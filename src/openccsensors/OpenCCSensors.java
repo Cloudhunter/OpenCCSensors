@@ -20,7 +20,7 @@ public class OpenCCSensors
 	@Instance( value = "OCS" )
 	public static OpenCCSensors instance;
 	
-	@SidedProxy( clientSide = "openccsensors.client.ClientProxy", serverSide = "openccsensors.client.CommonProxy" )
+	@SidedProxy( clientSide = "openccsensors.client.ClientProxy", serverSide = "openccsensors.common.CommonProxy" )
 	public static CommonProxy proxy;
 	
 	// config class to keep all the config data in

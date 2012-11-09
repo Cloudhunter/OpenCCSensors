@@ -1,5 +1,6 @@
 package openccsensors.common.sensorperipheral;
 
+import cpw.mods.fml.common.registry.LanguageRegistry;
 import openccsensors.OpenCCSensors;
 import openccsensors.common.core.TurtleSensorEnvironment;
 import net.minecraft.src.ItemStack;
@@ -22,7 +23,8 @@ public class TurtleUpgradeSensor implements ITurtleUpgrade
 	@Override
 	public String getAdjective() 
 	{
-		return "Sensor";
+		String translation = LanguageRegistry.instance().getStringLocalization("openccsensors.upgrade.adjective");
+		return translation == "" ? LanguageRegistry.instance().getStringLocalization("openccsensors.upgrade.adjective", "en_US") : translation;
 	}
 
 	@Override
@@ -46,7 +48,7 @@ public class TurtleUpgradeSensor implements ITurtleUpgrade
 	@Override
 	public String getIconTexture(ITurtleAccess turtle, TurtleSide side) 
 	{
-		return "terrain.png";
+		return "/terrain.png";
 	}
 
 	@Override
