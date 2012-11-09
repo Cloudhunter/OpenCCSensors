@@ -37,5 +37,5 @@ public class OCSLog
 	{
 		log( Level.SEVERE, format, data );
 	}
-	
+
 }

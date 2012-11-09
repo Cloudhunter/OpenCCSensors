@@ -1,0 +1,7 @@
+
+language.name=English
+language.region=US
+language.code=en_US
+
+openccsensors.tile.sensorblock=Sensor Peripheral
+openccsensors.gui.sensor=Sensor
