@@ -1,2 +1,19 @@
+#OCS stuff
+openccsensors.common.sensorperipheral.TileEntitySensor=Sensor
+#CC stuff
 dan200.turtle.shared.TileEntityTurtleExpanded=Turtle
 dan200.turtle.shared.TileEntityTurtle=Turtle
+dan200.computer.shared.TileEntityDiskDrive=Disk Drive
+dan200.computer.shared.TileEntityPrinter=Printer
+#vanilla stuff - inside MCP
+net.minecraft.src.TileEntityBeacon=Beacon
+net.minecraft.src.TileEntityBrewingStand=Brewing Stand
+net.minecraft.src.TileEntityChest=Chest
+net.minecraft.src.TileEntityDispenser=Dispenser
+net.minecraft.src.TileEntityFurnace=Furnace
+#vanilla stuff - obfuscated
+and=Beacon
+ane=Brewing Stand
+anf=Chest
+anh=Dispenser
+ank=Furnace
