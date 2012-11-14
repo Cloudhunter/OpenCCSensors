@@ -1,5 +1,6 @@
 package openccsensors.common.sensorperipheral;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import openccsensors.common.core.ISensorEnvironment;
 import dan200.computer.api.IComputerAccess;
 import dan200.computer.api.IPeripheral;
@@ -21,7 +22,7 @@ implements ISensorEnvironment, IPeripheral, IInventory
 	
 	public TileEntitySensor()
 	{
-		peripheral = new PeripheralSensor(this);
+		peripheral = new PeripheralSensor(this, false);
 		inventory = new InventoryBasic("Sensor", 1);
 	}
 	

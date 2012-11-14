@@ -22,6 +22,7 @@ import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import openccsensors.OpenCCSensors;
 import openccsensors.common.core.OCSLog;
+import openccsensors.common.sensorcard.InventorySensorCard;
 import openccsensors.common.sensorperipheral.ContainerSensor;
 import openccsensors.common.sensorperipheral.BlockSensor;
 import openccsensors.common.sensorperipheral.TurtleUpgradeSensor;
@@ -37,6 +38,9 @@ public class CommonProxy
 		GameRegistry.registerBlock(OpenCCSensors.Blocks.sensorBlock);
 		GameRegistry.registerTileEntity(TileEntitySensor.class, "sensor");
 		
+		// register sensor card
+		OpenCCSensors.Items.inventorySensor = new InventorySensorCard(25648);
+		
 		// register turtle peripheral if applicable
 		if (OpenCCSensors.Config.turtlePeripheralEnabled)
 		{
@@ -48,8 +52,6 @@ public class CommonProxy
 		
 		// setup languages
 		setupLanguages();
-		
-		System.out.println(new ItemStack(OpenCCSensors.Blocks.sensorBlock).getItemName());
 		
 	}
 	

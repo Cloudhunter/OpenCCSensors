@@ -1,3 +1,4 @@
 openccsensors.tile.sensorblock.name=Sensor Peripheral
+openccsensors.item.inventorysensor.name=Inventory Sensorcard
 openccsensors.gui.sensor=Sensor
 openccsensors.upgrade.adjective=Sensor

@@ -60,7 +60,7 @@ public class TurtleUpgradeSensor implements ITurtleUpgrade
 	@Override
 	public ITurtlePeripheral createPeripheral(ITurtleAccess turtle, TurtleSide side) 
 	{
-		return new PeripheralSensor(new TurtleSensorEnvironment(turtle));
+		return new PeripheralSensor(new TurtleSensorEnvironment(turtle), true);
 	}
 
 	@Override
