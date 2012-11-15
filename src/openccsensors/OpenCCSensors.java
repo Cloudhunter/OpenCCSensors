@@ -15,7 +15,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 
 @Mod( modid = "OCS", name = "OpenCCSensors", version = "0.01", dependencies = "after:ComputerCraft" )
-@NetworkMod(clientSideRequired = false, serverSideRequired = true)
+@NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class OpenCCSensors 
 {
 	@Instance( value = "OCS" )
