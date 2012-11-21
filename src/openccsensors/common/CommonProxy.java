@@ -23,6 +23,7 @@ import net.minecraft.src.World;
 import openccsensors.OpenCCSensors;
 import openccsensors.common.core.OCSLog;
 import openccsensors.common.sensorcard.InventorySensorCard;
+import openccsensors.common.sensorcard.ProximitySensorCard;
 import openccsensors.common.sensorperipheral.ContainerSensor;
 import openccsensors.common.sensorperipheral.BlockSensor;
 import openccsensors.common.sensorperipheral.TurtleUpgradeSensor;
@@ -40,6 +41,7 @@ public class CommonProxy
 		
 		// register sensor card
 		OpenCCSensors.Items.inventorySensor = new InventorySensorCard(25648);
+		OpenCCSensors.Items.proximitySensor = new ProximitySensorCard(25649);
 		
 		// register turtle peripheral if applicable
 		if (OpenCCSensors.Config.turtlePeripheralEnabled)

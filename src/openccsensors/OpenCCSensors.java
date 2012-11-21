@@ -5,6 +5,7 @@ import net.minecraftforge.common.Property;
 import openccsensors.common.CommonProxy;
 import openccsensors.common.core.OCSLog;
 import openccsensors.common.sensorcard.InventorySensorCard;
+import openccsensors.common.sensorcard.ProximitySensorCard;
 import openccsensors.common.sensorperipheral.BlockSensor;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -41,6 +42,7 @@ public class OpenCCSensors
 	public static class Items
 	{
 		public static InventorySensorCard inventorySensor;
+		public static ProximitySensorCard proximitySensor;
 	}
 	
 	@Mod.PreInit
