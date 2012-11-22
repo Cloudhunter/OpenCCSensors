@@ -1,9 +1,7 @@
 package openccsensors.common.sensorcard;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -72,7 +70,7 @@ public class ProximitySensorCard extends Item implements ISensorCard
 		    while (it.hasNext())
 		    {
 		    	Map.Entry pairs = (Map.Entry) it.next();
-		    	pairs.setValue(new LivingTarget((EntityLiving) pairs.getValue()));
+		    	pairs.setValue(new LivingTarget((EntityLiving) pairs.getValue(), x, y, z));
 		    }
 		    
 		    livingMap = livingEntityMap;
@@ -123,20 +121,21 @@ public class ProximitySensorCard extends Item implements ISensorCard
 		
 		private String rawType;
 		private String name;
+		private Vec3 sensorPos;
 		
-		LivingTarget(EntityLiving living)
+		LivingTarget(EntityLiving living, int sx, int sy, int sz)
 		{
 			id = living.entityId;
-			
+			sensorPos = Vec3.createVectorHelper(sx, sy, sz);
 			rawType = (living instanceof EntityPlayer) ? "Player" : living.getEntityName();
 		}
 		
 		private void addPositionToMap(EntityLiving living, Map map)
 		{
 			HashMap<String, Integer> pos = new HashMap<String,Integer>();
-			pos.put("x", ((Double) living.posX).intValue());
-			pos.put("y", ((Double) living.posY).intValue());
-			pos.put("z", ((Double) living.posZ).intValue());
+			pos.put("x", ((Double) living.posX).intValue() - (int) sensorPos.xCoord);
+			pos.put("y", ((Double) living.posY).intValue() - (int) sensorPos.yCoord);
+			pos.put("z", ((Double) living.posZ).intValue() - (int) sensorPos.zCoord);
 			map.put("position",pos);
 		}
 		
