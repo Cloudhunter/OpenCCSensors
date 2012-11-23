@@ -150,7 +150,7 @@ public class IndustrialCraftSensorCard extends Item implements ISensorCard
 				rtn.put("heat", reactor.getHeat());
 				rtn.put("maxHeat", reactor.getMaxHeat());
 				rtn.put("powered", reactor.produceEnergy());
-				rtn.put("output", reactor.getOutput());			
+				rtn.put("output", reactor.getOutput() * 5); // see http://bt.industrial-craft.net/view.php?id=68 this is fixed in 1.109 api which I'll update to sometime soon (when logistics pipes has a 1.4.5 jenkins build)
 				IInventory reactorInventory = (IInventory)reactor;
 				rtn.put("inventory", SensorHelper.invToMap(reactorInventory));				
 			}
