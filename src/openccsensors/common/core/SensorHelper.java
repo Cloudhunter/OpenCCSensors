@@ -35,6 +35,19 @@ import net.minecraft.src.World;
 
 public class SensorHelper
 {
+	public static HashMap<String, TileEntity> getAdjacentTile(World world, int x, int y, int z, Class[] validClasses)
+	{
+		HashMap map = new HashMap<String, TileEntity>();
+		addToHashMap(world.getBlockTileEntity(x + 1, y, z), map, validClasses, "EAST");
+		addToHashMap(world.getBlockTileEntity(x - 1, y, z), map, validClasses, "WEST");
+		addToHashMap(world.getBlockTileEntity(x, y + 1, z), map, validClasses, "UP");
+		addToHashMap(world.getBlockTileEntity(x, y - 1, z), map, validClasses, "DOWN");
+		addToHashMap(world.getBlockTileEntity(x, y, z + 1), map, validClasses, "SOUTH");
+		addToHashMap(world.getBlockTileEntity(x, y, z - 1), map, validClasses, "NORTH");
+		
+		return map;		
+	}
+	
 	public static HashMap<String, TileEntity> getAdjacentTile(World world, int x, int y, int z, Class clazz)
 	{
 		HashMap map = new HashMap<String, TileEntity>();
@@ -84,6 +97,30 @@ public class SensorHelper
 		}
 		
 		return map;
+	}
+	
+	public static boolean addToHashMap( TileEntity tile, HashMap<String, TileEntity> map, Class[] validClasses, String name )
+	{
+		if (tile != null && validClasses != null)
+		{
+			for (Class classInstance: validClasses)
+			{
+				if (classInstance.isInstance(tile))
+				{
+					String _name = name;
+					if ( _name == null )
+					{
+						_name = tile.toString();
+					}
+					
+					map.put( _name, tile );
+					break;
+				}
+			}
+			return true;
+		}
+		
+		return false;		
 	}
 	
 	public static boolean addToHashMap( TileEntity tile, HashMap<String, TileEntity> map, Class clazz, String name )
