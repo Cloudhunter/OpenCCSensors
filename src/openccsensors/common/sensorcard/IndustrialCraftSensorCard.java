@@ -1,13 +1,19 @@
 package openccsensors.common.sensorcard;
 
+import ic2.api.EnergyNet;
 import ic2.api.IEnergyConductor;
+import ic2.api.IEnergySink;
+import ic2.api.IEnergySource;
 import ic2.api.IEnergyStorage;
 import ic2.api.IReactor;
 import ic2.api.IReactorChamber;
+import ic2.api.Ic2Recipes;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
 import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.IInventory;
@@ -60,25 +66,22 @@ public class IndustrialCraftSensorCard extends Item implements ISensorCard
 		
 		@Override
 		public Map getBasicTarget(World world, int x, int y, int z)
-		{
-			
-			Class[] validIC2Tiles = new Class[] { IReactor.class, IReactorChamber.class, IEnergyStorage.class, IEnergyConductor.class };
+		{			
+			Class[] validIC2Tiles = new Class[] { IReactor.class, IReactorChamber.class, IEnergyStorage.class, IEnergyConductor.class, IEnergySource.class, IEnergySink.class };
 
-			HashMap tileMap = SensorHelper.getAdjacentTile(world, x, y, z, validIC2Tiles);
-			
+			HashMap tileMap = SensorHelper.getAdjacentTile(world, x, y, z, validIC2Tiles);		
 		    Iterator it = tileMap.entrySet().iterator();
 		    while (it.hasNext())
 		    {
 		    	Map.Entry pairs = (Map.Entry) it.next();
-		    	pairs.setValue(new IC2Target((TileEntity) pairs.getValue()));
-		    }
-		    
+		    	TileEntity ic2Entity = (TileEntity)pairs.getValue();
+		    	if (!(ic2Entity instanceof IReactorChamber) || (((IReactorChamber)ic2Entity).getReactor() != null))
+		    		pairs.setValue(new IC2Target((TileEntity) pairs.getValue()));
+		    }		    
 		    ic2EntityMap = tileMap;
 		    
-		    HashMap retMap = new HashMap();
-		    
-		    it = ic2EntityMap.entrySet().iterator();
-		    
+		    HashMap retMap = new HashMap();		    
+		    it = ic2EntityMap.entrySet().iterator();		    
 		    while (it.hasNext())
 		    {
 		    	Map.Entry pairs = (Map.Entry) it.next();
@@ -91,14 +94,8 @@ public class IndustrialCraftSensorCard extends Item implements ISensorCard
 		@Override
 		public Map getDetailTarget(World world, int x, int y, int z, String target)
 		{
-			IC2Target inv = (IC2Target) ic2EntityMap.get(target);
-			if (inv == null)
-			{
-				return null;
-			}
-			
-			
-			return inv.getDetailInformation(world);
+			IC2Target ic2Entity = (IC2Target) ic2EntityMap.get(target);
+			return ic2Entity.getDetailInformation(world);
 		}
 
 		@Override
@@ -121,7 +118,7 @@ public class IndustrialCraftSensorCard extends Item implements ISensorCard
 		private int yCoord;
 		private int zCoord;
 		
-		private String rawType;
+		private String interfaceType;
 		private String name;
 		
 		IC2Target(TileEntity ic2Entity)
@@ -130,28 +127,86 @@ public class IndustrialCraftSensorCard extends Item implements ISensorCard
 			yCoord = ic2Entity.yCoord;
 			zCoord = ic2Entity.zCoord;
 			
-			rawType = ic2Entity.getClass().getName();		
+			if ((ic2Entity instanceof IReactor) || (ic2Entity instanceof IReactorChamber))
+				interfaceType = IReactor.class.getName();
+			else if (ic2Entity instanceof IEnergyStorage)
+				interfaceType = IEnergyStorage.class.getName();
+			else if (ic2Entity instanceof IEnergyConductor)
+				interfaceType = IEnergyConductor.class.getName();
+			else if (ic2Entity instanceof IEnergySink)
+				interfaceType = IEnergySink.class.getName();
+			else if (ic2Entity instanceof IEnergySource)
+				interfaceType = IEnergySource.class.getName();
+			else
+				interfaceType = ic2Entity.getClass().getName();			
+		}
+		
+		private HashMap populateReactorData(IReactor reactor)
+		{
+			HashMap rtn = null;
+			if (reactor != null)
+			{
+				rtn = new HashMap();				
+				rtn.put("heat", reactor.getHeat());
+				rtn.put("maxHeat", reactor.getMaxHeat());
+				rtn.put("powered", reactor.produceEnergy());
+				rtn.put("output", reactor.getOutput());			
+				IInventory reactorInventory = (IInventory)reactor;
+				rtn.put("inventory", SensorHelper.invToMap(reactorInventory));				
+			}
+			return rtn;
+		}
+		
+		private HashMap populateEnergyStorageData(IEnergyStorage storage)
+		{
+			HashMap rtn = null;
+			if (storage != null)
+			{
+				rtn = new HashMap();
+				rtn.put("stored", storage.getStored());
+				rtn.put("capacity", storage.getCapacity());
+				rtn.put("output", storage.getOutput());
+			}
+			return rtn;
+		}
+		
+		private HashMap populateEnergyConducted(World world, TileEntity tile)
+		{
+			HashMap rtn = null;
+			if (tile != null)
+			{
+				rtn = new HashMap();
+				Long energyConducted = EnergyNet.getForWorld(world).getTotalEnergyConducted((TileEntity)tile);
+				rtn.put("energyConducted", energyConducted);
+			}
+			return rtn;
 		}
 		
 		public Map getBasicInformation(World world)
 		{
 			HashMap retMap = new HashMap();
 			
-			retMap.put("type", SensorHelper.getType(rawType)); // abuse translation system to translate obsfucated/dev names
+			retMap.put("type", SensorHelper.getType(interfaceType)); // abuse translation system to translate obsfucated/dev names
 			
 			return retMap;
 		}
 		
 		public Map getDetailInformation(World world)
 		{
-			HashMap retMap = new HashMap();
-			TileEntity tile = world.getBlockTileEntity(xCoord, yCoord, zCoord);
-			
-			if (tile == null || !(tile instanceof IInventory))
+			HashMap retMap = null;
+			TileEntity tile = world.getBlockTileEntity(xCoord, yCoord, zCoord);			
+			if (tile != null)
 			{
-				return null;
+				if (IReactor.class.isInstance(tile))
+					retMap = populateReactorData((IReactor)tile);
+				else if (IReactorChamber.class.isInstance(tile))
+					retMap = populateReactorData(((IReactorChamber)tile).getReactor());
+				else if (IEnergyStorage.class.isInstance(tile))
+					retMap = populateEnergyStorageData((IEnergyStorage)tile);
+				else
+					retMap = populateEnergyConducted(world, tile);
 			}
-			return null;
+			return retMap;
 		}
 	}
 }

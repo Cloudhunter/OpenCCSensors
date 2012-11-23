@@ -101,6 +101,7 @@ public class SensorHelper
 	
 	public static boolean addToHashMap( TileEntity tile, HashMap<String, TileEntity> map, Class[] validClasses, String name )
 	{
+		boolean rtn = false;
 		if (tile != null && validClasses != null)
 		{
 			for (Class classInstance: validClasses)
@@ -114,13 +115,12 @@ public class SensorHelper
 					}
 					
 					map.put( _name, tile );
+					rtn = true;
 					break;
 				}
-			}
-			return true;
-		}
-		
-		return false;		
+			}			
+		}		
+		return rtn;		
 	}
 	
 	public static boolean addToHashMap( TileEntity tile, HashMap<String, TileEntity> map, Class clazz, String name )
