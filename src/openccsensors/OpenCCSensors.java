@@ -6,6 +6,7 @@ import openccsensors.common.CommonProxy;
 import openccsensors.common.core.OCSLog;
 import openccsensors.common.sensorcard.InventorySensorCard;
 import openccsensors.common.sensorcard.ProximitySensorCard;
+import openccsensors.common.sensorcard.IndustrialCraftSensorCard;
 import openccsensors.common.sensorperipheral.BlockSensor;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -15,7 +16,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 
-@Mod( modid = "OCS", name = "OpenCCSensors", version = "0.01", dependencies = "after:ComputerCraft" )
+@Mod( modid = "OCS", name = "OpenCCSensors", version = "0.02", dependencies = "after:ComputerCraft" )
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class OpenCCSensors 
 {
@@ -43,6 +44,7 @@ public class OpenCCSensors
 	{
 		public static InventorySensorCard inventorySensor;
 		public static ProximitySensorCard proximitySensor;
+		public static IndustrialCraftSensorCard industrialSensor;
 	}
 	
 	@Mod.PreInit

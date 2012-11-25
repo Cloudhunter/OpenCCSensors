@@ -1,5 +1,7 @@
 package openccsensors.common;
 
+import ic2.api.Ic2Recipes;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,15 +15,18 @@ import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import net.minecraft.src.Block;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IInventory;
 import net.minecraft.src.InventoryPlayer;
+import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Material;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import openccsensors.OpenCCSensors;
 import openccsensors.common.core.OCSLog;
+import openccsensors.common.sensorcard.IndustrialCraftSensorCard;
 import openccsensors.common.sensorcard.InventorySensorCard;
 import openccsensors.common.sensorcard.ProximitySensorCard;
 import openccsensors.common.sensorperipheral.ContainerSensor;
@@ -38,10 +43,43 @@ public class CommonProxy
 		OpenCCSensors.Blocks.sensorBlock = new BlockSensor( OpenCCSensors.Config.sensorBlockID, Material.rock );
 		GameRegistry.registerBlock(OpenCCSensors.Blocks.sensorBlock);
 		GameRegistry.registerTileEntity(TileEntitySensor.class, "sensor");
-		
+					
 		// register sensor card
 		OpenCCSensors.Items.inventorySensor = new InventorySensorCard(25648);
 		OpenCCSensors.Items.proximitySensor = new ProximitySensorCard(25649);
+		
+		GameRegistry.addRecipe(new ItemStack(OpenCCSensors.Blocks.sensorBlock), 
+				"rrr", 
+				"sss", 
+				"sss", 
+				'r', new ItemStack(Block.torchRedstoneActive),
+				's', new ItemStack(Block.stone));
+		
+		GameRegistry.addRecipe(new ItemStack(OpenCCSensors.Items.inventorySensor),
+				"rcr",
+				"rrr",
+				"rrr",
+				'r', new ItemStack(Item.redstone),
+				'c', new ItemStack(Block.chest));
+		
+		GameRegistry.addRecipe(new ItemStack(OpenCCSensors.Items.proximitySensor),
+				"rpr",
+				"rrr",
+				"rrr",
+				'r', new ItemStack(Item.redstone),
+				'p', new ItemStack(Block.pressurePlateStone));
+				
+		ItemStack advancedCircuit = ic2.api.Items.getItem("advancedCircuit");
+		if (advancedCircuit != null)
+		{
+			OpenCCSensors.Items.industrialSensor = new IndustrialCraftSensorCard(25650);			
+			GameRegistry.addRecipe(new ItemStack(OpenCCSensors.Items.industrialSensor), 
+					"rar",
+					"rrr",
+					"rrr",
+					'r', new ItemStack(Item.redstone),
+					'a', ic2.api.Items.getItem("advancedCircuit"));
+		}
 		
 		// register turtle peripheral if applicable
 		if (OpenCCSensors.Config.turtlePeripheralEnabled)
