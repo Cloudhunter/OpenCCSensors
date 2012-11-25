@@ -63,10 +63,9 @@ public class IndustrialCraftSensorCard extends Item implements ISensorCard
 		{
 			return "industrial";
 		}
-		
-		@Override
-		public Map getBasicTarget(World world, int x, int y, int z)
-		{			
+
+		private void populateEntityMap(World world, int x, int y, int z)
+		{
 			Class[] validIC2Tiles = new Class[] { IReactor.class, IReactorChamber.class, IEnergyStorage.class, IEnergyConductor.class, IEnergySource.class, IEnergySink.class };
 
 			HashMap tileMap = SensorHelper.getAdjacentTile(world, x, y, z, validIC2Tiles);		
@@ -78,10 +77,15 @@ public class IndustrialCraftSensorCard extends Item implements ISensorCard
 		    	if (!(ic2Entity instanceof IReactorChamber) || (((IReactorChamber)ic2Entity).getReactor() != null))
 		    		pairs.setValue(new IC2Target((TileEntity) pairs.getValue()));
 		    }		    
-		    ic2EntityMap = tileMap;
-		    
+		    ic2EntityMap = tileMap;			
+		}
+		
+		@Override
+		public Map getBasicTarget(World world, int x, int y, int z)
+		{			
+		    populateEntityMap(world, x, y, z);
 		    HashMap retMap = new HashMap();		    
-		    it = ic2EntityMap.entrySet().iterator();		    
+		    Iterator it = ic2EntityMap.entrySet().iterator();		    
 		    while (it.hasNext())
 		    {
 		    	Map.Entry pairs = (Map.Entry) it.next();
@@ -94,6 +98,7 @@ public class IndustrialCraftSensorCard extends Item implements ISensorCard
 		@Override
 		public Map getDetailTarget(World world, int x, int y, int z, String target)
 		{
+		//	populateEntityMap(world, x, y, z); todo or not todo maybe scanning first is good?
 			IC2Target ic2Entity = (IC2Target) ic2EntityMap.get(target);
 			return ic2Entity.getDetailInformation(world);
 		}
@@ -151,8 +156,6 @@ public class IndustrialCraftSensorCard extends Item implements ISensorCard
 				rtn.put("maxHeat", reactor.getMaxHeat());
 				rtn.put("powered", reactor.produceEnergy());
 				rtn.put("output", reactor.getOutput() * 5); // see http://bt.industrial-craft.net/view.php?id=68 this is fixed in 1.109 api which I'll update to sometime soon (when logistics pipes has a 1.4.5 jenkins build)
-				IInventory reactorInventory = (IInventory)reactor;
-				rtn.put("inventory", SensorHelper.invToMap(reactorInventory));				
 			}
 			return rtn;
 		}
