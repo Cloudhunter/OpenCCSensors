@@ -5,6 +5,11 @@ dan200.turtle.shared.TileEntityTurtleExpanded=Turtle
 dan200.turtle.shared.TileEntityTurtle=Turtle
 dan200.computer.shared.TileEntityDiskDrive=Disk Drive
 dan200.computer.shared.TileEntityPrinter=Printer
+#ic2 stuff
+ic2.common.TileEntityElectricBatBox=BatBox
+ic2.common.TileEntityElectricMFSU=MFSU
+ic2.common.TileEntityElectricMFE=MFE
+ic2.common.TileEntityNuclearReactorElectric=Nuclear Reactor
 #vanilla stuff - inside MCP
 net.minecraft.src.TileEntityBeacon=Beacon
 net.minecraft.src.TileEntityBrewingStand=Brewing Stand
