@@ -5,8 +5,10 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
+import net.minecraft.src.Block;
 import net.minecraft.src.Chunk;
 import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.Entity;
@@ -39,6 +41,7 @@ public class ProximitySensorCard extends Item implements ISensorCard
 	{
 		super(par1);
 		setCreativeTab(CreativeTabs.tabRedstone);
+		addRecipeToGameRegistry();
 	}
 	
 	// Temporary! To differentiate this sensor card from the Inventory one. 
@@ -57,6 +60,16 @@ public class ProximitySensorCard extends Item implements ISensorCard
 	public String getItemNameIS(ItemStack is)
 	{
 		return "openccsensors.item.proximitysensor";
+	}
+	
+	public void addRecipeToGameRegistry()
+	{
+		GameRegistry.addRecipe(new ItemStack(this),
+				"rpr",
+				"rrr",
+				"rrr",
+				'r', new ItemStack(Item.redstone),
+				'p', new ItemStack(Block.pressurePlateStone));
 	}
 	
 	public class InventorySensorInterface extends GenericSensorInterface implements ISensorInterface 

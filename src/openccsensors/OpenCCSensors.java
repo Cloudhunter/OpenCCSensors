@@ -4,6 +4,7 @@ import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.Property;
 import openccsensors.common.CommonProxy;
 import openccsensors.common.core.OCSLog;
+import openccsensors.common.sensorcard.BuildCraftSensorCard;
 import openccsensors.common.sensorcard.IC2SensorCard;
 import openccsensors.common.sensorcard.InventorySensorCard;
 import openccsensors.common.sensorcard.ProximitySensorCard;
@@ -45,6 +46,7 @@ public class OpenCCSensors
 		public static InventorySensorCard inventorySensor;
 		public static ProximitySensorCard proximitySensor;
 		public static IC2SensorCard ic2Sensor;
+		public static BuildCraftSensorCard buildcraftSensor;
 	}
 	
 	@Mod.PreInit

@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 import net.minecraft.src.Block;
@@ -18,6 +19,7 @@ import net.minecraft.src.ItemStack;
 import net.minecraft.src.StringTranslate;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
+import openccsensors.OpenCCSensors;
 import openccsensors.common.core.GenericSensorInterface;
 import openccsensors.common.core.ISensorInterface;
 import openccsensors.common.core.ISensorCard;
@@ -35,6 +37,7 @@ public class IC2SensorCard extends Item implements ISensorCard
 	{
 		super(par1);
 		setCreativeTab(CreativeTabs.tabRedstone);
+		addRecipeToGameRegistry();
 	}
 
 	@Override
@@ -47,6 +50,17 @@ public class IC2SensorCard extends Item implements ISensorCard
 	public String getItemNameIS(ItemStack is)
 	{
 		return "openccsensors.item.ic2sensor";
+	}
+	
+	public void addRecipeToGameRegistry()
+	{
+		GameRegistry.addRecipe(new ItemStack(this), 
+				"ccr",
+				"crr",
+				"rrp",
+				'r', new ItemStack(Item.redstone),
+				'c', ic2.api.Items.getItem("uraniumIngot") ,
+				'p', new ItemStack(Item.paper));
 	}
 	
 	public class IC2SensorInterface extends GenericSensorInterface implements ISensorInterface 

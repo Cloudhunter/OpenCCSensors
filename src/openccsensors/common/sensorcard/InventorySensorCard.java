@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 import net.minecraft.src.Block;
@@ -32,6 +33,7 @@ public class InventorySensorCard extends Item implements ISensorCard {
 	public InventorySensorCard(int par1) {
 		super(par1);
 		setCreativeTab(CreativeTabs.tabRedstone);
+		addRecipeToGameRegistry();
 	}
 
 	@Override
@@ -44,7 +46,19 @@ public class InventorySensorCard extends Item implements ISensorCard {
 	public String getItemNameIS(ItemStack is) {
 		return "openccsensors.item.inventorysensor";
 	}
-
+	
+	public void addRecipeToGameRegistry()
+	{
+		
+		GameRegistry.addRecipe(new ItemStack(this),
+				"wwr",
+				"wrr",
+				"rrp",
+				'w', new ItemStack(Block.planks),
+				'r', new ItemStack(Item.redstone),
+				'p', new ItemStack(Item.paper));
+	}
+	
 	public class InventorySensorInterface extends GenericSensorInterface
 			implements ISensorInterface {
 

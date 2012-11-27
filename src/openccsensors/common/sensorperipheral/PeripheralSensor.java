@@ -113,7 +113,7 @@ implements ITurtlePeripheral
 	@Override
 	public void attach(IComputerAccess computer, String computerSide) 
 	{
-
+			//computer.mountFixedDir("ocs", "openccsensors/resources/lua", true);
 	}
 
 	@Override
