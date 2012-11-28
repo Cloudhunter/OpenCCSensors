@@ -5,9 +5,9 @@ import java.util.Map;
 import buildcraft.energy.TileEngine;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
-import openccsensors.common.core.ISensorInterface;
-import openccsensors.common.core.ISensorTarget;
-import openccsensors.common.core.ITargetWrapper;
+import openccsensors.common.api.ISensorInterface;
+import openccsensors.common.api.ISensorTarget;
+import openccsensors.common.api.ITargetWrapper;
 import openccsensors.common.helper.TargetHelper;
 import openccsensors.common.sensors.TargetRetriever;
 

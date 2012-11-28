@@ -5,8 +5,8 @@ import net.minecraft.src.Block;
 import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
-import openccsensors.common.core.ISensorCard;
-import openccsensors.common.core.ISensorInterface;
+import openccsensors.common.api.ISensorCard;
+import openccsensors.common.api.ISensorInterface;
 
 
 /**

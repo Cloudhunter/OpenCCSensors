@@ -7,7 +7,7 @@ import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.Vec3;
 import net.minecraft.src.World;
-import openccsensors.common.core.ISensorTarget;
+import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.helper.LivingEntityHelper;
 
 /*
