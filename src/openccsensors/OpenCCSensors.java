@@ -29,6 +29,7 @@ public class OpenCCSensors
 	public static class Config
 	{
 		public static int sensorBlockID;
+		public static int sensorBlockRenderID;
 		public static boolean turtlePeripheralEnabled;
 	}
 	
@@ -54,6 +55,10 @@ public class OpenCCSensors
 		prop.comment = "The block ID for the sensor block";
 		Config.sensorBlockID = prop.getInt();
 		
+		prop = configFile.getBlock("sensorBlockRenderID", 84);
+		prop.comment = "The render ID for the sensor block";
+		Config.sensorBlockRenderID = prop.getInt();
+		
 		prop = configFile.get("general", "turtlePeripheralEnabled", true);
 		prop.comment = "Turtle Peripheral Enabled";
 		Config.turtlePeripheralEnabled = prop.getBoolean(true);
@@ -72,6 +77,7 @@ public class OpenCCSensors
 		
 		// init our proxy
 		proxy.init();
+		proxy.registerRenderInformation();
 	}
 	
 }

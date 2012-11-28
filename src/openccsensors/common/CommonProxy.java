@@ -105,6 +105,10 @@ public class CommonProxy
 
 	}
 	
+	public void registerRenderInformation()
+	{
+	}
+	
 	// GUI Stuff
 	public Object getGui( InventoryPlayer inventory, TileEntitySensor tileentity )
 	{

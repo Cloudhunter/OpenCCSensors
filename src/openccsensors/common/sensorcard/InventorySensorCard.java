@@ -25,6 +25,13 @@ public class InventorySensorCard extends Item implements ISensorCard
 	{
 		super(par1);
 		setCreativeTab(CreativeTabs.tabRedstone);
+		setTextureFile("/openccsensors/resources/images/terrain.png");
+	}
+		
+	// Temporary! 
+	@Override
+	public int getIconFromDamage(int par1) {
+		return 16;
 	}
 
 	@Override
