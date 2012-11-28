@@ -51,6 +51,16 @@ implements ISensorEnvironment, IPeripheral, IInventory
     
     // IPeripheral interface - basically a proxy to the SensorPeripheral, allowing us to reuse code for the turtle peripheral
 
+    public boolean getDirectional()
+    {
+    	return peripheral.isDirectional();
+    }
+    
+    public void setDirectional(boolean isDirectional)
+    {
+    	peripheral.setDirectional(isDirectional);
+    }
+    
 	@Override
 	public String getType() 
 	{
