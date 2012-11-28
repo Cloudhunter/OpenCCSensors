@@ -5,5 +5,5 @@ import net.minecraft.src.World;
 
 public interface ISensorCard 
 {
-	ISensorInterface getSensorInterface(ItemStack itemstack, boolean turtle);	
+	ISensorInterface getSensorInterface(ItemStack itemstack, boolean turtle);
 }
