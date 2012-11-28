@@ -2,8 +2,10 @@ package openccsensors.common.sensors.industrialcraft;
 
 import java.util.Map;
 
+import ic2.api.IEnergyConductor;
 import ic2.api.IEnergyStorage;
 import ic2.api.IReactor;
+import ic2.api.IReactorChamber;
 import openccsensors.common.core.ISensorInterface;
 import openccsensors.common.core.ISensorTarget;
 import openccsensors.common.core.ITargetWrapper;
@@ -34,6 +36,19 @@ public class IC2SensorInterface implements ISensorInterface
 			}
 		});
 		
+		retriever.registerTarget(IReactorChamber.class, new ITargetWrapper() {
+			@Override
+			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
+				return new ReactorTarget((TileEntity)((IReactorChamber)entity).getReactor());
+			}
+		});
+		
+		retriever.registerTarget(IEnergyConductor.class, new ITargetWrapper() {
+			@Override
+			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
+				return new EnergyConductorTarget((TileEntity)entity);
+			}
+		});
 	}
 
 	@Override
