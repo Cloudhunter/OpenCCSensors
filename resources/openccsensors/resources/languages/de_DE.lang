@@ -1,0 +1,7 @@
+openccsensors.tile.sensorblock.name=Sensorgerät
+openccsensors.item.inventorysensor.name=Inventar Sensorkarte
+openccsensors.item.proximitysensor.name=Entfernungungs Sensorkarte
+openccsensors.item.ic2sensor.name=IndustrialCraft 2 Sensorkarte
+openccsensors.item.buildcraftsensor.name=BuildCraft Sensorkarte
+openccsensors.gui.sensor=Sensor
+openccsensors.upgrade.adjective=Sensor
