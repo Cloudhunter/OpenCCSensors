@@ -1,9 +1,11 @@
-package openccsensors.common.core;
+package openccsensors.common.sensors;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import openccsensors.common.core.ISensorTarget;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 

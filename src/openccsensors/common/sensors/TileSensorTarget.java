@@ -1,4 +1,4 @@
-package openccsensors.common.sensortargets;
+package openccsensors.common.sensors;
 
 import java.util.HashMap;
 import java.util.Map;

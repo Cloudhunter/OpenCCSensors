@@ -22,14 +22,14 @@ import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import openccsensors.OpenCCSensors;
 import openccsensors.common.core.OCSLog;
-import openccsensors.common.sensorcard.BuildCraftSensorCard;
-import openccsensors.common.sensorcard.IC2SensorCard;
-import openccsensors.common.sensorcard.InventorySensorCard;
-import openccsensors.common.sensorcard.ProximitySensorCard;
 import openccsensors.common.sensorperipheral.ContainerSensor;
 import openccsensors.common.sensorperipheral.BlockSensor;
 import openccsensors.common.sensorperipheral.TurtleUpgradeSensor;
 import openccsensors.common.sensorperipheral.TileEntitySensor;
+import openccsensors.common.sensors.buildcraft.BuildCraftSensorCard;
+import openccsensors.common.sensors.industrialcraft.IC2SensorCard;
+import openccsensors.common.sensors.vanilla.InventorySensorCard;
+import openccsensors.common.sensors.vanilla.ProximitySensorCard;
 
 public class CommonProxy
 {
