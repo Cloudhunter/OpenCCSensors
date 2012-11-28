@@ -3,6 +3,7 @@ package openccsensors.common.sensors.buildcraft;
 import java.util.Map;
 
 import buildcraft.energy.TileEngine;
+import buildcraft.factory.TileQuarry;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import openccsensors.common.core.ISensorInterface;
@@ -22,6 +23,13 @@ public class BuildCraftSensorInterface implements ISensorInterface
 			@Override
 			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
 				return new EngineTarget((TileEntity)entity);
+			}
+		});
+		
+		retriever.registerTarget(TileQuarry.class, new ITargetWrapper() {
+			@Override
+			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
+				return new QuarryTarget((TileEntity)entity);
 			}
 		});
 	}
