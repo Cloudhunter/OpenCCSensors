@@ -1,22 +1,17 @@
 package openccsensors.common.sensors.industrialcraft;
 
+import java.util.Map;
+
 import ic2.api.IEnergyStorage;
 import ic2.api.IReactor;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.World;
 import openccsensors.common.core.ISensorInterface;
 import openccsensors.common.core.ISensorTarget;
 import openccsensors.common.core.ITargetWrapper;
-import openccsensors.common.helper.BlockTileHelper;
 import openccsensors.common.helper.TargetHelper;
 import openccsensors.common.sensors.TargetRetriever;
-import openccsensors.common.sensors.buildcraft.EngineTarget;
+import openccsensors.common.sensors.industrialcraft.ReactorTarget;
+import net.minecraft.src.TileEntity;
+import net.minecraft.src.World;
 
 public class IC2SensorInterface implements ISensorInterface 
 {
