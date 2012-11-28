@@ -9,7 +9,7 @@ import java.util.Map;
 
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
-import openccsensors.common.core.ISensorTarget;
+import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.sensors.TileSensorTarget;
 
 public class EnergyConductorTarget extends TileSensorTarget implements ISensorTarget{

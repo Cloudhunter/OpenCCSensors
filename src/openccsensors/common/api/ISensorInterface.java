@@ -1,4 +1,4 @@
-package openccsensors.common.core;
+package openccsensors.common.api;
 
 import java.util.Map;
 

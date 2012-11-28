@@ -9,8 +9,8 @@ import net.minecraft.src.EntityLiving;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 
-import openccsensors.common.core.ISensorTarget;
-import openccsensors.common.core.ITargetWrapper;
+import openccsensors.common.api.ISensorTarget;
+import openccsensors.common.api.ITargetWrapper;
 import openccsensors.common.helper.LivingEntityHelper;
 
 public class TargetRetriever {

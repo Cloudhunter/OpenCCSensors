@@ -1,4 +1,4 @@
-package openccsensors.common.core;
+package openccsensors.common.api;
 
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.World;

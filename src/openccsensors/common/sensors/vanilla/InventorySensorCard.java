@@ -1,8 +1,8 @@
 package openccsensors.common.sensors.vanilla;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import openccsensors.common.core.ISensorCard;
-import openccsensors.common.core.ISensorInterface;
+import openccsensors.common.api.ISensorCard;
+import openccsensors.common.api.ISensorInterface;
 import net.minecraft.src.Block;
 import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.Item;

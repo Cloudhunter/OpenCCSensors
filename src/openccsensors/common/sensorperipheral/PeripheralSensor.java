@@ -2,9 +2,9 @@ package openccsensors.common.sensorperipheral;
 
 import java.util.Arrays;
 
-import openccsensors.common.core.ISensorInterface;
+import openccsensors.common.api.ISensorCard;
+import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.core.ISensorEnvironment;
-import openccsensors.common.core.ISensorCard;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Vec3;
