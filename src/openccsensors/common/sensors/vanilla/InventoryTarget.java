@@ -10,8 +10,6 @@ import openccsensors.common.core.ISensorTarget;
 import openccsensors.common.helper.InventoryHelper;
 import openccsensors.common.sensors.TileSensorTarget;
 
-
-
 public class InventoryTarget extends TileSensorTarget implements
 		ISensorTarget {
 
@@ -21,13 +19,11 @@ public class InventoryTarget extends TileSensorTarget implements
 
 	@Override
 	public Map getDetailInformation(World world) {
-		HashMap retMap = new HashMap();
-		TileEntity tile = world.getBlockTileEntity(xCoord, yCoord, zCoord);
-		if (tile == null || !(tile instanceof IInventory)) {
-			return null;
-		}
+		
+		IInventory inventory = (IInventory) world.getBlockTileEntity(xCoord, yCoord, zCoord);
 
-		return InventoryHelper.invToMap((IInventory) tile);
+		return InventoryHelper.invToMap(inventory);
+		
 	}
 
 }

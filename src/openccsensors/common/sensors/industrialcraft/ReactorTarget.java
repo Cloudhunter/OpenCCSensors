@@ -23,15 +23,12 @@ public class ReactorTarget extends TileSensorTarget implements ISensorTarget
 	{
 		HashMap retMap = new HashMap();
 		
-		TileEntity tile = world.getBlockTileEntity(xCoord, yCoord, zCoord);
-		if (tile == null || !(tile instanceof IReactor)) {
-			return null;
-		}
+		IReactor reactor = (IReactor) world.getBlockTileEntity(xCoord, yCoord, zCoord);
 		
-		retMap.put("Heat", ((IReactor) tile).getHeat());
-		retMap.put("MaxHeat", ((IReactor) tile).getMaxHeat());
-		retMap.put("Output", ((IReactor) tile).getOutput());
-		retMap.put("Active", ((IReactor) tile).produceEnergy());
+		retMap.put("Heat", reactor.getHeat());
+		retMap.put("MaxHeat", reactor.getMaxHeat());
+		retMap.put("Output", reactor.getOutput());
+		retMap.put("Active", reactor.produceEnergy());
 		
 		return retMap;
 		

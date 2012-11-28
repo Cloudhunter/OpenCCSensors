@@ -1,5 +1,8 @@
 package openccsensors.common.sensors.vanilla;
 
+import ic2.api.IEnergyStorage;
+import ic2.api.IReactor;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -10,39 +13,31 @@ import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import openccsensors.common.core.ISensorInterface;
 import openccsensors.common.core.ISensorTarget;
+import openccsensors.common.core.ITargetWrapper;
 import openccsensors.common.helper.BlockTileHelper;
-import openccsensors.common.sensors.GenericSensorInterface;
+import openccsensors.common.helper.TargetHelper;
+import openccsensors.common.sensors.TargetRetriever;
+import openccsensors.common.sensors.industrialcraft.EnergyStorageTarget;
+import openccsensors.common.sensors.industrialcraft.ReactorTarget;
 
-public class InventorySensorInterface extends GenericSensorInterface implements
-		ISensorInterface {
+public class InventorySensorInterface implements ISensorInterface {
 
-	Class[] relevantClassTypes = { IInventory.class };
+	private TargetRetriever retriever = new TargetRetriever();
+	
+	public InventorySensorInterface()
+	{
+		retriever.registerTarget(IInventory.class, new ITargetWrapper() {
+			@Override
+			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
+				return new InventoryTarget((TileEntity)entity);
+			}
+		});
+		
+	}
 
 	@Override
 	public String getName() {
 		return "inventory";
-	}
-
-	@Override
-	public HashMap<String, ISensorTarget> getAvailableTargets(World world,
-			int x, int y, int z) {
-		HashMap<String, ISensorTarget> targets = new HashMap<String, ISensorTarget>();
-
-		HashMap<String, TileEntity> entities = BlockTileHelper.getAdjacentTile(
-				world, x, y, z, relevantClassTypes);
-
-		BlockTileHelper.addToHashMap(world.getBlockTileEntity(x, y, z),
-				entities, relevantClassTypes, "SELF");
-
-		Iterator it = entities.entrySet().iterator();
-
-		while (it.hasNext()) {
-			Map.Entry<String, TileEntity> pairs = (Entry<String, TileEntity>) it
-					.next();
-			targets.put(pairs.getKey(), new InventoryTarget(pairs.getValue()));
-		}
-
-		return targets;
 	}
 
 	@Override
@@ -53,6 +48,29 @@ public class InventorySensorInterface extends GenericSensorInterface implements
 	@Override
 	public Object[] callMethod(int methodID, Object[] args) throws Exception {
 		return null;
+	}
+
+	@Override
+	public Map getBasicTarget(World world, int x, int y, int z)
+			throws Exception {
+		
+		return TargetHelper.getBasicInformationForTargets(
+				retriever.getAdjacentTiles(world, x, y, z, true),
+				world
+		);
+		
+	}
+
+	@Override
+	public Map getTargetDetails(World world, int x, int y, int z, String target)
+			throws Exception {
+
+		return TargetHelper.getDetailedInformationForTarget(
+				target,
+				retriever.getAdjacentTiles(world, x, y, z, true),
+				world
+		);
+		
 	}
 
 }

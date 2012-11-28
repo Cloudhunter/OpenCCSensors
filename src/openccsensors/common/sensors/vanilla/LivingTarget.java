@@ -21,7 +21,6 @@ public class LivingTarget implements ISensorTarget
 	
 	LivingTarget(EntityLiving living, int sx, int sy, int sz)
 	{
-		super();
 		id = living.entityId;
 		sensorPos = Vec3.createVectorHelper(sx, sy, sz);
 		rawType = (living instanceof EntityPlayer) ? "Player" : living.getEntityName();

@@ -3,19 +3,34 @@ package openccsensors.common.sensors.vanilla;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import net.minecraft.src.EntityLiving;
+import net.minecraft.src.IInventory;
+import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
+
 import openccsensors.common.core.ISensorInterface;
 import openccsensors.common.core.ISensorTarget;
+import openccsensors.common.core.ITargetWrapper;
 import openccsensors.common.helper.LivingEntityHelper;
-import openccsensors.common.sensors.GenericSensorInterface;
+import openccsensors.common.helper.TargetHelper;
+import openccsensors.common.sensors.TargetRetriever;
 
-public class ProximitySensorInterface extends GenericSensorInterface implements ISensorInterface 
+public class ProximitySensorInterface implements ISensorInterface 
 {
 
+	private TargetRetriever retriever = new TargetRetriever();
 	private final double sensingRadius = 16.0F;
+	
+	public ProximitySensorInterface()
+	{
+		retriever.registerTarget(EntityLiving.class, new ITargetWrapper() {
+			@Override
+			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
+				return new LivingTarget((EntityLiving)entity, sx, sy, sz);
+			}
+		});
+	}
 
 	@Override
 	public String getName() 
@@ -23,24 +38,6 @@ public class ProximitySensorInterface extends GenericSensorInterface implements 
 		return "proximity";
 	}
 	
-	@Override
-	public HashMap<String, ISensorTarget> getAvailableTargets(World world, int x, int y, int z)
-	{
-
-		HashMap<String, ISensorTarget> targets = new HashMap<String, ISensorTarget>();
-
-		HashMap<String, EntityLiving> entities = LivingEntityHelper.getLivingEntities(world, x, y, z, sensingRadius);
-
-		Iterator it = entities.entrySet().iterator();
-
-		while (it.hasNext()) {
-			Map.Entry<String, EntityLiving> pairs = (Entry<String, EntityLiving>) it.next();
-			targets.put(pairs.getKey(), new LivingTarget(pairs.getValue(), x, y, z));
-		}
-
-		return targets;
-	}
-
 	@Override
 	public String[] getMethods() 
 	{
@@ -51,6 +48,29 @@ public class ProximitySensorInterface extends GenericSensorInterface implements 
 	public Object[] callMethod(int methodID, Object[] args) throws Exception 
 	{
 		return null;
+	}
+
+	@Override
+	public Map getBasicTarget(World world, int x, int y, int z)
+			throws Exception {
+		
+		return TargetHelper.getBasicInformationForTargets(
+				retriever.getLivingEntities(world, x, y, z, sensingRadius),
+				world
+			);
+		
+	}
+
+	@Override
+	public Map getTargetDetails(World world, int x, int y, int z, String target)
+			throws Exception {
+		
+		return TargetHelper.getDetailedInformationForTarget(
+				target,
+				retriever.getLivingEntities(world, x, y, z, sensingRadius),
+				world
+			);
+		
 	}
 
 }

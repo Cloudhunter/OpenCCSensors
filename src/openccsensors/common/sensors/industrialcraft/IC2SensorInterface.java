@@ -12,23 +12,40 @@ import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import openccsensors.common.core.ISensorInterface;
 import openccsensors.common.core.ISensorTarget;
+import openccsensors.common.core.ITargetWrapper;
 import openccsensors.common.helper.BlockTileHelper;
-import openccsensors.common.sensors.GenericSensorInterface;
+import openccsensors.common.helper.TargetHelper;
+import openccsensors.common.sensors.TargetRetriever;
+import openccsensors.common.sensors.buildcraft.EngineTarget;
 
-public class IC2SensorInterface extends GenericSensorInterface implements ISensorInterface 
+public class IC2SensorInterface implements ISensorInterface 
 {
 	
-	Class[] relevantClassTypes = {
-			IEnergyStorage.class,
-			IReactor.class
-	};
+	private TargetRetriever retriever = new TargetRetriever();
+	
+	public IC2SensorInterface ()
+	{
+		retriever.registerTarget(IReactor.class, new ITargetWrapper() {
+			@Override
+			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
+				return new ReactorTarget((TileEntity)entity);
+			}
+		});
+		
+		retriever.registerTarget(IEnergyStorage.class, new ITargetWrapper() {
+			@Override
+			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
+				return new EnergyStorageTarget((TileEntity)entity);
+			}
+		});
+		
+	}
 
 	@Override
 	public String getName() 
 	{
 		return "ic2sensor";
 	}
-
 
 	@Override
 	public String[] getMethods() 
@@ -42,35 +59,25 @@ public class IC2SensorInterface extends GenericSensorInterface implements ISenso
 		return null;
 	}
 	
+	
+	public Map getBasicTarget(World world, int x, int y, int z)
+	{
+		return TargetHelper.getBasicInformationForTargets(
+				retriever.getAdjacentTiles(world, x, y, z),
+				world
+		);
+	}
+
 	@Override
-	public HashMap<String, ISensorTarget> getAvailableTargets(World world, int x, int y, int z) {
+	public Map getTargetDetails(World world, int x, int y, int z, String target)
+			throws Exception {
+
+		return TargetHelper.getDetailedInformationForTarget(
+				target,
+				retriever.getAdjacentTiles(world, x, y, z),
+				world
+		);
 		
-		HashMap<String, ISensorTarget> targets = new HashMap<String, ISensorTarget>();
-
-		HashMap<String, TileEntity> entities = BlockTileHelper.getAdjacentTile(world, x, y, z, relevantClassTypes);
-
-		Iterator it = entities.entrySet().iterator();
-
-		while (it.hasNext()) {
-			Map.Entry<String, TileEntity> pairs = (Entry<String, TileEntity>) it.next();
-			targets.put(pairs.getKey(), getTargetForTileEntity(pairs.getValue()));
-		}
-
-		return targets;
 	}
 	
-	private ISensorTarget getTargetForTileEntity(TileEntity entity)
-	{
-		if (entity instanceof IReactor)
-		{
-			return new ReactorTarget(entity);
-		}
-		else if (entity instanceof IEnergyStorage)
-		{
-			return new EnergyStorageTarget(entity);
-		}
-		
-		return null;
-	}
-
 }

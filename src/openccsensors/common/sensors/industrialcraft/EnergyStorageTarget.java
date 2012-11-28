@@ -21,14 +21,11 @@ public class EnergyStorageTarget extends TileSensorTarget implements ISensorTarg
 	{
 		HashMap retMap = new HashMap();
 		
-		TileEntity tile = world.getBlockTileEntity(xCoord, yCoord, zCoord);
-		if (tile == null || !(tile instanceof IEnergyStorage)) {
-			return null;
-		}
+		IEnergyStorage storage = (IEnergyStorage) world.getBlockTileEntity(xCoord, yCoord, zCoord);
 		
-		retMap.put("Stored", ((IEnergyStorage) tile).getStored());
-		retMap.put("Capacity", ((IEnergyStorage) tile).getCapacity());
-		retMap.put("Output", ((IEnergyStorage) tile).getOutput());
+		retMap.put("Stored", storage.getStored());
+		retMap.put("Capacity", storage.getCapacity());
+		retMap.put("Output", storage.getOutput());
 		
 		return retMap;
 		

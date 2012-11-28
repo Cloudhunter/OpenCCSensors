@@ -1,26 +1,31 @@
 package openccsensors.common.sensors.buildcraft;
 
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 
+import buildcraft.energy.TileEngine;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import openccsensors.common.core.ISensorInterface;
 import openccsensors.common.core.ISensorTarget;
-import openccsensors.common.core.OCSLog;
-import openccsensors.common.helper.BlockTileHelper;
-import openccsensors.common.sensors.GenericSensorInterface;
-import buildcraft.energy.TileEngine;
+import openccsensors.common.core.ITargetWrapper;
+import openccsensors.common.helper.TargetHelper;
+import openccsensors.common.sensors.TargetRetriever;
 
-public class BuildCraftSensorInterface extends GenericSensorInterface implements ISensorInterface 
+public class BuildCraftSensorInterface implements ISensorInterface 
 {
-	
-	Class[] relevantClassTypes = {
-			TileEngine.class
-	};
 
+	private TargetRetriever retriever = new TargetRetriever();
+	
+	public BuildCraftSensorInterface()
+	{
+		retriever.registerTarget(TileEngine.class, new ITargetWrapper() {
+			@Override
+			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
+				return new EngineTarget((TileEntity)entity);
+			}
+		});
+	}
+	
 	@Override
 	public String getName() 
 	{
@@ -39,32 +44,30 @@ public class BuildCraftSensorInterface extends GenericSensorInterface implements
 	{
 		return null;
 	}
-	
+
+
 	@Override
-	public HashMap<String, ISensorTarget> getAvailableTargets(World world, int x, int y, int z) {
+	public Map getBasicTarget(World world, int x, int y, int z)
+			throws Exception {
 		
-		HashMap<String, ISensorTarget> targets = new HashMap<String, ISensorTarget>();
+		return TargetHelper.getBasicInformationForTargets(
+				retriever.getAdjacentTiles(world, x, y, z),
+				world
+		);
+		
+	}
 
-		HashMap<String, TileEntity> entities = BlockTileHelper.getAdjacentTile(world, x, y, z, relevantClassTypes);
 
-		Iterator it = entities.entrySet().iterator();
+	@Override
+	public Map getTargetDetails(World world, int x, int y, int z, String target)
+			throws Exception {
 
-		while (it.hasNext()) {
-			Map.Entry<String, TileEntity> pairs = (Entry<String, TileEntity>) it.next();
-			targets.put(pairs.getKey(), getTargetForTileEntity(pairs.getValue()));
-		}
-
-		return targets;
+		return TargetHelper.getDetailedInformationForTarget(
+				target,
+				retriever.getAdjacentTiles(world, x, y, z),
+				world
+		);
+		
 	}
 	
-	private ISensorTarget getTargetForTileEntity(TileEntity entity)
-	{
-		if (entity instanceof TileEngine)
-		{
-			OCSLog.info(entity.toString());
-			return new EngineTarget(entity);
-		}
-		return null;
-	}
-
 }

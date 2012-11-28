@@ -26,44 +26,31 @@ import openccsensors.common.core.ISensorTarget;
 import openccsensors.common.core.OCSLog;
 import openccsensors.common.helper.BlockTileHelper;
 import openccsensors.common.helper.SensorHelper;
-import openccsensors.common.sensors.GenericSensorInterface;
 import openccsensors.common.sensors.TileSensorTarget;
 
-public class IC2SensorCard extends Item implements ISensorCard
-{
+public class IC2SensorCard extends Item implements ISensorCard {
 
-	public IC2SensorCard(int par1)
-	{
+	public IC2SensorCard(int par1) {
 		super(par1);
 		setCreativeTab(CreativeTabs.tabRedstone);
-		addRecipeToGameRegistry();
-	}
-
-	@Override
-	public ISensorInterface getSensorInterface(ItemStack itemstack, boolean turtle) 
-	{
-		return new IC2SensorInterface();
-	}
-	
-	@Override
-	public String getItemNameIS(ItemStack is)
-	{
-		return "openccsensors.item.ic2sensor";
-	}
-	
-	public void addRecipeToGameRegistry()
-	{
-		GameRegistry.addRecipe(new ItemStack(this), 
-				"ccr",
-				"crr",
+		GameRegistry.addRecipe(new ItemStack(this),
+				"uur",
+				"urr",
 				"rrp",
 				'r', new ItemStack(Item.redstone),
-				'c', ic2.api.Items.getItem("uraniumIngot") ,
+				'u', ic2.api.Items.getItem("uraniumIngot"),
 				'p', new ItemStack(Item.paper));
 	}
-	
 
-	
-	
+	@Override
+	public ISensorInterface getSensorInterface(ItemStack itemstack,
+			boolean turtle) {
+		return new IC2SensorInterface();
+	}
+
+	@Override
+	public String getItemNameIS(ItemStack is) {
+		return "openccsensors.item.ic2sensor";
+	}
 
 }

@@ -21,17 +21,14 @@ public class EngineTarget extends TileSensorTarget implements ISensorTarget
 
 		HashMap retMap = new HashMap();
 		
-		TileEntity tile = world.getBlockTileEntity(xCoord, yCoord, zCoord);
-		if (tile == null || !(tile instanceof TileEngine)) {
-			return null;
-		}
+		TileEngine tileEngine = (TileEngine) world.getBlockTileEntity(xCoord, yCoord, zCoord);
 		
-		retMap.put("Active", ((TileEngine) tile).engine.isActive());
-		retMap.put("Heat", ((TileEngine) tile).engine.getHeat());
-		retMap.put("IsBurning", ((TileEngine) tile).engine.isBurning());
-		retMap.put("PistonSpeed", ((TileEngine) tile).engine.getPistonSpeed());
-		retMap.put("Energy", ((TileEngine) tile).engine.energy);
-		retMap.put("MaxEnergy", ((TileEngine) tile).engine.maxEnergy);
+		retMap.put("Active", tileEngine.engine.isActive());
+		retMap.put("Heat", tileEngine.engine.getHeat());
+		retMap.put("IsBurning", tileEngine.engine.isBurning());
+		retMap.put("PistonSpeed", tileEngine.engine.getPistonSpeed());
+		retMap.put("Energy", tileEngine.engine.energy);
+		retMap.put("MaxEnergy", tileEngine.engine.maxEnergy);
 		
 		return retMap;
 	}
