@@ -23,10 +23,10 @@ public class EnergyConductorTarget extends TileSensorTarget implements ISensorTa
 		
 		HashMap retMap = new HashMap();
 		
-		IEnergyConductor conductor = (IEnergyConductor) world.getBlockTileEntity(xCoord, yCoord, zCoord);
-		Long energyConducted = EnergyNet.getForWorld(world).getTotalEnergyConducted((TileEntity)conductor);
+		TileEntity conductor = (TileEntity) world.getBlockTileEntity(xCoord, yCoord, zCoord);
+		Long energyConducted = EnergyNet.getForWorld(world).getTotalEnergyConducted(conductor);
 		
-		retMap.put("energyConducted", energyConducted);
+		retMap.put("EnergyConducted", energyConducted);
 		
 		return retMap;
 	}

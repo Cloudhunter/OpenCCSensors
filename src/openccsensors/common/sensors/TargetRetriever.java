@@ -22,6 +22,13 @@ public class TargetRetriever {
 		targets.add(new TargetPair(entity, wrapper));
 	}
 	
+	public void registerTargets(Class[] entities, ITargetWrapper wrapper)
+	{
+		for (Class entityClass : entities)
+		{
+			targets.add(new TargetPair(entityClass, wrapper));
+		}
+	}
 	public HashMap<String, ISensorTarget> getAdjacentTiles(World world, int x, int y, int z)
 	{
 		return getAdjacentTiles(world, x, y, z, false);
