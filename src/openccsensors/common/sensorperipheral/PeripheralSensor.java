@@ -2,9 +2,9 @@ package openccsensors.common.sensorperipheral;
 
 import java.util.Arrays;
 
-import openccsensors.common.core.ISensorInterface;
+import openccsensors.common.api.ISensorCard;
+import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.core.ISensorEnvironment;
-import openccsensors.common.core.ISensorCard;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Vec3;
@@ -40,7 +40,7 @@ implements ITurtlePeripheral
 	@Override
 	public String[] getMethodNames() 
 	{
-		return new String[] { "getTargets", "getDetailTarget", "getSensorName", "getSensorMethods", "sensorCardCall" };
+		return new String[] { "getTargets", "getTargetDetails", "getSensorName", "getSensorMethods", "sensorCardCall" };
 	}
 
 	@Override
@@ -71,7 +71,7 @@ implements ITurtlePeripheral
 				{
 					if (arguments[0] instanceof String)
 					{
-						return new Object[]{ sensorCard.getDetailTarget(env.getWorld(), (int) vec.xCoord, (int) vec.yCoord, (int) vec.zCoord, arguments[0].toString()) };
+						return new Object[]{ sensorCard.getTargetDetails(env.getWorld(), (int) vec.xCoord, (int) vec.yCoord, (int) vec.zCoord, arguments[0].toString()) };
 					}
 				}
 				throw new Exception("Invalid arguments. Expected String.");
@@ -113,7 +113,7 @@ implements ITurtlePeripheral
 	@Override
 	public void attach(IComputerAccess computer, String computerSide) 
 	{
-
+			//computer.mountFixedDir("ocs", "openccsensors/resources/lua", true);
 	}
 
 	@Override
