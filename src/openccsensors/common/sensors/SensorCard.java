@@ -9,8 +9,6 @@ import cpw.mods.fml.common.asm.SideOnly;
 
 import openccsensors.common.api.ISensorCard;
 import openccsensors.common.api.ISensorInterface;
-import openccsensors.common.core.OCSLog;
-import openccsensors.common.sensors.buildcraft.BuildCraftSensorInterface;
 import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
@@ -52,6 +50,7 @@ public class SensorCard extends Item implements ISensorCard
 	    return par1;
 	}
 	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(int par1, CreativeTabs tab, List subItems)
 	{
