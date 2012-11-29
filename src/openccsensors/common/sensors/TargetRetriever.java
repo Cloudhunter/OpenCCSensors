@@ -2,16 +2,13 @@ package openccsensors.common.sensors;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Map.Entry;
 
 import net.minecraft.src.EntityLiving;
-import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITargetWrapper;
-import openccsensors.common.core.OCSLog;
 import openccsensors.common.helper.LivingEntityHelper;
 
 public class TargetRetriever {

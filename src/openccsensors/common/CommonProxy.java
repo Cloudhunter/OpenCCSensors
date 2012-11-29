@@ -26,10 +26,6 @@ import openccsensors.common.sensorperipheral.ContainerSensor;
 import openccsensors.common.sensorperipheral.BlockSensor;
 import openccsensors.common.sensorperipheral.TurtleUpgradeSensor;
 import openccsensors.common.sensorperipheral.TileEntitySensor;
-import openccsensors.common.sensors.buildcraft.BuildCraftSensorCard;
-import openccsensors.common.sensors.industrialcraft.IC2SensorCard;
-import openccsensors.common.sensors.vanilla.InventorySensorCard;
-import openccsensors.common.sensors.vanilla.ProximitySensorCard;
 
 public class CommonProxy
 {
@@ -40,18 +36,7 @@ public class CommonProxy
 		OpenCCSensors.Blocks.sensorBlock = new BlockSensor( OpenCCSensors.Config.sensorBlockID, Material.rock );
 		GameRegistry.registerBlock(OpenCCSensors.Blocks.sensorBlock);
 		GameRegistry.registerTileEntity(TileEntitySensor.class, "sensor");
-		
-		// register sensor card
-		OpenCCSensors.Items.inventorySensor = new InventorySensorCard(25648);
-		OpenCCSensors.Items.proximitySensor = new ProximitySensorCard(25649);
-		OpenCCSensors.Items.buildcraftSensor = new BuildCraftSensorCard(25651);
-
-		// need to fix this
-		if (ic2.api.Items.getItem("advancedCircuit") != null)
-		{
-			OpenCCSensors.Items.ic2Sensor = new IC2SensorCard(25650);
-		}
-		
+	
 		
 		// register turtle peripheral if applicable
 		if (OpenCCSensors.Config.turtlePeripheralEnabled)
@@ -113,6 +98,10 @@ public class CommonProxy
         	LanguageRegistry.instance().loadLocalization(url, langString, false );
         }
 
+	}
+	
+	public void registerRenderInformation()
+	{
 	}
 	
 	// GUI Stuff
