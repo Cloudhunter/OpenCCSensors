@@ -1,5 +1,6 @@
 package openccsensors.common.helper;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -7,34 +8,49 @@ import java.util.Map.Entry;
 import net.minecraft.src.World;
 
 import openccsensors.common.api.ISensorTarget;
+import openccsensors.common.core.OCSLog;
 
 public class TargetHelper {
 	
-	public static Map getBasicInformationForTargets(HashMap<String, ISensorTarget> targets, World world)
+	public static Map getBasicInformationForTargets(HashMap<String, ArrayList<ISensorTarget>> directions, World world)
 	{
-
 		HashMap<String, Object> retMap = new HashMap<String, Object>();
 		
-		for (Entry<String, ISensorTarget> entry : targets.entrySet())
+		for (Entry<String, ArrayList<ISensorTarget>> entry : directions.entrySet())
 		{
-			ISensorTarget target = entry.getValue();
-			if (target != null)
+			ArrayList<ISensorTarget> targets = entry.getValue();
+
+			for (ISensorTarget target : targets)
 			{
-				retMap.put(entry.getKey(), target.getBasicInformation(world));
+				if (target != null)
+				{
+					Map map = (Map) retMap.get(entry.getKey());
+					if (map == null)
+					{
+						map = new HashMap();
+						retMap.put(entry.getKey(), map);
+					}
+					map.putAll(target.getBasicInformation(world));
+				}
 			}
 		}
 		
 		return retMap;
 	}
-	public static Map getDetailedInformationForTarget(String target, HashMap<String, ISensorTarget> targets, World world) {
+	public static Map getDetailedInformationForTarget(String targetId, HashMap<String, ArrayList<ISensorTarget>> targets, World world) {
 
-		if (targets.containsKey(target))
+		if (targets.containsKey(targetId))
 		{
-			ISensorTarget sensorTarget = targets.get(target);
-			if (sensorTarget != null)
+			ArrayList<ISensorTarget> sensorTargets = targets.get(targetId);
+			HashMap rtn = new HashMap();
+			if (sensorTargets != null)
 			{
-				return sensorTarget.getDetailInformation(world);
+				for (ISensorTarget target : sensorTargets)
+				{
+					rtn.putAll(target.getDetailInformation(world));
+				}
 			}
+			return rtn;
 		}
 		
 		return null;

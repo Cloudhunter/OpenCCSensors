@@ -1,8 +1,7 @@
 package openccsensors.common.sensors.buildcraft;
 
 import java.util.Map;
-
-import buildcraft.energy.TileEngine;
+import buildcraft.energy.IEngineProvider;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import openccsensors.common.api.ISensorInterface;
@@ -18,12 +17,13 @@ public class BuildCraftSensorInterface implements ISensorInterface
 	
 	public BuildCraftSensorInterface()
 	{
-		retriever.registerTarget(TileEngine.class, new ITargetWrapper() {
+		retriever.registerTarget(IEngineProvider.class, new ITargetWrapper() {
 			@Override
 			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
 				return new EngineTarget((TileEntity)entity);
 			}
 		});
+		
 	}
 	
 	@Override
