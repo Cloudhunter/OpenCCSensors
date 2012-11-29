@@ -92,7 +92,7 @@ local function redraw()
 
 		--detailed info.
 		detailLines = {}
-		toLines(peripheral.call(sideNames[sideSelection], "getDetailTarget", targetNameMenuTable[targetSelection]), detailLines, {}, 0)
+		toLines(peripheral.call(sideNames[sideSelection], "getTargetDetails", targetNameMenuTable[targetSelection]), detailLines, {}, 0)
 		for i=1, math.min(h - 3, #detailLines - ((detailOffset - 1) * (h - 3))) do
 			term.setCursorPos(17, i + 3)
 			term.write("|"..string.sub(detailLines[(detailOffset - 1) * (h - 3) + i], 1, w - 17))
