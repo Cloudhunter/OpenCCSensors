@@ -1,8 +1,5 @@
 package openccsensors.common.sensors.vanilla;
 
-import ic2.api.IEnergyStorage;
-import ic2.api.IReactor;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;

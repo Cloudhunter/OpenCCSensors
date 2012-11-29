@@ -15,8 +15,15 @@ public class InventorySensorCard extends Item implements ISensorCard {
 		super(par1);
 		setCreativeTab(CreativeTabs.tabRedstone);
 		addRecipeToGameRegistry();
+		setTextureFile("/openccsensors/resources/images/terrain.png");
 	}
-
+	
+	@Override
+	public int getIconFromDamage(int par1)
+	{
+	    return 16;
+	}
+	
 	@Override
 	public ISensorInterface getSensorInterface(ItemStack itemstack,
 			boolean turtle) {

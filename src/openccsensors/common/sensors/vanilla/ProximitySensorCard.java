@@ -19,6 +19,7 @@ public class ProximitySensorCard extends Item implements ISensorCard
 	{
 		super(par1);
 		setCreativeTab(CreativeTabs.tabRedstone);
+		setTextureFile("/openccsensors/resources/images/terrain.png");
 		
 		GameRegistry.addRecipe(new ItemStack(this),
 				"rpr",
@@ -30,7 +31,7 @@ public class ProximitySensorCard extends Item implements ISensorCard
 	
 	@Override
 	public int getIconFromDamage(int par1) {
-		return 1;
+		return 17;
 	}
 	
 	
