@@ -1,0 +1,177 @@
+local sideNames = rs.getSides()
+local sensorSides = {}
+local sideSelection, targetSelection, targetOffset, detailOffset = 1, 1, 1, 1
+local detailLines, targetNameMenuTable
+
+local function checkSensors()
+	for _,side in ipairs(sideNames) do
+		if peripheral.getType(side) == "sensor" then
+			sensorSides[side] = true
+		else
+			sensorSides[side] = false
+		end
+	end
+end
+
+local function writeEntry(menuTable, index, cursorPos)
+	if cursorPos == index then
+		term.setBackgroundColor(term.isColor() and colors.blue or colors.white)
+		term.setTextColor(term.isColor() and colors.white or colors.black)
+		term.write(string.sub(menuTable[index], 1, 16))
+		term.setBackgroundColor(colors.black)
+		term.setTextColor(colors.white)
+	else
+		term.write(string.sub(menuTable[index], 1, 16))
+	end
+end
+
+local function toLines(currTable, linesTable, trackingTable, depth)
+	for k,v in pairs(currTable) do
+		if type(v) == "table" then
+			table.insert(linesTable, string.rep(" ", depth)..tostring(k)..":")
+			if trackingTable[v] then
+				table.insert(linesTable, string.rep(" ", depth + 1).."<Cyclic Reference>")
+			else
+				trackingTable[v] = true
+				toLines(v, linesTable, trackingTable, depth + 1)
+			end
+		else
+			table.insert(linesTable, string.rep(" ", depth)..tostring(k).."> "..tostring(v))
+		end
+	end
+end
+
+local function redraw()
+	w, h = term.getSize()
+	term.clear()
+	term.setCursorPos(1, 1)
+	term.write("=Sensor Info Viewer="..string.rep("=", w - 20))
+	term.setCursorPos(1, 2)
+	for n,side in ipairs(sideNames) do
+		if n == sideSelection then
+			term.setBackgroundColor(term.isColor() and colors.blue or colors.white)
+			term.setTextColor(term.isColor() and colors.white or colors.black)
+			term.write(side)
+			term.setBackgroundColor(colors.black)
+			term.setTextColor(colors.white)
+			term.write(" ")
+		else
+			term.write(side.." ")
+		end
+	end
+	term.setCursorPos(1, 3)
+	term.write("-Targets--------+-Info-"..string.rep("-", w - 23))
+
+	checkSensors()
+	if sensorSides[sideNames[sideSelection]] then
+		--targets
+		local targetNames = peripheral.call(sideNames[sideSelection], "getTargets")
+		targetNameMenuTable = {}
+		for k,v in pairs(targetNames) do
+			table.insert(targetNameMenuTable, k)
+		end
+		term.setCursorPos(1, 4)
+		if targetOffset > 1 then
+			term.write("/\\")
+		else
+			writeEntry(targetNameMenuTable, 1, targetSelection)
+		end
+		--h-5 to leave room for top and bottom entries.
+		for i=1, math.min(h - 5, #targetNameMenuTable - 1) do
+			term.setCursorPos(1, i + 4)
+			writeEntry(targetNameMenuTable, targetOffset + i, targetSelection)
+		end
+		if #targetNameMenuTable >= h then
+			term.setCursorPos(1, h)
+			if #targetNameMenuTable > targetOffset + h - 1 then
+				term.write("\\/")
+			else
+				writeEntry(targetNameMenuTable, #targetNameMenuTable, targetSelection)
+			end
+		end
+
+		--detailed info.
+		detailLines = {}
+		toLines(peripheral.call(sideNames[sideSelection], "getDetailTarget", targetNameMenuTable[targetSelection]), detailLines, {}, 0)
+		for i=1, math.min(h - 3, #detailLines - ((detailOffset - 1) * (h - 3))) do
+			term.setCursorPos(17, i + 3)
+			term.write("|"..string.sub(detailLines[(detailOffset - 1) * (h - 3) + i], 1, w - 17))
+		end
+		local currX, currY = term.getCursorPos()
+		for i=currY + 1, h do
+			term.setCursorPos(17, i)
+			term.write("|")
+		end
+	else
+		term.setCursorPos(1, 4)
+		term.write("No sensor found |")
+		for i=5, h do
+			term.setCursorPos(17, i)
+			term.write("|")
+		end
+	end
+	term.setCursorPos(1, h)
+end
+
+while true do
+	redraw()
+	local e, p1 = os.pullEvent()
+	if e == "key" then
+		if p1 == 203 then
+			--left
+			if sideSelection > 1 then
+				sideSelection = sideSelection - 1
+				targetSelection = 1
+				detailOffset = 1
+				detailLines = nil
+			end
+		elseif p1 == 205 then
+			--right
+			if sideSelection < 6 then
+				sideSelection = sideSelection + 1
+				targetSelection = 1
+				detailOffset = 1
+				detailLines = nil
+			end
+		elseif p1 == 200 then
+			--up
+			if targetSelection > 1 then
+				targetSelection = targetSelection - 1
+				detailOffset = 1
+				detailLines = nil
+			end
+		elseif p1 == 208 then
+			--down
+			if targetNameMenuTable and targetSelection < #targetNameMenuTable then
+				targetSelection = targetSelection + 1
+				detailOffset = 1
+				detailLines = nil
+			end
+		elseif p1 == 201 then
+			--pgup, moves detail
+			if detailOffset > 1 then
+				detailOffset = detailOffset - 1
+			end
+		elseif p1 == 209 then
+			--pgdown, moves detail
+			if detailLines and detailOffset < math.ceil(#detailLines / (h - 3)) then
+				detailOffset = detailOffset + 1
+			end
+		end
+	elseif e == "char" then
+		if p1 == "s" then
+			--save sensor detailed output.
+			if detailLines then
+				local fileHandle = io.open("sensorDetailed-"..sideNames[sideSelection], "w")
+				if fileHandle then
+					for k, v in ipairs(detailLines) do
+						fileHandle:write(v.."\n")
+					end
+					fileHandle:close()
+				end
+			end
+		elseif p1 == "q" then
+			return
+		end
+	end
+end
