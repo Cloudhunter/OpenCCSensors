@@ -2,8 +2,12 @@ package openccsensors.common.sensors.industrialcraft;
 
 import java.util.Map;
 
+import ic2.api.IEnergyConductor;
+import ic2.api.IEnergySink;
+import ic2.api.IEnergySource;
 import ic2.api.IEnergyStorage;
 import ic2.api.IReactor;
+import ic2.api.IReactorChamber;
 import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITargetWrapper;
@@ -34,6 +38,23 @@ public class IC2SensorInterface implements ISensorInterface
 			}
 		});
 		
+		retriever.registerTarget(IReactorChamber.class, new ITargetWrapper() {
+			@Override
+			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
+				return new ReactorTarget((TileEntity)((IReactorChamber)entity).getReactor());
+			}
+		});
+		
+		retriever.registerTargets(new Class[] {
+					IEnergySink.class,
+					IEnergySource.class,
+					IEnergyConductor.class
+			}, new ITargetWrapper() {
+			@Override
+			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
+				return new EnergyConductorTarget((TileEntity)entity);
+			}
+		});
 	}
 
 	@Override
@@ -54,7 +75,7 @@ public class IC2SensorInterface implements ISensorInterface
 		return null;
 	}
 	
-	
+	@Override
 	public Map getBasicTarget(World world, int x, int y, int z)
 	{
 		return TargetHelper.getBasicInformationForTargets(
@@ -65,7 +86,8 @@ public class IC2SensorInterface implements ISensorInterface
 
 	@Override
 	public Map getTargetDetails(World world, int x, int y, int z, String target)
-			throws Exception {
+			throws Exception
+	{
 
 		return TargetHelper.getDetailedInformationForTarget(
 				target,
