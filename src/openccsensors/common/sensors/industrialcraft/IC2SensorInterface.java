@@ -75,7 +75,7 @@ public class IC2SensorInterface implements ISensorInterface
 		return null;
 	}
 	
-	
+	@Override
 	public Map getBasicTarget(World world, int x, int y, int z)
 	{
 		return TargetHelper.getBasicInformationForTargets(
@@ -86,7 +86,8 @@ public class IC2SensorInterface implements ISensorInterface
 
 	@Override
 	public Map getTargetDetails(World world, int x, int y, int z, String target)
-			throws Exception {
+			throws Exception
+	{
 
 		return TargetHelper.getDetailedInformationForTarget(
 				target,

@@ -17,7 +17,6 @@ public class TileSensorTarget {
 
 	protected String rawType;
 	
-	
 	protected TileSensorTarget(TileEntity targetEntity) {
 
 		xCoord = targetEntity.xCoord;

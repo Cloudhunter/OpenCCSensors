@@ -11,6 +11,7 @@ import net.minecraft.src.World;
 
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITargetWrapper;
+import openccsensors.common.core.OCSLog;
 import openccsensors.common.helper.LivingEntityHelper;
 
 public class TargetRetriever {
@@ -29,14 +30,14 @@ public class TargetRetriever {
 			targets.add(new TargetPair(entityClass, wrapper));
 		}
 	}
-	public HashMap<String, ISensorTarget> getAdjacentTiles(World world, int x, int y, int z)
+	public HashMap<String, ArrayList<ISensorTarget>> getAdjacentTiles(World world, int x, int y, int z)
 	{
 		return getAdjacentTiles(world, x, y, z, false);
 	}
 	
-	public HashMap<String, ISensorTarget> getAdjacentTiles(World world, int sx, int sy, int sz, boolean includeSelf)
+	public HashMap<String, ArrayList<ISensorTarget>> getAdjacentTiles(World world, int sx, int sy, int sz, boolean includeSelf)
 	{
-		HashMap<String, ISensorTarget> map = new HashMap<String, ISensorTarget>();
+		HashMap<String, ArrayList<ISensorTarget>> map = new HashMap<String, ArrayList<ISensorTarget>>();
 
 		addTileEntityToHashMapIfValid(sx, sy, sz, world.getBlockTileEntity(sx + 1, sy, sz), map, "EAST");
 		addTileEntityToHashMapIfValid(sx, sy, sz, world.getBlockTileEntity(sx - 1, sy, sz), map, "WEST");
@@ -53,9 +54,9 @@ public class TargetRetriever {
 		return map;
 	}
 	
-	public HashMap<String, ISensorTarget> getLivingEntities(World world, int sx, int sy, int sz, double radius)
+	public HashMap<String, ArrayList<ISensorTarget>> getLivingEntities(World world, int sx, int sy, int sz, double radius)
 	{
-		HashMap<String, ISensorTarget> map = new HashMap<String, ISensorTarget>();
+		HashMap<String, ArrayList<ISensorTarget>> map = new HashMap<String, ArrayList<ISensorTarget>>();
 
 		for (Entry<String, EntityLiving> entity : LivingEntityHelper.getLivingEntities(world, sx, sy, sz, radius).entrySet())
 		{
@@ -66,7 +67,7 @@ public class TargetRetriever {
 	}
 	
 
-	private void addTileEntityToHashMapIfValid(int sx, int sy, int sz, Object entity, HashMap<String, ISensorTarget> map, String name)
+	private void addTileEntityToHashMapIfValid(int sx, int sy, int sz, Object entity, HashMap<String, ArrayList<ISensorTarget>> map, String name)
 	{
 		if (entity != null)
 		{
@@ -80,8 +81,13 @@ public class TargetRetriever {
 						_name = entity.toString();
 					}
 					
-					map.put( _name, pair.wrapper.createNew(entity, sx, sy, sz) );
-					return;					
+					ArrayList<ISensorTarget> arr = map.get(_name);
+					if (arr == null)
+					{
+						arr = new ArrayList<ISensorTarget>();
+						map.put(_name, arr);
+					}
+					arr.add(pair.wrapper.createNew(entity, sx, sy, sz));
 				}
 			}
 		}
