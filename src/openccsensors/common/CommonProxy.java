@@ -26,10 +26,6 @@ import openccsensors.common.sensorperipheral.ContainerSensor;
 import openccsensors.common.sensorperipheral.BlockSensor;
 import openccsensors.common.sensorperipheral.TurtleUpgradeSensor;
 import openccsensors.common.sensorperipheral.TileEntitySensor;
-import openccsensors.common.sensors.buildcraft.BuildCraftSensorCard;
-import openccsensors.common.sensors.industrialcraft.IC2SensorCard;
-import openccsensors.common.sensors.vanilla.InventorySensorCard;
-import openccsensors.common.sensors.vanilla.ProximitySensorCard;
 
 public class CommonProxy
 {

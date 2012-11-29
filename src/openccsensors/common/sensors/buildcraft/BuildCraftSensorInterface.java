@@ -1,9 +1,14 @@
 package openccsensors.common.sensors.buildcraft;
 
 import java.util.Map;
+
+import cpw.mods.fml.common.registry.GameRegistry;
 import buildcraft.energy.IEngineProvider;
+import net.minecraft.src.Item;
+import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
+import openccsensors.OpenCCSensors;
 import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITargetWrapper;
@@ -29,7 +34,7 @@ public class BuildCraftSensorInterface implements ISensorInterface
 	@Override
 	public String getName() 
 	{
-		return "buildcraftsensor";
+		return "openccsensors.item.buildcraftsensor";
 	}
 
 
@@ -68,6 +73,24 @@ public class BuildCraftSensorInterface implements ISensorInterface
 				world
 		);
 		
+	}
+
+	@Override
+	public int getId()
+	{
+		return 3;
+	}
+	
+	@Override
+	public void initRecipes()
+	{
+		GameRegistry.addRecipe(new ItemStack(OpenCCSensors.sensorCard, 1, this.getId()), 
+				"ccr",
+				"crp",
+				"rrp",
+				'r', new ItemStack(Item.redstone),
+				'c', new ItemStack(Item.shovelSteel),
+				'p', new ItemStack(Item.paper));
 	}
 	
 }

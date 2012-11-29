@@ -2,18 +2,23 @@ package openccsensors.common.sensors.industrialcraft;
 
 import java.util.Map;
 
+import cpw.mods.fml.common.registry.GameRegistry;
+
 import ic2.api.IEnergyConductor;
 import ic2.api.IEnergySink;
 import ic2.api.IEnergySource;
 import ic2.api.IEnergyStorage;
 import ic2.api.IReactor;
 import ic2.api.IReactorChamber;
+import openccsensors.OpenCCSensors;
 import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITargetWrapper;
 import openccsensors.common.helper.TargetHelper;
 import openccsensors.common.sensors.TargetRetriever;
 import openccsensors.common.sensors.industrialcraft.ReactorTarget;
+import net.minecraft.src.Item;
+import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 
@@ -60,7 +65,7 @@ public class IC2SensorInterface implements ISensorInterface
 	@Override
 	public String getName() 
 	{
-		return "ic2sensor";
+		return "openccsensors.item.ic2sensor";
 	}
 
 	@Override
@@ -95,6 +100,24 @@ public class IC2SensorInterface implements ISensorInterface
 				world
 		);
 		
+	}
+
+	@Override
+	public int getId()
+	{
+		return 2;
+	}
+
+	@Override
+	public void initRecipes()
+	{
+		GameRegistry.addRecipe(new ItemStack(OpenCCSensors.sensorCard, 1, this.getId()),
+				"uur",
+				"urr",
+				"rrp",
+				'r', new ItemStack(Item.redstone),
+				'u', ic2.api.Items.getItem("uraniumIngot"),
+				'p', new ItemStack(Item.paper));
 	}
 	
 }

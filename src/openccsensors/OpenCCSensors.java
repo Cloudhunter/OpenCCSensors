@@ -7,10 +7,7 @@ import net.minecraftforge.common.Property;
 import openccsensors.common.CommonProxy;
 import openccsensors.common.core.OCSLog;
 import openccsensors.common.sensorperipheral.BlockSensor;
-import openccsensors.common.sensors.buildcraft.BuildCraftSensorCard;
-import openccsensors.common.sensors.industrialcraft.IC2SensorCard;
-import openccsensors.common.sensors.vanilla.InventorySensorCard;
-import openccsensors.common.sensors.vanilla.ProximitySensorCard;
+import openccsensors.common.sensors.SensorCard;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Instance;
@@ -43,8 +40,8 @@ public class OpenCCSensors
 	{
 		public static BlockSensor sensorBlock;
 	}
-	
-	public static ArrayList<Item> Items = new ArrayList<Item>();
+
+	public static Item sensorCard;
 	
 	@Mod.PreInit
 	public void preInit( FMLPreInitializationEvent evt )
@@ -81,6 +78,8 @@ public class OpenCCSensors
 		loadSensorPack("buildcraft");
 		loadSensorPack("vanilla");
 		loadSensorPack("industrialcraft");
+
+		sensorCard = new SensorCard(12345);
 		
 		proxy.registerRenderInformation();
 	}

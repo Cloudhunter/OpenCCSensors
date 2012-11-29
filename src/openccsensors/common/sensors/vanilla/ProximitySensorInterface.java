@@ -4,11 +4,17 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import cpw.mods.fml.common.registry.GameRegistry;
+
+import net.minecraft.src.Block;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.IInventory;
+import net.minecraft.src.Item;
+import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 
+import openccsensors.OpenCCSensors;
 import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITargetWrapper;
@@ -35,7 +41,7 @@ public class ProximitySensorInterface implements ISensorInterface
 	@Override
 	public String getName() 
 	{
-		return "proximity";
+		return "openccsensors.item.proximitysensor";
 	}
 	
 	@Override
@@ -71,6 +77,23 @@ public class ProximitySensorInterface implements ISensorInterface
 				world
 			);
 		
+	}
+
+	@Override
+	public int getId()
+	{
+		return 1;
+	}
+
+	@Override
+	public void initRecipes()
+	{
+		GameRegistry.addRecipe(new ItemStack(OpenCCSensors.sensorCard, 1, this.getId()),
+				"rpr",
+				"rrr",
+				"rrr",
+				'r', new ItemStack(Item.redstone),
+				'p', new ItemStack(Block.pressurePlateStone));
 	}
 
 }

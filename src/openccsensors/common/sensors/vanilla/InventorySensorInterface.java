@@ -5,9 +5,15 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import cpw.mods.fml.common.registry.GameRegistry;
+
+import net.minecraft.src.Block;
 import net.minecraft.src.IInventory;
+import net.minecraft.src.Item;
+import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
+import openccsensors.OpenCCSensors;
 import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITargetWrapper;
@@ -33,8 +39,9 @@ public class InventorySensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public String getName() {
-		return "inventory";
+	public String getName()
+	{
+		return "openccsensors.item.inventorysensor";
 	}
 
 	@Override
@@ -68,6 +75,24 @@ public class InventorySensorInterface implements ISensorInterface {
 				world
 		);
 		
+	}
+
+	@Override
+	public int getId()
+	{
+		return 0;
+	}
+
+	@Override
+	public void initRecipes()
+	{
+		GameRegistry.addRecipe(new ItemStack(OpenCCSensors.sensorCard, 1, this.getId()),
+				"wwr",
+				"wrr",
+				"rrp",
+				'w', new ItemStack(Block.planks),
+				'r', new ItemStack(Item.redstone),
+				'p', new ItemStack(Item.paper));	
 	}
 
 }
