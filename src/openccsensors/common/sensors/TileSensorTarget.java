@@ -1,10 +1,6 @@
 package openccsensors.common.sensors;
 
 import java.util.HashMap;
-import java.util.Map;
-
-import openccsensors.common.api.ISensorTarget;
-import openccsensors.common.core.OCSLog;
 import openccsensors.common.helper.SensorHelper;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;

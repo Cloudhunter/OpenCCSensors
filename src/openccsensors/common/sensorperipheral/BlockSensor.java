@@ -26,6 +26,31 @@ public class BlockSensor extends BlockContainer
 	}
 
 	@Override
+	public boolean isOpaqueCube()
+	{
+		return false;
+	}
+	
+	/**
+     * If this block doesn't render as an ordinary block it will return False (examples: signs, buttons, stairs, etc)
+     */
+	@Override
+    public boolean renderAsNormalBlock()
+    {
+        return false;
+    }
+	
+	/*
+    /**
+     * The type of render function that is called for this block
+     */
+    @Override
+    public int getRenderType()
+    {
+        return OpenCCSensors.Config.sensorBlockRenderID;
+    }
+	
+	@Override
 	public TileEntity createNewTileEntity( World world )
 	{
 		return new TileEntitySensor();

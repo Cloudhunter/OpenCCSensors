@@ -2,8 +2,10 @@ package openccsensors.common.sensorperipheral;
 
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import openccsensors.OpenCCSensors;
+import openccsensors.common.core.OCSLog;
 import openccsensors.common.core.TurtleSensorEnvironment;
 import net.minecraft.src.ItemStack;
+import dan200.computer.api.IPeripheral;
 import dan200.turtle.api.ITurtleAccess;
 import dan200.turtle.api.ITurtlePeripheral;
 import dan200.turtle.api.ITurtleUpgrade;
@@ -48,13 +50,23 @@ public class TurtleUpgradeSensor implements ITurtleUpgrade
 	@Override
 	public String getIconTexture(ITurtleAccess turtle, TurtleSide side) 
 	{
-		return "/terrain.png";
+		return "/openccsensors/resources/images/terrain.png";
 	}
 
 	@Override
 	public int getIconIndex(ITurtleAccess turtle, TurtleSide side)
 	{
-		return 1;
+		if (turtle != null && side != null) {
+			IPeripheral peripheral = turtle.getPeripheral(side);
+			if (peripheral != null) {
+				PeripheralSensor sensor = (PeripheralSensor)turtle.getPeripheral(side);
+				if (sensor != null)
+				{
+					return sensor.isDirectional() ? 1 : 0;
+				}
+			}
+		}
+		return 0;
 	}
 
 	@Override

@@ -10,25 +10,26 @@ import net.minecraft.src.World;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.sensors.TileSensorTarget;
 
-public class EnergyStorageTarget extends TileSensorTarget implements ISensorTarget
-{
+public class EnergyStorageTarget extends TileSensorTarget implements
+		ISensorTarget {
 
 	EnergyStorageTarget(TileEntity targetEntity) {
 		super(targetEntity);
 	}
 
-	public Map getDetailInformation(World world)
-	{
+	@Override
+	public Map getDetailInformation(World world) {
 		HashMap retMap = new HashMap();
-		
-		IEnergyStorage storage = (IEnergyStorage) world.getBlockTileEntity(xCoord, yCoord, zCoord);
-		
+
+		IEnergyStorage storage = (IEnergyStorage) world.getBlockTileEntity(
+				xCoord, yCoord, zCoord);
+
 		retMap.put("Stored", storage.getStored());
 		retMap.put("Capacity", storage.getCapacity());
 		retMap.put("Output", storage.getOutput());
-		
+
 		return retMap;
-		
+
 	}
 
 }
