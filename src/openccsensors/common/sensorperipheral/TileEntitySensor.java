@@ -20,10 +20,13 @@ implements ISensorEnvironment, IPeripheral, IInventory
 
 	private IInventory inventory;
 	
+	private int orientation;
+	
 	public TileEntitySensor()
 	{
 		peripheral = new PeripheralSensor(this, false);
 		inventory = new InventoryBasic("Sensor", 1);
+		orientation = 0;
 	}
 	
     public void readFromNBT(NBTTagCompound nbttagcompound)
@@ -47,6 +50,16 @@ implements ISensorEnvironment, IPeripheral, IInventory
 			sensorStack.writeToNBT(item);
         }
         nbttagcompound.setTag("item", item);
+    }
+    
+    public int getOrientation()
+    {
+    	return orientation;
+    }
+    
+    public void increaseOrientation(int increase)
+    {
+    	orientation = (orientation+increase)%360;
     }
     
     // IPeripheral interface - basically a proxy to the SensorPeripheral, allowing us to reuse code for the turtle peripheral

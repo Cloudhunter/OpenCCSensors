@@ -4,5 +4,6 @@ openccsensors.item.proximitysensor.name=Proximity Sensorcard
 openccsensors.item.ic2sensor.name=IndustrialCraft 2 Sensorcard
 openccsensors.item.buildcraftsensor.name=BuildCraft Sensorcard
 openccsensors.item.liquidsensor.name=Liquid Sensorcard
+openccsensors.item.worldsensor.name=World Sensorcard
 openccsensors.gui.sensor=Sensor
 openccsensors.upgrade.adjective=Sensor
