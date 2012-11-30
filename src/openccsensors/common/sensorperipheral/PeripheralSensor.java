@@ -23,12 +23,24 @@ implements ITurtlePeripheral
 	private ItemStack sensorItemStack;
 	
 	private boolean turtle;
+	
+	private boolean directional;
 
 	public PeripheralSensor(ISensorEnvironment _env, boolean _turtle) 
 	{
 		env = _env;
 		turtle = _turtle;
-		
+		directional = false;
+	}
+	
+	public boolean isDirectional()
+	{
+		return directional;
+	}
+	
+	public void setDirectional(boolean isDirectional)
+	{
+		directional = isDirectional;
 	}
 
 	@Override

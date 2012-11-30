@@ -13,52 +13,49 @@ import openccsensors.common.helper.LivingEntityHelper;
 /*
  * Object to represent a living target
  */
-public class LivingTarget implements ISensorTarget
-{
+public class LivingTarget implements ISensorTarget {
 	private int id;
 	private Vec3 sensorPos;
 	protected String rawType;
-	
-	LivingTarget(EntityLiving living, int sx, int sy, int sz)
-	{
+
+	LivingTarget(EntityLiving living, int sx, int sy, int sz) {
 		id = living.entityId;
 		sensorPos = Vec3.createVectorHelper(sx, sy, sz);
-		rawType = (living instanceof EntityPlayer) ? "Player" : living.getEntityName();
+		rawType = (living instanceof EntityPlayer) ? "Player" : living
+				.getEntityName();
 
 	}
-	
-	public Map getBasicInformation(World world)
-	{
-		EntityLiving entityLiving = (EntityLiving)world.getEntityByID(id);
-		
+
+	@Override
+	public Map getBasicInformation(World world) {
+		EntityLiving entityLiving = (EntityLiving) world.getEntityByID(id);
+
 		HashMap retMap = new HashMap();
-		
+
 		retMap.put("type", rawType);
 		addPositionToMap(entityLiving, retMap);
-		
+
 		return retMap;
 	}
-	
-	public Map getDetailInformation(World world)
-	{
-		EntityLiving entityLiving = (EntityLiving)world.getEntityByID(id);
-		
+
+	@Override
+	public Map getDetailInformation(World world) {
+		EntityLiving entityLiving = (EntityLiving) world.getEntityByID(id);
+
 		Map retMap = LivingEntityHelper.livingToMap(entityLiving);
-		
-		if (entityLiving == null)
-		{
+
+		if (entityLiving == null) {
 			return null;
 		}
-		
+
 		retMap.put("type", rawType);
 		addPositionToMap(entityLiving, retMap);
-		
+
 		return retMap;
 	}
-	
-	private void addPositionToMap(EntityLiving living, Map map)
-	{
-		HashMap<String, Integer> pos = new HashMap<String,Integer>();
+
+	private void addPositionToMap(EntityLiving living, Map map) {
+		HashMap<String, Integer> pos = new HashMap<String, Integer>();
 		pos.put("x", ((Double) living.posX).intValue() - (int) sensorPos.xCoord);
 		pos.put("y", ((Double) living.posY).intValue() - (int) sensorPos.yCoord);
 		pos.put("z", ((Double) living.posZ).intValue() - (int) sensorPos.zCoord);

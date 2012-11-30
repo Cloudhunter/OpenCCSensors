@@ -1,7 +1,6 @@
 package openccsensors.common.sensors.industrialcraft;
 
-import ic2.api.IEnergyStorage;
-
+import ic2.api.EnergyNet;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,26 +9,25 @@ import net.minecraft.src.World;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.sensors.TileSensorTarget;
 
-public class EnergyStorageTarget extends TileSensorTarget implements
+public class EnergyConductorTarget extends TileSensorTarget implements
 		ISensorTarget {
 
-	EnergyStorageTarget(TileEntity targetEntity) {
+	protected EnergyConductorTarget(TileEntity targetEntity) {
 		super(targetEntity);
 	}
 
 	@Override
 	public Map getDetailInformation(World world) {
+
 		HashMap retMap = new HashMap();
 
-		IEnergyStorage storage = (IEnergyStorage) world.getBlockTileEntity(
-				xCoord, yCoord, zCoord);
+		TileEntity conductor = world.getBlockTileEntity(xCoord, yCoord, zCoord);
+		Long energyConducted = EnergyNet.getForWorld(world)
+				.getTotalEnergyConducted(conductor);
 
-		retMap.put("Stored", storage.getStored());
-		retMap.put("Capacity", storage.getCapacity());
-		retMap.put("Output", storage.getOutput());
+		retMap.put("EnergyConducted", energyConducted);
 
 		return retMap;
-
 	}
 
 }
