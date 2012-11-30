@@ -1,6 +1,7 @@
 package openccsensors.common.sensors.industrialcraft;
 
 import ic2.api.IReactor;
+import ic2.api.IC2Reactor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class ReactorTarget extends TileSensorTarget implements ISensorTarget
 		
 		retMap.put("Heat", reactor.getHeat());
 		retMap.put("MaxHeat", reactor.getMaxHeat());
-		retMap.put("Output", reactor.getOutput());
+		retMap.put("Output", reactor.getOutput() * new IC2Reactor().getEUOutput());
 		retMap.put("Active", reactor.produceEnergy());
 		
 		return retMap;
