@@ -1,7 +1,6 @@
 package openccsensors;
 
-import java.util.ArrayList;
-
+import net.minecraft.src.Item;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.Property;
 import openccsensors.common.CommonProxy;
@@ -15,7 +14,6 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
-import net.minecraft.src.Item;
 
 @Mod( modid = "OCS", name = "OpenCCSensors", version = "0.03", dependencies = "required-after:ComputerCraft;after:CCTurtle")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)

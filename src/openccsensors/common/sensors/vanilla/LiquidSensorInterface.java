@@ -1,46 +1,40 @@
-package openccsensors.common.sensors.buildcraft;
+package openccsensors.common.sensors.vanilla;
 
 import java.util.Map;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import buildcraft.energy.IEngineProvider;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
-import openccsensors.OpenCCSensors;
+import net.minecraftforge.liquids.ITankContainer;
 import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITargetWrapper;
 import openccsensors.common.helper.TargetHelper;
 import openccsensors.common.sensors.TargetRetriever;
 
-public class BuildCraftSensorInterface implements ISensorInterface {
+public class LiquidSensorInterface implements ISensorInterface {
 
 	private TargetRetriever retriever = new TargetRetriever();
-
-	public BuildCraftSensorInterface() {
-		retriever.registerTarget(IEngineProvider.class, new ITargetWrapper() {
+	
+	public LiquidSensorInterface ()
+	{
+		retriever.registerTarget(ITankContainer.class, new ITargetWrapper() {
 			@Override
 			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
-				return new EngineTarget((TileEntity) entity);
+				return new LiquidTankTarget((TileEntity) entity);
 			}
 		});
 	}
-
+	
 	@Override
 	public String getName() {
-		return "openccsensors.item.buildcraftsensor";
+		return "openccsensors.item.liquidsensor";
 	}
 
 	@Override
-	public String[] getMethods() {
-		return null;
-	}
-
-	@Override
-	public Object[] callMethod(int methodID, Object[] args) throws Exception {
-		return null;
+	public int getId() {
+		// TODO Auto-generated method stub
+		return 25;
 	}
 
 	@Override
@@ -55,25 +49,26 @@ public class BuildCraftSensorInterface implements ISensorInterface {
 	@Override
 	public Map getTargetDetails(World world, int x, int y, int z, String target)
 			throws Exception {
-
 		return TargetHelper.getDetailedInformationForTarget(target,
 				retriever.getAdjacentTiles(world, x, y, z), world);
-
 	}
 
 	@Override
-	public int getId() {
-		return 19;
+	public String[] getMethods() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object[] callMethod(int methodID, Object[] args) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public void initRecipes() {
-		GameRegistry
-				.addRecipe(
-						new ItemStack(OpenCCSensors.sensorCard, 1, this.getId()),
-						"ccr", "crp", "rrp", 'r', new ItemStack(Item.redstone),
-						'c', new ItemStack(Item.shovelSteel), 'p',
-						new ItemStack(Item.paper));
+		// TODO Auto-generated method stub
+		
 	}
 
 }

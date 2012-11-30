@@ -65,7 +65,7 @@ public class InventorySensorInterface implements ISensorInterface {
 
 	@Override
 	public int getId() {
-		return 0;
+		return 16;
 	}
 
 	@Override

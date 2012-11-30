@@ -92,7 +92,7 @@ public class IC2SensorInterface implements ISensorInterface {
 
 	@Override
 	public int getId() {
-		return 2;
+		return 18;
 	}
 
 	@Override

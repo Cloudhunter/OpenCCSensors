@@ -7,5 +7,6 @@ public class SensorPack {
 	public static void init() {
 		SensorCard.registerInterface(new InventorySensorInterface());
 		SensorCard.registerInterface(new ProximitySensorInterface());
+		SensorCard.registerInterface(new LiquidSensorInterface());
 	}
 }

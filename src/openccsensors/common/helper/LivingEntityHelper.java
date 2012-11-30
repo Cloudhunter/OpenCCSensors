@@ -20,29 +20,29 @@ public class LivingEntityHelper {
 	{
 		HashMap map = new HashMap();
 		
-		map.put("heldItem", InventoryHelper.itemstackToMap(living.getHeldItem()));
+		map.put("HeldItem", InventoryHelper.itemstackToMap(living.getHeldItem()));
 		
 		HashMap armour = new HashMap();
-		armour.put("boots", InventoryHelper.itemstackToMap(living.getCurrentItemOrArmor(1)));
-		armour.put("leggings", InventoryHelper.itemstackToMap(living.getCurrentItemOrArmor(2)));
-		armour.put("chestplate", InventoryHelper.itemstackToMap(living.getCurrentItemOrArmor(3)));
-		armour.put("helmet", InventoryHelper.itemstackToMap(living.getCurrentItemOrArmor(4)));
-		map.put("armour", armour);
-		map.put("health", living.getHealth());
-		map.put("isAirborne", living.isAirBorne);		
-		map.put("isJumping", living.isJumping);
-		map.put("isBlocking", living.isBlocking());
-		map.put("isBurning", living.isBurning());
-		map.put("isEating", living.isEating());
-		map.put("isAlive", living.isEntityAlive());
-		map.put("isInWater", living.isInWater());
-		map.put("isOnLadder", living.isOnLadder());
-		map.put("isSleeping", living.isPlayerSleeping());
-		map.put("isRiding", living.isRiding());
-		map.put("isSneaking", living.isSneaking());
-		map.put("isSprinting", living.isSprinting());
-		map.put("isWet", living.isWet());
-		map.put("isHome", living.isWithinHomeDistanceCurrentPosition());
+		armour.put("Boots", InventoryHelper.itemstackToMap(living.getCurrentItemOrArmor(1)));
+		armour.put("Leggings", InventoryHelper.itemstackToMap(living.getCurrentItemOrArmor(2)));
+		armour.put("Chestplate", InventoryHelper.itemstackToMap(living.getCurrentItemOrArmor(3)));
+		armour.put("Helmet", InventoryHelper.itemstackToMap(living.getCurrentItemOrArmor(4)));
+		map.put("Armour", armour);
+		map.put("Health", living.getHealth());
+		map.put("IsAirborne", living.isAirBorne);		
+		map.put("IsJumping", living.isJumping);
+		map.put("IsBlocking", living.isBlocking());
+		map.put("IsBurning", living.isBurning());
+		map.put("IsEating", living.isEating());
+		map.put("IsAlive", living.isEntityAlive());
+		map.put("IsInWater", living.isInWater());
+		map.put("IsOnLadder", living.isOnLadder());
+		map.put("IsSleeping", living.isPlayerSleeping());
+		map.put("IsRiding", living.isRiding());
+		map.put("IsSneaking", living.isSneaking());
+		map.put("IsSprinting", living.isSprinting());
+		map.put("IsWet", living.isWet());
+		map.put("IsHome", living.isWithinHomeDistanceCurrentPosition());
 		
 		HashMap potionEffects = new HashMap();
 		Collection<PotionEffect> effects = living.getActivePotionEffects();
@@ -52,15 +52,15 @@ public class LivingEntityHelper {
 			potionEffects.put(count, effect.getEffectName());
 			count++;
 		}
-		map.put("potionEffects", potionEffects);
+		map.put("PotionEffects", potionEffects);
 		
 		if (living instanceof EntityPlayer)
 		{
 			EntityPlayer player = (EntityPlayer)living;
-			map.put("foodLevel", player.getFoodStats().getFoodLevel());
-			map.put("gamemode", player.capabilities.isCreativeMode);
-			map.put("username", player.username);
-			map.put("inventory", InventoryHelper.invToMap(player.inventory));
+			map.put("FoodLevel", player.getFoodStats().getFoodLevel());
+			map.put("Gamemode", player.capabilities.isCreativeMode);
+			map.put("Username", player.username);
+			map.put("Inventory", InventoryHelper.invToMap(player.inventory));
 		}
 		
 		return map;
