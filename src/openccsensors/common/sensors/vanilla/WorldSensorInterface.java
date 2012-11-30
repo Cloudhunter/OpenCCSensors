@@ -34,8 +34,6 @@ public class WorldSensorInterface implements ISensorInterface {
 			throws Exception {
 		
 		HashMap retMap = new HashMap();
-		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-		retMap.put("CurrentDate", sdf.format(world.getCurrentDate()));
 		retMap.put("Biome", world.getBiomeGenForCoords(x, y).biomeName);
 		retMap.put("LightLevel", world.getBlockLightValue(x, y, z));
 		retMap.put("Raining", world.isRaining());
