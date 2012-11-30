@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.src.IInventory;
+import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
@@ -32,25 +33,35 @@ public class LiquidTankTarget extends TileSensorTarget implements ISensorTarget{
 		
 		ILiquidTank[] tanks = tankContainer.getTanks(ForgeDirection.UNKNOWN);
 		
-		int capacity = 0;
-		int amount = 0;
-		LiquidStack stack = null;
-		
+		LiquidStack stack;
+		ItemStack istack;
+		Item item;
+		Map tankProperties;
+		int i = 0;
 		for (ILiquidTank tank : tanks)
 		{
-			capacity += tank.getCapacity();
-			amount += tank.getLiquid().amount;
-			if (stack == null)
+			tankProperties = new HashMap();
+			tankProperties.put("Amount",  tank.getLiquid().amount);
+			tankProperties.put("Capacity",  tank.getCapacity());
+			
+			stack = tank.getLiquid();
+			
+			if (stack != null)
 			{
-				stack = tank.getLiquid();
+				istack = stack.asItemStack();
+				if (istack != null)
+				{
+					if (istack.getItem() != null)
+					{
+						tankProperties.put("Name",  istack.getDisplayName());
+				
+					}
+				}
 			}
+			retMap.put(i, tankProperties);
+			i++;
 		}
-		ItemStack istack = stack.asItemStack();
-		retMap.put("Amount",  amount);
-		retMap.put("Capacity",  capacity);
-		retMap.put("Name",  istack.getItem().getItemNameIS(istack));
-		
-		
+
 		return retMap;
 	}
 
