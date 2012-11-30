@@ -27,17 +27,17 @@ public class InventoryHelper {
 		
 		if (itemstack == null)
 		{
-			map.put("name", "empty");
-			map.put("size", 0);
-			map.put("damagevalue", 0);
+			map.put("Name", "empty");
+			map.put("Size", 0);
+			map.put("Damagevalue", 0);
 			return map; // empty item
 		}
 		
 		Item item = itemstack.getItem();
 		
-		map.put("name", item.getItemNameIS(itemstack));
-		map.put("size", itemstack.stackSize);
-		map.put("damageValue", itemstack.getItemDamage());
+		map.put("Name", item.getItemNameIS(itemstack));
+		map.put("Size", itemstack.stackSize);
+		map.put("DamageValue", itemstack.getItemDamage());
 		
 		if (itemstack.hasTagCompound())
 		{
