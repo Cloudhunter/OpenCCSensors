@@ -3,12 +3,15 @@ package openccsensors.common.sensorperipheral;
 import java.util.Random;
 
 import openccsensors.OpenCCSensors;
+import openccsensors.common.core.OCSLog;
 import net.minecraft.src.BlockContainer;
 import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.EntityItem;
+import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Material;
+import net.minecraft.src.MathHelper;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
@@ -117,4 +120,29 @@ public class BlockSensor extends BlockContainer
         super.breakBlock(par1World, par2, par3, par4, par5, par6);
     }
 
+    @Override
+	public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLiving par5EntityPlayer) {
+    	int p = MathHelper.floor_double((double)((par5EntityPlayer.rotationYaw * 4F) / 360F) + 0.5D) & 3; //this is a smart equation
+		byte byte0 = 3;
+		
+		switch(p)
+		{
+		case 0:
+			byte0 = 2;
+			break;
+		case 1:
+			byte0 = 1;
+			break;
+		case 2:
+			byte0 = 0;
+			break;
+		case 3:
+			byte0 = 3;
+			break;
+		default:
+			break;
+		}
+
+		par1World.setBlockMetadataWithNotify(par2, par3, par4, byte0);
+	}
 }

@@ -6,6 +6,7 @@ import cpw.mods.fml.client.FMLClientHandler;
 
 import openccsensors.OpenCCSensors;
 import openccsensors.client.sensorperipheral.ModelSensor;
+import openccsensors.common.core.OCSLog;
 import openccsensors.common.sensorperipheral.TileEntitySensor;
 import net.minecraft.src.FontRenderer;
 import net.minecraft.src.ItemStack;
@@ -36,12 +37,20 @@ public class TileEntitySensorRenderer extends TileEntitySpecialRenderer {
 		GL11.glTranslatef((float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F);
 		this.bindTextureByName("/openccsensors/resources/images/sensorblock.png");
         GL11.glPushMatrix();
-        this.modelSensor.renderSensor();
+        
+        int orientation=0;
+        if (tile.getDirectional()) {
+        	orientation = (tile.getWorldObj()!=null) ? tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord)*90 : 3; 
+        } else {
+        	orientation = tile.getOrientation();
+        	tile.increaseOrientation(1);
+        }
+        this.modelSensor.renderSensor(orientation);
+        
         GL11.glPopMatrix();
         if (renderIcon) {
         	this.bindTextureByName(iconTexture);
-        	GL11.glRotatef(180, 0.0F, 0.0F, 1.0F);
-        	GL11.glScalef(0.5F, 0.5F, 1.05F);
+        	GL11.glScalef(0.3F, 1.05F, 0.3F);
         	GL11.glDepthMask(false);
         	this.modelSensor.renderIcon(iconIndex);
         	GL11.glDepthMask(true);

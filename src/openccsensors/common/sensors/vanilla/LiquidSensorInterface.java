@@ -2,6 +2,7 @@ package openccsensors.common.sensors.vanilla;
 
 import java.util.Map;
 
+import net.minecraft.src.BlockFluid;
 import net.minecraft.src.IInventory;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
@@ -33,7 +34,6 @@ public class LiquidSensorInterface implements ISensorInterface {
 
 	@Override
 	public int getId() {
-		// TODO Auto-generated method stub
 		return 25;
 	}
 
