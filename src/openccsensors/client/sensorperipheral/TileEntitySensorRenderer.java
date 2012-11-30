@@ -38,16 +38,19 @@ public class TileEntitySensorRenderer extends TileEntitySpecialRenderer {
 		this.bindTextureByName("/openccsensors/resources/images/sensorblock.png");
         GL11.glPushMatrix();
         
-        int orientation=0;
+        int placing = 0;
+        int rotation=0;
+        placing = (tile.getWorldObj()!=null) ? tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord)*90 : 3;
         if (tile.getDirectional()) {
-        	orientation = (tile.getWorldObj()!=null) ? tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord)*90 : 3; 
+        	rotation = placing;
         } else {
-        	orientation = tile.getOrientation();
+        	rotation = tile.getOrientation();
         	tile.increaseOrientation(1);
         }
-        this.modelSensor.renderSensor(orientation);
+        this.modelSensor.renderSensor(rotation);
         
         GL11.glPopMatrix();
+        GL11.glRotatef(placing, 0, 1, 0);
         if (renderIcon) {
         	this.bindTextureByName(iconTexture);
         	GL11.glScalef(0.3F, 1.05F, 0.3F);
