@@ -27,25 +27,20 @@ public class TargetRetriever {
 			targets.add(new TargetPair(entityClass, wrapper));
 		}
 	}
-	public HashMap<String, ArrayList<ISensorTarget>> getAdjacentTiles(World world, int x, int y, int z)
-	{
-		return getAdjacentTiles(world, x, y, z, false);
-	}
 	
-	public HashMap<String, ArrayList<ISensorTarget>> getAdjacentTiles(World world, int sx, int sy, int sz, boolean includeSelf)
+	public HashMap<String, ArrayList<ISensorTarget>> getAdjacentTiles(World world, int sx, int sy, int sz)
 	{
 		HashMap<String, ArrayList<ISensorTarget>> map = new HashMap<String, ArrayList<ISensorTarget>>();
 
-		addTileEntityToHashMapIfValid(sx, sy, sz, world.getBlockTileEntity(sx + 1, sy, sz), map, "EAST");
-		addTileEntityToHashMapIfValid(sx, sy, sz, world.getBlockTileEntity(sx - 1, sy, sz), map, "WEST");
-		addTileEntityToHashMapIfValid(sx, sy, sz, world.getBlockTileEntity(sx, sy + 1, sz), map, "UP");
-		addTileEntityToHashMapIfValid(sx, sy, sz, world.getBlockTileEntity(sx, sy - 1, sz), map, "DOWN");
-		addTileEntityToHashMapIfValid(sx, sy, sz, world.getBlockTileEntity(sx, sy, sz + 1), map, "SOUTH");
-		addTileEntityToHashMapIfValid(sx, sy, sz, world.getBlockTileEntity(sx, sy, sz - 1), map, "NORTH");
-		
-		if (includeSelf)
+		for (int x=-2; x <= 2; x++)
 		{
-			addTileEntityToHashMapIfValid(sx, sy, sz, world.getBlockTileEntity(sx, sy, sz), map, "SELF");
+			for (int y =- 2; y <= 2; y++)
+			{
+				for (int z =- 2; z <= 2; z++)
+				{
+					addTileEntityToHashMapIfValid(sx, sy, sz, world.getBlockTileEntity(sx + x, sy + y, sz + z), map, String.format("%s,%s,%s", x, y, z));
+				}
+			}
 		}
 		
 		return map;
