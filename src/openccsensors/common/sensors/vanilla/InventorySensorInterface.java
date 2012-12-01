@@ -51,7 +51,7 @@ public class InventorySensorInterface implements ISensorInterface {
 			throws Exception {
 
 		return TargetHelper.getBasicInformationForTargets(
-				retriever.getAdjacentTiles(world, x, y, z, true), world);
+				retriever.getAdjacentTiles(world, x, y, z), world);
 
 	}
 
@@ -60,7 +60,7 @@ public class InventorySensorInterface implements ISensorInterface {
 			throws Exception {
 
 		return TargetHelper.getDetailedInformationForTarget(target,
-				retriever.getAdjacentTiles(world, x, y, z, true), world);
+				retriever.getAdjacentTiles(world, x, y, z), world);
 
 	}
 
