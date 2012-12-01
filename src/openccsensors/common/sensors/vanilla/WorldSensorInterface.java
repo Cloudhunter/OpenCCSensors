@@ -17,7 +17,7 @@ public class WorldSensorInterface implements ISensorInterface {
 
 	@Override
 	public int getId() {
-		return 60;
+		return 21;
 	}
 
 	@Override
