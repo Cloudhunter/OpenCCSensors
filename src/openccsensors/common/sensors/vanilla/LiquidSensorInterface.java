@@ -35,7 +35,7 @@ public class LiquidSensorInterface implements ISensorInterface {
 
 	@Override
 	public int getId() {
-		return 25;
+		return 20;
 	}
 
 	@Override
