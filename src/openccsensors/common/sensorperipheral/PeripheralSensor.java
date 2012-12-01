@@ -2,18 +2,22 @@ package openccsensors.common.sensorperipheral;
 
 import java.util.Arrays;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+
+import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorCard;
 import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.core.ISensorEnvironment;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Vec3;
+import net.minecraft.src.World;
 import dan200.computer.api.IComputerAccess;
 import dan200.computer.api.IPeripheral;
 import dan200.turtle.api.ITurtlePeripheral;
 
 public class PeripheralSensor
-implements ITurtlePeripheral
+implements ITurtlePeripheral, ISensorAccess
 {
 	
 	private ISensorEnvironment env;
@@ -41,6 +45,10 @@ implements ITurtlePeripheral
 	public void setDirectional(boolean isDirectional)
 	{
 		directional = isDirectional;
+		Vec3 loc = env.getLocation();
+		World world = env.getWorld();
+		if (world != null) // can happen during loading
+			world.markBlockForUpdate((int)loc.xCoord, (int)loc.yCoord, (int)loc.zCoord);
 	}
 
 	@Override
@@ -107,7 +115,7 @@ implements ITurtlePeripheral
 						Object[] newArray = new Object[arguments.length - 1];
 						System.arraycopy(arguments, 1, newArray, 0, arguments.length - 1);
 						
-						return sensorCard.callMethod(newMethod, newArray);
+						return sensorCard.callMethod(this, newMethod, newArray);
 					}
 				}
 				throw new Exception("Invalid arguments. Expected String.");
@@ -162,6 +170,18 @@ implements ITurtlePeripheral
 		}
 		
 		throw new Exception("Item is not sensor card!");
+	}
+
+	@Override
+	public boolean isTurtle()
+	{
+		return turtle;
+	}
+
+	@Override
+	public ISensorEnvironment getSensorEnvironment()
+	{
+		return env;
 	}
 
 }

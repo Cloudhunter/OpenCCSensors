@@ -1,14 +1,16 @@
 package openccsensors.common.sensorperipheral;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import openccsensors.common.core.ISensorEnvironment;
 import dan200.computer.api.IComputerAccess;
 import dan200.computer.api.IPeripheral;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IInventory;
+import net.minecraft.src.INetworkManager;
 import net.minecraft.src.InventoryBasic;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.NBTTagCompound;
+import net.minecraft.src.Packet;
+import net.minecraft.src.Packet132TileEntityData;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.Vec3;
 import net.minecraft.src.World;
@@ -35,6 +37,7 @@ implements ISensorEnvironment, IPeripheral, IInventory
 
 		NBTTagCompound item = nbttagcompound.getCompoundTag("item");
 		inventory.setInventorySlotContents(0, ItemStack.loadItemStackFromNBT(item));
+		setDirectional(nbttagcompound.getBoolean("directional"));
     }
 
     public void writeToNBT(NBTTagCompound nbttagcompound)
@@ -50,6 +53,8 @@ implements ISensorEnvironment, IPeripheral, IInventory
 			sensorStack.writeToNBT(item);
         }
         nbttagcompound.setTag("item", item);
+        
+        nbttagcompound.setBoolean("directional", peripheral.isDirectional());
     }
     
     public int getOrientation()
@@ -62,6 +67,26 @@ implements ISensorEnvironment, IPeripheral, IInventory
     	orientation = (orientation+increase)%360;
     }
     
+    @Override 
+    public Packet getDescriptionPacket()
+    {
+    	Packet132TileEntityData packet = new Packet132TileEntityData();
+    	packet.actionType = 0;
+    	packet.xPosition = xCoord;
+    	packet.yPosition = yCoord;
+    	packet.zPosition = zCoord;
+    	NBTTagCompound nbt = new NBTTagCompound();
+    	writeToNBT(nbt);
+    	packet.customParam1 = nbt;
+    	return packet;
+    }
+    
+    @Override
+    public void onDataPacket(INetworkManager net, Packet132TileEntityData pkt)
+    {
+    	readFromNBT(pkt.customParam1);
+    }
+    
     // IPeripheral interface - basically a proxy to the SensorPeripheral, allowing us to reuse code for the turtle peripheral
 
     public boolean getDirectional()
@@ -71,7 +96,7 @@ implements ISensorEnvironment, IPeripheral, IInventory
     
     public void setDirectional(boolean isDirectional)
     {
-    	peripheral.setDirectional(isDirectional);
+    	peripheral.setDirectional(isDirectional);    	
     }
     
 	@Override
@@ -159,6 +184,8 @@ implements ISensorEnvironment, IPeripheral, IInventory
 	public void setInventorySlotContents(int var1, ItemStack var2)
 	{
 		inventory.setInventorySlotContents(var1, var2);
+		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+		
 	}
 
 	@Override

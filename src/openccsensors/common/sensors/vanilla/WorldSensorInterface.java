@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.src.World;
+import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorInterface;
 
 public class WorldSensorInterface implements ISensorInterface {
@@ -50,7 +51,7 @@ public class WorldSensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public Object[] callMethod(int methodID, Object[] args) throws Exception {
+	public Object[] callMethod(ISensorAccess sensor, int methodID, Object[] args) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

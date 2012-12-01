@@ -11,6 +11,6 @@ public interface ISensorInterface
 	Map getBasicTarget(World world, int x, int y, int z) throws Exception;
 	Map getTargetDetails(World world, int x, int y, int z, String target) throws Exception;
 	String[] getMethods();
-	Object[] callMethod(int methodID, Object[] args) throws Exception;
+	Object[] callMethod(ISensorAccess sensor, int methodID, Object[] args) throws Exception;
 	void initRecipes();
 }
