@@ -17,7 +17,7 @@ public class WorldSensorInterface implements ISensorInterface {
 
 	@Override
 	public int getId() {
-		return 60;
+		return 21;
 	}
 
 	@Override
@@ -35,6 +35,7 @@ public class WorldSensorInterface implements ISensorInterface {
 			throws Exception {
 		
 		HashMap retMap = new HashMap();
+		retMap.put("Dimension", world.getWorldInfo().getDimension());
 		retMap.put("Biome", world.getBiomeGenForCoords(x, y).biomeName);
 		retMap.put("LightLevel", world.getBlockLightValue(x, y, z));
 		retMap.put("Raining", world.isRaining());
