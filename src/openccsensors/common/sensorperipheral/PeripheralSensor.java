@@ -10,6 +10,7 @@ import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.core.ISensorEnvironment;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
+import net.minecraft.src.TileEntity;
 import net.minecraft.src.Vec3;
 import net.minecraft.src.World;
 import dan200.computer.api.IComputerAccess;
@@ -50,6 +51,25 @@ implements ITurtlePeripheral, ISensorAccess
 		if (world != null) // can happen during loading
 			world.markBlockForUpdate((int)loc.xCoord, (int)loc.yCoord, (int)loc.zCoord);
 	}
+	
+	public int getDirection()
+	{
+		int direction = 0;
+		if (turtle) {
+			// think of something for turtles...
+		} else {
+			Vec3 loc = env.getLocation();
+			World world = env.getWorld();
+				if (world != null) // can happen during loading
+				{
+					TileEntity tile = world.getBlockTileEntity((int)loc.xCoord, (int)loc.yCoord, (int)loc.zCoord);
+					if (tile != null && tile instanceof TileEntitySensor) {
+						direction = ((TileEntitySensor)tile).getOrientation();
+					}
+				}
+		}
+		return direction;
+	}	
 
 	@Override
 	public String getType() 
