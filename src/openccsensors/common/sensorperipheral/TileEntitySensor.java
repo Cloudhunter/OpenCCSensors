@@ -57,7 +57,7 @@ implements ISensorEnvironment, IPeripheral, IInventory
         nbttagcompound.setBoolean("directional", peripheral.isDirectional());
     }
     
-    public int getOrientation()
+    public int getFacing()
     {
     	return orientation;
     }

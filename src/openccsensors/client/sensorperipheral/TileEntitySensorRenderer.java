@@ -44,7 +44,7 @@ public class TileEntitySensorRenderer extends TileEntitySpecialRenderer {
         if (tile.getDirectional()) {
         	rotation = placing;
         } else {
-        	rotation = tile.getOrientation();
+        	rotation = tile.getFacing();
         	tile.increaseOrientation(1);
         }
         this.modelSensor.renderSensor(rotation);
