@@ -22,7 +22,7 @@ implements ISensorEnvironment, IPeripheral, IInventory
 
 	private IInventory inventory;
 	
-	private int orientation;
+	private float orientation;
 	
 	public TileEntitySensor()
 	{
@@ -59,10 +59,10 @@ implements ISensorEnvironment, IPeripheral, IInventory
     
     public int getFacing()
     {
-    	return orientation;
+    	return (int)orientation;
     }
     
-    public void increaseOrientation(int increase)
+    public void increaseOrientation(float increase)
     {
     	orientation = (orientation+increase)%360;
     }
