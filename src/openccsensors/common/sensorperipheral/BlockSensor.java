@@ -63,7 +63,12 @@ public class BlockSensor extends BlockContainer
     {
         if (!world.isRemote)
         {
+        	if (player.isSneaking())
+        	{
+        		return false;
+        	}
         	player.openGui(OpenCCSensors.instance, 1987, world, x, y, z);
+        	return true;
         }
         
         return true;
