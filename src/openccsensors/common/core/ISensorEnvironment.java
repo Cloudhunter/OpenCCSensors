@@ -9,5 +9,6 @@ public interface ISensorEnvironment
 {
 	public World getWorld();
 	public Vec3 getLocation(); // Vec3 since that is what turtles use.
+	public int getFacing();
 	public ItemStack getSensorCard();
 }

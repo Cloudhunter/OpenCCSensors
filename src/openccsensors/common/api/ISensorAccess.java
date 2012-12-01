@@ -6,7 +6,6 @@ public interface ISensorAccess
 {
 	public void setDirectional(boolean bool);
 	public boolean isDirectional();
-	public int getDirection();
 	public boolean isTurtle();
 	public ISensorEnvironment getSensorEnvironment();
 }
