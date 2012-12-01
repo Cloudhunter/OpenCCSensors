@@ -27,6 +27,11 @@ implements ISensorEnvironment
 	{
 		return turtle.getPosition();
 	}
+	
+	public int getFacing()
+	{
+		return (turtle.getFacingDir()+1)%4;
+	}
 
 	@Override
 	public ItemStack getSensorCard()

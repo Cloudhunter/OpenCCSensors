@@ -52,25 +52,6 @@ implements ITurtlePeripheral, ISensorAccess
 		if (world != null) // can happen during loading
 			world.markBlockForUpdate((int)loc.xCoord, (int)loc.yCoord, (int)loc.zCoord);
 	}
-	
-	public int getDirection()
-	{
-		int direction = 0;
-		Vec3 loc = env.getLocation();
-		World world = env.getWorld();
-		if (world != null) // can happen during loading
-		{
-			TileEntity tile = world.getBlockTileEntity((int)loc.xCoord, (int)loc.yCoord, (int)loc.zCoord);
-			if (turtle) {
-				if (tile != null && tile instanceof ITurtleAccess)
-					direction = (((ITurtleAccess)tile).getFacingDir()+1)%4;
-			} else {
-				if (tile != null && tile instanceof TileEntitySensor)
-					direction = ((TileEntitySensor)tile).getOrientation();
-			}
-		}
-		return direction;
-	}	
 
 	@Override
 	public String getType() 
