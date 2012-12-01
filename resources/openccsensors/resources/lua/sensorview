@@ -173,7 +173,7 @@ while true do
 		if p1 == "s" then
 			--save sensor detailed output.
 			if detailLines then
-				local fileHandle = io.open("sensorDetailed-"..sideNames[sideSelection], "w")
+				local fileHandle = io.open("sensorDetailed-"..sideNames[sideSelection].."-"..targetNameMenuTable[targetSelection], "w")
 				if fileHandle then
 					for k, v in ipairs(detailLines) do
 						fileHandle:write(v.."\n")
