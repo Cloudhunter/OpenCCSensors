@@ -36,7 +36,7 @@ public class WorldSensorInterface implements ISensorInterface {
 		
 		HashMap retMap = new HashMap();
 		retMap.put("Dimension", world.getWorldInfo().getDimension());
-		retMap.put("Biome", world.getBiomeGenForCoords(x, y).biomeName);
+		retMap.put("Biome", world.getBiomeGenForCoords(x, z).biomeName);
 		retMap.put("LightLevel", world.getBlockLightValue(x, y, z));
 		retMap.put("Raining", world.isRaining());
 		

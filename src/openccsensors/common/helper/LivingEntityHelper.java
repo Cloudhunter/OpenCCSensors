@@ -33,7 +33,7 @@ public class LivingEntityHelper {
 		map.put("IsJumping", living.isJumping);
 		map.put("IsBlocking", living.isBlocking());
 		map.put("IsBurning", living.isBurning());
-		map.put("IsEating", living.isEating());
+		//map.put("IsEating", living.isEating());
 		map.put("IsAlive", living.isEntityAlive());
 		map.put("IsInWater", living.isInWater());
 		map.put("IsOnLadder", living.isOnLadder());
