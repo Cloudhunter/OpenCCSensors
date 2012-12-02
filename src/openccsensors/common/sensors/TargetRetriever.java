@@ -2,9 +2,11 @@ package openccsensors.common.sensors;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map.Entry;
 
 import net.minecraft.src.EntityLiving;
+import net.minecraft.src.Vec3;
 import net.minecraft.src.World;
 
 import openccsensors.common.api.ISensorTarget;
@@ -85,6 +87,57 @@ public class TargetRetriever {
 		}
 	}
 	
+	public class pyramidIterator implements Iterator
+	{
+		private int currentIndex;
+		private int range;
+		private Vec3 origin;
+		private float rotation;
+		
+		public pyramidIterator(int x, int y, int z, int direction, int range)
+		{
+			this.currentIndex = 0;
+			this.range = range;
+			this.origin = Vec3.createVectorHelper(x, y, z);
+			this.rotation = (float) (-(direction%4)*Math.PI/2);
+		}
+		
+		private int getDepth(int index)
+		{
+			return (int) Math.ceil( Math.pow((3.0F/4.0F)*index, 1.0F/3.0F) );
+		}
+		
+		private Vec3 findRelative(int index)
+		{
+			int z = getDepth(index); // depth of the smallest pyramid with volume >= index
+			int offset = z - (int) (Math.pow(z-1,3)*(4.0F/3.0F));
+			int y = (int) Math.floor((float)offset/(float)(z*2));
+			int x = offset%(z*2);
+			return Vec3.createVectorHelper(x, y, z);
+		}
+		
+		private Vec3 findAbsolute(int index)
+		{
+			Vec3 relative = findRelative(index);
+			relative.rotateAroundY(this.rotation);
+			return this.origin.addVector(relative.xCoord, relative.yCoord,relative.zCoord);
+		}
+		
+		@Override
+		public boolean hasNext() {
+			
+			return getDepth(currentIndex) <= range;
+		}
+
+		@Override
+		public Object next() {
+			return findAbsolute(currentIndex++);
+		}
+
+		@Override
+		public void remove() {
+		}
+	}
 	
 	protected class TargetPair {
 		
