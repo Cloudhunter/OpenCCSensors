@@ -7,6 +7,7 @@ import net.minecraft.src.IInventory;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraftforge.liquids.ITankContainer;
+import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITargetWrapper;
@@ -34,7 +35,7 @@ public class LiquidSensorInterface implements ISensorInterface {
 
 	@Override
 	public int getId() {
-		return 25;
+		return 20;
 	}
 
 	@Override
@@ -60,7 +61,7 @@ public class LiquidSensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public Object[] callMethod(int methodID, Object[] args) throws Exception {
+	public Object[] callMethod(ISensorAccess sensor, int methodID, Object[] args) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

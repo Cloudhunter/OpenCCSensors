@@ -11,6 +11,7 @@ import net.minecraft.src.ItemStack;
 import net.minecraft.src.World;
 
 import openccsensors.OpenCCSensors;
+import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITargetWrapper;
@@ -42,7 +43,7 @@ public class ProximitySensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public Object[] callMethod(int methodID, Object[] args) throws Exception {
+	public Object[] callMethod(ISensorAccess sensor, int methodID, Object[] args) throws Exception {
 		return null;
 	}
 
