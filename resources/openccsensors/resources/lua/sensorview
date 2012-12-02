@@ -2,7 +2,7 @@ local sideNames = rs.getSides()
 local sensorSides = {}
 local sideSelection, targetSelection, targetOffset, detailOffset = 1, 1, 1, 1
 local detailLines, targetNameMenuTable
-local graphing, graphTable, graphMatch, graphInstance = false
+local graphing, graphSide, graphTarget, graphMatch, graphInstance = false
 
 os.loadAPI("/rom/apis/graph")
 
@@ -154,10 +154,10 @@ local function createGraph(targetNum)
 			break
 		end
 	end
-	if monSide and targetNum >= 1 and findGraphMatch(graphTable, targetNum, 0, {}) then
+	if monSide and targetNum >= 1 and findGraphMatch(peripheral.call(graphSide, "getTargetDetails", graphTarget), targetNum, 0, {}) then
 		graphMatch = targetNum
-		local val, name = findGraphMatch(graphTable, targetNum, 0, {})
-		local updateFunc = function() return (findGraphMatch(graphTable, graphMatch, 0, {})) end
+		local val, name = findGraphMatch(peripheral.call(graphSide, "getTargetDetails", graphTarget), targetNum, 0, {})
+		local updateFunc = function() return (findGraphMatch(peripheral.call(graphSide, "getTargetDetails", graphTarget), graphMatch, 0, {})) end
 		graphInst = graph.new(monSide, updateFunc, name)
 		return graphInst
 	end
@@ -227,10 +227,12 @@ while true do
 			if graph then
 				graphing = not graphing
 				if not graphing then
-					graphTable = nil
+					graphSide = nil
+					graphTarget = nil
 					graphUpdate = nil
 				else
-					graphTable = peripheral.call(sideNames[sideSelection], "getTargetDetails", targetNameMenuTable[targetSelection])
+					graphSide = sideNames[sideSelection]
+					graphTarget = targetNameMenuTable[targetSelection]
 					graphInstance = createGraph(1)
 					graphUpdate = os.startTimer(0)
 				end
