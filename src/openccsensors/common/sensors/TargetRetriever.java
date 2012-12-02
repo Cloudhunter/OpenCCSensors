@@ -75,7 +75,6 @@ public class TargetRetriever {
 				
 		return map;
 	}
-	
 
 	private void addTileEntityToHashMapIfValid(int sx, int sy, int sz, Object entity, HashMap<String, ArrayList<ISensorTarget>> map, String name)
 	{
@@ -120,15 +119,16 @@ public class TargetRetriever {
 		
 		private int getDepth(int index)
 		{
-			return (int) Math.ceil( Math.pow((3.0F/4.0F)*index, 1.0F/3.0F) );
+			double x = Math.pow(-1+81*index+9*Math.pow(-2*index+81*index*index, 2), 3);
+			return (int) (Math.ceil((1.0F/6.0F)*(2.0F+1.0F/x+x)));
 		}
 		
 		private Vec3 findRelative(int index)
 		{
 			int z = getDepth(index); // depth of the smallest pyramid with volume >= index
-			int offset = z - (int) (Math.pow(z-1,3)*(4.0F/3.0F));
-			int y = (int) Math.floor((float)offset/(float)(z*2));
-			int x = offset%(z*2);
+			int offset = z - (int) (((4*z*z-4*z+1)*z)/3.0F);
+			int y = (int) Math.floor((float)offset/(float)(z*2-1));
+			int x = offset%(z*2-1);
 			return Vec3.createVectorHelper(x, y, z);
 		}
 		
