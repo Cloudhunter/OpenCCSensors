@@ -4,7 +4,7 @@
 	<!-- Properties -->
 
 	<property name="build.dir"           value="build"/>
-	<property name="src.dir"             value="common"/>
+	<property name="src.dir"             value="src"/>
 
 	<property name="download.dir"        value="download"/>
 
@@ -48,7 +48,7 @@
 	</target>
 
 	<!-- Set full version -->
-	<target name="initialize-version" depends="version-provided,version-not-provided">
+	<target name="initialize-version">
 		<echo message="Starting build for ${mod.version}"/>
 	</target>
 
@@ -136,6 +136,9 @@
 
 		<!-- Reset src dir to post-forge-install state -->
 		<delete dir="${mcpsrc.dir}/openccsensors"/>
+		<delete dir="${mcpsrc.dir}/ic2"/>
+		<delete dir="${mcpsrc.dir}/dan200"/>
+		<delete dir="${mcpsrc.dir}/buildcraft"/>
 
 	</target>
 
