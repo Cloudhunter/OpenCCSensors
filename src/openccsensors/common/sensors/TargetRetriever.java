@@ -60,6 +60,22 @@ public class TargetRetriever {
 		return map;
 	}
 	
+	public HashMap<String, ArrayList<ISensorTarget>> getLivingEntities(World world, int sx, int sy, int sz, double radius, int direction)
+	{
+		HashMap<String, ArrayList<ISensorTarget>> map = new HashMap<String, ArrayList<ISensorTarget>>();
+		// very temporary and inefficient method:
+		PyramidIterator it = new PyramidIterator(sx,sy,sz,(int) radius,direction);
+		while (it.hasNext()) {
+			Vec3 vec = (Vec3) it.next();
+			for (Entry<String, EntityLiving> entity : LivingEntityHelper.getLivingEntities(world, (int)vec.xCoord, (int)vec.yCoord, (int)vec.zCoord, 0).entrySet())
+			{
+				addTileEntityToHashMapIfValid(sx, sy, sz, entity.getValue(), map, entity.getKey());
+			}
+		}
+				
+		return map;
+	}
+	
 
 	private void addTileEntityToHashMapIfValid(int sx, int sy, int sz, Object entity, HashMap<String, ArrayList<ISensorTarget>> map, String name)
 	{
@@ -87,14 +103,14 @@ public class TargetRetriever {
 		}
 	}
 	
-	public class pyramidIterator implements Iterator
+	public class PyramidIterator implements Iterator
 	{
 		private int currentIndex;
 		private int range;
 		private Vec3 origin;
 		private float rotation;
 		
-		public pyramidIterator(int x, int y, int z, int direction, int range)
+		public PyramidIterator(int x, int y, int z, int direction, int range)
 		{
 			this.currentIndex = 0;
 			this.range = range;
