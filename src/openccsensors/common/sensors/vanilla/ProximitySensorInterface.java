@@ -1,5 +1,6 @@
 package openccsensors.common.sensors.vanilla;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -39,20 +40,34 @@ public class ProximitySensorInterface implements ISensorInterface {
 
 	@Override
 	public String[] getMethods() {
-		return null;
+		return new String[] { "getDirectional", "setDirectional" };
 	}
 
 	@Override
 	public Object[] callMethod(ISensorAccess sensor, int methodID, Object[] args) throws Exception {
-		return null;
+		switch(methodID)
+		{
+		case 0:
+			return new Object[]{ sensor.isDirectional() };
+		case 1:
+			if ((args.length > 0) && (args[0] instanceof Boolean))
+				sensor.setDirectional((Boolean)args[0]);
+			break;
+		default:
+			break;
+		}
+		return new Object[]{};
 	}
 
 	@Override
 	public Map getBasicTarget(World world, int x, int y, int z)
 			throws Exception {
 
+		HashMap targets;
+		targets = retriever.getLivingEntities(world, x, y, z, sensingRadius);
+		
 		return TargetHelper.getBasicInformationForTargets(
-				retriever.getLivingEntities(world, x, y, z, sensingRadius),
+				targets,
 				world);
 
 	}
