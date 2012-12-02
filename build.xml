@@ -1,0 +1,154 @@
+<!-- nallar's BuildCraft ant build script edited for OpenCCSensors -->
+<project name="OpenCCSensors" default="main">
+	<property environment="env"/>
+	<!-- Properties -->
+
+	<property name="build.dir"           value="build"/>
+	<property name="src.dir"             value="common"/>
+
+	<property name="download.dir"        value="download"/>
+
+	<property name="classes.dir"         value="${build.dir}/classes"/>
+	<property name="jar.dir"             value="${build.dir}/dist"/>
+
+	<property name="mcp.dir"             value="${build.dir}/mcp"/>
+	<property name="forge.dir"           value="${mcp.dir}/forge"/>
+
+	<property name="mcpsrc.dir"          value="${mcp.dir}/src/minecraft"/>
+
+	<property name="mcp.version"         value="723"/>
+	<property name="mc.version"          value="1.4.5"/>
+	<property name="forge.version"       value="6.4.0.396"/>
+	<property name="mod.version"          value="0.03"/>
+	<property name="mod.name"		value="OpenCCSensors"/>
+	
+	<property name="mcp.name"            value="mcp${mcp.version}.zip"/>
+	<property name="forge.name"          value="minecraftforge-src-${mc.version}-${forge.version}.zip"/>
+
+	<available property="forge-exists" file="${download.dir}/${forge.name}"/>
+	<available property="mcp-exists" file="${download.dir}/${mcp.name}"/>
+
+	<condition property="out-of-date">
+		<not>
+			<and>
+				<available file="${download.dir}/${mcp.name}"/>
+				<available file="${download.dir}/${forge.name}"/>
+				<available file="${mcpsrc.dir}"/>
+			</and>
+		</not>
+	</condition>
+
+	<mkdir dir="${download.dir}"/>
+
+	<!-- Targets -->
+
+	<!-- Clear build directory -->
+	<target name="clean">
+		<delete dir="${build.dir}"/>
+	</target>
+
+	<!-- Set full version -->
+	<target name="initialize-version" depends="version-provided,version-not-provided">
+		<echo message="Starting build for ${mod.version}"/>
+	</target>
+
+	<!-- Download necessary files -->
+	<target name="download-files" depends="download-mcp,download-forge"/>
+
+	<!-- Download mcp -->
+	<target name="download-mcp" unless="mcp-exists">
+		<get src="http://mcp.ocean-labs.de/files/${mcp.name}" dest="${download.dir}" usetimestamp="True"/>
+	</target>
+
+	<!-- Download forge (if it doesn't exist) -->
+	<target name="download-forge" unless="forge-exists" >
+		<get src="http://files.minecraftforge.net/${forge.name}" dest="${download.dir}" usetimestamp="True"/>
+	</target>
+
+	<!-- Setup mcp and forge -->
+	<target name="setup" depends="download-files" if="out-of-date">
+	
+		<delete dir="${mcp.dir}"/>
+
+		<!-- Unzip them -->
+		<unzip dest="${mcp.dir}" src="${download.dir}/${mcp.name}"/>
+
+		<unzip dest="${mcp.dir}" src="${download.dir}/${forge.name}"/>
+
+		<!-- Fix executable permissions -->
+		<chmod dir="${mcp.dir}" perm="ugo+rx" includes="**.sh"/>
+		<chmod file="${mcp.dir}/runtime/bin/astyle-osx" perm="ugo+rx"/>
+
+		<!-- Install forge -->
+		<exec dir="${forge.dir}" executable="cmd" osfamily="windows">
+			<arg line="/c install.cmd"/>
+		</exec>
+
+		<exec dir="${forge.dir}" executable="sh" osfamily="unix">
+			<arg value="install.sh"/>
+		</exec>
+
+	</target>
+
+	<target name="compile" depends="initialize-version,setup">
+
+		<delete dir="${classes.dir}"/>
+		<mkdir dir="${classes.dir}"/>
+		
+		<!-- Copy BC source -->
+		<copy todir="${mcpsrc.dir}">
+			<fileset dir="${src.dir}"/>
+			<filterset>
+				<filter token="VERSION" value="${mod.version}"/>
+			</filterset>
+		</copy>
+
+		<!-- Recompile -->
+		<exec dir="${mcp.dir}" executable="cmd" osfamily="windows">
+			<arg line="/c recompile.bat"/>
+		</exec>
+
+		<exec dir="${mcp.dir}" executable="sh" osfamily="unix">
+			<arg value="recompile.sh"/>
+		</exec>
+
+		<!-- Reobfuscate -->
+		<exec dir="${mcp.dir}" executable="cmd" osfamily="windows">
+			<arg line="/c reobfuscate.bat"/>
+		</exec>
+
+		<exec dir="${mcp.dir}" executable="sh" osfamily="unix">
+			<arg value="reobfuscate.sh"/>
+		</exec>
+
+		<!-- Copy BC classes -->
+		<copy todir="${classes.dir}">
+			<fileset dir="${mcp.dir}/reobf/minecraft"/>
+		</copy>
+
+		<!-- Copy resources -->
+		<copy todir="${classes.dir}">
+			<fileset dir="resources">
+				<exclude name="build.xml"/>
+				<exclude name="build.number"/>
+			</fileset>
+		</copy>
+
+		<!-- Reset src dir to post-forge-install state -->
+		<delete dir="${mcpsrc.dir}/openccsensors"/>
+
+	</target>
+
+	<!-- Package the compiled files -->
+	<target name="package" depends="compile">
+
+		<delete dir="${jar.dir}"/>
+		<mkdir dir="${jar.dir}"/>
+		<jar destfile="${jar.dir}/${mod.name}-${mod.version}.jar" basedir="${classes.dir}"/>
+
+	</target>
+
+	<!-- Default target to run -->
+	<target name="main" depends="package"/>
+
+</project>
