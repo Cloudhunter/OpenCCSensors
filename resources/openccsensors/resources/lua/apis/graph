@@ -1,0 +1,105 @@
+local Graph = {
+	getColor = function(self, value)
+		local colorIndex = math.ceil((value - self.min) / ((self.max - self.min) / #self.gradient))
+		if colorIndex == 0 then colorIndex = 1 end
+		if self.monitor.isColor() then
+			return self.gradient[colorIndex]
+		else
+			return colors.white
+		end
+	end,
+	draw = function(self)
+		self.monitor.setTextScale(0.5)
+		table.insert(self.history, self.update())
+		if self.history[#self.history] > self.max then
+			self.max = self.history[#self.history]
+		elseif self.history[#self.history] < self.min then
+			self.min = self.history[#self.history]
+		end
+		local xLim, yLim = self.monitor.getSize()
+		if #self.history > xLim then table.remove(self.history, 1) end
+		self.monitor.setBackgroundColor(colors.black)
+		self.monitor.setTextColor(colors.white)
+		self.monitor.clear()
+		--we set up our value string for numeric value readout here, but draw it later so it doesn't interfere with the full-screen trace.
+		local valueString, cStart, cEnd = ""
+		if self.valueText then
+			valueString = self.valueText..": "
+			cStart = #valueString + 1
+			valueString = valueString..tostring(self.history[#self.history])
+			cEnd = #valueString
+			valueString = valueString.." / "..self.max
+		end
+		for i=1, #self.history do
+			local yPosition = yLim - math.ceil((yLim - 1) * (self.history[i] - self.min) / (self.max - self.min))
+			self.monitor.setCursorPos(i, yPosition)
+			if yPosition == 2 then
+				if #valueString > 0 and i >= 2 and i <= #valueString + 1 then
+					--we are writing both trace and value string.
+					self.monitor.setBackgroundColor(self:getColor(self.history[i]))
+					self.monitor.write(string.sub(valueString, i-1, i-1))
+					self.monitor.setBackgroundColor(colors.black)				
+				else
+					--we are only writing trace, which just happens to be at y == 2
+					self.monitor.setBackgroundColor(self:getColor(self.history[i]))
+					self.monitor.write(" ")
+					self.monitor.setBackgroundColor(colors.black)
+				end
+			else
+				--write trace normally
+				self.monitor.setBackgroundColor(self:getColor(self.history[i]))
+				self.monitor.write(" ")
+				self.monitor.setBackgroundColor(colors.black)
+				--but also write valueString if we're in one of those columns.
+				if #valueString > 0 and i >= 2 and i <= #valueString + 1 then
+					self.monitor.setCursorPos(i, 2)
+					if i >= cStart + 1 and i <= cEnd + 1 then
+						self.monitor.setTextColor(self:getColor(self.history[#self.history]))
+					end
+					self.monitor.write(string.sub(valueString, i-1, i-1))
+					self.monitor.setTextColor(colors.white)
+				end
+			end
+		end
+		if #self.history < #valueString + 1 then
+			--draw from wherever we left off.
+			self.monitor.setCursorPos(#self.history + 1, 2)
+			for i=#self.history + 1, #valueString + 1 do
+				if i >= cStart + 1 and i <= cEnd + 1 then
+					self.monitor.setTextColor(self:getColor(self.history[#self.history]))
+				end
+				self.monitor.write(string.sub(valueString, i-1, i-1))
+				self.monitor.setTextColor(colors.white)
+			end
+		end
+	end,
+	tostring = function(self)
+		local valueString = ""
+		if self.valueText then
+			valueString = self.valueText..": "
+		end
+		valueString = valueString..tostring(self.history[#self.history]).." / "..self.max
+		return valueString
+	end,
+}
+
+local gmetatable = {
+	__index = Graph,
+	__tostring = function(g) return g:tostring() end,
+}
+
+function new(monSide, updateFunction, valueText, gradientTable, min, max)
+	if not monSide then return nil, "Must specify monitor side!" end
+	if not updateFunction then return nil, "Must specify update function!" end
+	local g = {
+		min = min or 0,
+		max = max or 1,
+		monitor = peripheral.wrap(monSide),
+		update = updateFunction,
+		history = {},
+		gradient = gradientTable or {colors.red, colors.orange, colors.yellow, colors.lime, colors.green},
+		valueText = valueText,
+	}
+	setmetatable(g, gmetatable)
+	return g
+end
