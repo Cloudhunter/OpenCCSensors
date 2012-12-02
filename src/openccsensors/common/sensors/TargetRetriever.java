@@ -60,6 +60,21 @@ public class TargetRetriever {
 		return map;
 	}
 	
+	public HashMap<String, ArrayList<ISensorTarget>> getLivingEntities(World world, int sx, int sy, int sz, double radius, int direction)
+	{
+		HashMap<String, ArrayList<ISensorTarget>> map = new HashMap<String, ArrayList<ISensorTarget>>();
+		// very temporary and inefficient method:
+		PyramidIterator it = new PyramidIterator(sx,sy,sz,(int) radius,direction);
+		while (it.hasNext()) {
+			Vec3 vec = (Vec3) it.next();
+			for (Entry<String, EntityLiving> entity : LivingEntityHelper.getLivingEntities(world, (int)vec.xCoord, (int)vec.yCoord, (int)vec.zCoord, 0).entrySet())
+			{
+				addTileEntityToHashMapIfValid(sx, sy, sz, entity.getValue(), map, entity.getKey());
+			}
+		}
+				
+		return map;
+	}
 
 	private void addTileEntityToHashMapIfValid(int sx, int sy, int sz, Object entity, HashMap<String, ArrayList<ISensorTarget>> map, String name)
 	{
@@ -87,14 +102,14 @@ public class TargetRetriever {
 		}
 	}
 	
-	public class pyramidIterator implements Iterator
+	public class PyramidIterator implements Iterator
 	{
 		private int currentIndex;
 		private int range;
 		private Vec3 origin;
 		private float rotation;
 		
-		public pyramidIterator(int x, int y, int z, int direction, int range)
+		public PyramidIterator(int x, int y, int z, int direction, int range)
 		{
 			this.currentIndex = 0;
 			this.range = range;
@@ -104,15 +119,16 @@ public class TargetRetriever {
 		
 		private int getDepth(int index)
 		{
-			return (int) Math.ceil( Math.pow((3.0F/4.0F)*index, 1.0F/3.0F) );
+			double x = Math.pow(-1+81*index+9*Math.pow(-2*index+81*index*index, 2), 3);
+			return (int) (Math.ceil((1.0F/6.0F)*(2.0F+1.0F/x+x)));
 		}
 		
 		private Vec3 findRelative(int index)
 		{
 			int z = getDepth(index); // depth of the smallest pyramid with volume >= index
-			int offset = z - (int) (Math.pow(z-1,3)*(4.0F/3.0F));
-			int y = (int) Math.floor((float)offset/(float)(z*2));
-			int x = offset%(z*2);
+			int offset = z - (int) (((4*z*z-4*z+1)*z)/3.0F);
+			int y = (int) Math.floor((float)offset/(float)(z*2-1));
+			int x = offset%(z*2-1);
 			return Vec3.createVectorHelper(x, y, z);
 		}
 		
