@@ -69,12 +69,15 @@ public class BuildCraftSensorInterface implements ISensorInterface {
 
 	@Override
 	public void initRecipes() {
-		GameRegistry
-				.addRecipe(
-						new ItemStack(OpenCCSensors.sensorCard, 1, this.getId()),
-						"ccr", "crp", "rrp", 'r', new ItemStack(Item.redstone),
-						'c', new ItemStack(Item.shovelSteel), 'p',
-						new ItemStack(Item.paper));
+
+		GameRegistry.addRecipe(
+				new ItemStack(OpenCCSensors.sensorCard, 1, this.getId()),
+				"rpr",
+				"rrr",
+				"aaa",
+				'r', new ItemStack(Item.redstone),
+				'a', new ItemStack(Item.paper),
+				'p',new ItemStack(Item.arrow));
 	}
 
 }
