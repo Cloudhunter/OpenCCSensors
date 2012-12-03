@@ -2,11 +2,17 @@ package openccsensors.common.sensors.vanilla;
 
 import java.util.Map;
 
+import cpw.mods.fml.common.registry.GameRegistry;
+
+import net.minecraft.src.Block;
 import net.minecraft.src.BlockFluid;
 import net.minecraft.src.IInventory;
+import net.minecraft.src.Item;
+import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraftforge.liquids.ITankContainer;
+import openccsensors.OpenCCSensors;
 import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.api.ISensorTarget;
@@ -68,8 +74,14 @@ public class LiquidSensorInterface implements ISensorInterface {
 
 	@Override
 	public void initRecipes() {
-		// TODO Auto-generated method stub
-		
+		GameRegistry.addRecipe(
+				new ItemStack(OpenCCSensors.sensorCard, 1, this.getId()),
+				"rwr",
+				"rrr",
+				"aaa",
+				'r', new ItemStack(Item.redstone),
+				'a', new ItemStack(Item.paper),
+				'w',new ItemStack(Item.bucketWater));
 	}
 
 }
