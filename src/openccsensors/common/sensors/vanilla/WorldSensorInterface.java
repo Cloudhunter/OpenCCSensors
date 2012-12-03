@@ -4,7 +4,12 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+import cpw.mods.fml.common.registry.GameRegistry;
+
+import net.minecraft.src.Item;
+import net.minecraft.src.ItemStack;
 import net.minecraft.src.World;
+import openccsensors.OpenCCSensors;
 import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorInterface;
 
@@ -57,8 +62,14 @@ public class WorldSensorInterface implements ISensorInterface {
 
 	@Override
 	public void initRecipes() {
-		// TODO Auto-generated method stub
-
+		GameRegistry.addRecipe(
+				new ItemStack(OpenCCSensors.sensorCard, 1, this.getId()),
+				"rer",
+				"rrr",
+				"aaa",
+				'r', new ItemStack(Item.redstone),
+				'a', new ItemStack(Item.paper),
+				'e',new ItemStack(Item.enderPearl));
 	}
 
 }

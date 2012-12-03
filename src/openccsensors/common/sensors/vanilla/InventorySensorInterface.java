@@ -73,8 +73,12 @@ public class InventorySensorInterface implements ISensorInterface {
 	public void initRecipes() {
 		GameRegistry.addRecipe(
 				new ItemStack(OpenCCSensors.sensorCard, 1, this.getId()),
-				"wwr", "wrr", "rrp", 'w', new ItemStack(Block.planks), 'r',
-				new ItemStack(Item.redstone), 'p', new ItemStack(Item.paper));
+				"rpr",
+				"rrr",
+				"aaa",
+				'r', new ItemStack(Item.redstone),
+				'a', new ItemStack(Item.paper),
+				'p',new ItemStack(Block.planks));
 	}
 
 }

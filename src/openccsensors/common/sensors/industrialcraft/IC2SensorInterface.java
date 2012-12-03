@@ -18,6 +18,7 @@ import openccsensors.common.api.ITargetWrapper;
 import openccsensors.common.helper.TargetHelper;
 import openccsensors.common.sensors.TargetRetriever;
 import openccsensors.common.sensors.industrialcraft.ReactorTarget;
+import net.minecraft.src.Block;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntity;
@@ -98,11 +99,15 @@ public class IC2SensorInterface implements ISensorInterface {
 
 	@Override
 	public void initRecipes() {
+		
 		GameRegistry.addRecipe(
 				new ItemStack(OpenCCSensors.sensorCard, 1, this.getId()),
-				"uur", "urr", "rrp", 'r', new ItemStack(Item.redstone), 'u',
-				ic2.api.Items.getItem("uraniumIngot"), 'p', new ItemStack(
-						Item.paper));
+				"rpr",
+				"rrr",
+				"aaa",
+				'r', new ItemStack(Item.redstone),
+				'a', new ItemStack(Item.paper),
+				'p',ic2.api.Items.getItem("uraniumIngot"));
 	}
 
 }

@@ -13,9 +13,11 @@ import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import net.minecraft.src.Block;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IInventory;
 import net.minecraft.src.InventoryPlayer;
+import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Material;
 import net.minecraft.src.TileEntity;
@@ -36,7 +38,14 @@ public class CommonProxy
 		OpenCCSensors.Blocks.sensorBlock = new BlockSensor( OpenCCSensors.Config.sensorBlockID, Material.rock );
 		GameRegistry.registerBlock(OpenCCSensors.Blocks.sensorBlock);
 		GameRegistry.registerTileEntity(TileEntitySensor.class, "sensor");
-	
+		GameRegistry.addRecipe(
+				new ItemStack(OpenCCSensors.Blocks.sensorBlock, 1, 0),
+				"ooo",
+				"ror",
+				"sss",
+				'o', new ItemStack(Block.obsidian),
+				'r', new ItemStack(Item.redstone),
+				's',new ItemStack(Block.stone));
 		
 		// register turtle peripheral if applicable
 		if (OpenCCSensors.Config.turtlePeripheralEnabled)
