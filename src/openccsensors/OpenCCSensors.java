@@ -30,6 +30,7 @@ public class OpenCCSensors
 	{
 		public static int sensorBlockID;
 		public static int sensorBlockRenderID;
+		public static int sensorCardID;
 		public static boolean turtlePeripheralEnabled;
 	}
 	
@@ -57,6 +58,10 @@ public class OpenCCSensors
 		prop = configFile.get("general", "turtlePeripheralEnabled", true);
 		prop.comment = "Turtle Peripheral Enabled";
 		Config.turtlePeripheralEnabled = prop.getBoolean(true);
+
+		prop = configFile.getItem("sensorCardID", 7486);
+		prop.comment = "The block ID for the sensor card";
+		Config.sensorCardID = prop.getInt();
 		
 		configFile.save();
 	}
@@ -77,7 +82,7 @@ public class OpenCCSensors
 		loadSensorPack("vanilla");
 		loadSensorPack("industrialcraft");
 
-		sensorCard = new SensorCard(12345);
+		sensorCard = new SensorCard(Config.sensorCardID);
 		
 		proxy.registerRenderInformation();
 	}
