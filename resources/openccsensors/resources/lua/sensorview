@@ -158,7 +158,7 @@ local function createGraph(targetNum)
 		graphMatch = targetNum
 		local val, name = findGraphMatch(peripheral.call(graphSide, "getTargetDetails", graphTarget), targetNum, 0, {})
 		local updateFunc = function() return (findGraphMatch(peripheral.call(graphSide, "getTargetDetails", graphTarget), graphMatch, 0, {})) end
-		graphInst = graph.new(monSide, updateFunc, name)
+		graphInst = graph.new(peripheral.wrap(monSide), updateFunc, name)
 		return graphInst
 	end
 end
