@@ -14,7 +14,7 @@ import net.minecraft.src.PotionEffect;
 import net.minecraft.src.Vec3;
 import net.minecraft.src.World;
 
-public class LivingEntityHelper {
+public class EntityHelper {
 
 	public static Map livingToMap( EntityLiving living )
 	{
@@ -66,9 +66,9 @@ public class LivingEntityHelper {
 		return map;
 	}
 
-	public static HashMap<String, EntityLiving> getLivingEntities(World world, int x, int y, int z, double radius)
+	public static HashMap<String, Entity> getEntities(World world, int x, int y, int z, double radius)
 	{
-		HashMap<String, EntityLiving> map = new HashMap<String, EntityLiving>();
+		HashMap<String, Entity> map = new HashMap<String, Entity>();
 		Vec3 sensorPos = Vec3.createVectorHelper(x,y,z);
 		
 		int dChunk = (int) Math.ceil(radius/16.0F);  // calculate the maximum distance in chunks to search in
@@ -82,17 +82,14 @@ public class LivingEntityHelper {
 				{
 					for (Entity entity : subchunk)
 					{
-						if (entity instanceof EntityLiving)
+						Entity entityLiving = (Entity)entity;
+						Vec3 livingPos = Vec3.createVectorHelper(entityLiving.posX, entityLiving.posY, entityLiving.posZ);
+						if (sensorPos.distanceTo(livingPos) <= radius)
 						{
-							EntityLiving entityLiving = (EntityLiving)entity;
-							Vec3 livingPos = Vec3.createVectorHelper(entityLiving.posX, entityLiving.posY, entityLiving.posZ);
-							if (sensorPos.distanceTo(livingPos) <= radius)
-							{
-								// Only append the id when it's not a player. EntityPlayer already appends the id: 
-								String targetName = (entityLiving instanceof EntityPlayer) ? entityLiving.getEntityName() : entityLiving.getEntityName() + entityLiving.entityId;
-								targetName = targetName.replaceAll("\\s","");
-								map.put(targetName, entityLiving);
-							}
+							// Only append the id when it's not a player. EntityPlayer already appends the id: 
+							String targetName = (entityLiving instanceof EntityPlayer) ? entityLiving.getEntityName() : entityLiving.getEntityName() + entityLiving.entityId;
+							targetName = targetName.replaceAll("\\s","");
+							map.put(targetName, entityLiving);
 						}
 					}
 				}

@@ -2,6 +2,8 @@ package openccsensors.common.api;
 
 import java.util.Map;
 
+import openccsensors.common.sensors.SensorCard;
+
 import net.minecraft.src.World;
 
 public interface ISensorInterface 
@@ -12,5 +14,5 @@ public interface ISensorInterface
 	Map getTargetDetails(World world, int x, int y, int z, String target) throws Exception;
 	String[] getMethods();
 	Object[] callMethod(ISensorAccess sensor, int methodID, Object[] args) throws Exception;
-	void initRecipes();
+	void initRecipes(SensorCard card);
 }

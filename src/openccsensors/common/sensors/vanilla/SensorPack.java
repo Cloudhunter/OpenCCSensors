@@ -9,5 +9,6 @@ public class SensorPack {
 		SensorCard.registerInterface(new ProximitySensorInterface());
 		SensorCard.registerInterface(new LiquidSensorInterface());
 		SensorCard.registerInterface(new WorldSensorInterface());
+		SensorCard.registerInterface(new DroppedItemSensorInterface());
 	}
 }

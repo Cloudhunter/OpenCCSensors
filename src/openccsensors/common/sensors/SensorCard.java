@@ -23,6 +23,10 @@ public class SensorCard extends Item implements ISensorCard
 		setHasSubtypes(true);
         this.setMaxDamage(0);
 		setCreativeTab(CreativeTabs.tabRedstone);
+		for (Entry<Integer, ISensorInterface> entry : interfaces.entrySet())
+		{
+			entry.getValue().initRecipes(this);
+		}
 	}
 
 	@Override
@@ -64,5 +68,6 @@ public class SensorCard extends Item implements ISensorCard
 	{
 		interfaces.put(iface.getId(), iface);
 	}
+	
 
 }

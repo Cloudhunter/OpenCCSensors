@@ -14,6 +14,7 @@ import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITargetWrapper;
 import openccsensors.common.helper.TargetHelper;
+import openccsensors.common.sensors.SensorCard;
 import openccsensors.common.sensors.TargetRetriever;
 
 public class BuildCraftSensorInterface implements ISensorInterface {
@@ -21,10 +22,14 @@ public class BuildCraftSensorInterface implements ISensorInterface {
 	private TargetRetriever retriever = new TargetRetriever();
 
 	public BuildCraftSensorInterface() {
-		retriever.registerTarget(IEngineProvider.class, new ITargetWrapper() {
+		retriever.registerTarget(new ITargetWrapper() {
 			@Override
 			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
-				return new EngineTarget((TileEntity) entity);
+				if (entity instanceof IEngineProvider)
+				{
+					return new EngineTarget((TileEntity) entity);
+				}
+				return null;
 			}
 		});
 	}
@@ -68,10 +73,9 @@ public class BuildCraftSensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public void initRecipes() {
-
+	public void initRecipes(SensorCard card) {
 		GameRegistry.addRecipe(
-				new ItemStack(OpenCCSensors.sensorCard, 1, this.getId()),
+				new ItemStack(card, 1, this.getId()),
 				"rpr",
 				"rrr",
 				"aaa",
