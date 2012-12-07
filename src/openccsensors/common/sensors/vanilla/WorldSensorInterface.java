@@ -12,6 +12,7 @@ import net.minecraft.src.World;
 import openccsensors.OpenCCSensors;
 import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorInterface;
+import openccsensors.common.sensors.SensorCard;
 
 public class WorldSensorInterface implements ISensorInterface {
 
@@ -61,9 +62,9 @@ public class WorldSensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public void initRecipes() {
+	public void initRecipes(SensorCard card) {
 		GameRegistry.addRecipe(
-				new ItemStack(OpenCCSensors.sensorCard, 1, this.getId()),
+				new ItemStack(card, 1, this.getId()),
 				"rer",
 				"rrr",
 				"aaa",

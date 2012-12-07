@@ -16,6 +16,7 @@ import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITargetWrapper;
 import openccsensors.common.helper.TargetHelper;
+import openccsensors.common.sensors.SensorCard;
 import openccsensors.common.sensors.TargetRetriever;
 import openccsensors.common.sensors.industrialcraft.ReactorTarget;
 import net.minecraft.src.Block;
@@ -98,10 +99,9 @@ public class IC2SensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public void initRecipes() {
-		
+	public void initRecipes(SensorCard card) {
 		GameRegistry.addRecipe(
-				new ItemStack(OpenCCSensors.sensorCard, 1, this.getId()),
+			new ItemStack(card, 1, this.getId()),
 				"rpr",
 				"rrr",
 				"aaa",

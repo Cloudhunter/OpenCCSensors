@@ -18,6 +18,7 @@ import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITargetWrapper;
 import openccsensors.common.helper.TargetHelper;
+import openccsensors.common.sensors.SensorCard;
 import openccsensors.common.sensors.TargetRetriever;
 
 public class LiquidSensorInterface implements ISensorInterface {
@@ -73,9 +74,9 @@ public class LiquidSensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public void initRecipes() {
-		GameRegistry.addRecipe(
-				new ItemStack(OpenCCSensors.sensorCard, 1, this.getId()),
+	public void initRecipes(SensorCard card) {
+			GameRegistry.addRecipe(
+				new ItemStack(card, 1, this.getId()),
 				"rwr",
 				"rrr",
 				"aaa",
