@@ -8,7 +8,7 @@ import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.Vec3;
 import net.minecraft.src.World;
 import openccsensors.common.api.ISensorTarget;
-import openccsensors.common.helper.LivingEntityHelper;
+import openccsensors.common.helper.EntityHelper;
 
 /*
  * Object to represent a living target
@@ -42,7 +42,7 @@ public class LivingTarget implements ISensorTarget {
 	public Map getDetailInformation(World world) {
 		EntityLiving entityLiving = (EntityLiving) world.getEntityByID(id);
 
-		Map retMap = LivingEntityHelper.livingToMap(entityLiving);
+		Map retMap = EntityHelper.livingToMap(entityLiving);
 
 		if (entityLiving == null) {
 			return null;
