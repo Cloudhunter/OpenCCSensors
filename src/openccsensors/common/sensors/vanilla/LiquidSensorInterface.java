@@ -27,10 +27,14 @@ public class LiquidSensorInterface implements ISensorInterface {
 	
 	public LiquidSensorInterface ()
 	{
-		retriever.registerTarget(ITankContainer.class, new ITargetWrapper() {
+		retriever.registerTarget(new ITargetWrapper() {
 			@Override
 			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
-				return new LiquidTankTarget((TileEntity) entity);
+				if (entity instanceof ITankContainer)
+				{
+					return new LiquidTankTarget((TileEntity) entity);
+				}
+				return null;
 			}
 		});
 	}

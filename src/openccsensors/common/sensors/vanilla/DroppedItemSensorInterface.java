@@ -1,16 +1,19 @@
 package openccsensors.common.sensors.vanilla;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
 import cpw.mods.fml.common.registry.GameRegistry;
 
 import net.minecraft.src.Block;
+import net.minecraft.src.Entity;
+import net.minecraft.src.EntityArrow;
+import net.minecraft.src.EntityItem;
 import net.minecraft.src.EntityLiving;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
+import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
-
 import openccsensors.OpenCCSensors;
 import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorInterface;
@@ -21,48 +24,38 @@ import openccsensors.common.helper.TargetHelper;
 import openccsensors.common.sensors.SensorCard;
 import openccsensors.common.sensors.TargetRetriever;
 
-public class ProximitySensorInterface implements ISensorInterface {
+public class DroppedItemSensorInterface implements ISensorInterface {
 
 	private TargetRetriever retriever = new TargetRetriever();
 	private final double sensingRadius = 16.0F;
 
-	public ProximitySensorInterface() {
+	public DroppedItemSensorInterface() {
 		retriever.registerTarget(new ITargetWrapper() {
 			@Override
 			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
-				if (entity instanceof EntityLiving)
+				if (entity instanceof EntityItem && ((Entity)entity).isEntityAlive())
 				{
-					return new LivingTarget((EntityLiving) entity, sx, sy, sz);
+					return new DroppedItemTarget((Entity) entity, sx, sy, sz);
 				}
 				return null;
 			}
 		});
-	}
 
+	}
+	
 	@Override
 	public String getName() {
-		return "openccsensors.item.proximitysensor";
+		return "openccsensors.item.droppeditemsensor";
 	}
 
 	@Override
 	public String[] getMethods() {
-		return new String[] { "getDirectional", "setDirectional" };
+		return null;
 	}
 
 	@Override
 	public Object[] callMethod(ISensorAccess sensor, int methodID, Object[] args) throws Exception {
-		switch(methodID)
-		{
-		case 0:
-			return new Object[]{ sensor.isDirectional() };
-		case 1:
-			if ((args.length > 0) && (args[0] instanceof Boolean))
-				sensor.setDirectional((Boolean)args[0]);
-			break;
-		default:
-			break;
-		}
-		return new Object[]{};
+		return null;
 	}
 
 	@Override
@@ -70,8 +63,7 @@ public class ProximitySensorInterface implements ISensorInterface {
 			throws Exception {
 
 		return TargetHelper.getBasicInformationForTargets(
-				retriever.getEntities(world, x, y, z, sensingRadius),
-				world);
+				retriever.getEntities(world, x, y, z,  sensingRadius), world);
 
 	}
 
@@ -80,14 +72,13 @@ public class ProximitySensorInterface implements ISensorInterface {
 			throws Exception {
 
 		return TargetHelper.getDetailedInformationForTarget(target,
-				retriever.getEntities(world, x, y, z, sensingRadius),
-				world);
+				retriever.getEntities(world, x, y, z, sensingRadius), world);
 
 	}
 
 	@Override
 	public int getId() {
-		return 17;
+		return 22;
 	}
 
 	@Override
@@ -99,7 +90,7 @@ public class ProximitySensorInterface implements ISensorInterface {
 				"aaa",
 				'r', new ItemStack(Item.redstone),
 				'a', new ItemStack(Item.paper),
-				'p',new ItemStack(Block.pressurePlateStone));
+				'p',new ItemStack(Item.slimeBall));
 	}
 
 }

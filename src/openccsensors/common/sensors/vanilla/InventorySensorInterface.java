@@ -23,10 +23,14 @@ public class InventorySensorInterface implements ISensorInterface {
 	private TargetRetriever retriever = new TargetRetriever();
 
 	public InventorySensorInterface() {
-		retriever.registerTarget(IInventory.class, new ITargetWrapper() {
+		retriever.registerTarget(new ITargetWrapper() {
 			@Override
 			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
-				return new InventoryTarget((TileEntity) entity);
+				if (entity instanceof IInventory)
+				{
+					return new InventoryTarget((TileEntity) entity);
+				}
+				return null;
 			}
 		});
 

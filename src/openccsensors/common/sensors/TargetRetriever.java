@@ -5,29 +5,22 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import net.minecraft.src.Entity;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.Vec3;
 import net.minecraft.src.World;
 
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITargetWrapper;
-import openccsensors.common.helper.LivingEntityHelper;
+import openccsensors.common.helper.EntityHelper;
 
 public class TargetRetriever {
 
-	ArrayList<TargetPair> targets = new ArrayList<TargetPair>();
+	ArrayList<ITargetWrapper> targets = new ArrayList<ITargetWrapper>();
 	
-	public void registerTarget(Class entity, ITargetWrapper wrapper)
+	public void registerTarget(ITargetWrapper wrapper)
 	{
-		targets.add(new TargetPair(entity, wrapper));
-	}
-	
-	public void registerTargets(Class[] entities, ITargetWrapper wrapper)
-	{
-		for (Class entityClass : entities)
-		{
-			targets.add(new TargetPair(entityClass, wrapper));
-		}
+		targets.add(wrapper);
 	}
 	
 	public HashMap<String, ArrayList<ISensorTarget>> getAdjacentTiles(World world, int sx, int sy, int sz)
@@ -48,11 +41,11 @@ public class TargetRetriever {
 		return map;
 	}
 	
-	public HashMap<String, ArrayList<ISensorTarget>> getLivingEntities(World world, int sx, int sy, int sz, double radius)
+	public HashMap<String, ArrayList<ISensorTarget>> getEntities(World world, int sx, int sy, int sz, double radius)
 	{
 		HashMap<String, ArrayList<ISensorTarget>> map = new HashMap<String, ArrayList<ISensorTarget>>();
 
-		for (Entry<String, EntityLiving> entity : LivingEntityHelper.getLivingEntities(world, sx, sy, sz, radius).entrySet())
+		for (Entry<String, Entity> entity : EntityHelper.getEntities(world, sx, sy, sz, radius).entrySet())
 		{
 			addTileEntityToHashMapIfValid(sx, sy, sz, entity.getValue(), map, entity.getKey());
 		}
@@ -60,14 +53,14 @@ public class TargetRetriever {
 		return map;
 	}
 	
-	public HashMap<String, ArrayList<ISensorTarget>> getLivingEntities(World world, int sx, int sy, int sz, double radius, int direction)
+	public HashMap<String, ArrayList<ISensorTarget>> getEntities(World world, int sx, int sy, int sz, double radius, int direction)
 	{
 		HashMap<String, ArrayList<ISensorTarget>> map = new HashMap<String, ArrayList<ISensorTarget>>();
 		// very temporary and inefficient method:
 		PyramidIterator it = new PyramidIterator(sx,sy,sz,(int) radius,direction);
 		while (it.hasNext()) {
 			Vec3 vec = (Vec3) it.next();
-			for (Entry<String, EntityLiving> entity : LivingEntityHelper.getLivingEntities(world, (int)vec.xCoord, (int)vec.yCoord, (int)vec.zCoord, 0).entrySet())
+			for (Entry<String, Entity> entity : EntityHelper.getEntities(world, (int)vec.xCoord, (int)vec.yCoord, (int)vec.zCoord, 0).entrySet())
 			{
 				addTileEntityToHashMapIfValid(sx, sy, sz, entity.getValue(), map, entity.getKey());
 			}
@@ -80,23 +73,23 @@ public class TargetRetriever {
 	{
 		if (entity != null)
 		{
-			for (TargetPair pair : targets)
+			for (ITargetWrapper wrapper : targets)
 			{
-				if (pair.entityClass.isInstance(entity))
+				ISensorTarget target = wrapper.createNew(entity, sx, sy, sz);
+				if (target != null)
 				{
 					String _name = name;
 					if ( _name == null )
 					{
 						_name = entity.toString();
 					}
-					
 					ArrayList<ISensorTarget> arr = map.get(_name);
 					if (arr == null)
 					{
 						arr = new ArrayList<ISensorTarget>();
 						map.put(_name, arr);
 					}
-					arr.add(pair.wrapper.createNew(entity, sx, sy, sz));
+					arr.add(target);
 				}
 			}
 		}
@@ -153,19 +146,6 @@ public class TargetRetriever {
 		@Override
 		public void remove() {
 		}
-	}
-	
-	protected class TargetPair {
-		
-		public Class entityClass;
-		public ITargetWrapper wrapper;
-		
-		public TargetPair(Class entityClass, ITargetWrapper wrapper)
-		{
-			this.entityClass = entityClass;
-			this.wrapper = wrapper;
-		}
-		
 	}
 	
 }

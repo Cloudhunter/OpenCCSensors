@@ -22,10 +22,14 @@ public class BuildCraftSensorInterface implements ISensorInterface {
 	private TargetRetriever retriever = new TargetRetriever();
 
 	public BuildCraftSensorInterface() {
-		retriever.registerTarget(IEngineProvider.class, new ITargetWrapper() {
+		retriever.registerTarget(new ITargetWrapper() {
 			@Override
 			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
-				return new EngineTarget((TileEntity) entity);
+				if (entity instanceof IEngineProvider)
+				{
+					return new EngineTarget((TileEntity) entity);
+				}
+				return null;
 			}
 		});
 	}

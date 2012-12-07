@@ -30,37 +30,47 @@ public class IC2SensorInterface implements ISensorInterface {
 	private TargetRetriever retriever = new TargetRetriever();
 
 	public IC2SensorInterface() {
-		retriever.registerTarget(IReactor.class, new ITargetWrapper() {
+		retriever.registerTarget(new ITargetWrapper() {
 			@Override
 			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
-				return new ReactorTarget((TileEntity) entity);
+				if (entity instanceof IReactor)
+				{
+					return new ReactorTarget((TileEntity) entity);
+				}
+				else if (entity instanceof IReactorChamber)
+				{
+					return new ReactorTarget(
+							(TileEntity) ((IReactorChamber) entity).getReactor());
+				}
+				return null;
 			}
 		});
 
-		retriever.registerTarget(IEnergyStorage.class, new ITargetWrapper() {
+		retriever.registerTarget(new ITargetWrapper() {
 			@Override
 			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
-				return new EnergyStorageTarget((TileEntity) entity);
+				if (entity instanceof IEnergyStorage)
+				{
+					return new EnergyStorageTarget((TileEntity) entity);
+				}
+				return null;
 			}
 		});
 
-		retriever.registerTarget(IReactorChamber.class, new ITargetWrapper() {
+
+		retriever.registerTarget(new ITargetWrapper() {
 			@Override
-			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
-				return new ReactorTarget(
-						(TileEntity) ((IReactorChamber) entity).getReactor());
+			public ISensorTarget createNew(Object entity, int sx,
+					int sy, int sz) {
+				if (entity instanceof IEnergySink ||
+					entity instanceof IEnergySource ||
+					entity instanceof IEnergyConductor)
+				{
+					return new EnergyConductorTarget((TileEntity) entity);
+				}
+				return null;
 			}
 		});
-
-		retriever.registerTargets(new Class[] { IEnergySink.class,
-				IEnergySource.class, IEnergyConductor.class },
-				new ITargetWrapper() {
-					@Override
-					public ISensorTarget createNew(Object entity, int sx,
-							int sy, int sz) {
-						return new EnergyConductorTarget((TileEntity) entity);
-					}
-				});
 	}
 
 	@Override
