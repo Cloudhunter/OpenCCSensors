@@ -26,7 +26,7 @@ public class WorldSensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public Map getBasicTarget(World world, int x, int y, int z)
+	public Map getBasicTarget(ISensorAccess sensor, World world, int x, int y, int z)
 			throws Exception {
 		HashMap retMap = new HashMap();
 		HashMap currentDetails = new HashMap();
@@ -36,7 +36,7 @@ public class WorldSensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public Map getTargetDetails(World world, int x, int y, int z, String target)
+	public Map getTargetDetails(ISensorAccess sensor, World world, int x, int y, int z, String target)
 			throws Exception {
 		
 		HashMap retMap = new HashMap();
@@ -72,4 +72,9 @@ public class WorldSensorInterface implements ISensorInterface {
 				'e',new ItemStack(Item.enderPearl));
 	}
 
+	@Override
+	public boolean isDirectionalEnabled() {
+		return false;
+	}
+	
 }

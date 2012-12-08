@@ -40,31 +40,23 @@ public class ProximitySensorInterface implements ISensorInterface {
 
 	@Override
 	public String[] getMethods() {
-		return new String[] { "getDirectional", "setDirectional" };
+		return null;
 	}
 
 	@Override
 	public Object[] callMethod(ISensorAccess sensor, int methodID, Object[] args) throws Exception {
-		switch(methodID)
-		{
-		case 0:
-			return new Object[]{ sensor.isDirectional() };
-		case 1:
-			if ((args.length > 0) && (args[0] instanceof Boolean))
-				sensor.setDirectional((Boolean)args[0]);
-			break;
-		default:
-			break;
-		}
-		return new Object[]{};
+		return null;
 	}
 
 	@Override
-	public Map getBasicTarget(World world, int x, int y, int z)
+	public Map getBasicTarget(ISensorAccess sensor, World world, int x, int y, int z)
 			throws Exception {
 
 		HashMap targets;
-		targets = retriever.getLivingEntities(world, x, y, z, sensingRadius);
+		if (sensor.isDirectional())
+			targets = retriever.getLivingEntities(world, x, y, z, 2*sensingRadius, sensor.getSensorEnvironment().getFacing());
+		else
+			targets = retriever.getLivingEntities(world, x, y, z, sensingRadius);
 		
 		return TargetHelper.getBasicInformationForTargets(
 				targets,
@@ -73,7 +65,7 @@ public class ProximitySensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public Map getTargetDetails(World world, int x, int y, int z, String target)
+	public Map getTargetDetails(ISensorAccess sensor, World world, int x, int y, int z, String target)
 			throws Exception {
 
 		return TargetHelper.getDetailedInformationForTarget(target,
@@ -97,6 +89,11 @@ public class ProximitySensorInterface implements ISensorInterface {
 				'r', new ItemStack(Item.redstone),
 				'a', new ItemStack(Item.paper),
 				'p',new ItemStack(Block.pressurePlateStone));
+	}
+	
+	@Override
+	public boolean isDirectionalEnabled() {
+		return false; // disabled for now
 	}
 
 }

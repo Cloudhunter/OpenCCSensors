@@ -11,6 +11,7 @@ import net.minecraft.src.World;
 
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITargetWrapper;
+import openccsensors.common.core.OCSLog;
 import openccsensors.common.helper.LivingEntityHelper;
 
 public class TargetRetriever {
@@ -60,6 +61,7 @@ public class TargetRetriever {
 		return map;
 	}
 	
+	// unused for now:
 	public HashMap<String, ArrayList<ISensorTarget>> getLivingEntities(World world, int sx, int sy, int sz, double radius, int direction)
 	{
 		HashMap<String, ArrayList<ISensorTarget>> map = new HashMap<String, ArrayList<ISensorTarget>>();
@@ -67,7 +69,8 @@ public class TargetRetriever {
 		PyramidIterator it = new PyramidIterator(sx,sy,sz,(int) radius,direction);
 		while (it.hasNext()) {
 			Vec3 vec = (Vec3) it.next();
-			for (Entry<String, EntityLiving> entity : LivingEntityHelper.getLivingEntities(world, (int)vec.xCoord, (int)vec.yCoord, (int)vec.zCoord, 0).entrySet())
+			OCSLog.info("Scanning block at :%s", vec.toString());
+			for (Entry<String, EntityLiving> entity : LivingEntityHelper.getLivingEntities(world, (int)vec.xCoord, (int)vec.yCoord, (int)vec.zCoord, 1).entrySet())
 			{
 				addTileEntityToHashMapIfValid(sx, sy, sz, entity.getValue(), map, entity.getKey());
 			}
@@ -102,6 +105,7 @@ public class TargetRetriever {
 		}
 	}
 	
+	// maths are wrong in this one
 	public class PyramidIterator implements Iterator
 	{
 		private int currentIndex;
@@ -141,7 +145,7 @@ public class TargetRetriever {
 		
 		@Override
 		public boolean hasNext() {
-			
+			OCSLog.info("Depth of next block:%d", getDepth(currentIndex));
 			return getDepth(currentIndex) <= range;
 		}
 

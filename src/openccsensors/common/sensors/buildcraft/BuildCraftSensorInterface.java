@@ -45,7 +45,7 @@ public class BuildCraftSensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public Map getBasicTarget(World world, int x, int y, int z)
+	public Map getBasicTarget(ISensorAccess sensor, World world, int x, int y, int z)
 			throws Exception {
 
 		return TargetHelper.getBasicInformationForTargets(
@@ -54,7 +54,7 @@ public class BuildCraftSensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public Map getTargetDetails(World world, int x, int y, int z, String target)
+	public Map getTargetDetails(ISensorAccess sensor, World world, int x, int y, int z, String target)
 			throws Exception {
 
 		return TargetHelper.getDetailedInformationForTarget(target,
@@ -80,4 +80,8 @@ public class BuildCraftSensorInterface implements ISensorInterface {
 				'p',new ItemStack(Item.arrow));
 	}
 
+	@Override
+	public boolean isDirectionalEnabled() {
+		return false;
+	}	
 }

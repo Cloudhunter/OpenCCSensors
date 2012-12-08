@@ -62,7 +62,7 @@ implements ITurtlePeripheral, ISensorAccess
 	@Override
 	public String[] getMethodNames() 
 	{
-		return new String[] { "getTargets", "getTargetDetails", "getSensorName", "getSensorMethods", "sensorCardCall" };
+		return new String[] { "getTargets", "getTargetDetails", "getSensorName", "getSensorMethods", "sensorCardCall", "isDirectional", "setDirectional" };
 	}
 
 	@Override
@@ -87,13 +87,13 @@ implements ITurtlePeripheral, ISensorAccess
 		switch (method)
 		{
 			case 0:
-				return new Object[] { sensorCard.getBasicTarget(env.getWorld(), (int) vec.xCoord, (int) vec.yCoord, (int) vec.zCoord) };
+				return new Object[] { sensorCard.getBasicTarget(this, env.getWorld(), (int) vec.xCoord, (int) vec.yCoord, (int) vec.zCoord) };
 			case 1:
 				if (arguments.length > 0)
 				{
 					if (arguments[0] instanceof String)
 					{
-						return new Object[]{ sensorCard.getTargetDetails(env.getWorld(), (int) vec.xCoord, (int) vec.yCoord, (int) vec.zCoord, arguments[0].toString()) };
+						return new Object[]{ sensorCard.getTargetDetails(this, env.getWorld(), (int) vec.xCoord, (int) vec.yCoord, (int) vec.zCoord, arguments[0].toString()) };
 					}
 				}
 				throw new Exception("Invalid arguments. Expected String.");
@@ -121,6 +121,20 @@ implements ITurtlePeripheral, ISensorAccess
 					}
 				}
 				throw new Exception("Invalid arguments. Expected String.");
+			case 5:
+				return new Object[]{ this.isDirectional() };
+			case 6:
+				if (!sensorCard.isDirectionalEnabled())
+					return new Object[]{false};
+				if (arguments.length > 0)
+				{
+					if (arguments[0] instanceof Boolean)
+					{
+						this.setDirectional((Boolean)arguments[0]);
+						return new Object[]{true};
+					}
+				}
+				throw new Exception("Invalid arguments. Expected Boolean.");
 		}
 		
 		return null;

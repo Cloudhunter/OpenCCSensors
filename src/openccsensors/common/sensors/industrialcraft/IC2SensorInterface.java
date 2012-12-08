@@ -78,13 +78,13 @@ public class IC2SensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public Map getBasicTarget(World world, int x, int y, int z) {
+	public Map getBasicTarget(ISensorAccess sensor, World world, int x, int y, int z) {
 		return TargetHelper.getBasicInformationForTargets(
 				retriever.getAdjacentTiles(world, x, y, z), world);
 	}
 
 	@Override
-	public Map getTargetDetails(World world, int x, int y, int z, String target)
+	public Map getTargetDetails(ISensorAccess sensor, World world, int x, int y, int z, String target)
 			throws Exception {
 
 		return TargetHelper.getDetailedInformationForTarget(target,
@@ -110,4 +110,9 @@ public class IC2SensorInterface implements ISensorInterface {
 				'p',ic2.api.Items.getItem("uraniumIngot"));
 	}
 
+	@Override
+	public boolean isDirectionalEnabled() {
+		return false;
+	}
+	
 }
