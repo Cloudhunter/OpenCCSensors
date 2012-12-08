@@ -50,7 +50,7 @@ public class LiquidSensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public Map getBasicTarget(World world, int x, int y, int z)
+	public Map getBasicTarget(ISensorAccess sensor, World world, int x, int y, int z)
 			throws Exception {
 
 		return TargetHelper.getBasicInformationForTargets(
@@ -59,7 +59,7 @@ public class LiquidSensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public Map getTargetDetails(World world, int x, int y, int z, String target)
+	public Map getTargetDetails(ISensorAccess sensor, World world, int x, int y, int z, String target)
 			throws Exception {
 		return TargetHelper.getDetailedInformationForTarget(target,
 				retriever.getAdjacentTiles(world, x, y, z), world);
@@ -89,4 +89,8 @@ public class LiquidSensorInterface implements ISensorInterface {
 				'w',new ItemStack(Item.bucketWater));
 	}
 
+	@Override
+	public boolean isDirectionalEnabled() {
+		return false;
+	}
 }

@@ -59,7 +59,7 @@ public class DroppedItemSensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public Map getBasicTarget(World world, int x, int y, int z)
+	public Map getBasicTarget(ISensorAccess sensor, World world, int x, int y, int z)
 			throws Exception {
 
 		return TargetHelper.getBasicInformationForTargets(
@@ -68,7 +68,7 @@ public class DroppedItemSensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public Map getTargetDetails(World world, int x, int y, int z, String target)
+	public Map getTargetDetails(ISensorAccess sensor, World world, int x, int y, int z, String target)
 			throws Exception {
 
 		return TargetHelper.getDetailedInformationForTarget(target,
@@ -91,6 +91,12 @@ public class DroppedItemSensorInterface implements ISensorInterface {
 				'r', new ItemStack(Item.redstone),
 				'a', new ItemStack(Item.paper),
 				'p',new ItemStack(Item.slimeBall));
+	}
+
+	@Override
+	public boolean isDirectionalEnabled() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
