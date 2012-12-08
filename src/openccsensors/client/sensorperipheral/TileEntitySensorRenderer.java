@@ -39,17 +39,8 @@ public class TileEntitySensorRenderer extends TileEntitySpecialRenderer {
 		this.bindTextureByName("/openccsensors/resources/images/sensorblock.png");
 		GL11.glPushMatrix();
 
-		int placing = 0;
-		int rotation = 0;
-		placing = (tile.getWorldObj() != null) ? tile.getWorldObj()
-				.getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord) * 90
-				: 3;
-		if (tile.getDirectional()) {
-			rotation = placing;
-		} else {
-			rotation = tile.getFacing();
-			tile.increaseOrientation(5); // i wanted this to be partialTick*x, but the animation is WORSE
-		}
+		int placing = tile.getFacing()*90;
+		int rotation = tile.isDirectional() ? placing : (int)tile.getRotation();
 		this.modelSensor.renderSensor(rotation);
 
 		GL11.glPopMatrix();
