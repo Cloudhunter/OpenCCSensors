@@ -95,6 +95,7 @@ public class TargetRetriever {
 		}
 	}
 	
+	// maths are wrong in this one
 	public class PyramidIterator implements Iterator
 	{
 		private int currentIndex;
@@ -134,7 +135,6 @@ public class TargetRetriever {
 		
 		@Override
 		public boolean hasNext() {
-			
 			return getDepth(currentIndex) <= range;
 		}
 

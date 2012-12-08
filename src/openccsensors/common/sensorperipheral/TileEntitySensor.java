@@ -22,13 +22,14 @@ implements ISensorEnvironment, IPeripheral, IInventory
 
 	private IInventory inventory;
 	
-	private float orientation;
+	private float rotation;
+	private final static float rotationSpeed = 3.0F; //degrees per tick
 	
 	public TileEntitySensor()
 	{
 		peripheral = new PeripheralSensor(this, false);
 		inventory = new InventoryBasic("Sensor", 1);
-		orientation = 0;
+		rotation = 0;
 	}
 	
     public void readFromNBT(NBTTagCompound nbttagcompound)
@@ -59,12 +60,19 @@ implements ISensorEnvironment, IPeripheral, IInventory
     
     public int getFacing()
     {
-    	return (int)orientation;
+    	return (worldObj == null) ? 0 : this.getBlockMetadata();
     }
     
-    public void increaseOrientation(float increase)
+    public float getRotation()
     {
-    	orientation = (orientation+increase)%360;
+    	return rotation;
+    }
+    
+    @Override
+    public void updateEntity()
+    {
+    	super.updateEntity();
+    	rotation = (rotation+rotationSpeed)%360;
     }
     
     @Override 
@@ -89,7 +97,7 @@ implements ISensorEnvironment, IPeripheral, IInventory
     
     // IPeripheral interface - basically a proxy to the SensorPeripheral, allowing us to reuse code for the turtle peripheral
 
-    public boolean getDirectional()
+    public boolean isDirectional()
     {
     	return peripheral.isDirectional();
     }
