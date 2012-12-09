@@ -25,13 +25,18 @@ public class TargetRetriever {
 	
 	public HashMap<String, ArrayList<ISensorTarget>> getAdjacentTiles(World world, int sx, int sy, int sz)
 	{
+		return getAdjacentTiles(world, sx, sy, sz, 2);
+	}
+	
+	public HashMap<String, ArrayList<ISensorTarget>> getAdjacentTiles(World world, int sx, int sy, int sz, int distance)
+	{
 		HashMap<String, ArrayList<ISensorTarget>> map = new HashMap<String, ArrayList<ISensorTarget>>();
 
-		for (int x=-2; x <= 2; x++)
+		for (int x=-distance; x <= distance; x++)
 		{
-			for (int y =- 2; y <= 2; y++)
+			for (int y =- distance; y <= distance; y++)
 			{
-				for (int z =- 2; z <= 2; z++)
+				for (int z =- distance; z <= distance; z++)
 				{
 					addTileEntityToHashMapIfValid(sx, sy, sz, world.getBlockTileEntity(sx + x, sy + y, sz + z), map, String.format("%s,%s,%s", x, y, z));
 				}
