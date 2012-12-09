@@ -6,5 +6,6 @@ openccsensors.item.buildcraftsensor.name=BuildCraft Sensorcard
 openccsensors.item.liquidsensor.name=Liquid Sensorcard
 openccsensors.item.worldsensor.name=World Sensorcard
 openccsensors.item.droppeditemsensor.name=Dropped Item Sensorcard
+openccsensors.item.signsensor.name=Sign Sensorcard
 openccsensors.gui.sensor=Sensor
 openccsensors.upgrade.adjective=Sensor
