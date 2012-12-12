@@ -30,9 +30,7 @@ public class LiquidTankTarget extends TileSensorTarget implements ISensorTarget{
 				yCoord, zCoord);
 
 		HashMap retMap = new HashMap();
-		
 		ILiquidTank[] tanks = tankContainer.getTanks(ForgeDirection.UNKNOWN);
-		
 		LiquidStack stack;
 		ItemStack istack;
 		Item item;
@@ -41,7 +39,6 @@ public class LiquidTankTarget extends TileSensorTarget implements ISensorTarget{
 		for (ILiquidTank tank : tanks)
 		{
 			tankProperties = new HashMap();
-			tankProperties.put("Amount",  tank.getLiquid().amount);
 			tankProperties.put("Capacity",  tank.getCapacity());
 			
 			stack = tank.getLiquid();
@@ -54,10 +51,16 @@ public class LiquidTankTarget extends TileSensorTarget implements ISensorTarget{
 					if (istack.getItem() != null)
 					{
 						tankProperties.put("Name",  istack.getDisplayName());
+						tankProperties.put("Amount",  stack.amount);
 				
 					}
 				}
 			}
+			if (!tankProperties.containsKey("Amount"))
+			{
+				tankProperties.put("Amount", 0);
+			}
+			
 			retMap.put(i, tankProperties);
 			i++;
 		}

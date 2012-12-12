@@ -56,9 +56,9 @@ public class LivingTarget implements ISensorTarget {
 
 	private void addPositionToMap(EntityLiving living, Map map) {
 		HashMap<String, Integer> pos = new HashMap<String, Integer>();
-		pos.put("X", ((Double) living.posX).intValue() - (int) sensorPos.xCoord);
-		pos.put("Y", ((Double) living.posY).intValue() - (int) sensorPos.yCoord);
-		pos.put("Z", ((Double) living.posZ).intValue() - (int) sensorPos.zCoord);
+		pos.put("X", ((Double) living.posX).intValue() - (int) (sensorPos.xCoord + 0.5));
+		pos.put("Y", ((Double) living.posY).intValue() - (int) (sensorPos.yCoord + 0.5));
+		pos.put("Z", ((Double) living.posZ).intValue() - (int) (sensorPos.zCoord + 0.5));
 		map.put("Position", pos);
 	}
 
