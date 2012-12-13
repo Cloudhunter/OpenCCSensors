@@ -117,7 +117,7 @@ public class IC2SensorInterface implements ISensorInterface {
 				"aaa",
 				'r', new ItemStack(Item.redstone),
 				'a', new ItemStack(Item.paper),
-				'p',ic2.api.Items.getItem("uraniumIngot"));
+				'p',ic2.api.Items.getItem("copperCableItem"));
 	}
 
 	@Override
