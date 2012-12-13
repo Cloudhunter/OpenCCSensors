@@ -1,6 +1,10 @@
 package openccsensors.client.sensorperipheral;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import net.minecraft.src.ModelBase;
+import net.minecraft.src.ModelBox;
 import net.minecraft.src.ModelRenderer;
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
@@ -10,11 +14,11 @@ public class ModelSensor extends ModelBase
 {
     /** The board on a sign that has the writing on it. */
     public ModelRenderer sensorBase = (new ModelRenderer(this, 0, 0)).setTextureSize(64, 64);
-    public ModelRenderer sensorIcon;
     public ModelRenderer sensorAxel;
     public ModelRenderer sensorDishCenter;
     public ModelRenderer sensorDishLeft;
     public ModelRenderer sensorDishRight;
+    public HashMap<Integer,ModelRenderer> sensorIcons;
     public ModelSensor()
     {
         this.sensorBase.addBox(-8.0F, -8.0F, -8.0F, 16, 4, 16, 0.0F);
@@ -39,6 +43,8 @@ public class ModelSensor extends ModelBase
         this.sensorAxel.addChild(sensorDishCenter);
         this.sensorDishCenter.addChild(sensorDishLeft);
         this.sensorDishCenter.addChild(sensorDishRight);   
+        sensorIcons = new HashMap<Integer, ModelRenderer>();
+        
     }
 
     /**
@@ -54,9 +60,19 @@ public class ModelSensor extends ModelBase
     public void renderIcon(int iconIndex)
     {
     	iconIndex--;
-    	this.sensorIcon = new ModelRenderer(this,16*(iconIndex%16), 16*((int)Math.floor(iconIndex/16.0F+0.5F))).setTextureSize(256, 256);
-        this.sensorIcon.addBox(-8.0F, 3.6F, -20.0F, 16, 0, 16, 0.0F);
-        this.sensorIcon.rotateAngleX = (float) (Math.PI);
-    	this.sensorIcon.render(0.0625F);
+    	ModelRenderer currentIconRenderer;
+    	if (!sensorIcons.containsKey(iconIndex))
+    	{
+    		currentIconRenderer = new ModelRenderer(this, 16*(iconIndex%16), 16*((int)Math.floor(iconIndex/16.0F+0.5F))).setTextureSize(256, 256);
+    		currentIconRenderer.addBox(-8.0F, 3.6F, -20.0F, 16, 0, 16, 0.0F);
+    		sensorIcons.put(iconIndex, currentIconRenderer);
+    	}
+    	else
+    	{
+    		currentIconRenderer = sensorIcons.get(iconIndex);
+    	}
+    	
+    	currentIconRenderer.rotateAngleX = (float) (Math.PI);
+    	currentIconRenderer.render(0.0625F);
     }
 }
