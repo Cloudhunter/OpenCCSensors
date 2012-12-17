@@ -26,7 +26,7 @@ public class ReactorTarget extends TileSensorTarget implements ISensorTarget {
 
 		retMap.put("Heat", reactor.getHeat());
 		retMap.put("MaxHeat", reactor.getMaxHeat());
-		retMap.put("Output", reactor.getOutput() * new IC2Reactor().getEUOutput());
+		retMap.put("Output", reactor.getOutput() * IC2Reactor.getEUOutput());
 		retMap.put("Active", reactor.produceEnergy());
 
 		return retMap;
