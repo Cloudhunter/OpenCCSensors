@@ -4,11 +4,13 @@ import java.util.Map;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 import net.minecraft.src.Block;
+import net.minecraft.src.CraftingManager;
 import net.minecraft.src.IInventory;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import openccsensors.OpenCCSensors;
 import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorInterface;
@@ -76,14 +78,17 @@ public class InventorySensorInterface implements ISensorInterface {
 
 	@Override
 	public void initRecipes(SensorCard card) {
-		GameRegistry.addRecipe(
-				new ItemStack(card, 1, this.getId()),
+		CraftingManager.getInstance().getRecipeList().add(new ShapedOreRecipe(
+			new ItemStack(card, 1, this.getId()),
+			new Object[] {
 				"rpr",
 				"rrr",
 				"aaa",
-				'r', new ItemStack(Item.redstone),
-				'a', new ItemStack(Item.paper),
-				'p',new ItemStack(Block.planks));
+				Character.valueOf('r'), new ItemStack(Item.redstone),
+				Character.valueOf('a'), new ItemStack(Item.paper),
+				Character.valueOf('p'), "plankWood"					
+			}
+		));
 	}
 
 	@Override
