@@ -1,5 +1,8 @@
 package openccsensors.common.sensorperipheral;
 
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 import openccsensors.common.core.ISensorEnvironment;
 import dan200.computer.api.IComputerAccess;
 import dan200.computer.api.IPeripheral;
@@ -24,6 +27,7 @@ implements ISensorEnvironment, IPeripheral, IInventory
 	
 	private float rotation;
 	private final static float rotationSpeed = 3.0F; //degrees per tick
+	
 	
 	public TileEntitySensor()
 	{
@@ -72,6 +76,7 @@ implements ISensorEnvironment, IPeripheral, IInventory
     public void updateEntity()
     {
     	super.updateEntity();
+    	peripheral.update();
     	rotation = (rotation+rotationSpeed)%360;
     }
     
@@ -218,5 +223,6 @@ implements ISensorEnvironment, IPeripheral, IInventory
 
 	@Override
 	public void closeChest() {}
+	
 	
 }
