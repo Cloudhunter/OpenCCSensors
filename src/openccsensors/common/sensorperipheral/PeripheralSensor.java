@@ -1,6 +1,7 @@
 package openccsensors.common.sensorperipheral;
 
 import java.util.Arrays;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 
@@ -8,6 +9,7 @@ import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorCard;
 import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.core.ISensorEnvironment;
+import openccsensors.common.core.OCSLog;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntity;
@@ -32,6 +34,22 @@ implements ITurtlePeripheral, ISensorAccess
 	
 	private boolean directional;
 
+	public ConcurrentLinkedQueue<MethodCallQueueItem> callQueue = new ConcurrentLinkedQueue<MethodCallQueueItem>();
+	
+	public class MethodCallQueueItem
+	{
+		public IComputerAccess computer;
+		public int method;
+		public Object[] arguments;
+		
+		public MethodCallQueueItem(IComputerAccess computer, int method, Object[] arguments)
+		{
+			this.computer = computer;
+			this.method = method;
+			this.arguments = arguments;
+		}
+	}
+	
 	public PeripheralSensor(ISensorEnvironment _env, boolean _turtle) 
 	{
 		env = _env;
@@ -68,6 +86,31 @@ implements ITurtlePeripheral, ISensorAccess
 	@Override
 	public Object[] callMethod(IComputerAccess computer, int method, Object[] arguments) throws Exception 
 	{
+		callQueue.add(new MethodCallQueueItem(computer, method, arguments));
+		return null;
+	}
+
+	@Override
+	public boolean canAttachToSide(int side) 
+	{
+		return true;
+	}
+
+	@Override
+	public void attach(IComputerAccess computer, String computerSide) 
+	{
+			//computer.mountFixedDir("ocs", "openccsensors/resources/lua", true);
+	}
+
+	@Override
+	public void detach(IComputerAccess computer) 
+	{
+		
+	}
+
+	private Object[] processQueueItem(IComputerAccess computer, int method, Object[] arguments) throws Exception
+	{
+
 		if (sensorItemStack != env.getSensorCard())
 		{
 			sensorItemStack = env.getSensorCard();
@@ -139,28 +182,26 @@ implements ITurtlePeripheral, ISensorAccess
 		
 		return null;
 	}
-
-	@Override
-	public boolean canAttachToSide(int side) 
-	{
-		return true;
-	}
-
-	@Override
-	public void attach(IComputerAccess computer, String computerSide) 
-	{
-			//computer.mountFixedDir("ocs", "openccsensors/resources/lua", true);
-	}
-
-	@Override
-	public void detach(IComputerAccess computer) 
-	{
-		
-	}
-
+	
 	@Override
 	public void update() 
 	{
+		OCSLog.info("TEst");
+    	MethodCallQueueItem item = callQueue.poll();
+    	while (item != null)
+    	{
+    		try {
+				
+    			Object[] response = processQueueItem(item.computer,  item.method, item.arguments);
+				item.computer.queueEvent("ocs_response", response);
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+			
+			}
+    		item = callQueue.poll();
+    	}
+    	
 	}
 	
 	private ISensorInterface getSensorCard() throws Exception
