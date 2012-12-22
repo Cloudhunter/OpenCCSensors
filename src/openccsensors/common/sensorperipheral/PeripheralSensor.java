@@ -36,14 +36,18 @@ implements ITurtlePeripheral, ISensorAccess
 
 	public ConcurrentLinkedQueue<MethodCallQueueItem> callQueue = new ConcurrentLinkedQueue<MethodCallQueueItem>();
 	
+	private int methodCallId = 0;
+	
 	public class MethodCallQueueItem
 	{
 		public IComputerAccess computer;
 		public int method;
 		public Object[] arguments;
+		public int methodCallId;
 		
-		public MethodCallQueueItem(IComputerAccess computer, int method, Object[] arguments)
+		public MethodCallQueueItem(int methodCallId, IComputerAccess computer, int method, Object[] arguments)
 		{
+			this.methodCallId = methodCallId;
 			this.computer = computer;
 			this.method = method;
 			this.arguments = arguments;
@@ -55,6 +59,7 @@ implements ITurtlePeripheral, ISensorAccess
 		env = _env;
 		turtle = _turtle;
 		directional = false;
+		
 	}
 	
 	public boolean isDirectional()
@@ -86,8 +91,9 @@ implements ITurtlePeripheral, ISensorAccess
 	@Override
 	public Object[] callMethod(IComputerAccess computer, int method, Object[] arguments) throws Exception 
 	{
-		callQueue.add(new MethodCallQueueItem(computer, method, arguments));
-		return null;
+		methodCallId++;
+		callQueue.add(new MethodCallQueueItem(methodCallId, computer, method, arguments));
+		return new Object[] { methodCallId };
 	}
 
 	@Override
@@ -108,9 +114,11 @@ implements ITurtlePeripheral, ISensorAccess
 		
 	}
 
-	private Object[] processQueueItem(IComputerAccess computer, int method, Object[] arguments) throws Exception
+	private Object[] processQueueItem(MethodCallQueueItem item) throws Exception
 	{
-
+		IComputerAccess computer = item.computer;
+		int method = item.method;
+		Object[] arguments = item.arguments;
 		if (sensorItemStack != env.getSensorCard())
 		{
 			sensorItemStack = env.getSensorCard();
@@ -130,20 +138,20 @@ implements ITurtlePeripheral, ISensorAccess
 		switch (method)
 		{
 			case 0:
-				return new Object[] { sensorCard.getBasicTarget(this, env.getWorld(), (int) vec.xCoord, (int) vec.yCoord, (int) vec.zCoord) };
+				return new Object[] { item.methodCallId, sensorCard.getBasicTarget(this, env.getWorld(), (int) vec.xCoord, (int) vec.yCoord, (int) vec.zCoord) };
 			case 1:
 				if (arguments.length > 0)
 				{
 					if (arguments[0] instanceof String)
 					{
-						return new Object[]{ sensorCard.getTargetDetails(this, env.getWorld(), (int) vec.xCoord, (int) vec.yCoord, (int) vec.zCoord, arguments[0].toString()) };
+						return new Object[]{ methodCallId, sensorCard.getTargetDetails(this, env.getWorld(), (int) vec.xCoord, (int) vec.yCoord, (int) vec.zCoord, arguments[0].toString()) };
 					}
 				}
 				throw new Exception("Invalid arguments. Expected String.");
 			case 2:
-				return new Object[]{ sensorCard.getName() };
+				return new Object[]{ methodCallId, sensorCard.getName() };
 			case 3:
-				return sensorCard.getMethods();
+				return new Object[] { item.methodCallId, sensorCard.getMethods() };
 			case 4:
 				if (arguments.length > 0)
 				{
@@ -160,7 +168,7 @@ implements ITurtlePeripheral, ISensorAccess
 						Object[] newArray = new Object[arguments.length - 1];
 						System.arraycopy(arguments, 1, newArray, 0, arguments.length - 1);
 						
-						return sensorCard.callMethod(this, newMethod, newArray);
+						return new Object[] { item.methodCallId, sensorCard.callMethod(this, newMethod, newArray) };
 					}
 				}
 				throw new Exception("Invalid arguments. Expected String.");
@@ -168,7 +176,7 @@ implements ITurtlePeripheral, ISensorAccess
 				return new Object[]{ this.isDirectional() };
 			case 6:
 				if (!sensorCard.isDirectionalEnabled())
-					return new Object[]{false};
+					return new Object[]{item.methodCallId, false};
 				if (arguments.length > 0)
 				{
 					if (arguments[0] instanceof Boolean)
@@ -186,13 +194,12 @@ implements ITurtlePeripheral, ISensorAccess
 	@Override
 	public void update() 
 	{
-		OCSLog.info("TEst");
     	MethodCallQueueItem item = callQueue.poll();
     	while (item != null)
     	{
     		try {
 				
-    			Object[] response = processQueueItem(item.computer,  item.method, item.arguments);
+    			Object[] response = processQueueItem(item);
 				item.computer.queueEvent("ocs_response", response);
 			} catch (Exception e) {
 				
