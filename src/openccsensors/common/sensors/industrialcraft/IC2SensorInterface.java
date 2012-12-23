@@ -3,13 +3,12 @@ package openccsensors.common.sensors.industrialcraft;
 import java.util.Map;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-
-import ic2.api.IEnergyConductor;
-import ic2.api.IEnergySink;
-import ic2.api.IEnergySource;
 import ic2.api.IEnergyStorage;
 import ic2.api.IReactor;
 import ic2.api.IReactorChamber;
+import ic2.api.energy.tile.IEnergyConductor;
+import ic2.api.energy.tile.IEnergySink;
+import ic2.api.energy.tile.IEnergySource;
 import openccsensors.OpenCCSensors;
 import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorInterface;
@@ -19,11 +18,10 @@ import openccsensors.common.helper.TargetHelper;
 import openccsensors.common.sensors.SensorCard;
 import openccsensors.common.sensors.TargetRetriever;
 import openccsensors.common.sensors.industrialcraft.ReactorTarget;
-import net.minecraft.src.Block;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.World;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
 public class IC2SensorInterface implements ISensorInterface {
 

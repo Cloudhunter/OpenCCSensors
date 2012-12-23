@@ -5,8 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.minecraft.src.World;
-
+import net.minecraft.world.World;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.core.OCSLog;
 

@@ -2,19 +2,20 @@ package openccsensors.common.sensorperipheral;
 
 import java.util.Random;
 
+import net.minecraft.block.BlockContainer;
+import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.World;
+
 import openccsensors.OpenCCSensors;
 import openccsensors.common.core.OCSLog;
-import net.minecraft.src.BlockContainer;
-import net.minecraft.src.CreativeTabs;
-import net.minecraft.src.EntityItem;
-import net.minecraft.src.EntityLiving;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.Material;
-import net.minecraft.src.MathHelper;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.World;
 
 public class BlockSensor extends BlockContainer 
 {
@@ -115,7 +116,7 @@ public class BlockSensor extends BlockContainer
 
                         if (var9.hasTagCompound())
                         {
-                            var14.item.setTagCompound((NBTTagCompound)var9.getTagCompound().copy());
+                            var14.func_92014_d().setTagCompound((NBTTagCompound)var9.getTagCompound().copy());
                         }
                     }
                 }

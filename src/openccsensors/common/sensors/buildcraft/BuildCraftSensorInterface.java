@@ -2,12 +2,13 @@ package openccsensors.common.sensors.buildcraft;
 
 import java.util.Map;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import buildcraft.energy.IEngineProvider;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.World;
+
+import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import openccsensors.OpenCCSensors;
 import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorInterface;

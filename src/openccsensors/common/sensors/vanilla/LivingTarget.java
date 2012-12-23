@@ -3,10 +3,10 @@ package openccsensors.common.sensors.vanilla;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.minecraft.src.EntityLiving;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.Vec3;
-import net.minecraft.src.World;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
+import net.minecraft.entity.player.EntityPlayer;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.helper.EntityHelper;
 

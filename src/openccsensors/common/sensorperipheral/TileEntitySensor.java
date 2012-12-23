@@ -3,20 +3,21 @@ package openccsensors.common.sensorperipheral;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryBasic;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.INetworkManager;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.Packet132TileEntityData;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
+
 import openccsensors.common.core.ISensorEnvironment;
 import dan200.computer.api.IComputerAccess;
 import dan200.computer.api.IPeripheral;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.IInventory;
-import net.minecraft.src.INetworkManager;
-import net.minecraft.src.InventoryBasic;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.Packet;
-import net.minecraft.src.Packet132TileEntityData;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.Vec3;
-import net.minecraft.src.World;
 
 public class TileEntitySensor extends TileEntity
 implements ISensorEnvironment, IPeripheral, IInventory
@@ -137,9 +138,9 @@ implements ISensorEnvironment, IPeripheral, IInventory
 	}
 
 	@Override
-	public void attach(IComputerAccess computer, String computerSide) 
+	public void attach(IComputerAccess computer) 
 	{
-		peripheral.attach(computer, computerSide);
+		peripheral.attach(computer);
 		
 	}
 
