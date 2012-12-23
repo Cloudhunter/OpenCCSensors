@@ -1,11 +1,10 @@
 package openccsensors.common.sensors.industrialcraft;
 
-import ic2.api.EnergyNet;
+import ic2.api.energy.EnergyNet;
 import java.util.HashMap;
 import java.util.Map;
-
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.World;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.sensors.TileSensorTarget;
 

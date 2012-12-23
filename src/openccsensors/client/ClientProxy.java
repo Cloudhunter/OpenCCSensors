@@ -2,9 +2,7 @@ package openccsensors.client;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import net.minecraft.src.IInventory;
-import net.minecraft.src.InventoryPlayer;
-import net.minecraft.src.TileEntity;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.client.MinecraftForgeClient;
 import openccsensors.client.sensorperipheral.BlockSensorRenderingHandler;
 import openccsensors.client.sensorperipheral.GuiSensor;

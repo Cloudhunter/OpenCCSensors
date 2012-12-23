@@ -3,14 +3,13 @@ package openccsensors.common.sensors.vanilla;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.minecraft.block.Block;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+
 import cpw.mods.fml.common.registry.GameRegistry;
-
-import net.minecraft.src.Block;
-import net.minecraft.src.EntityLiving;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.World;
-
 import openccsensors.OpenCCSensors;
 import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorInterface;

@@ -1,15 +1,14 @@
 package openccsensors.common.sensors.vanilla;
 
 import java.util.Map;
-import cpw.mods.fml.common.registry.GameRegistry;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.IInventory;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.TileEntitySign;
-import net.minecraft.src.World;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntitySign;
+import net.minecraft.world.World;
+import cpw.mods.fml.common.registry.GameRegistry;
 import openccsensors.OpenCCSensors;
 import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorInterface;
@@ -18,6 +17,7 @@ import openccsensors.common.api.ITargetWrapper;
 import openccsensors.common.helper.TargetHelper;
 import openccsensors.common.sensors.SensorCard;
 import openccsensors.common.sensors.TargetRetriever;
+import openccsensors.common.sensors.vanilla.SignPostTarget;
 
 public class SignSensorInterface implements ISensorInterface {
 

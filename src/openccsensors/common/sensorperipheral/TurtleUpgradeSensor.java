@@ -1,13 +1,13 @@
 package openccsensors.common.sensorperipheral;
 
+import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import openccsensors.OpenCCSensors;
 import openccsensors.common.core.OCSLog;
 import openccsensors.common.core.TurtleSensorEnvironment;
-import net.minecraft.src.ItemStack;
+import dan200.computer.api.IHostedPeripheral;
 import dan200.computer.api.IPeripheral;
 import dan200.turtle.api.ITurtleAccess;
-import dan200.turtle.api.ITurtlePeripheral;
 import dan200.turtle.api.ITurtleUpgrade;
 import dan200.turtle.api.TurtleSide;
 import dan200.turtle.api.TurtleUpgradeType;
@@ -70,7 +70,7 @@ public class TurtleUpgradeSensor implements ITurtleUpgrade
 	}
 
 	@Override
-	public ITurtlePeripheral createPeripheral(ITurtleAccess turtle, TurtleSide side) 
+	public IHostedPeripheral createPeripheral(ITurtleAccess turtle, TurtleSide side) 
 	{
 		return new PeripheralSensor(new TurtleSensorEnvironment(turtle), true);
 	}

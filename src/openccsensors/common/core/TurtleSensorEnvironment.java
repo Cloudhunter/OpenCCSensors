@@ -1,9 +1,9 @@
 package openccsensors.common.core;
 
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
 import dan200.turtle.api.ITurtleAccess;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.Vec3;
-import net.minecraft.src.World;
 
 public class TurtleSensorEnvironment
 implements ISensorEnvironment

@@ -1,14 +1,14 @@
 package openccsensors.common.core;
 
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.Vec3;
-import net.minecraft.src.World;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
 import dan200.computer.api.IPeripheral;
 
 public interface ISensorEnvironment 
 {
 	public World getWorld();
-	public Vec3 getLocation(); // Vec3 since that is what turtles use.
+	public Vec3 getLocation();
 	public int getFacing();
 	public ItemStack getSensorCard();
 }

@@ -3,25 +3,24 @@ package openccsensors.common.sensorperipheral;
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
 import cpw.mods.fml.common.FMLCommonHandler;
-
 import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorCard;
 import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.core.ISensorEnvironment;
 import openccsensors.common.core.OCSLog;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.Vec3;
-import net.minecraft.src.World;
 import dan200.computer.api.IComputerAccess;
+import dan200.computer.api.IHostedPeripheral;
 import dan200.computer.api.IPeripheral;
 import dan200.turtle.api.ITurtleAccess;
-import dan200.turtle.api.ITurtlePeripheral;
 
 public class PeripheralSensor
-implements ITurtlePeripheral, ISensorAccess
+implements IHostedPeripheral, ISensorAccess
 {
 	
 	private ISensorEnvironment env;
@@ -103,7 +102,7 @@ implements ITurtlePeripheral, ISensorAccess
 	}
 
 	@Override
-	public void attach(IComputerAccess computer, String computerSide) 
+	public void attach(IComputerAccess computer) 
 	{
 			//computer.mountFixedDir("ocs", "openccsensors/resources/lua", true);
 	}
@@ -246,6 +245,14 @@ implements ITurtlePeripheral, ISensorAccess
 	public ISensorEnvironment getSensorEnvironment()
 	{
 		return env;
+	}
+
+	@Override
+	public void readFromNBT(NBTTagCompound paramNBTTagCompound) {
+	}
+
+	@Override
+	public void writeToNBT(NBTTagCompound paramNBTTagCompound) {
 	}
 
 }

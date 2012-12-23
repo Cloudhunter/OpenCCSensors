@@ -3,11 +3,10 @@ package openccsensors.client.sensorperipheral;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import net.minecraft.src.ModelBase;
-import net.minecraft.src.ModelBox;
-import net.minecraft.src.ModelRenderer;
-import cpw.mods.fml.common.Side;
-import cpw.mods.fml.common.asm.SideOnly;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
+import cpw.mods.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.Side;
 
 @SideOnly(Side.CLIENT)
 public class ModelSensor extends ModelBase

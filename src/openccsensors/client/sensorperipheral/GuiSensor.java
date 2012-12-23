@@ -1,13 +1,13 @@
 package openccsensors.client.sensorperipheral;
 
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.util.StatCollector;
+
 import org.lwjgl.opengl.GL11;
 
 import openccsensors.common.sensorperipheral.ContainerSensor;
 import openccsensors.common.sensorperipheral.TileEntitySensor;
-import net.minecraft.src.Container;
-import net.minecraft.src.GuiContainer;
-import net.minecraft.src.InventoryPlayer;
-import net.minecraft.src.StatCollector;
 
 public class GuiSensor extends GuiContainer 
 {

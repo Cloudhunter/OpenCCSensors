@@ -2,11 +2,10 @@ package openccsensors.common.helper;
 
 import java.util.HashMap;
 
+import net.minecraft.tileentity.TileEntity;
+
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.core.OCSLog;
-
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.World;
 
 public class BlockTileHelper {
 
