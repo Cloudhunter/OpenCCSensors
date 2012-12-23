@@ -1,0 +1,40 @@
+local function waitForResponse( _id )
+	local event, responseID, success
+	while event ~= "ocs_response" or responseID ~= _id do
+		event, responseID, success = os.pullEvent( "ocs_response" )
+	end
+	return success
+end
+
+function wrap(side)
+	local wrappedTable = {}
+	if peripheral.getType(side) == "sensor" then
+		local periph = peripheral.wrap(side)
+		for k,v in pairs(periph) do
+			if type(k) == "string" and type(v) == "function" then
+				wrappedTable[k] = function(...)
+					local id = periph[k](...)
+					if id == -1 then
+						return false
+					end
+					return waitForResponse(id)
+				end
+			end
+		end
+		return wrappedTable
+	else
+		return nil, "not a sensor"
+	end
+end
+
+function call(side, ...)
+	if peripheral.getType(side) == "sensor" then
+		local id = peripheral.call(side, ...)
+		if id == -1 then
+			return false
+		end
+		return waitForResponse(id)
+	else
+		return nil, "not a sensor"
+	end
+end
