@@ -76,7 +76,7 @@ local function redraw()
 	checkSensors()
 	if sensorSides[sideNames[sideSelection]] then
 		--targets
-		local targetNames = peripheral.call(sideNames[sideSelection], "getTargets")
+		local targetNames = sensor.call(sideNames[sideSelection], "getTargets")
 
 		targetNameMenuTable = {}
 		for k,v in pairs(targetNames) do
@@ -107,7 +107,7 @@ local function redraw()
 
 			--detailed info.
 			detailLines = {}
-			toLines(peripheral.call(sideNames[sideSelection], "getTargetDetails", targetNameMenuTable[targetSelection]), detailLines, {}, 0)
+			toLines(sensor.call(sideNames[sideSelection], "getTargetDetails", targetNameMenuTable[targetSelection]), detailLines, {}, 0)
 			for i=1, math.min(h - 3, #detailLines - ((detailOffset - 1) * (h - 3))) do
 				term.setCursorPos(17, i + 3)
 				term.write("|"..string.sub(detailLines[(detailOffset - 1) * (h - 3) + i], 1, w - 17))
@@ -154,11 +154,11 @@ local function createGraph(targetNum)
 			break
 		end
 	end
-	if monSide and targetNum >= 1 and findGraphMatch(peripheral.call(graphSide, "getTargetDetails", graphTarget), targetNum, 0, {}) then
+	if monSide and targetNum >= 1 and findGraphMatch(sensor.call(graphSide, "getTargetDetails", graphTarget), targetNum, 0, {}) then
 		graphMatch = targetNum
-		local val, name = findGraphMatch(peripheral.call(graphSide, "getTargetDetails", graphTarget), targetNum, 0, {})
-		local updateFunc = function() return (findGraphMatch(peripheral.call(graphSide, "getTargetDetails", graphTarget), graphMatch, 0, {})) end
-		graphInst = graph.new(peripheral.wrap(monSide), updateFunc, name)
+		local val, name = findGraphMatch(sensor.call(graphSide, "getTargetDetails", graphTarget), targetNum, 0, {})
+		local updateFunc = function() return (findGraphMatch(sensor.call(graphSide, "getTargetDetails", graphTarget), graphMatch, 0, {})) end
+		graphInst = graph.new(monSide, updateFunc, name)
 		return graphInst
 	end
 end
