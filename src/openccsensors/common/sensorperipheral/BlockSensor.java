@@ -82,6 +82,12 @@ public class BlockSensor extends BlockContainer
     }
     
     @Override
+    public int idDropped(int metadata, Random random, int zero)
+    {
+    	return this.blockID;
+    }
+    
+    @Override
     public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
     {
         TileEntitySensor var7 = (TileEntitySensor)par1World.getBlockTileEntity(par2, par3, par4);
