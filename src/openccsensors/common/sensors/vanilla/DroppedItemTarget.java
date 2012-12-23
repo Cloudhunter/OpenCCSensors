@@ -46,9 +46,9 @@ public class DroppedItemTarget implements ISensorTarget {
 	
 	private void addPositionToMap(Entity entity, Map map) {
 		HashMap<String, Integer> pos = new HashMap<String, Integer>();
-		pos.put("X", ((Double) entity.posX).intValue() - (int) sensorPos.xCoord);
-		pos.put("Y", ((Double) entity.posY).intValue() - (int) sensorPos.yCoord);
-		pos.put("Z", ((Double) entity.posZ).intValue() - (int) sensorPos.zCoord);
+		pos.put("X", ((Double) entity.posX).intValue() - (int) (sensorPos.xCoord + 0.5));
+		pos.put("Y", ((Double) entity.posY).intValue() - (int) (sensorPos.yCoord));
+		pos.put("Z", ((Double) entity.posZ).intValue() - (int) (sensorPos.zCoord + 0.5));
 		map.put("Position", pos);
 	}
 }
