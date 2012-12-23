@@ -8,20 +8,20 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import net.minecraft.src.Block;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.IInventory;
-import net.minecraft.src.InventoryPlayer;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.Material;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.World;
 import openccsensors.OpenCCSensors;
 import openccsensors.common.core.OCSLog;
 import openccsensors.common.sensorperipheral.ContainerSensor;
@@ -36,7 +36,7 @@ public class CommonProxy
 	{
 		// create block and register it
 		OpenCCSensors.Blocks.sensorBlock = new BlockSensor( OpenCCSensors.Config.sensorBlockID, Material.rock );
-		GameRegistry.registerBlock(OpenCCSensors.Blocks.sensorBlock);
+		GameRegistry.registerBlock(OpenCCSensors.Blocks.sensorBlock, "OCS");
 		GameRegistry.registerTileEntity(TileEntitySensor.class, "sensor");
 		GameRegistry.addRecipe(
 				new ItemStack(OpenCCSensors.Blocks.sensorBlock, 1, 0),

@@ -8,12 +8,9 @@ import openccsensors.OpenCCSensors;
 import openccsensors.client.sensorperipheral.ModelSensor;
 import openccsensors.common.core.OCSLog;
 import openccsensors.common.sensorperipheral.TileEntitySensor;
-import net.minecraft.src.FontRenderer;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.ModelRenderer;
-import net.minecraft.src.RenderBlocks;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.TileEntitySpecialRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.client.ForgeHooksClient;
 
 public class TileEntitySensorRenderer extends TileEntitySpecialRenderer {

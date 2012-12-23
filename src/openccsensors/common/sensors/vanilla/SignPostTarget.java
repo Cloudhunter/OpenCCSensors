@@ -3,10 +3,9 @@ package openccsensors.common.sensors.vanilla;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.minecraft.src.IInventory;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.TileEntitySign;
-import net.minecraft.src.World;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntitySign;
+import net.minecraft.world.World;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.helper.InventoryHelper;
 import openccsensors.common.sensors.TileSensorTarget;

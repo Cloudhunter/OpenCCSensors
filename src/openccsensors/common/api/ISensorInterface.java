@@ -2,9 +2,8 @@ package openccsensors.common.api;
 
 import java.util.Map;
 
+import net.minecraft.world.World;
 import openccsensors.common.sensors.SensorCard;
-
-import net.minecraft.src.World;
 
 public interface ISensorInterface 
 {

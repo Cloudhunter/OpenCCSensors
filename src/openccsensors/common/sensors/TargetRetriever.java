@@ -5,11 +5,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-import net.minecraft.src.Entity;
-import net.minecraft.src.EntityLiving;
-import net.minecraft.src.Vec3;
-import net.minecraft.src.World;
-
+import net.minecraft.entity.Entity;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITargetWrapper;
 import openccsensors.common.helper.EntityHelper;

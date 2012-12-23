@@ -5,14 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-import net.minecraft.src.Chunk;
-import net.minecraft.src.Entity;
-import net.minecraft.src.EntityLiving;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.PotionEffect;
-import net.minecraft.src.Vec3;
-import net.minecraft.src.World;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 
 public class EntityHelper {
 

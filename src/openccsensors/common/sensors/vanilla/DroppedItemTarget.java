@@ -3,12 +3,10 @@ package openccsensors.common.sensors.vanilla;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.minecraft.src.Entity;
-import net.minecraft.src.EntityItem;
-import net.minecraft.src.EntityLiving;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.Vec3;
-import net.minecraft.src.World;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
 import openccsensors.common.api.ISensorTarget;
 
 public class DroppedItemTarget implements ISensorTarget {
@@ -20,7 +18,7 @@ public class DroppedItemTarget implements ISensorTarget {
 	{
 		id = entity.entityId;
 		sensorPos = Vec3.createVectorHelper(sx, sy, sz);
-		rawType = ((EntityItem)entity).item.getItemName();
+		rawType = ((EntityItem)entity).func_92014_d().getItemName();
 	}
 	
 	@Override
@@ -41,7 +39,7 @@ public class DroppedItemTarget implements ISensorTarget {
 		HashMap retMap = new HashMap();
 		retMap.put("type", rawType);
 		retMap.put("IsBurning", entity.isBurning());
-		retMap.put("StackSize", Integer.toString(entity.item.stackSize));
+		retMap.put("StackSize", Integer.toString(entity.func_92014_d().stackSize));
 		addPositionToMap(entity, retMap);
 		return retMap;
 	}

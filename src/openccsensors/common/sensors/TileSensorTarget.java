@@ -1,9 +1,10 @@
 package openccsensors.common.sensors;
 
 import java.util.HashMap;
+
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import openccsensors.common.helper.SensorHelper;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.World;
 
 public class TileSensorTarget {
 
