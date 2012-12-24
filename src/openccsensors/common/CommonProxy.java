@@ -22,7 +22,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
@@ -41,9 +40,10 @@ public class CommonProxy
 	public void init() 
 	{
 		// create block and register it
-		OpenCCSensors.Blocks.sensorBlock = new BlockSensor( OpenCCSensors.Config.sensorBlockID, Material.rock );
+		OpenCCSensors.Blocks.sensorBlock = new BlockSensor( OpenCCSensors.Config.sensorBlockID, Material.cloth );
 		GameRegistry.registerBlock(OpenCCSensors.Blocks.sensorBlock, "OCS");
 		GameRegistry.registerTileEntity(TileEntitySensor.class, "sensor");
+		OpenCCSensors.Blocks.sensorBlock.setHardness(0.5F);
 		GameRegistry.addRecipe(
 				new ItemStack(OpenCCSensors.Blocks.sensorBlock, 1, 0),
 				"ooo",
