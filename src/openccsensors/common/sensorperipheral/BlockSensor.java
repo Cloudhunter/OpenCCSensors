@@ -2,6 +2,8 @@ package openccsensors.common.sensorperipheral;
 
 import java.util.Random;
 
+import dan200.ComputerCraft;
+
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -26,7 +28,7 @@ public class BlockSensor extends BlockContainer
 	{
 		super(par1, par2Material);
 		blockIndexInTexture = 1; // Temporary! Will have a texture eventually ;) Will probably end up using a TileEntitySpecialRenderer to render the sensor card on the outside of the block.
-		setCreativeTab(CreativeTabs.tabRedstone);
+		setCreativeTab(ComputerCraft.getCreativeTab());
 	}
 
 	@Override

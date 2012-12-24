@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import dan200.computer.api.ComputerCraftAPI;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -22,7 +23,7 @@ public class SensorCard extends Item implements ISensorCard
 		setTextureFile("/openccsensors/resources/images/terrain.png");
 		setHasSubtypes(true);
         this.setMaxDamage(0);
-		setCreativeTab(CreativeTabs.tabRedstone);
+		setCreativeTab(ComputerCraftAPI.getCreativeTab());
 		for (Entry<Integer, ISensorInterface> entry : interfaces.entrySet())
 		{
 			entry.getValue().initRecipes(this);
