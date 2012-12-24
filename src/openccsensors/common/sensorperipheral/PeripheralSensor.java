@@ -104,7 +104,7 @@ implements IHostedPeripheral, ISensorAccess
 	@Override
 	public void attach(IComputerAccess computer) 
 	{
-			//computer.mountFixedDir("ocs", "openccsensors/resources/lua", true);
+			computer.mountFixedDir("ocs", "mods/OCSLua/lua", true, 0);
 	}
 
 	@Override

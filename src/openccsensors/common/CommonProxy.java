@@ -1,12 +1,18 @@
 package openccsensors.common;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -59,6 +65,132 @@ public class CommonProxy
 		// setup languages
 		setupLanguages();
 		
+		setupLuaFiles();
+		
+	}
+	
+	private void setupLuaFiles()
+	{
+		
+		File modFile = FMLCommonHandler.instance().findContainerFor(OpenCCSensors.instance).getSource();
+		
+		String beginStr = "openccsensors/resources/lua/";
+		String destFolder = ".\\mods\\OCSLua\\lua";
+		
+		if (modFile.isDirectory())
+		{
+			File srcFile = new File(modFile, beginStr);
+			
+			File destFile = new File(destFolder);
+			
+			try {
+				copy(srcFile, destFile);
+			} catch (IOException e) {
+				OCSLog.warn("Error while copying Lua files. Peripheral may not automount Lua files! Exception follows.");
+				e.printStackTrace();
+			}
+			
+		} else {
+			extractZipToLocation(modFile, beginStr, destFolder);
+		}
+		
+
+	}
+	
+	private void extractZipToLocation(File zipFile, String sourceFolder, String destFolder)
+	{
+	    try {
+	        String destinationname = destFolder;
+	        byte[] buf = new byte[1024];
+	        ZipInputStream zipinputstream = null;
+	        ZipEntry zipentry;
+	        zipinputstream = new ZipInputStream(
+	                new FileInputStream(zipFile));
+
+	        zipentry = zipinputstream.getNextEntry();
+	        while (zipentry != null) {
+	            //for each entry to be extracted
+	        	String zipentryName = zipentry.getName();
+	        	
+	        	if(!zipentryName.startsWith(sourceFolder))
+	        	{
+	        		zipentry = zipinputstream.getNextEntry();
+	        		continue;
+	        	}
+	        	
+	        	
+	            String entryName = destinationname + zipentryName.substring(Math.min(zipentryName.length(), sourceFolder.length() - 1));
+	            entryName = entryName.replace('/', File.separatorChar);
+	            entryName = entryName.replace('\\', File.separatorChar);
+	            int n;
+	            FileOutputStream fileoutputstream;
+	            File newFile = new File(entryName);
+	            if (zipentry.isDirectory()) {
+	                if (!newFile.mkdirs()) {
+	                    break;
+	                }
+	                zipentry = zipinputstream.getNextEntry();
+	                continue;
+	            }
+
+	            fileoutputstream = new FileOutputStream(entryName);
+
+	            while ((n = zipinputstream.read(buf, 0, 1024)) > -1) {
+	                fileoutputstream.write(buf, 0, n);
+	            }
+
+	            fileoutputstream.close();
+	            zipinputstream.closeEntry();
+	            zipentry = zipinputstream.getNextEntry();
+
+	        }//while
+
+	        zipinputstream.close();
+	    } catch (Exception e) {
+	    	OCSLog.warn("Error while extracting Lua files. Peripheral may not automount Lua files! Exception follows.");
+	        e.printStackTrace();
+	    }
+	}
+	
+	private static final void copy( File source, File destination ) throws IOException {
+		if( source.isDirectory() ) {
+			copyDirectory( source, destination );
+		} else {
+			copyFile( source, destination );
+		}
+	}
+
+	private static final void copyDirectory( File source, File destination ) throws IOException {
+		if( !source.isDirectory() ) {
+			throw new IllegalArgumentException( "Source (" + source.getPath() + ") must be a directory." );
+		}
+
+		if( !source.exists() ) {
+			throw new IllegalArgumentException( "Source directory (" + source.getPath() + ") doesn't exist." );
+		}
+
+		if( destination.exists() ) {
+			//throw new IllegalArgumentException( "Destination (" + destination.getPath() + ") exists." );
+		}
+
+		destination.mkdirs();
+		File[] files = source.listFiles();
+
+		for( File file : files ) {
+			if( file.isDirectory() ) {
+				copyDirectory( file, new File( destination, file.getName() ) );
+			} else {
+				copyFile( file, new File( destination, file.getName() ) );
+			}
+		}
+	}
+  
+	private static final void copyFile( File source, File destination ) throws IOException {
+		FileChannel sourceChannel = new FileInputStream( source ).getChannel();
+		FileChannel targetChannel = new FileOutputStream( destination ).getChannel();
+		sourceChannel.transferTo(0, sourceChannel.size(), targetChannel);
+		sourceChannel.close();
+		targetChannel.close();
 	}
 	
 	// Language setup (thinking ahead here!)
