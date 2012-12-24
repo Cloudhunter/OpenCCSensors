@@ -158,7 +158,7 @@ local function createGraph(targetNum)
 		graphMatch = targetNum
 		local val, name = findGraphMatch(sensor.call(graphSide, "getTargetDetails", graphTarget), targetNum, 0, {})
 		local updateFunc = function() return (findGraphMatch(sensor.call(graphSide, "getTargetDetails", graphTarget), graphMatch, 0, {})) end
-		graphInst = graph.new(monSide, updateFunc, name)
+		graphInst = graph.new(peripheral.wrap(monSide), updateFunc, name)
 		return graphInst
 	end
 end
@@ -208,10 +208,8 @@ while true do
 			if detailLines and detailOffset < math.ceil(#detailLines / (h - 3)) then
 				detailOffset = detailOffset + 1
 			end
-		end
-	elseif e == "char" then
-		if p1 == "s" then
-			--save sensor detailed output.
+		--and now, since redraw() will eat char events with the change to sensor.call:
+		elseif p1 == 31 then --s
 			if detailLines then
 				local fileHandle = io.open("sensorDetailed-"..sideNames[sideSelection].."-"..targetNameMenuTable[targetSelection], "w")
 				if fileHandle then
@@ -221,9 +219,10 @@ while true do
 					fileHandle:close()
 				end
 			end
-		elseif p1 == "q" then
+		elseif p1 == 16 then --q
+			sleep(0)
 			return
-		elseif p1 == "g" then
+		elseif p1 == 34 then --g
 			if graph then
 				graphing = not graphing
 				if not graphing then
@@ -234,20 +233,20 @@ while true do
 					graphSide = sideNames[sideSelection]
 					graphTarget = targetNameMenuTable[targetSelection]
 					graphInstance = createGraph(1)
-					graphUpdate = os.startTimer(0)
+					graphUpdate = os.startTimer(0.5)
 				end
 			end
-		elseif p1 == "n" then
+		elseif p1 == 49 then --n
 			local newGraph = createGraph(graphMatch + 1)
 			if newGraph then
 				graphInstance = newGraph
-				graphUpdate = os.startTimer(0)
+				graphUpdate = os.startTimer(0.5)
 			end
-		elseif p1 == "p" then
+		elseif p1 == 25 then --p
 			local newGraph = createGraph(graphMatch - 1)
 			if newGraph then
 				graphInstance = newGraph
-				graphUpdate = os.startTimer(0)
+				graphUpdate = os.startTimer(0.5)
 			end
 		end
 	elseif e == "timer" then

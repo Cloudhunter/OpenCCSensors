@@ -108,7 +108,7 @@ function new(target, updateFunction, valueText, gradientTable, min, max, sharedB
 		end
 	end
 	if type(max) ~= "table" then
-		local setMax = max or 0
+		local setMax = max or 1
 		for i=1, #g.update do
 			g.max[i] = setMax
 		end
