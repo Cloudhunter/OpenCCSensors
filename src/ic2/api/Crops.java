@@ -2,7 +2,7 @@ package ic2.api;
 
 import java.util.HashMap;
 
-import net.minecraft.src.BiomeGenBase;
+import net.minecraft.world.biome.BiomeGenBase;
 
 /**
  * General management of the crop system. All crop management methods will be moved here in the 2.00 update.

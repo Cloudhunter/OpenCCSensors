@@ -1,4 +1,4 @@
-package ic2.api;
+package ic2.api.energy.tile;
 
 /**
  * Tile entities which conduct energy pulses without buffering (mostly cables) have to implement this

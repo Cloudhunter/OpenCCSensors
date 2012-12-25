@@ -76,14 +76,10 @@ public interface IPeripheral
 	 * when interacting with minecraft objects.
 	 * @param 	computer		The interface to the computer that is being attached. Remember that multiple
 	 *							computers can be attached to a peripheral at once.
-	 * @param 	computerSide	A string indicating which "side" of the computer the peripheral is attaching,
-	 *							relative to the computers orientation. This value will be one of "top", "bottom",
-	 *							"left", "right", "front" or "back". This can be used to uniquely identify the
-	 *							peripheral when raising events or returning values to the computer.
 	 * @see		#canAttachToSide
 	 * @see		#detach
 	 */
-    public void attach( IComputerAccess computer, String computerSide );
+    public void attach( IComputerAccess computer );
 
 	/**
 	 * Is called when a computer is detaching from the peripheral.

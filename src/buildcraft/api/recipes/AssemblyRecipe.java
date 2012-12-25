@@ -2,7 +2,7 @@ package buildcraft.api.recipes;
 
 import java.util.LinkedList;
 
-import net.minecraft.src.ItemStack;
+import net.minecraft.item.ItemStack;
 
 public class AssemblyRecipe {
 
@@ -22,18 +22,21 @@ public class AssemblyRecipe {
 
 		for (ItemStack in : input) {
 
-			if (in == null)
+			if (in == null) {
 				continue;
+			}
 
 			int found = 0; // Amount of ingredient found in inventory
 
 			for (ItemStack item : items) {
-				if (item == null)
+				if (item == null) {
 					continue;
+				}
 
-				if (item.isItemEqual(in))
+				if (item.isItemEqual(in)) {
 					found += item.stackSize; // Adds quantity of stack to amount
 												// found
+				}
 			}
 
 			if (found < in.stackSize)

@@ -1,20 +1,23 @@
 package openccsensors.common.sensors.vanilla;
 
 import java.util.Map;
-import cpw.mods.fml.common.registry.GameRegistry;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.IInventory;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.World;
+import net.minecraft.block.Block;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import openccsensors.OpenCCSensors;
 import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITargetWrapper;
 import openccsensors.common.helper.TargetHelper;
+import openccsensors.common.sensors.SensorCard;
 import openccsensors.common.sensors.TargetRetriever;
 
 public class InventorySensorInterface implements ISensorInterface {
@@ -22,10 +25,14 @@ public class InventorySensorInterface implements ISensorInterface {
 	private TargetRetriever retriever = new TargetRetriever();
 
 	public InventorySensorInterface() {
-		retriever.registerTarget(IInventory.class, new ITargetWrapper() {
+		retriever.registerTarget(new ITargetWrapper() {
 			@Override
 			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
-				return new InventoryTarget((TileEntity) entity);
+				if (entity instanceof IInventory)
+				{
+					return new InventoryTarget((TileEntity) entity);
+				}
+				return null;
 			}
 		});
 
@@ -47,7 +54,7 @@ public class InventorySensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public Map getBasicTarget(World world, int x, int y, int z)
+	public Map getBasicTarget(ISensorAccess sensor, World world, int x, int y, int z)
 			throws Exception {
 
 		return TargetHelper.getBasicInformationForTargets(
@@ -56,7 +63,7 @@ public class InventorySensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public Map getTargetDetails(World world, int x, int y, int z, String target)
+	public Map getTargetDetails(ISensorAccess sensor, World world, int x, int y, int z, String target)
 			throws Exception {
 
 		return TargetHelper.getDetailedInformationForTarget(target,
@@ -70,11 +77,23 @@ public class InventorySensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public void initRecipes() {
-		GameRegistry.addRecipe(
-				new ItemStack(OpenCCSensors.sensorCard, 1, this.getId()),
-				"wwr", "wrr", "rrp", 'w', new ItemStack(Block.planks), 'r',
-				new ItemStack(Item.redstone), 'p', new ItemStack(Item.paper));
+	public void initRecipes(SensorCard card) {
+		CraftingManager.getInstance().getRecipeList().add(new ShapedOreRecipe(
+			new ItemStack(card, 1, this.getId()),
+			new Object[] {
+				"rpr",
+				"rrr",
+				"aaa",
+				Character.valueOf('r'), new ItemStack(Item.redstone),
+				Character.valueOf('a'), new ItemStack(Item.paper),
+				Character.valueOf('p'), "plankWood"					
+			}
+		));
+	}
+
+	@Override
+	public boolean isDirectionalEnabled() {
+		return false;
 	}
 
 }

@@ -1,6 +1,6 @@
 package ic2.api;
 
-import net.minecraft.src.ItemStack;
+import net.minecraft.item.ItemStack;
 
 /**
  * Design custom Reactor components by implementing this Interface

@@ -1,4 +1,4 @@
-package ic2.api;
+package ic2.api.network;
 
 /**
  * Allows a tile entity to receive field sync updates received from the server. 

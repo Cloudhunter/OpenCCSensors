@@ -9,7 +9,7 @@
 
 package buildcraft.api.transport;
 
-import net.minecraft.src.ItemStack;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeDirection;
 
 /**
@@ -18,6 +18,7 @@ import net.minecraftforge.common.ForgeDirection;
 public interface IPipeEntry {
 
 	void entityEntering(ItemStack payload, ForgeDirection orientation);
+
 	void entityEntering(IPipedItem item, ForgeDirection orientation);
 
 	boolean acceptItems();

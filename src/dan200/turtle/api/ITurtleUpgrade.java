@@ -1,5 +1,6 @@
 
 package dan200.turtle.api;
+import dan200.computer.api.*;
 
 /**
  * The primary interface for defining an upgrade for Turtles. A turtle upgrade
@@ -37,7 +38,7 @@ public interface ITurtleUpgrade
 	 * with to create a turtle which holds this upgrade.
 	 * Currently, turtle crafting is restricted to one tool & one peripheral per turtle.
 	 */		
-	public net.minecraft.src.ItemStack getCraftingItem();
+	public net.minecraft.item.ItemStack getCraftingItem();
 
 	/**
 	 * Return whether this turtle upgrade is an easter egg, and should be attempted to be hidden
@@ -77,7 +78,7 @@ public interface ITurtleUpgrade
 	 * @returns The newly created peripheral. You may return null if this upgrade is a Tool
 	 * and this method is not expected to be called.
 	 */		
-	public ITurtlePeripheral createPeripheral( ITurtleAccess turtle, TurtleSide side );
+	public IHostedPeripheral createPeripheral( ITurtleAccess turtle, TurtleSide side );
 
 	/**
 	 * Will only be called for Tool upgrades. Called when turtle.dig() or turtle.attack() is called

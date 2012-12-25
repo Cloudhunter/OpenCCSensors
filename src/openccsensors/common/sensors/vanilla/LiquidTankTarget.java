@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.minecraft.src.IInventory;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.World;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.liquids.ILiquidTank;
 import net.minecraftforge.liquids.ITankContainer;
@@ -30,9 +29,7 @@ public class LiquidTankTarget extends TileSensorTarget implements ISensorTarget{
 				yCoord, zCoord);
 
 		HashMap retMap = new HashMap();
-		
 		ILiquidTank[] tanks = tankContainer.getTanks(ForgeDirection.UNKNOWN);
-		
 		LiquidStack stack;
 		ItemStack istack;
 		Item item;
@@ -41,7 +38,6 @@ public class LiquidTankTarget extends TileSensorTarget implements ISensorTarget{
 		for (ILiquidTank tank : tanks)
 		{
 			tankProperties = new HashMap();
-			tankProperties.put("Amount",  tank.getLiquid().amount);
 			tankProperties.put("Capacity",  tank.getCapacity());
 			
 			stack = tank.getLiquid();
@@ -54,10 +50,16 @@ public class LiquidTankTarget extends TileSensorTarget implements ISensorTarget{
 					if (istack.getItem() != null)
 					{
 						tankProperties.put("Name",  istack.getDisplayName());
+						tankProperties.put("Amount",  stack.amount);
 				
 					}
 				}
 			}
+			if (!tankProperties.containsKey("Amount"))
+			{
+				tankProperties.put("Amount", 0);
+			}
+			
 			retMap.put(i, tankProperties);
 			i++;
 		}

@@ -9,8 +9,8 @@
 
 package buildcraft.api.core;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.World;
+import net.minecraft.block.Block;
+import net.minecraft.world.World;
 
 public class BuildCraftAPI {
 
@@ -21,7 +21,7 @@ public class BuildCraftAPI {
 	public static final int LAST_ORIGINAL_ITEM = 126;
 
 	public static final boolean[] softBlocks = new boolean[Block.blocksList.length];
-        
+
 	@Deprecated
 	// To be removed
 	public static boolean softBlock(int blockId) {

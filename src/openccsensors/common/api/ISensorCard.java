@@ -1,8 +1,6 @@
 package openccsensors.common.api;
 
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.World;
-import net.minecraft.src.Item;
+import net.minecraft.item.ItemStack;
 
 public interface ISensorCard 
 {

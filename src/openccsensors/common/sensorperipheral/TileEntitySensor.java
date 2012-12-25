@@ -1,19 +1,23 @@
 package openccsensors.common.sensorperipheral;
 
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryBasic;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.INetworkManager;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.Packet132TileEntityData;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
+
 import openccsensors.common.core.ISensorEnvironment;
 import dan200.computer.api.IComputerAccess;
 import dan200.computer.api.IPeripheral;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.IInventory;
-import net.minecraft.src.INetworkManager;
-import net.minecraft.src.InventoryBasic;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.Packet;
-import net.minecraft.src.Packet132TileEntityData;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.Vec3;
-import net.minecraft.src.World;
 
 public class TileEntitySensor extends TileEntity
 implements ISensorEnvironment, IPeripheral, IInventory
@@ -22,13 +26,15 @@ implements ISensorEnvironment, IPeripheral, IInventory
 
 	private IInventory inventory;
 	
-	private float orientation;
+	private float rotation;
+	private final static float rotationSpeed = 3.0F; //degrees per tick
+	
 	
 	public TileEntitySensor()
 	{
 		peripheral = new PeripheralSensor(this, false);
 		inventory = new InventoryBasic("Sensor", 1);
-		orientation = 0;
+		rotation = 0;
 	}
 	
     public void readFromNBT(NBTTagCompound nbttagcompound)
@@ -59,12 +65,20 @@ implements ISensorEnvironment, IPeripheral, IInventory
     
     public int getFacing()
     {
-    	return (int)orientation;
+    	return (worldObj == null) ? 0 : this.getBlockMetadata();
     }
     
-    public void increaseOrientation(float increase)
+    public float getRotation()
     {
-    	orientation = (orientation+increase)%360;
+    	return rotation;
+    }
+    
+    @Override
+    public void updateEntity()
+    {
+    	super.updateEntity();
+    	peripheral.update();
+    	rotation = (rotation+rotationSpeed)%360;
     }
     
     @Override 
@@ -89,7 +103,7 @@ implements ISensorEnvironment, IPeripheral, IInventory
     
     // IPeripheral interface - basically a proxy to the SensorPeripheral, allowing us to reuse code for the turtle peripheral
 
-    public boolean getDirectional()
+    public boolean isDirectional()
     {
     	return peripheral.isDirectional();
     }
@@ -124,9 +138,9 @@ implements ISensorEnvironment, IPeripheral, IInventory
 	}
 
 	@Override
-	public void attach(IComputerAccess computer, String computerSide) 
+	public void attach(IComputerAccess computer) 
 	{
-		peripheral.attach(computer, computerSide);
+		peripheral.attach(computer);
 		
 	}
 
@@ -210,5 +224,6 @@ implements ISensorEnvironment, IPeripheral, IInventory
 
 	@Override
 	public void closeChest() {}
+	
 	
 }

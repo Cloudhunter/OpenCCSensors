@@ -1,6 +1,6 @@
 package ic2.api;
 
-import net.minecraft.src.World;
+import net.minecraft.world.World;
 
 /**
  * Allows an item to act as a terraformer blueprint.

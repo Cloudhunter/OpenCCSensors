@@ -2,10 +2,9 @@ package buildcraft.api.gates;
 
 import java.util.LinkedList;
 
+import net.minecraft.block.Block;
+import net.minecraft.tileentity.TileEntity;
 import buildcraft.api.transport.IPipe;
-
-import net.minecraft.src.Block;
-import net.minecraft.src.TileEntity;
 
 public class ActionManager {
 
@@ -80,6 +79,5 @@ public class ActionManager {
 
 		return triggers;
 	}
-
 
 }

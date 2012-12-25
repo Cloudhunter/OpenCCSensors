@@ -1,21 +1,23 @@
 package openccsensors.common.sensors.vanilla;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import net.minecraft.block.Block;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+
 import cpw.mods.fml.common.registry.GameRegistry;
-
-import net.minecraft.src.Block;
-import net.minecraft.src.EntityLiving;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.World;
-
 import openccsensors.OpenCCSensors;
 import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITargetWrapper;
+import openccsensors.common.core.OCSLog;
 import openccsensors.common.helper.TargetHelper;
+import openccsensors.common.sensors.SensorCard;
 import openccsensors.common.sensors.TargetRetriever;
 
 public class ProximitySensorInterface implements ISensorInterface {
@@ -24,10 +26,14 @@ public class ProximitySensorInterface implements ISensorInterface {
 	private final double sensingRadius = 16.0F;
 
 	public ProximitySensorInterface() {
-		retriever.registerTarget(EntityLiving.class, new ITargetWrapper() {
+		retriever.registerTarget(new ITargetWrapper() {
 			@Override
 			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
-				return new LivingTarget((EntityLiving) entity, sx, sy, sz);
+				if (entity instanceof EntityLiving)
+				{
+					return new LivingTarget((EntityLiving) entity, sx, sy, sz);
+				}
+				return null;
 			}
 		});
 	}
@@ -48,21 +54,27 @@ public class ProximitySensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public Map getBasicTarget(World world, int x, int y, int z)
+	public Map getBasicTarget(ISensorAccess sensor, World world, int x, int y, int z)
 			throws Exception {
 
+		HashMap targets;
+		if (sensor.isDirectional())
+			targets = retriever.getEntities(world, x, y, z, 2*sensingRadius, sensor.getSensorEnvironment().getFacing());
+		else
+			targets = retriever.getEntities(world, x, y, z, sensingRadius);
+		
 		return TargetHelper.getBasicInformationForTargets(
-				retriever.getLivingEntities(world, x, y, z, sensingRadius),
+				retriever.getEntities(world, x, y, z, sensingRadius),
 				world);
 
 	}
 
 	@Override
-	public Map getTargetDetails(World world, int x, int y, int z, String target)
+	public Map getTargetDetails(ISensorAccess sensor, World world, int x, int y, int z, String target)
 			throws Exception {
 
 		return TargetHelper.getDetailedInformationForTarget(target,
-				retriever.getLivingEntities(world, x, y, z, sensingRadius),
+				retriever.getEntities(world, x, y, z, sensingRadius),
 				world);
 
 	}
@@ -73,11 +85,20 @@ public class ProximitySensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public void initRecipes() {
+	public void initRecipes(SensorCard card) {
 		GameRegistry.addRecipe(
-				new ItemStack(OpenCCSensors.sensorCard, 1, this.getId()),
-				"rpr", "rrr", "rrr", 'r', new ItemStack(Item.redstone), 'p',
-				new ItemStack(Block.pressurePlateStone));
+				new ItemStack(card, 1, this.getId()),
+				"rpr",
+				"rrr",
+				"aaa",
+				'r', new ItemStack(Item.redstone),
+				'a', new ItemStack(Item.paper),
+				'p',new ItemStack(Block.pressurePlateStone));
+	}
+	
+	@Override
+	public boolean isDirectionalEnabled() {
+		return false; // disabled for now
 	}
 
 }

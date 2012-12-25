@@ -1,7 +1,7 @@
 package ic2.api;
 
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.ItemStack;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 
 /**
  * Armor items implementing this can be considered metal armor.

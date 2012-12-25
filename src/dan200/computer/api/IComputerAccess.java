@@ -22,13 +22,6 @@ public interface IComputerAccess
 	public int createNewSaveDir( String subPath );
 	
 	/**
-	 * Equivalent to mountSaveDir( String desiredLocation, String subPath, int id, boolean readOnly, long spaceLimit ) with no space limit.
-	 * Mounts created with this method will have unlimited capacity.
-	 * @see	#mountSaveDir(String, String, int, boolean, long)
-	 */
-	public String mountSaveDir( String desiredLocation, String subPath, int id, boolean readOnly );
-	
-	/**
 	 * Mounts a directory into the computers file system, from a real directory a subPath of the users game save,
 	 * with a numerical name. To be used with createNewSaveDir.<br>
 	 * For example: n = createNewSaveDir( "computer/cdrom" ), will create a new
@@ -46,7 +39,7 @@ public interface IComputerAccess
 	 * @param id				The numerical name of the folder to mount from the subPath: ex: mountSaveDir( "cdrom", "computer/cdrom", 7 )
 	 *							will mount the directory "computer/cdrom/7". Use createNewSaveDir to obtain a unique directory id.
 	 * @param readOnly			Whether the computer will be disallowed from making changes to the mounted directory and modifing or creating files therin.
-	 * @param spaceLimit		The size limit of the mount, in bytes.
+	 * @param spaceLimit		The size limit of the mount, in bytes. Specify 0 to have unlimited capacity.
 	 * @return					The location in the computers file system where the directory was mounted. This may differ from "desiredLocation", so the
 	 *							return value should be kept track of so the folder can be unmounted later.
 	 * @see	#createNewSaveDir(String)
@@ -54,13 +47,6 @@ public interface IComputerAccess
 	 * @see	#unmount(String)
 	 */
 	public String mountSaveDir( String desiredLocation, String subPath, int id, boolean readOnly, long spaceLimit );
-
-	/**
-	 * Equivalent to mountFixedDir( String desiredLocation, String path, boolean readOnly, long spaceLimit ) with no space limit.
-	 * Mounts created with this method will have unlimited capacity.
-	 * @see	#mountFixedDir(String, String, boolean, long)
-	 */
-	public String mountFixedDir( String desiredLocation, String path, boolean readOnly );
 	
 	/**
 	 * Mounts a directory into the computers file system, from a real directory in the Minecraft install folder.<br>
@@ -77,7 +63,7 @@ public interface IComputerAccess
 	 *							mount "cdrom", or a "cdrom" folder already exists.
 	 * @param subPath			The real relative file path from the minecraft install root, where the directory to mount can be located.
 	 * @param readOnly			Whether the computer will be disallowed from making changes to the mounted directory and modifing or creating files therin.
-	 * @param spaceLimit		The size limit of the mount, in bytes.
+	 * @param spaceLimit		The size limit of the mount, in bytes. Specify 0 to have unlimited capacity.
 	 * @return					The location in the computers file system where the directory was mounted. This may differ from "desiredLocation", so the
 	 *							return value should be kept track of so the folder can be unmounted later.
 	 * @see	#mountSaveDir(String, String, int, boolean, long)
@@ -128,4 +114,14 @@ public interface IComputerAccess
 	 * @see IPeripheral#callMethod
 	 */
 	public void queueEvent( String event, Object[] arguments );
+
+	/**
+	 * Get a string indicating which "side" of the computer the IComputerAccess this peripheral
+	 * has been created for is attached to, relative to the computers orientation. This can be used to
+	 * uniquely identify the peripheral when raising events or returning values to the computer.
+	 * The value returned by this function will be different for the IComputerAccess for each of
+	 * the peripherals attached to the computer.
+	 * @return One of "top", "bottom", "left", "right", "front" or "back"
+	 */
+	public String getAttachmentSide();
 }

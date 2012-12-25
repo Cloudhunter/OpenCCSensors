@@ -1,6 +1,6 @@
 package openccsensors;
 
-import net.minecraft.src.Item;
+import net.minecraft.item.Item;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.Property;
 import openccsensors.common.CommonProxy;
@@ -15,7 +15,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 
-@Mod( modid = "OCS", name = "OpenCCSensors", version = "0.03", dependencies = "required-after:ComputerCraft;after:CCTurtle")
+@Mod( modid = "OCS", name = "OpenCCSensors", version = "0.07", dependencies = "required-after:ComputerCraft;after:CCTurtle")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class OpenCCSensors 
 {
@@ -30,6 +30,7 @@ public class OpenCCSensors
 	{
 		public static int sensorBlockID;
 		public static int sensorBlockRenderID;
+		public static int sensorCardID;
 		public static boolean turtlePeripheralEnabled;
 	}
 	
@@ -57,6 +58,10 @@ public class OpenCCSensors
 		prop = configFile.get("general", "turtlePeripheralEnabled", true);
 		prop.comment = "Turtle Peripheral Enabled";
 		Config.turtlePeripheralEnabled = prop.getBoolean(true);
+
+		prop = configFile.getItem("sensorCardID", 7486);
+		prop.comment = "The block ID for the sensor card";
+		Config.sensorCardID = prop.getInt();
 		
 		configFile.save();
 	}
@@ -77,7 +82,7 @@ public class OpenCCSensors
 		loadSensorPack("vanilla");
 		loadSensorPack("industrialcraft");
 
-		sensorCard = new SensorCard(12345);
+		sensorCard = new SensorCard(Config.sensorCardID);
 		
 		proxy.registerRenderInformation();
 	}

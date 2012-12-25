@@ -1,14 +1,15 @@
 package openccsensors.client.sensorperipheral;
 
+import net.minecraft.block.Block;
+import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
+import net.minecraft.world.IBlockAccess;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import openccsensors.OpenCCSensors;
 import openccsensors.common.sensorperipheral.TileEntitySensor;
-import net.minecraft.src.Block;
-import net.minecraft.src.IBlockAccess;
-import net.minecraft.src.RenderBlocks;
-import net.minecraft.src.TileEntityRenderer;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class BlockSensorRenderingHandler implements ISimpleBlockRenderingHandler {

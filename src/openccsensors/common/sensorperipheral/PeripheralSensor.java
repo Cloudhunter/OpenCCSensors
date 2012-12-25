@@ -1,25 +1,26 @@
 package openccsensors.common.sensorperipheral;
 
 import java.util.Arrays;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
 import cpw.mods.fml.common.FMLCommonHandler;
-
 import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorCard;
 import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.core.ISensorEnvironment;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.Vec3;
-import net.minecraft.src.World;
+import openccsensors.common.core.OCSLog;
 import dan200.computer.api.IComputerAccess;
+import dan200.computer.api.IHostedPeripheral;
 import dan200.computer.api.IPeripheral;
 import dan200.turtle.api.ITurtleAccess;
-import dan200.turtle.api.ITurtlePeripheral;
 
 public class PeripheralSensor
-implements ITurtlePeripheral, ISensorAccess
+implements IHostedPeripheral, ISensorAccess
 {
 	
 	private ISensorEnvironment env;
@@ -32,11 +33,32 @@ implements ITurtlePeripheral, ISensorAccess
 	
 	private boolean directional;
 
+	public ConcurrentLinkedQueue<MethodCallQueueItem> callQueue = new ConcurrentLinkedQueue<MethodCallQueueItem>();
+	
+	private int methodCallId = 0;
+	
+	public class MethodCallQueueItem
+	{
+		public IComputerAccess computer;
+		public int method;
+		public Object[] arguments;
+		public int methodCallId;
+		
+		public MethodCallQueueItem(int methodCallId, IComputerAccess computer, int method, Object[] arguments)
+		{
+			this.methodCallId = methodCallId;
+			this.computer = computer;
+			this.method = method;
+			this.arguments = arguments;
+		}
+	}
+	
 	public PeripheralSensor(ISensorEnvironment _env, boolean _turtle) 
 	{
 		env = _env;
 		turtle = _turtle;
 		directional = false;
+		
 	}
 	
 	public boolean isDirectional()
@@ -62,12 +84,40 @@ implements ITurtlePeripheral, ISensorAccess
 	@Override
 	public String[] getMethodNames() 
 	{
-		return new String[] { "getTargets", "getTargetDetails", "getSensorName", "getSensorMethods", "sensorCardCall" };
+		return new String[] { "getTargets", "getTargetDetails", "getSensorName", "getSensorMethods", "sensorCardCall", "isDirectional", "setDirectional" };
 	}
 
 	@Override
 	public Object[] callMethod(IComputerAccess computer, int method, Object[] arguments) throws Exception 
 	{
+		methodCallId++;
+		callQueue.add(new MethodCallQueueItem(methodCallId, computer, method, arguments));
+		return new Object[] { methodCallId };
+	}
+
+	@Override
+	public boolean canAttachToSide(int side) 
+	{
+		return true;
+	}
+
+	@Override
+	public void attach(IComputerAccess computer) 
+	{
+			computer.mountFixedDir("ocs", "mods/OCSLua/lua", true, 0);
+	}
+
+	@Override
+	public void detach(IComputerAccess computer) 
+	{
+		
+	}
+
+	private Object[] processQueueItem(MethodCallQueueItem item) throws Exception
+	{
+		IComputerAccess computer = item.computer;
+		int method = item.method;
+		Object[] arguments = item.arguments;
 		if (sensorItemStack != env.getSensorCard())
 		{
 			sensorItemStack = env.getSensorCard();
@@ -87,20 +137,20 @@ implements ITurtlePeripheral, ISensorAccess
 		switch (method)
 		{
 			case 0:
-				return new Object[] { sensorCard.getBasicTarget(env.getWorld(), (int) vec.xCoord, (int) vec.yCoord, (int) vec.zCoord) };
+				return new Object[] { item.methodCallId, sensorCard.getBasicTarget(this, env.getWorld(), (int) vec.xCoord, (int) vec.yCoord, (int) vec.zCoord) };
 			case 1:
 				if (arguments.length > 0)
 				{
 					if (arguments[0] instanceof String)
 					{
-						return new Object[]{ sensorCard.getTargetDetails(env.getWorld(), (int) vec.xCoord, (int) vec.yCoord, (int) vec.zCoord, arguments[0].toString()) };
+						return new Object[]{ methodCallId, sensorCard.getTargetDetails(this, env.getWorld(), (int) vec.xCoord, (int) vec.yCoord, (int) vec.zCoord, arguments[0].toString()) };
 					}
 				}
 				throw new Exception("Invalid arguments. Expected String.");
 			case 2:
-				return new Object[]{ sensorCard.getName() };
+				return new Object[]{ methodCallId, sensorCard.getName() };
 			case 3:
-				return sensorCard.getMethods();
+				return new Object[] { item.methodCallId, sensorCard.getMethods() };
 			case 4:
 				if (arguments.length > 0)
 				{
@@ -117,36 +167,47 @@ implements ITurtlePeripheral, ISensorAccess
 						Object[] newArray = new Object[arguments.length - 1];
 						System.arraycopy(arguments, 1, newArray, 0, arguments.length - 1);
 						
-						return sensorCard.callMethod(this, newMethod, newArray);
+						return new Object[] { item.methodCallId, sensorCard.callMethod(this, newMethod, newArray) };
 					}
 				}
 				throw new Exception("Invalid arguments. Expected String.");
+			case 5:
+				return new Object[]{ this.isDirectional() };
+			case 6:
+				if (!sensorCard.isDirectionalEnabled())
+					return new Object[]{item.methodCallId, false};
+				if (arguments.length > 0)
+				{
+					if (arguments[0] instanceof Boolean)
+					{
+						this.setDirectional((Boolean)arguments[0]);
+						return new Object[]{true};
+					}
+				}
+				throw new Exception("Invalid arguments. Expected Boolean.");
 		}
 		
 		return null;
 	}
-
-	@Override
-	public boolean canAttachToSide(int side) 
-	{
-		return true;
-	}
-
-	@Override
-	public void attach(IComputerAccess computer, String computerSide) 
-	{
-			//computer.mountFixedDir("ocs", "openccsensors/resources/lua", true);
-	}
-
-	@Override
-	public void detach(IComputerAccess computer) 
-	{
-		
-	}
-
+	
 	@Override
 	public void update() 
 	{
+    	MethodCallQueueItem item = callQueue.poll();
+    	while (item != null)
+    	{
+    		try {
+				
+    			Object[] response = processQueueItem(item);
+				item.computer.queueEvent("ocs_response", response);
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+			
+			}
+    		item = callQueue.poll();
+    	}
+    	
 	}
 	
 	private ISensorInterface getSensorCard() throws Exception
@@ -184,6 +245,14 @@ implements ITurtlePeripheral, ISensorAccess
 	public ISensorEnvironment getSensorEnvironment()
 	{
 		return env;
+	}
+
+	@Override
+	public void readFromNBT(NBTTagCompound paramNBTTagCompound) {
+	}
+
+	@Override
+	public void writeToNBT(NBTTagCompound paramNBTTagCompound) {
 	}
 
 }

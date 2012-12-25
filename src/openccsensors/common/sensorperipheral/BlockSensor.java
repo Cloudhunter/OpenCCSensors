@@ -2,19 +2,22 @@ package openccsensors.common.sensorperipheral;
 
 import java.util.Random;
 
+import dan200.ComputerCraft;
+
+import net.minecraft.block.BlockContainer;
+import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.World;
+
 import openccsensors.OpenCCSensors;
 import openccsensors.common.core.OCSLog;
-import net.minecraft.src.BlockContainer;
-import net.minecraft.src.CreativeTabs;
-import net.minecraft.src.EntityItem;
-import net.minecraft.src.EntityLiving;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.Material;
-import net.minecraft.src.MathHelper;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.World;
 
 public class BlockSensor extends BlockContainer 
 {
@@ -25,7 +28,7 @@ public class BlockSensor extends BlockContainer
 	{
 		super(par1, par2Material);
 		blockIndexInTexture = 1; // Temporary! Will have a texture eventually ;) Will probably end up using a TileEntitySpecialRenderer to render the sensor card on the outside of the block.
-		setCreativeTab(CreativeTabs.tabRedstone);
+		setCreativeTab(ComputerCraft.getCreativeTab());
 	}
 
 	@Override
@@ -81,6 +84,12 @@ public class BlockSensor extends BlockContainer
     }
     
     @Override
+    public int idDropped(int metadata, Random random, int zero)
+    {
+    	return this.blockID;
+    }
+    
+    @Override
     public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
     {
         TileEntitySensor var7 = (TileEntitySensor)par1World.getBlockTileEntity(par2, par3, par4);
@@ -115,7 +124,7 @@ public class BlockSensor extends BlockContainer
 
                         if (var9.hasTagCompound())
                         {
-                            var14.item.setTagCompound((NBTTagCompound)var9.getTagCompound().copy());
+                            var14.func_92014_d().setTagCompound((NBTTagCompound)var9.getTagCompound().copy());
                         }
                     }
                 }

@@ -1,6 +1,6 @@
 package ic2.api;
 
-import net.minecraft.src.ItemStack;
+import net.minecraft.item.ItemStack;
 
 /**
  * Provides access to IC2 blocks and items.
@@ -24,7 +24,7 @@ public final class Items {
 	 */
 	public static ItemStack getItem(String name) {
 		try {
-			if (Ic2Items == null) Ic2Items = Class.forName(getPackage() + ".common.Ic2Items");
+			if (Ic2Items == null) Ic2Items = Class.forName(getPackage() + ".core.Ic2Items");
 			
 			Object ret = Ic2Items.getField(name).get(null);
 			

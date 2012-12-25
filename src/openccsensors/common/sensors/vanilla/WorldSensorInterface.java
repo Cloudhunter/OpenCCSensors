@@ -4,9 +4,15 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.minecraft.src.World;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+
+import cpw.mods.fml.common.registry.GameRegistry;
+import openccsensors.OpenCCSensors;
 import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorInterface;
+import openccsensors.common.sensors.SensorCard;
 
 public class WorldSensorInterface implements ISensorInterface {
 
@@ -21,7 +27,7 @@ public class WorldSensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public Map getBasicTarget(World world, int x, int y, int z)
+	public Map getBasicTarget(ISensorAccess sensor, World world, int x, int y, int z)
 			throws Exception {
 		HashMap retMap = new HashMap();
 		HashMap currentDetails = new HashMap();
@@ -31,7 +37,7 @@ public class WorldSensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public Map getTargetDetails(World world, int x, int y, int z, String target)
+	public Map getTargetDetails(ISensorAccess sensor, World world, int x, int y, int z, String target)
 			throws Exception {
 		
 		HashMap retMap = new HashMap();
@@ -56,9 +62,20 @@ public class WorldSensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public void initRecipes() {
-		// TODO Auto-generated method stub
-
+	public void initRecipes(SensorCard card) {
+		GameRegistry.addRecipe(
+				new ItemStack(card, 1, this.getId()),
+				"rer",
+				"rrr",
+				"aaa",
+				'r', new ItemStack(Item.redstone),
+				'a', new ItemStack(Item.paper),
+				'e',new ItemStack(Item.enderPearl));
 	}
 
+	@Override
+	public boolean isDirectionalEnabled() {
+		return false;
+	}
+	
 }

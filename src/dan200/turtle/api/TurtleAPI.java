@@ -5,12 +5,12 @@ import java.lang.reflect.Method;
 /**
  * The static entry point to the ComputerCraft Turtle Upgrade API.
  * Members in this class must be called after mod_CCTurtle has been initialised,
- * but may be called before it is loaded.
+ * but may be called before it is fully loaded.
  */
 public class TurtleAPI
 {
 	/**
-	 * Registers a new turtle upgrade for use in the ComputerCraft. After calling this,
+	 * Registers a new turtle upgrade for use in ComputerCraft. After calling this,
 	 * users should be able to craft Turtles with your new upgrade. It is recommended to call
 	 * this during the load() method of your mod.
 	 * @throws Exception if you try to register an upgrade with an already used or reserved upgradeID
@@ -41,13 +41,13 @@ public class TurtleAPI
 		if( !ccTurtleSearched ) {
 			// Search for CCTurtle
 			try {
-				ccTurtle = Class.forName( "dan200.turtle.shared.CCTurtle" );
+				ccTurtle = Class.forName( "dan200.CCTurtle" );
 				ccTurtle_registerTurtleUpgrade = findCCTurtleMethod( "registerTurtleUpgrade", new Class[] {
 					ITurtleUpgrade.class
 				} );				
 				
 			} catch( ClassNotFoundException e ) {
-				System.out.println("ComputerCraft: CCTurtle not found.");
+				System.out.println("ComputerCraftAPI: CCTurtle not found.");
 
 			} finally {
 				ccTurtleSearched = true;
@@ -62,7 +62,7 @@ public class TurtleAPI
 			return ccTurtle.getMethod( name, args );
 			
 		} catch( NoSuchMethodException e ) {
-			System.out.println("ComputerCraft: CCTurtle method " + name + " not found.");
+			System.out.println("ComputerCraftAPI: CCTurtle method " + name + " not found.");
 			return null;
 		}
 	}	

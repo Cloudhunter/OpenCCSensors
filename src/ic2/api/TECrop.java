@@ -1,8 +1,8 @@
 package ic2.api;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.TileEntity;
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 
 /**
  * Provides access to a crop tile entity. Contains all methods and fields you can access from your CropCard.

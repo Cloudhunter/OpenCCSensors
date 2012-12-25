@@ -1,5 +1,6 @@
 
 package dan200.turtle.api;
+import dan200.computer.api.*;
 
 /**
  * The interface passed to upgrades by turtles, providing methods that they can call.
@@ -11,13 +12,13 @@ public interface ITurtleAccess
 	 * Returns the world in which the turtle resides.
 	 * @return the world in which the turtle resides.
 	 */
-	public net.minecraft.src.World getWorld();
+	public net.minecraft.world.World getWorld();
 
 	/**
 	 * Returns a vector containing the integer block co-ordinates at which the turtle resides.
 	 * @return a vector containing the integer block co-ordinates at which the turtle resides.
 	 */
-	public net.minecraft.src.Vec3 getPosition();
+	public net.minecraft.util.Vec3 getPosition();
 
 	/**
 	 * Returns the world direction the turtle is currently facing.
@@ -43,14 +44,14 @@ public interface ITurtleAccess
 	 * @param index which inventory slot to retreive, should be between 0 and getInventorySize() - 1
 	 * @return the item stack that the turtle has in one of its inventory slots. May be null.
 	 */
-	public net.minecraft.src.ItemStack getSlotContents( int index );
+	public net.minecraft.item.ItemStack getSlotContents( int index );
 
 	/**
 	 * Changes the item stack that the turtle has in one of its inventory slots.
 	 * @param index which inventory slot to change, should be between 0 and getInventorySize() - 1
 	 * @param stack an item stack to put in the slot. May be null.
 	 */
-	public void setSlotContents( int index, net.minecraft.src.ItemStack stack );
+	public void setSlotContents( int index, net.minecraft.item.ItemStack stack );
 	
 	/**
 	 * Tries to store an item stack into the turtles current inventory, starting from the turtles
@@ -61,7 +62,7 @@ public interface ITurtleAccess
 	 * and the stack was partially stored, the ItemStack passed into "stack" will now
 	 * represent the stack of items that is left over.
 	 */
-	public boolean storeItemStack( net.minecraft.src.ItemStack stack );
+	public boolean storeItemStack( net.minecraft.item.ItemStack stack );
 
 	/**
 	 * Drops an item stack from the turtle onto the floor, or into an inventory is there is one
@@ -73,7 +74,7 @@ public interface ITurtleAccess
 	 * and the stack was partially stored, the ItemStack passed into "stack" will now
 	 * represent the stack of items that is left over.
 	 */
-	public boolean dropItemStack( net.minecraft.src.ItemStack stack, int dir );
+	public boolean dropItemStack( net.minecraft.item.ItemStack stack, int dir );
 	
 	/**
 	 * "Deploys" an item stack in the direction specified. This simulates a player right clicking, and calls onItemUse() on the Item class.
@@ -83,7 +84,7 @@ public interface ITurtleAccess
 	 * @param dir The world direction to deploy the item
 	 * @return true if the stack was deployed, false if it was not.
 	 */
-	public boolean deployWithItemStack( net.minecraft.src.ItemStack stack, int dir );
+	public boolean deployWithItemStack( net.minecraft.item.ItemStack stack, int dir );
 
 	/**
 	 * Tries to "attack" entities with an item stack in the direction specified. This simulates a player left clicking, but will
@@ -93,7 +94,7 @@ public interface ITurtleAccess
 	 * @param dir The world direction to attack with the item
 	 * @return true if something was attacked, false if it was not
 	 */
-	public boolean attackWithItemStack( net.minecraft.src.ItemStack stack, int dir, float damageMultiplier );
+	public boolean attackWithItemStack( net.minecraft.item.ItemStack stack, int dir, float damageMultiplier );
 
 	/**
 	 * Returns the current fuel level of the turtle, this is the same integer returned by turtle.getFuelLevel(),
@@ -109,7 +110,7 @@ public interface ITurtleAccess
 	 * @param stack The stack to try to refuel with
 	 * @return Whether the turtle was refueled
 	 */
-	public boolean refuelWithItemStack( net.minecraft.src.ItemStack stack );
+	public boolean refuelWithItemStack( net.minecraft.item.ItemStack stack );
 	
 	/**
 	 * Removes some fuel from the turtles fuel supply. Negative numbers can be passed in to INCREASE the fuel level of the turtle.
@@ -140,5 +141,5 @@ public interface ITurtleAccess
 	 * Returns the peripheral created by the upgrade on the specified side of the turtle, if there is one.
 	 * @return the peripheral created by the upgrade on the specified side of the turtle, if there is one.
 	 */
-	public ITurtlePeripheral getPeripheral( TurtleSide side );
+	public IHostedPeripheral getPeripheral( TurtleSide side );
 }

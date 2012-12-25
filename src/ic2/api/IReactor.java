@@ -1,8 +1,8 @@
 package ic2.api;
 
-import net.minecraft.src.ChunkCoordinates;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.World;
+import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 
 /**
  * Interface implemented by the tile entity of nuclear reactors.
@@ -79,14 +79,14 @@ public interface IReactor {
 	/**
 	 * Get the reactor's energy output.
 	 * 
-	 * @return Energy output in EU/t
+	 * @return Energy output, not multiplied by the base EU/t value
 	 */
 	public int getOutput();
 	
 	/**
 	 * Add's the given amount of energy to the Reactor's output.
 	 * 
-	 * @return Energy output after adding the value, in EU/t
+	 * @return Energy output after adding the value, not multiplied by the base EU/t value
 	 */
 	public int addOutput(int energy);
 	

@@ -1,9 +1,7 @@
 package openccsensors.common.api;
 
-import java.util.HashMap;
 import java.util.Map;
-
-import net.minecraft.src.World;
+import net.minecraft.world.World;
 
 public interface ISensorTarget {
 	public Map getBasicInformation(World world);

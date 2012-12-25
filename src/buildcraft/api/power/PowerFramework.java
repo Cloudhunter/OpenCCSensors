@@ -9,7 +9,7 @@
 
 package buildcraft.api.power;
 
-import net.minecraft.src.NBTTagCompound;
+import net.minecraft.nbt.NBTTagCompound;
 
 public abstract class PowerFramework {
 
@@ -37,9 +37,8 @@ public abstract class PowerFramework {
 
 		IPowerProvider provider = receptor.getPowerProvider();
 
-		if (provider == null) {
+		if (provider == null)
 			return;
-		}
 
 		NBTTagCompound cpt = new NBTTagCompound();
 
