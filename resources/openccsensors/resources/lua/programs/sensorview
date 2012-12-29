@@ -4,7 +4,8 @@ local sideSelection, targetSelection, targetOffset, detailOffset = 1, 1, 1, 1
 local detailLines, targetNameMenuTable
 local graphing, graphSide, graphTarget, graphMatch, graphInstance = false
 
-os.loadAPI("/rom/apis/graph")
+os.loadAPI("ocs/apis/graph")
+os.loadAPI("ocs/apis/sensor")
 
 local function checkSensors()
 	for _,side in ipairs(sideNames) do
