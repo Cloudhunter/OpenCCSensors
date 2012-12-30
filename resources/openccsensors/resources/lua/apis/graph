@@ -9,6 +9,10 @@ local Graph = {
 		end
 	end,
 	draw = function(self)
+		--get the updates first.
+		for i=1, #self.update do
+			self.history[i][#self.history[i] + 1] = self.update[i]()
+		end
 		if self.target.setTextScale then self.target.setTextScale(0.5) end
 		self.target.setBackgroundColor(colors.black)
 		self.target.setTextColor(colors.white)
@@ -16,7 +20,6 @@ local Graph = {
 		local newMax, newMin = self.max[1], self.min[1]
 		--draw traces
 		for trace=1,#self.update do
-			self.history[trace][#self.history[trace] + 1] = self.update[trace]()
 			if self.history[trace][#self.history[trace]] > self.max[trace] then
 				if self.sharedBounds and self.history[trace][#self.history[trace]] > newMax then
 					newMax = self.history[trace][#self.history[trace]]
