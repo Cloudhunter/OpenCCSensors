@@ -60,12 +60,12 @@ local function redraw()
 	detailLines = {}
 	checkSensors()
 	if sensorSides[sideNames[sideSelection]] then
-		targetNames = sensor.call(sideNames[sideSelection], "getTargets")
+		targetNames = sensor.call(sideNames[sideSelection], "getSensorName") and sensor.call(sideNames[sideSelection], "getTargets")
 		targetNameMenuTable = {}
 		for k,v in pairs(targetNames) do
 			table.insert(targetNameMenuTable, k)
 		end
-		if targetNames then
+		if #targetNameMenuTable > 0 then
 			toLines(sensor.call(sideNames[sideSelection], "getTargetDetails", targetNameMenuTable[targetSelection]), detailLines, {}, 0)
 		end
 	end
@@ -90,9 +90,6 @@ local function redraw()
 	term.write("-Targets--------+-Info-"..string.rep("-", w - 23))
 
 	if targetNames then
-		--targets
-		
-	
 		--make sure we have valid targets, even if we have a valid sensor.
 		if #targetNameMenuTable > 0 then
 			term.setCursorPos(1, 4)
@@ -128,9 +125,15 @@ local function redraw()
 			drawDividerDown(5)
 		end
 	else
-		term.setCursorPos(1, 4)
-		term.write("No sensor found |")
-		drawDividerDown(5)
+		if peripheral.getType(sideNames[sideSelection]) == "sensor" then
+			term.setCursorPos(1, 4)
+			term.write("No sensor card  |")
+			drawDividerDown(5)
+		else
+			term.setCursorPos(1, 4)
+			term.write("No sensor found |")
+			drawDividerDown(5)
+		end
 	end
 	term.setCursorPos(1, h)
 end
@@ -245,16 +248,20 @@ while true do
 				end
 			end
 		elseif p1 == 49 then --n
-			local newGraph = createGraph(graphMatch + 1)
-			if newGraph then
-				graphInstance = newGraph
-				graphUpdate = os.startTimer(0.5)
+			if graphing then
+				local newGraph = createGraph(graphMatch + 1)
+				if newGraph then
+					graphInstance = newGraph
+					graphUpdate = os.startTimer(0.5)
+				end
 			end
 		elseif p1 == 25 then --p
-			local newGraph = createGraph(graphMatch - 1)
-			if newGraph then
-				graphInstance = newGraph
-				graphUpdate = os.startTimer(0.5)
+			if graphing then
+				local newGraph = createGraph(graphMatch - 1)
+				if newGraph then
+					graphInstance = newGraph
+					graphUpdate = os.startTimer(0.5)
+				end
 			end
 		end
 	elseif e == "timer" then
