@@ -82,7 +82,7 @@ public class LiquidSensorInterface implements ISensorInterface {
 				"aaa",
 				'r', new ItemStack(Item.redstone),
 				'a', new ItemStack(Item.paper),
-				'w',new ItemStack(Item.bucketWater));
+				'w',new ItemStack(Item.bucketEmpty));
 	}
 
 	@Override
