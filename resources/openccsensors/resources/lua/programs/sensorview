@@ -248,16 +248,20 @@ while true do
 				end
 			end
 		elseif p1 == 49 then --n
-			local newGraph = createGraph(graphMatch + 1)
-			if newGraph then
-				graphInstance = newGraph
-				graphUpdate = os.startTimer(0.5)
+			if graphing then
+				local newGraph = createGraph(graphMatch + 1)
+				if newGraph then
+					graphInstance = newGraph
+					graphUpdate = os.startTimer(0.5)
+				end
 			end
 		elseif p1 == 25 then --p
-			local newGraph = createGraph(graphMatch - 1)
-			if newGraph then
-				graphInstance = newGraph
-				graphUpdate = os.startTimer(0.5)
+			if graphing then
+				local newGraph = createGraph(graphMatch - 1)
+				if newGraph then
+					graphInstance = newGraph
+					graphUpdate = os.startTimer(0.5)
+				end
 			end
 		end
 	elseif e == "timer" then
