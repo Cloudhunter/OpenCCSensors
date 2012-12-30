@@ -1,9 +1,12 @@
 local function waitForResponse( _id )
-	local event, responseID, success
-	while event ~= "ocs_response" or responseID ~= _id do
-		event, responseID, success = os.pullEvent( "ocs_response" )
+	while true do
+		local event = {os.pullEvent()}
+		if event[1] == "ocs_response" and event[2] == _id then
+			return event[3]
+		else
+			os.queueEvent(unpack(event))
+		end
 	end
-	return success
 end
 
 function wrap(side)
