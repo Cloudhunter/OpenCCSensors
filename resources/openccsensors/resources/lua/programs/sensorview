@@ -62,11 +62,13 @@ local function redraw()
 	if sensorSides[sideNames[sideSelection]] then
 		targetNames = sensor.call(sideNames[sideSelection], "getSensorName") and sensor.call(sideNames[sideSelection], "getTargets")
 		targetNameMenuTable = {}
-		for k,v in pairs(targetNames) do
-			table.insert(targetNameMenuTable, k)
-		end
-		if #targetNameMenuTable > 0 then
-			toLines(sensor.call(sideNames[sideSelection], "getTargetDetails", targetNameMenuTable[targetSelection]), detailLines, {}, 0)
+		if targetNames then
+			for k,v in pairs(targetNames) do
+				table.insert(targetNameMenuTable, k)
+			end
+			if #targetNameMenuTable > 0 then
+				toLines(sensor.call(sideNames[sideSelection], "getTargetDetails", targetNameMenuTable[targetSelection]), detailLines, {}, 0)
+			end
 		end
 	end
 	--now draw the screen.
