@@ -1,7 +1,11 @@
 package openccsensors.client;
 
+import java.io.File;
+
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.client.MinecraftForgeClient;
 import openccsensors.client.sensorperipheral.BlockSensorRenderingHandler;
@@ -24,5 +28,11 @@ public class ClientProxy extends CommonProxy
 	public Object getGui( InventoryPlayer inventory, TileEntitySensor tileentity )
 	{
 		return new GuiSensor( inventory, tileentity);
-	}	
+	}
+	
+	@Override
+	public File getBase()
+	{
+		return FMLClientHandler.instance().getClient().getMinecraftDir();
+	}
 }

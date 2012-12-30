@@ -69,19 +69,28 @@ public class CommonProxy
 		
 	}
 	
+	public File getBase()
+	{
+		return FMLCommonHandler.instance().getMinecraftServerInstance().getFile(".");
+	}
+	
 	private void setupLuaFiles()
 	{
 		
 		File modFile = FMLCommonHandler.instance().findContainerFor(OpenCCSensors.instance).getSource();
 		
+		modFile = new File("./test.zip");
+		
+		File baseFile = getBase();
+		
 		String beginStr = "openccsensors/resources/lua/";
-		String destFolder = ".\\mods\\OCSLua\\lua";
+		String destFolder = "\\mods\\OCSLua\\lua";
 		
 		if (modFile.isDirectory())
 		{
 			File srcFile = new File(modFile, beginStr);
 			
-			File destFile = new File(destFolder);
+			File destFile = new File(baseFile, destFolder);
 			
 			try {
 				copy(srcFile, destFile);
@@ -100,7 +109,8 @@ public class CommonProxy
 	private void extractZipToLocation(File zipFile, String sourceFolder, String destFolder)
 	{
 	    try {
-	        String destinationname = destFolder;
+	        File destFile = new File(getBase(), destFolder);
+	        String destinationName = destFile.getAbsolutePath();
 	        byte[] buf = new byte[1024];
 	        ZipInputStream zipinputstream = null;
 	        ZipEntry zipentry;
@@ -119,7 +129,7 @@ public class CommonProxy
 	        	}
 	        	
 	        	
-	            String entryName = destinationname + zipentryName.substring(Math.min(zipentryName.length(), sourceFolder.length() - 1));
+	            String entryName = destinationName + zipentryName.substring(Math.min(zipentryName.length(), sourceFolder.length() - 1));
 	            entryName = entryName.replace('/', File.separatorChar);
 	            entryName = entryName.replace('\\', File.separatorChar);
 	            int n;
