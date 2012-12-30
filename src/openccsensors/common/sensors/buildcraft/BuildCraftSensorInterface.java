@@ -5,6 +5,7 @@ import java.util.Map;
 import buildcraft.energy.IEngineProvider;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -82,7 +83,7 @@ public class BuildCraftSensorInterface implements ISensorInterface {
 				"aaa",
 				'r', new ItemStack(Item.redstone),
 				'a', new ItemStack(Item.paper),
-				'p',new ItemStack(Item.arrow));
+				'p',new ItemStack(Block.lever));
 	}
 
 	@Override
