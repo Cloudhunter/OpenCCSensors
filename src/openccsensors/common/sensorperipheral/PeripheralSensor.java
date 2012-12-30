@@ -130,7 +130,9 @@ implements IHostedPeripheral, ISensorAccess
 		}
 		
 		if (sensorCard == null)
-			throw new Exception ("No sensor card inserted.");
+		{
+			return new Object[] { item.methodCallId, null};
+		}
 		
 		Vec3 vec = env.getLocation();
 		

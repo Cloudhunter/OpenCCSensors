@@ -84,7 +84,7 @@ public class SignSensorInterface implements ISensorInterface {
 				"aaa",
 				'r', new ItemStack(Item.redstone),
 				'a', new ItemStack(Item.paper),
-				's',new ItemStack(Block.signPost));
+				's',new ItemStack(Item.sign));
 	}
 
 	@Override
