@@ -218,7 +218,7 @@ implements IHostedPeripheral, ISensorAccess
 		
 		if (itemstack == null)
 		{
-			throw new Exception("No item in sensor reader!");
+			return null;
 		}
 		
 		Item item = itemstack.getItem(); 
@@ -231,10 +231,9 @@ implements IHostedPeripheral, ISensorAccess
 				return sensor;
 			}
 			
-			throw new Exception("Error reading sensor - please bug the author to add an ISensorCard!");
 		}
 		
-		throw new Exception("Item is not sensor card!");
+		return null;
 	}
 
 	@Override
