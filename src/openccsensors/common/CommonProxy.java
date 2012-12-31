@@ -79,13 +79,10 @@ public class CommonProxy
 		
 		File modFile = FMLCommonHandler.instance().findContainerFor(OpenCCSensors.instance).getSource();
 		
-		modFile = new File("./test.zip");
-		
 		File baseFile = getBase();
 		
 		String beginStr = "openccsensors/resources/lua/";
-		String destFolder = "\\mods\\OCSLua\\lua";
-		
+		String destFolder = "mods\\OCSLua\\lua";
 		if (modFile.isDirectory())
 		{
 			File srcFile = new File(modFile, beginStr);
@@ -108,8 +105,9 @@ public class CommonProxy
 	
 	private void extractZipToLocation(File zipFile, String sourceFolder, String destFolder)
 	{
-	    try {
-	        File destFile = new File(getBase(), destFolder);
+		try {
+
+			File destFile = new File(getBase(), destFolder);
 	        String destinationName = destFile.getAbsolutePath();
 	        byte[] buf = new byte[1024];
 	        ZipInputStream zipinputstream = null;
@@ -121,7 +119,6 @@ public class CommonProxy
 	        while (zipentry != null) {
 	            //for each entry to be extracted
 	        	String zipentryName = zipentry.getName();
-	        	
 	        	if(!zipentryName.startsWith(sourceFolder))
 	        	{
 	        		zipentry = zipinputstream.getNextEntry();
