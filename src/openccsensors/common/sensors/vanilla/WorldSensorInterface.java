@@ -16,6 +16,8 @@ import openccsensors.common.sensors.SensorCard;
 
 public class WorldSensorInterface implements ISensorInterface {
 
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	
 	@Override
 	public String getName() {
 		return "openccsensors.item.worldsensor";
@@ -45,6 +47,8 @@ public class WorldSensorInterface implements ISensorInterface {
 		retMap.put("Biome", world.getBiomeGenForCoords(x, z).biomeName);
 		retMap.put("LightLevel", world.getBlockLightValue(x, y, z));
 		retMap.put("Raining", world.isRaining());
+		retMap.put("Thunder", world.isThundering());
+		retMap.put("Daytime", world.isDaytime());
 		
 		return retMap;
 	}
