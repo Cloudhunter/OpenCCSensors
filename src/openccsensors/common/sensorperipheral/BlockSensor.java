@@ -13,7 +13,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 import openccsensors.OpenCCSensors;
 import openccsensors.common.core.OCSLog;
 
@@ -159,4 +161,11 @@ public class BlockSensor extends BlockContainer
 
 		par1World.setBlockMetadataWithNotify(par2, par3, par4, byte0);
 	}
+    
+    @Override
+    public int getFlammability(IBlockAccess world, int x, int y, int z, int metadata, ForgeDirection face)
+    {
+    	return 0;
+    }
+    
 }
