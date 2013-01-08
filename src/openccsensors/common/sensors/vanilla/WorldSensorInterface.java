@@ -47,7 +47,7 @@ public class WorldSensorInterface implements ISensorInterface {
 		retMap.put("Biome", world.getBiomeGenForCoords(x, z).biomeName);
 		retMap.put("LightLevel", world.getBlockLightValue(x, y, z));
 		retMap.put("Raining", world.isRaining());
-		retMap.put("Thunder", world.isThundering());
+		retMap.put("Thundering", world.isThundering());
 		retMap.put("Daytime", world.isDaytime());
 		
 		return retMap;
@@ -60,7 +60,7 @@ public class WorldSensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public Object[] callMethod(ISensorAccess sensor, int methodID, Object[] args) throws Exception {
+	public Map callMethod(ISensorAccess sensor, World world, int x, int y, int z, int methodID, Object[] args) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

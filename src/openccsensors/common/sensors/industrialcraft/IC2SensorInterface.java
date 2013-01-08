@@ -82,7 +82,7 @@ public class IC2SensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public Object[] callMethod(ISensorAccess sensor, int methodID, Object[] args) throws Exception {
+	public Map callMethod(ISensorAccess sensor, World world, int x, int y, int z, int methodID, Object[] args) throws Exception {
 		return null;
 	}
 
