@@ -8,11 +8,11 @@ import openccsensors.common.helper.SensorHelper;
 
 public class TileSensorTarget {
 
-	protected int xCoord;
-	protected int yCoord;
-	protected int zCoord;
+	public int xCoord;
+	public int yCoord;
+	public int zCoord;
 
-	protected String rawType;
+	public String rawType;
 	
 	protected TileSensorTarget(TileEntity targetEntity) {
 

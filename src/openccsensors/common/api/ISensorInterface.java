@@ -13,6 +13,6 @@ public interface ISensorInterface
 	Map getTargetDetails(ISensorAccess sensor, World world, int x, int y, int z, String target) throws Exception;
 	boolean isDirectionalEnabled();
 	String[] getMethods();
-	Object[] callMethod(ISensorAccess sensor, int methodID, Object[] args) throws Exception;
+	Map callMethod(ISensorAccess sensor, World world, int x, int y, int z, int methodID, Object[] args) throws Exception;
 	void initRecipes(SensorCard card);
 }
