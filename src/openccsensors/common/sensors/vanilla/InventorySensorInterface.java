@@ -192,6 +192,8 @@ public class InventorySensorInterface implements ISensorInterface {
 						HashMap ret = new HashMap();
 						ret.put("MapName", data.mapName);
 						ret.put("Scale", (int)data.scale);
+						ret.put("CenterX", data.xCenter);
+						ret.put("CenterZ", data.zCenter);
 						HashMap colors = new HashMap();
 						
 						// put all th colors in

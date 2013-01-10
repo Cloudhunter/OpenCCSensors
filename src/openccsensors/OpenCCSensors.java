@@ -81,6 +81,7 @@ public class OpenCCSensors
 		loadSensorPack("buildcraft");
 		loadSensorPack("vanilla");
 		loadSensorPack("industrialcraft");
+		loadSensorPack("thaumcraft");
 
 		sensorCard = new SensorCard(Config.sensorCardID);
 		
