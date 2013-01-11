@@ -28,7 +28,7 @@ public class TileSensorTarget {
 		
 		HashMap retMap = new HashMap();
 
-		retMap.put("type", SensorHelper.getType(rawType));
+		retMap.put("Type", SensorHelper.getType(rawType));
 
 		return retMap;
 	}

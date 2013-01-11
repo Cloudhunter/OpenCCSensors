@@ -46,6 +46,7 @@ public class TargetHelper {
 			{
 				for (ISensorTarget target : sensorTargets)
 				{
+					rtn.putAll(target.getBasicInformation(world));
 					rtn.putAll(target.getDetailInformation(world));
 				}
 			}

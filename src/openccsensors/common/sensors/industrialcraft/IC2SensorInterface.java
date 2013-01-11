@@ -14,6 +14,7 @@ import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITargetWrapper;
+import openccsensors.common.core.OCSLog;
 import openccsensors.common.helper.TargetHelper;
 import openccsensors.common.sensors.SensorCard;
 import openccsensors.common.sensors.TargetRetriever;
@@ -25,10 +26,15 @@ import net.minecraft.world.World;
 
 public class IC2SensorInterface implements ISensorInterface {
 
+	public final static int MASSFAB_MAX_ENERGY = 1100000;
+	
 	private TargetRetriever retriever = new TargetRetriever();
 
+	public final static String MASS_FAB_CLASS = "ic2.core.block.machine.tileentity.TileEntityMatter";
+	
 	public IC2SensorInterface() {
 		retriever.registerTarget(new ITargetWrapper() {
+			
 			@Override
 			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
 				if (entity instanceof IReactor)
@@ -44,6 +50,22 @@ public class IC2SensorInterface implements ISensorInterface {
 			}
 		});
 
+		retriever.registerTarget(new ITargetWrapper() {
+
+			@Override
+			public ISensorTarget createNew(Object entity, int sx, int sy,
+					int sz) {
+				
+				if (entity instanceof TileEntity && entity.getClass().getName() == MASS_FAB_CLASS)
+				{
+					return new MassFabTarget((TileEntity) entity);
+					
+				}
+				return null;
+			}
+			
+		});
+		
 		retriever.registerTarget(new ITargetWrapper() {
 			@Override
 			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {

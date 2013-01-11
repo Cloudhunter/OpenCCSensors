@@ -1,5 +1,6 @@
 package openccsensors.common.sensors.vanilla;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.inventory.IInventory;
@@ -21,8 +22,9 @@ public class InventoryTarget extends TileSensorTarget implements ISensorTarget {
 
 		IInventory inventory = (IInventory) world.getBlockTileEntity(xCoord,
 				yCoord, zCoord);
-
-		return InventoryHelper.invToMap(inventory);
+		HashMap items = new HashMap();
+		items.put("Items", InventoryHelper.invToMap(inventory));
+		return items;
 
 	}
 
