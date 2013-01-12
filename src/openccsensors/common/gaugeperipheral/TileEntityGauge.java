@@ -1,7 +1,11 @@
 package openccsensors.common.gaugeperipheral;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 import openccsensors.common.core.OCSLog;
 import openccsensors.common.sensors.industrialcraft.IC2SensorInterface;
@@ -11,32 +15,56 @@ import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.inventory.IInventory;
 
 public class TileEntityGauge extends TileEntity {
+	
+	public class GaugeCallbackPair {
+		public Class klazz;
+		public IGaugeCallback callback;
+		public GaugeCallbackPair(Class klazz, IGaugeCallback callback)
+		{
+			this.klazz = klazz;
+			this.callback = callback;
+		}
+	}
 	
     public static final String IC2_MASS_FAB_CLASSNAME = "ic2.core.block.machine.tileentity.TileEntityMatter";
     public static final String IC2_MFSU_CLASSNAME = "ic2.core.block.wiring.TileEntityElectricBlock";
     
-    private int orientation;
     private double percentage = 0;
     
-    private HashMap<Class, IGaugeCallback> monitors = null;
+    private ArrayList<GaugeCallbackPair> monitors = null;
     
     public TileEntityGauge()
     {
     	//monitors = new HashMap<Class, IGaugeCallback>();
     }
+    
+    public double getPercentage()
+    {
+    	return percentage;
+    }
+    
+    @Override
+    public int getBlockMetadata()
+    {
+        if (this.blockMetadata == -1)
+        {
+            return 4;
+        }
 
+        return this.blockMetadata;
+    }
     public void readFromNBT(NBTTagCompound nbttagcompound)
     {
-    	this.orientation = nbttagcompound.getInteger("orientation");
     	this.percentage = nbttagcompound.getDouble("percentage");
         super.readFromNBT(nbttagcompound);
     }
 
     public void writeToNBT(NBTTagCompound nbttagcompound)
     {
-    	nbttagcompound.setInteger("orientation", this.orientation);
+
     	nbttagcompound.setDouble("percentage", this.percentage);
         super.writeToNBT(nbttagcompound);
     }
@@ -44,18 +72,28 @@ public class TileEntityGauge extends TileEntity {
     @Override
     public void updateEntity()
     {
-    	if (monitors == null) addMonitors();
-    	
-    	TileEntity attachedTo = getAttachedTile();
-    	if (attachedTo != null)
+    	updatePercentage();
+        super.updateEntity();
+    }
+    
+    private void updatePercentage()
+    {
+
+    	if (!this.worldObj.isRemote)
     	{
-        	IGaugeCallback callback = getAvailableCallbackForTileEntity(attachedTo);
-	    	if (callback != null)
+
+        	if (monitors == null) addMonitors();
+        	
+	    	TileEntity attachedTo = getAttachedTile();
+	    	if (attachedTo != null)
 	    	{
-	    		percentage = monitors.get(attachedTo.getClass()).getPercentage(attachedTo);	
+	        	IGaugeCallback callback = getAvailableCallbackForTileEntity(attachedTo);
+		    	if (callback != null)
+		    	{
+		    		percentage = callback.getPercentage(attachedTo);
+		    	}
 	    	}
     	}
-        super.updateEntity();
     }
     
     @Override 
@@ -77,7 +115,10 @@ public class TileEntityGauge extends TileEntity {
     {
     	readFromNBT(pkt.customParam1);
     }
-    
+    private void addTileEntityMonitor(Class klazz, IGaugeCallback callback)
+    {
+    	monitors.add(new GaugeCallbackPair(klazz, callback));
+    }
     private void addTileEntityMonitor(String className, IGaugeCallback callback)
     {
     	try
@@ -85,7 +126,7 @@ public class TileEntityGauge extends TileEntity {
     		Class klazz = Class.forName(className);
     		if (klazz != null)
     		{
-    			monitors.put(klazz, callback);
+    			addTileEntityMonitor(klazz, callback);
     		}
     	}
     	catch(ClassNotFoundException exception)
@@ -95,15 +136,34 @@ public class TileEntityGauge extends TileEntity {
     
     private TileEntity getAttachedTile()
     {
-    	return this.getWorldObj().getBlockTileEntity(xCoord, yCoord-1, zCoord);
+    	int x = 0;
+    	int z = 0;
+    	switch (getFacing())
+    	{
+    	case 2:
+    		z = 1;
+    		break;
+    	case 5:
+    		x = -1;
+    		break;
+    	case 3:
+    		z = -1;
+    		break;
+    	case 4:
+    		x = 1;
+    		break;
+    	}
+    	return this.getWorldObj().getBlockTileEntity(xCoord+x, yCoord, zCoord+z);
     }
     
     private IGaugeCallback getAvailableCallbackForTileEntity(TileEntity entity)
     {
-		for (Map.Entry<Class, IGaugeCallback> entry : monitors.entrySet()) {
-    		if (entry.getKey().isAssignableFrom(entity.getClass()))
+    	for (int i=0; i<monitors.size(); i++)
+    	{
+    		GaugeCallbackPair monitor = monitors.get(i);
+    		if (monitor.klazz.isAssignableFrom(entity.getClass()))
     		{
-    			return entry.getValue();
+    			return monitor.callback;
     		}
     	}
     	return null;
@@ -117,7 +177,7 @@ public class TileEntityGauge extends TileEntity {
     
     private void addMonitors()
     {
-    	monitors = new HashMap<Class, IGaugeCallback>();
+    	monitors = new ArrayList<GaugeCallbackPair>();
     	
     	addTileEntityMonitor(IC2_MASS_FAB_CLASSNAME, new IGaugeCallback() {
     		public double getPercentage(TileEntity attachedTo) {
@@ -125,9 +185,17 @@ public class TileEntityGauge extends TileEntity {
     			attachedTo.writeToNBT(compound);
     			if (compound.hasKey("energy"))
     			{
-    				return (100.0 / IC2SensorInterface.MASSFAB_MAX_ENERGY) * compound.getInteger("energy");
+        			return (100.0 / IC2SensorInterface.MASSFAB_MAX_ENERGY) * compound.getInteger("energy");
     			}
     			return 0;
+    		}
+    	});
+    	
+
+    	addTileEntityMonitor(IInventory.class, new IGaugeCallback() {
+    		public double getPercentage(TileEntity attachedTo) {
+    			IInventory invent = (IInventory) attachedTo;
+    			return Math.random() * 100;
     		}
     	});
     }

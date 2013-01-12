@@ -18,11 +18,9 @@ public class BlockGaugeRenderingHandler implements ISimpleBlockRenderingHandler 
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelID,
 			RenderBlocks renderer) {
-		// rotate the model 90 degrees
+
 		GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
-		// move it to the center
         GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-        // if it's a sensor block, render it like the tile entity
 		if (block == OpenCCSensors.Blocks.gaugeBlock)
         {
         	TileEntityRenderer.instance.renderTileEntityAt(new TileEntityGauge(), 0.0D, 0.0D, 0.0D, 0.0F);
