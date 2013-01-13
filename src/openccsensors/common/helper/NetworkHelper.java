@@ -20,7 +20,7 @@ import net.minecraft.nbt.NBTTagString;
 
 public class NetworkHelper {
 
-	static Map NBTToMap( NBTTagCompound tagCompound )
+	public static Map NBTToMap( NBTTagCompound tagCompound )
 	{
 		HashMap map = new HashMap();
 		
