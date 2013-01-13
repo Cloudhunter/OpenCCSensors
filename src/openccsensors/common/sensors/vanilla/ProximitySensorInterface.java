@@ -57,11 +57,7 @@ public class ProximitySensorInterface implements ISensorInterface {
 	public Map getBasicTarget(ISensorAccess sensor, World world, int x, int y, int z)
 			throws Exception {
 
-		HashMap targets;
-		if (sensor.isDirectional())
-			targets = retriever.getEntities(world, x, y, z, 2*sensingRadius, sensor.getSensorEnvironment().getFacing());
-		else
-			targets = retriever.getEntities(world, x, y, z, sensingRadius);
+		HashMap targets = retriever.getEntities(world, x, y, z, sensingRadius);
 		
 		return TargetHelper.getBasicInformationForTargets(
 				retriever.getEntities(world, x, y, z, sensingRadius),

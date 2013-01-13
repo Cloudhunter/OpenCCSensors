@@ -54,7 +54,7 @@ public class BuildCraftSensorInterface implements ISensorInterface {
 			throws Exception {
 
 		return TargetHelper.getBasicInformationForTargets(
-				retriever.getAdjacentTiles(world, x, y, z), world);
+				retriever.getSurroundingTileEntities(world, x, y, z), world);
 
 	}
 
@@ -63,7 +63,7 @@ public class BuildCraftSensorInterface implements ISensorInterface {
 			throws Exception {
 
 		return TargetHelper.getDetailedInformationForTarget(target,
-				retriever.getAdjacentTiles(world, x, y, z), world);
+				retriever.getSurroundingTileEntities(world, x, y, z), world);
 
 	}
 

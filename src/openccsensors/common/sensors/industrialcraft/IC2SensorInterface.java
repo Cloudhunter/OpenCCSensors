@@ -111,7 +111,7 @@ public class IC2SensorInterface implements ISensorInterface {
 	@Override
 	public Map getBasicTarget(ISensorAccess sensor, World world, int x, int y, int z) {
 		return TargetHelper.getBasicInformationForTargets(
-				retriever.getAdjacentTiles(world, x, y, z), world);
+				retriever.getSurroundingTileEntities(world, x, y, z), world);
 	}
 
 	@Override
@@ -119,7 +119,7 @@ public class IC2SensorInterface implements ISensorInterface {
 			throws Exception {
 
 		return TargetHelper.getDetailedInformationForTarget(target,
-				retriever.getAdjacentTiles(world, x, y, z), world);
+				retriever.getSurroundingTileEntities(world, x, y, z), world);
 
 	}
 

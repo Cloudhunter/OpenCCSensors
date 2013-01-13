@@ -1,7 +1,9 @@
 package openccsensors.common.sensors.vanilla;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import net.minecraft.block.Block;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -21,8 +23,15 @@ public class DevSensorInterface implements ISensorInterface {
 	{
 		retriever.registerTarget(new ITargetWrapper() {
 			@Override
-			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
-				return new DevTileTarget((TileEntity) entity);
+			public ISensorTarget createNew(Object object, int sx, int sy, int sz) {
+				if (object instanceof TileEntity) {
+					return new DevTileTarget((TileEntity) object);
+				}else if (object instanceof int[]){
+					if (((int[])object)[0] != 0){
+						return new DevBlockTarget((int[])object);
+					}
+				}
+				return null;
 			}
 		});
 	}
@@ -40,17 +49,21 @@ public class DevSensorInterface implements ISensorInterface {
 	@Override
 	public Map getBasicTarget(ISensorAccess sensor, World world, int x, int y,
 			int z) throws Exception {
-
-		return TargetHelper.getBasicInformationForTargets(
-				retriever.getAdjacentTiles(world, x, y, z, 5), world);
+		
+		HashMap surrounding = retriever.getSurroundingObjects(world, x, y, z, TargetRetriever.Type.BLOCK);
+		surrounding.putAll(retriever.getSurroundingObjects(world, x, y, z, TargetRetriever.Type.TILEENTITY));
+		
+		return TargetHelper.getBasicInformationForTargets(surrounding, world);
 	}
 
 	@Override
 	public Map getTargetDetails(ISensorAccess sensor, World world, int x,
 			int y, int z, String target) throws Exception {
 
-		return TargetHelper.getDetailedInformationForTarget(target,
-				retriever.getAdjacentTiles(world, x, y, z, 5), world);
+		HashMap surrounding = retriever.getSurroundingObjects(world, x, y, z, TargetRetriever.Type.BLOCK);
+		surrounding.putAll(retriever.getSurroundingObjects(world, x, y, z, TargetRetriever.Type.TILEENTITY));
+		
+		return TargetHelper.getDetailedInformationForTarget(target, surrounding, world);
 	}
 
 	@Override

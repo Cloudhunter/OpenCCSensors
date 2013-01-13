@@ -57,7 +57,7 @@ public class SignSensorInterface implements ISensorInterface {
 			throws Exception {
 
 		return TargetHelper.getBasicInformationForTargets(
-				retriever.getAdjacentTiles(world, x, y, z, 5), world);
+				retriever.getSurroundingTileEntities(world, x, y, z), world);
 
 	}
 
@@ -66,7 +66,7 @@ public class SignSensorInterface implements ISensorInterface {
 			throws Exception {
 
 		return TargetHelper.getDetailedInformationForTarget(target,
-				retriever.getAdjacentTiles(world, x, y, z, 5), world);
+				retriever.getSurroundingTileEntities(world, x, y, z), world);
 
 	}
 

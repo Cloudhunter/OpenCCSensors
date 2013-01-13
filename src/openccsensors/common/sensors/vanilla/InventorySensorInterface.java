@@ -87,7 +87,7 @@ public class InventorySensorInterface implements ISensorInterface {
 			throws Exception {
 
 		return TargetHelper.getBasicInformationForTargets(
-				retriever.getAdjacentTiles(world, x, y, z), world);
+				retriever.getSurroundingTileEntities(world, x, y, z), world);
 
 	}
 
@@ -96,7 +96,7 @@ public class InventorySensorInterface implements ISensorInterface {
 			throws Exception {
 
 		return TargetHelper.getDetailedInformationForTarget(target,
-				retriever.getAdjacentTiles(world, x, y, z), world);
+				retriever.getSurroundingTileEntities(world, x, y, z), world);
 
 	}
 
@@ -149,7 +149,7 @@ public class InventorySensorInterface implements ISensorInterface {
 		}
 		
 		// grab all the targets the retriever managed to get
-		HashMap<String, ArrayList<ISensorTarget>> possibleTargets = retriever.getAdjacentTiles(world, x, y, z);
+		HashMap<String, ArrayList<ISensorTarget>> possibleTargets = retriever.getSurroundingTileEntities(world, x, y, z);
 		
 		// if their target exists
 		if (possibleTargets.containsKey(targetName))

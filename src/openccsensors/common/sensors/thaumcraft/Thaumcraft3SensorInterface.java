@@ -65,7 +65,7 @@ public class Thaumcraft3SensorInterface  implements ISensorInterface {
 			int z) throws Exception {
 		
 		return TargetHelper.getBasicInformationForTargets(
-				retriever.getAdjacentTiles(world, x, y, z), world);
+				retriever.getSurroundingTileEntities(world, x, y, z), world);
 		
 	}
 
@@ -74,7 +74,7 @@ public class Thaumcraft3SensorInterface  implements ISensorInterface {
 			int y, int z, String target) throws Exception {
 
 		return TargetHelper.getDetailedInformationForTarget(target,
-				retriever.getAdjacentTiles(world, x, y, z), world);
+				retriever.getSurroundingTileEntities(world, x, y, z), world);
 		
 	}
 

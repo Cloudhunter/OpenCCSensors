@@ -50,7 +50,7 @@ public class LiquidSensorInterface implements ISensorInterface {
 			throws Exception {
 
 		return TargetHelper.getBasicInformationForTargets(
-				retriever.getAdjacentTiles(world, x, y, z), world);
+				retriever.getSurroundingTileEntities(world, x, y, z), world);
 
 	}
 
@@ -58,7 +58,7 @@ public class LiquidSensorInterface implements ISensorInterface {
 	public Map getTargetDetails(ISensorAccess sensor, World world, int x, int y, int z, String target)
 			throws Exception {
 		return TargetHelper.getDetailedInformationForTarget(target,
-				retriever.getAdjacentTiles(world, x, y, z), world);
+				retriever.getSurroundingTileEntities(world, x, y, z), world);
 	}
 
 	@Override
