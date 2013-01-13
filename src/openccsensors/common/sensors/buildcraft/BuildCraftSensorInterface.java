@@ -2,6 +2,7 @@ package openccsensors.common.sensors.buildcraft;
 
 import java.util.Map;
 
+import buildcraft.api.power.IPowerReceptor;
 import buildcraft.energy.IEngineProvider;
 
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -30,6 +31,16 @@ public class BuildCraftSensorInterface implements ISensorInterface {
 				if (entity instanceof IEngineProvider)
 				{
 					return new EngineTarget((TileEntity) entity);
+				}
+				return null;
+			}
+		});
+		retriever.registerTarget(new ITargetWrapper() {
+			@Override
+			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
+				if (entity instanceof IPowerReceptor && !(entity instanceof IEngineProvider))
+				{
+					return new PowerReceptorTarget((TileEntity) entity);
 				}
 				return null;
 			}
