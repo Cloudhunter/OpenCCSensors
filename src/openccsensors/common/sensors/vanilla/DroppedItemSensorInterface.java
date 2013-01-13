@@ -22,7 +22,7 @@ public class DroppedItemSensorInterface implements ISensorInterface {
 	private final double sensingRadius = 16.0F;
 
 	public DroppedItemSensorInterface() {
-		retriever.registerTarget(new IEntityValidatorCallback() {
+		retriever.registerCallback(new IEntityValidatorCallback() {
 			@Override
 			public ISensorTarget getTargetIfValid(Entity entity, double relativeX, double relativeY, double relativeZ) {
 				if (entity instanceof EntityItem && ((Entity)entity).isEntityAlive())

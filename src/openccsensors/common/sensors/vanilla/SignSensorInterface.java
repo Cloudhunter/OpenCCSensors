@@ -21,7 +21,7 @@ public class SignSensorInterface implements ISensorInterface {
 	private TileEntityRetriever retriever = new TileEntityRetriever();
 
 	public SignSensorInterface() {
-		retriever.registerTarget(new ITileEntityValidatorCallback() {
+		retriever.registerCallback(new ITileEntityValidatorCallback() {
 			@Override
 			public ISensorTarget getTargetIfValid(TileEntity entity, int relativeX, int relativeY, int relativeZ) {
 				if (entity instanceof TileEntitySign)
