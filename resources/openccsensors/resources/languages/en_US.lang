@@ -1,4 +1,5 @@
 openccsensors.tile.sensorblock.name=Sensor Peripheral
+openccsensors.tile.gaugeblock.name=Gauge
 openccsensors.item.inventorysensor.name=Inventory Sensorcard
 openccsensors.item.proximitysensor.name=Proximity Sensorcard
 openccsensors.item.ic2sensor.name=IndustrialCraft 2 Sensorcard
@@ -6,6 +7,8 @@ openccsensors.item.buildcraftsensor.name=BuildCraft Sensorcard
 openccsensors.item.liquidsensor.name=Liquid Sensorcard
 openccsensors.item.worldsensor.name=World Sensorcard
 openccsensors.item.droppeditemsensor.name=Dropped Item Sensorcard
+openccsensors.item.thaumcraft3sensor.name=Thaumcraft 3 Sensorcard
 openccsensors.item.signsensor.name=Sign Sensorcard
+openccsensors.item.devsensor.name=Dev Sensorcard
 openccsensors.gui.sensor=Sensor
 openccsensors.upgrade.adjective=Sensor

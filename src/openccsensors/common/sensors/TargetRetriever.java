@@ -23,7 +23,7 @@ public class TargetRetriever {
 	
 	public HashMap<String, ArrayList<ISensorTarget>> getAdjacentTiles(World world, int sx, int sy, int sz)
 	{
-		return getAdjacentTiles(world, sx, sy, sz, 2);
+		return getAdjacentTiles(world, sx, sy, sz, 4);
 	}
 	
 	public HashMap<String, ArrayList<ISensorTarget>> getAdjacentTiles(World world, int sx, int sy, int sz, int distance)

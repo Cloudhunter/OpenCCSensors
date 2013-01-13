@@ -28,7 +28,10 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import openccsensors.OpenCCSensors;
+import openccsensors.OpenCCSensors.Blocks;
 import openccsensors.common.core.OCSLog;
+import openccsensors.common.gaugeperipheral.BlockGauge;
+import openccsensors.common.gaugeperipheral.TileEntityGauge;
 import openccsensors.common.sensorperipheral.ContainerSensor;
 import openccsensors.common.sensorperipheral.BlockSensor;
 import openccsensors.common.sensorperipheral.TurtleUpgradeSensor;
@@ -53,6 +56,11 @@ public class CommonProxy
 				'r', new ItemStack(Item.redstone),
 				's',new ItemStack(Block.stone));
 		
+		OpenCCSensors.Blocks.gaugeBlock = new BlockGauge( OpenCCSensors.Config.gaugeBlockID, Material.cloth );
+		GameRegistry.registerBlock(OpenCCSensors.Blocks.gaugeBlock, "OCS.gauge");
+		GameRegistry.registerTileEntity(TileEntityGauge.class, "gauge");
+		OpenCCSensors.Blocks.gaugeBlock.setHardness(0.5F);
+		
 		// register turtle peripheral if applicable
 		if (OpenCCSensors.Config.turtlePeripheralEnabled)
 		{
@@ -67,6 +75,10 @@ public class CommonProxy
 		
 		setupLuaFiles();
 		
+	}
+	
+	public void postInit()
+	{
 	}
 	
 	public File getBase()

@@ -40,7 +40,6 @@ public class DroppedItemTarget implements ISensorTarget {
 		retMap.put("type", rawType);
 		retMap.put("IsBurning", entity.isBurning());
 		retMap.put("StackSize", Integer.toString(entity.func_92014_d().stackSize));
-		addPositionToMap(entity, retMap);
 		return retMap;
 	}
 	

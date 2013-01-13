@@ -1,9 +1,6 @@
 package openccsensors.common.sensors.buildcraft;
 
 import java.util.Map;
-
-import buildcraft.energy.IEngineProvider;
-
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -18,6 +15,7 @@ import openccsensors.common.api.ITargetWrapper;
 import openccsensors.common.helper.TargetHelper;
 import openccsensors.common.sensors.SensorCard;
 import openccsensors.common.sensors.TargetRetriever;
+import buildcraft.api.power.IPowerReceptor;
 
 public class BuildCraftSensorInterface implements ISensorInterface {
 
@@ -27,9 +25,9 @@ public class BuildCraftSensorInterface implements ISensorInterface {
 		retriever.registerTarget(new ITargetWrapper() {
 			@Override
 			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
-				if (entity instanceof IEngineProvider)
+				if (entity instanceof IPowerReceptor)
 				{
-					return new EngineTarget((TileEntity) entity);
+					return new PowerReceptorTarget((TileEntity) entity);
 				}
 				return null;
 			}
