@@ -59,7 +59,7 @@ public class TileEntityRetriever {
 		return map;
 	}
 	
-	public void registerTarget(ITileEntityValidatorCallback wrapper) {
+	public void registerCallback(ITileEntityValidatorCallback wrapper) {
 		targets.add(wrapper);
 	}
 }
