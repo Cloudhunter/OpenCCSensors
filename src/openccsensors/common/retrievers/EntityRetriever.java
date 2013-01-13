@@ -25,7 +25,7 @@ public class EntityRetriever {
 				double relativeY = entity.getValue().posY - (sy + 0.5);
 				double relativeZ = entity.getValue().posZ - (sz + 0.5);
 				
-				ISensorTarget target = wrapper.getTargetIfValid(entity.getValue(), relativeX, relativeY, relativeZ, sx, sy, sz);
+				ISensorTarget target = wrapper.getTargetIfValid(entity.getValue(), relativeX, relativeY, relativeZ);
 				
 				if (target != null)
 				{

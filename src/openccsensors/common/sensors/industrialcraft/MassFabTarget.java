@@ -12,8 +12,8 @@ import openccsensors.common.sensors.TileSensorTarget;
 public class MassFabTarget extends TileSensorTarget implements
 		ISensorTarget {
 
-	MassFabTarget(TileEntity targetEntity) {
-		super(targetEntity);
+	MassFabTarget(TileEntity targetEntity, int relativeX, int relativeY, int relativeZ) {
+		super(targetEntity, relativeX, relativeY, relativeZ);
 	}
 
 	@Override

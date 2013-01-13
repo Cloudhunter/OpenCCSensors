@@ -13,8 +13,8 @@ import openccsensors.common.sensors.TileSensorTarget;
 public class EnergyStorageTarget extends TileSensorTarget implements
 		ISensorTarget {
 
-	EnergyStorageTarget(TileEntity targetEntity) {
-		super(targetEntity);
+	EnergyStorageTarget(TileEntity targetEntity, int relativeX, int relativeY, int relativeZ) {
+		super(targetEntity, relativeX, relativeY, relativeZ);
 	}
 
 	@Override

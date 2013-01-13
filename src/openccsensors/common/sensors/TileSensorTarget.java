@@ -11,14 +11,22 @@ public class TileSensorTarget {
 	public int xCoord;
 	public int yCoord;
 	public int zCoord;
+	
+	public int relativeX;
+	public int relativeY;
+	public int relativeZ;
 
 	public String rawType;
 	
-	protected TileSensorTarget(TileEntity targetEntity) {
+	protected TileSensorTarget(TileEntity targetEntity, int relativeX, int relativeY, int relativeZ) {
 
 		xCoord = targetEntity.xCoord;
 		yCoord = targetEntity.yCoord;
 		zCoord = targetEntity.zCoord;
+		
+		this.relativeX = relativeX;
+		this.relativeY = relativeY;
+		this.relativeZ = relativeZ;
 		
 		rawType = targetEntity.getClass().getName();
 	}

@@ -13,8 +13,8 @@ import openccsensors.common.sensors.TileSensorTarget;
 public class EnergyConductorTarget extends TileSensorTarget implements
 		ISensorTarget {
 
-	protected EnergyConductorTarget(TileEntity targetEntity) {
-		super(targetEntity);
+	protected EnergyConductorTarget(TileEntity targetEntity, int relativeX, int relativeY, int relativeZ) {
+		super(targetEntity, relativeX, relativeY, relativeZ);
 	}
 
 	@Override

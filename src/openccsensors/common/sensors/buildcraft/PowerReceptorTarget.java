@@ -13,8 +13,8 @@ import buildcraft.api.power.IPowerReceptor;
 
 public class PowerReceptorTarget extends TileSensorTarget implements ISensorTarget {
 
-	PowerReceptorTarget(TileEntity targetEntity) {
-		super(targetEntity);
+	PowerReceptorTarget(TileEntity targetEntity, int relativeX, int relativeY, int relativeZ) {
+		super(targetEntity, relativeX, relativeY, relativeZ);
 	}
 
 	@Override

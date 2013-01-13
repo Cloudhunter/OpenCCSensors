@@ -45,10 +45,10 @@ public class InventorySensorInterface implements ISensorInterface {
 	public InventorySensorInterface() {
 		retriever.registerTarget(new ITileEntityValidatorCallback() {
 			@Override
-			public ISensorTarget getTargetIfValid(TileEntity entity, int relativeX, int relativeY, int relativeZ, int x, int y, int z) {
+			public ISensorTarget getTargetIfValid(TileEntity entity, int relativeX, int relativeY, int relativeZ) {
 				if (entity instanceof IInventory)
 				{
-					return new InventoryTarget((TileEntity) entity);
+					return new InventoryTarget(entity, relativeX, relativeY, relativeZ);
 				}
 				return null;
 			}

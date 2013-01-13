@@ -25,21 +25,21 @@ public class Thaumcraft3SensorInterface  implements ISensorInterface {
 
 		retriever.registerTarget(new ITileEntityValidatorCallback() {
 			@Override
-			public ISensorTarget getTargetIfValid(TileEntity entity, int relativeX, int relativeY, int relativeZ, int x, int y, int z) {
+			public ISensorTarget getTargetIfValid(TileEntity entity, int relativeX, int relativeY, int relativeZ) {
 				
 				String className = entity.getClass().getName();
 				
 				if (className.equals(BRAIN_IN_A_JAR_CLASS))
 				{
-					return new BrainInAJarTarget((TileEntity) entity);
+					return new BrainInAJarTarget(entity, relativeX, relativeY, relativeZ);
 				}
 				else if (className.equals(CRUCIBLE_CLASS))
 				{
-					return new CrucibleTarget((TileEntity) entity);
+					return new CrucibleTarget(entity, relativeX, relativeY, relativeZ);
 				}
 				else if (className.equals(FILLED_JAR_CLASS))
 				{
-					return new FilledJarTarget((TileEntity) entity);
+					return new FilledJarTarget(entity, relativeX, relativeY, relativeZ);
 				}
 				return null;
 			}

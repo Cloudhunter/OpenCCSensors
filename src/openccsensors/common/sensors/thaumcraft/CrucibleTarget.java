@@ -12,8 +12,8 @@ import thaumcraft.api.EnumTag;
 
 public class CrucibleTarget extends TileSensorTarget implements ISensorTarget {
 
-	protected CrucibleTarget(TileEntity targetEntity) {
-		super(targetEntity);
+	protected CrucibleTarget(TileEntity targetEntity, int relativeX, int relativeY, int relativeZ) {
+		super(targetEntity, relativeX, relativeY, relativeZ);
 	}
 
 	@Override

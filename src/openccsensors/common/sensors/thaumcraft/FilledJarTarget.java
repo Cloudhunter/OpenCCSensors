@@ -12,8 +12,8 @@ import thaumcraft.api.EnumTag;
 
 public class FilledJarTarget  extends TileSensorTarget implements ISensorTarget {
 
-	protected FilledJarTarget(TileEntity targetEntity) {
-		super(targetEntity);
+	protected FilledJarTarget(TileEntity targetEntity, int relativeX, int relativeY, int relativeZ) {
+		super(targetEntity, relativeX, relativeY, relativeZ);
 	}
 
 	@Override

@@ -11,8 +11,8 @@ import openccsensors.common.sensors.TileSensorTarget;
 
 public class BrainInAJarTarget extends TileSensorTarget implements ISensorTarget {
 
-	protected BrainInAJarTarget(TileEntity targetEntity) {
-		super(targetEntity);
+	protected BrainInAJarTarget(TileEntity targetEntity, int relativeX, int relativeY, int relativeZ) {
+		super(targetEntity, relativeX, relativeY, relativeZ);
 	}
 
 	@Override
