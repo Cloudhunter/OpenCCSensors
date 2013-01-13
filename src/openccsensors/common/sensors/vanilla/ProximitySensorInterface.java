@@ -1,51 +1,38 @@
 package openccsensors.common.sensors.vanilla;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-
-import cpw.mods.fml.common.registry.GameRegistry;
-import openccsensors.OpenCCSensors;
 import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.api.ISensorTarget;
-import openccsensors.common.api.ITargetWrapper;
-import openccsensors.common.core.OCSLog;
 import openccsensors.common.helper.TargetHelper;
+import openccsensors.common.retrievers.EntityRetriever;
+import openccsensors.common.retrievers.IEntityValidatorCallback;
 import openccsensors.common.sensors.SensorCard;
-import openccsensors.common.sensors.TargetRetriever;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ProximitySensorInterface implements ISensorInterface {
 
-	private TargetRetriever retriever = new TargetRetriever();
+	private EntityRetriever retriever = new EntityRetriever();
 	private final double sensingRadius = 16.0F;
 
 	public ProximitySensorInterface() {
-		retriever.registerTarget(new ITargetWrapper() {
+		retriever.registerTarget(new IEntityValidatorCallback() {
 			@Override
-			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
+			public ISensorTarget getTargetIfValid(Entity entity, double relativeX, double relativeY, double relativeZ, int x, int y, int z) {
 				if (entity instanceof EntityLiving)
 				{
-					return new LivingTarget((EntityLiving) entity, sx, sy, sz);
+					return new LivingTarget((EntityLiving) entity, x, y, z);
 				}
 				return null;
 			}
 		});
-	}
-
-	@Override
-	public String getName() {
-		return "openccsensors.item.proximitysensor";
-	}
-
-	@Override
-	public String[] getMethods() {
-		return null;
 	}
 
 	@Override
@@ -56,21 +43,9 @@ public class ProximitySensorInterface implements ISensorInterface {
 	@Override
 	public Map getBasicTarget(ISensorAccess sensor, World world, int x, int y, int z)
 			throws Exception {
-
-		HashMap targets = retriever.getEntities(world, x, y, z, sensingRadius);
 		
 		return TargetHelper.getBasicInformationForTargets(
-				retriever.getEntities(world, x, y, z, sensingRadius),
-				world);
-
-	}
-
-	@Override
-	public Map getTargetDetails(ISensorAccess sensor, World world, int x, int y, int z, String target)
-			throws Exception {
-
-		return TargetHelper.getDetailedInformationForTarget(target,
-				retriever.getEntities(world, x, y, z, sensingRadius),
+				retriever.getSphere(world, x, y, z, sensingRadius),
 				world);
 
 	}
@@ -78,6 +53,26 @@ public class ProximitySensorInterface implements ISensorInterface {
 	@Override
 	public int getId() {
 		return 17;
+	}
+
+	@Override
+	public String[] getMethods() {
+		return null;
+	}
+
+	@Override
+	public String getName() {
+		return "openccsensors.item.proximitysensor";
+	}
+
+	@Override
+	public Map getTargetDetails(ISensorAccess sensor, World world, int x, int y, int z, String target)
+			throws Exception {
+
+		return TargetHelper.getDetailedInformationForTarget(target,
+				retriever.getSphere(world, x, y, z, sensingRadius),
+				world);
+
 	}
 
 	@Override

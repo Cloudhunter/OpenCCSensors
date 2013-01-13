@@ -1,7 +1,5 @@
 package openccsensors.common.sensors.thaumcraft;
 
-import ic2.api.IReactorChamber;
-
 import java.util.Map;
 
 import net.minecraft.tileentity.TileEntity;
@@ -9,16 +7,14 @@ import net.minecraft.world.World;
 import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.api.ISensorTarget;
-import openccsensors.common.api.ITargetWrapper;
-import openccsensors.common.core.OCSLog;
 import openccsensors.common.helper.TargetHelper;
+import openccsensors.common.retrievers.ITileEntityValidatorCallback;
+import openccsensors.common.retrievers.TileEntityRetriever;
 import openccsensors.common.sensors.SensorCard;
-import openccsensors.common.sensors.TargetRetriever;
-import openccsensors.common.sensors.industrialcraft.ReactorTarget;
 
 public class Thaumcraft3SensorInterface  implements ISensorInterface {
 
-	private TargetRetriever retriever = new TargetRetriever();
+	private TileEntityRetriever retriever = new TileEntityRetriever();
 	
 	public static final String BRAIN_IN_A_JAR_CLASS = "thaumcraft.common.blocks.jars.TileJarBrain";
 	public static final String CRUCIBLE_CLASS = "thaumcraft.common.blocks.TileCrucible";
@@ -27,9 +23,9 @@ public class Thaumcraft3SensorInterface  implements ISensorInterface {
 	public Thaumcraft3SensorInterface()
 	{
 
-		retriever.registerTarget(new ITargetWrapper() {
+		retriever.registerTarget(new ITileEntityValidatorCallback() {
 			@Override
-			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
+			public ISensorTarget getTargetIfValid(TileEntity entity, int relativeX, int relativeY, int relativeZ, int x, int y, int z) {
 				
 				String className = entity.getClass().getName();
 				
@@ -51,8 +47,18 @@ public class Thaumcraft3SensorInterface  implements ISensorInterface {
 	}
 	
 	@Override
-	public String getName() {
-		return "openccsensors.item.thaumcraft3sensor";
+	public Map callMethod(ISensorAccess sensor, World world, int x, int y,
+			int z, int methodID, Object[] args) throws Exception {
+		return null;
+	}
+
+	@Override
+	public Map getBasicTarget(ISensorAccess sensor, World world, int x, int y,
+			int z) throws Exception {
+		
+		return TargetHelper.getBasicInformationForTargets(
+				retriever.getCube(world, x, y, z), world);
+		
 	}
 
 	@Override
@@ -61,12 +67,13 @@ public class Thaumcraft3SensorInterface  implements ISensorInterface {
 	}
 
 	@Override
-	public Map getBasicTarget(ISensorAccess sensor, World world, int x, int y,
-			int z) throws Exception {
-		
-		return TargetHelper.getBasicInformationForTargets(
-				retriever.getSurroundingTileEntities(world, x, y, z), world);
-		
+	public String[] getMethods() {
+		return null;
+	}
+
+	@Override
+	public String getName() {
+		return "openccsensors.item.thaumcraft3sensor";
 	}
 
 	@Override
@@ -74,29 +81,18 @@ public class Thaumcraft3SensorInterface  implements ISensorInterface {
 			int y, int z, String target) throws Exception {
 
 		return TargetHelper.getDetailedInformationForTarget(target,
-				retriever.getSurroundingTileEntities(world, x, y, z), world);
+				retriever.getCube(world, x, y, z), world);
 		
-	}
-
-	@Override
-	public boolean isDirectionalEnabled() {
-		return false;
-	}
-
-	@Override
-	public String[] getMethods() {
-		return null;
-	}
-
-	@Override
-	public Map callMethod(ISensorAccess sensor, World world, int x, int y,
-			int z, int methodID, Object[] args) throws Exception {
-		return null;
 	}
 
 	@Override
 	public void initRecipes(SensorCard card) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean isDirectionalEnabled() {
+		return false;
 	}
 }

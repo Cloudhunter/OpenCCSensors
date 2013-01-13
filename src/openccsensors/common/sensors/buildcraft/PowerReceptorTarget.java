@@ -3,10 +3,10 @@ package openccsensors.common.sensors.buildcraft;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import openccsensors.common.api.ISensorTarget;
-import openccsensors.common.core.OCSLog;
 import openccsensors.common.sensors.TileSensorTarget;
 import buildcraft.api.power.IPowerProvider;
 import buildcraft.api.power.IPowerReceptor;

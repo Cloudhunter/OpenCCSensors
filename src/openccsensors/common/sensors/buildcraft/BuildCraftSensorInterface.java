@@ -1,47 +1,37 @@
 package openccsensors.common.sensors.buildcraft;
 
 import java.util.Map;
-import cpw.mods.fml.common.registry.GameRegistry;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import openccsensors.OpenCCSensors;
 import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.api.ISensorTarget;
-import openccsensors.common.api.ITargetWrapper;
 import openccsensors.common.helper.TargetHelper;
+import openccsensors.common.retrievers.ITileEntityValidatorCallback;
+import openccsensors.common.retrievers.TileEntityRetriever;
 import openccsensors.common.sensors.SensorCard;
-import openccsensors.common.sensors.TargetRetriever;
 import buildcraft.api.power.IPowerReceptor;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BuildCraftSensorInterface implements ISensorInterface {
 
-	private TargetRetriever retriever = new TargetRetriever();
+	private TileEntityRetriever retriever = new TileEntityRetriever();
 
 	public BuildCraftSensorInterface() {
-		retriever.registerTarget(new ITargetWrapper() {
+		retriever.registerTarget(new ITileEntityValidatorCallback() {
 			@Override
-			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
+			public ISensorTarget getTargetIfValid(TileEntity entity, int relativeX, int relativeY, int relativeZ, int x, int y, int z) {
 				if (entity instanceof IPowerReceptor)
 				{
-					return new PowerReceptorTarget((TileEntity) entity);
+					return new PowerReceptorTarget(entity);
 				}
 				return null;
 			}
 		});
-	}
-
-	@Override
-	public String getName() {
-		return "openccsensors.item.buildcraftsensor";
-	}
-
-	@Override
-	public String[] getMethods() {
-		return null;
 	}
 
 	@Override
@@ -54,8 +44,23 @@ public class BuildCraftSensorInterface implements ISensorInterface {
 			throws Exception {
 
 		return TargetHelper.getBasicInformationForTargets(
-				retriever.getSurroundingTileEntities(world, x, y, z), world);
+				retriever.getCube(world, x, y, z), world);
 
+	}
+
+	@Override
+	public int getId() {
+		return 19;
+	}
+
+	@Override
+	public String[] getMethods() {
+		return null;
+	}
+
+	@Override
+	public String getName() {
+		return "openccsensors.item.buildcraftsensor";
 	}
 
 	@Override
@@ -63,13 +68,8 @@ public class BuildCraftSensorInterface implements ISensorInterface {
 			throws Exception {
 
 		return TargetHelper.getDetailedInformationForTarget(target,
-				retriever.getSurroundingTileEntities(world, x, y, z), world);
+				retriever.getCube(world, x, y, z), world);
 
-	}
-
-	@Override
-	public int getId() {
-		return 19;
 	}
 
 	@Override

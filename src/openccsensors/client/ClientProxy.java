@@ -2,10 +2,6 @@ package openccsensors.client;
 
 import java.io.File;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.client.MinecraftForgeClient;
 import openccsensors.client.gaugeperipheral.BlockGaugeRenderingHandler;
@@ -16,9 +12,24 @@ import openccsensors.client.sensorperipheral.TileEntitySensorRenderer;
 import openccsensors.common.CommonProxy;
 import openccsensors.common.gaugeperipheral.TileEntityGauge;
 import openccsensors.common.sensorperipheral.TileEntitySensor;
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy 
 {
+	@Override
+	public File getBase()
+	{
+		return FMLClientHandler.instance().getClient().getMinecraftDir();
+	}
+	
+	@Override
+	public Object getGui( InventoryPlayer inventory, TileEntitySensor tileentity )
+	{
+		return new GuiSensor( inventory, tileentity);
+	}
+	
 	@Override
 	public void registerRenderInformation()
 	{
@@ -29,17 +40,5 @@ public class ClientProxy extends CommonProxy
 		RenderingRegistry.registerBlockHandler(new BlockGaugeRenderingHandler());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityGauge.class, new TileEntityGaugeRenderer());
 
-	}
-	
-	@Override
-	public Object getGui( InventoryPlayer inventory, TileEntitySensor tileentity )
-	{
-		return new GuiSensor( inventory, tileentity);
-	}
-	
-	@Override
-	public File getBase()
-	{
-		return FMLClientHandler.instance().getClient().getMinecraftDir();
 	}
 }

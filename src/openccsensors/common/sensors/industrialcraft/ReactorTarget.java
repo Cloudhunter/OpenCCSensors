@@ -1,7 +1,7 @@
 package openccsensors.common.sensors.industrialcraft;
 
-import ic2.api.IReactor;
 import ic2.api.IC2Reactor;
+import ic2.api.IReactor;
 
 import java.util.HashMap;
 import java.util.Map;

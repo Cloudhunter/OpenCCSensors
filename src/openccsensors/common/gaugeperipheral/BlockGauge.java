@@ -1,26 +1,18 @@
 package openccsensors.common.gaugeperipheral;
 
-import static net.minecraftforge.common.ForgeDirection.DOWN;
 import static net.minecraftforge.common.ForgeDirection.EAST;
 import static net.minecraftforge.common.ForgeDirection.NORTH;
 import static net.minecraftforge.common.ForgeDirection.SOUTH;
-import static net.minecraftforge.common.ForgeDirection.UP;
 import static net.minecraftforge.common.ForgeDirection.WEST;
+import net.minecraft.block.BlockContainer;
+import net.minecraft.block.material.Material;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dan200.computer.api.ComputerCraftAPI;
-import openccsensors.OpenCCSensors;
-import openccsensors.common.sensorperipheral.TileEntitySensor;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.MathHelper;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
 
 public class BlockGauge extends BlockContainer {
 
@@ -31,35 +23,7 @@ public class BlockGauge extends BlockContainer {
 		setCreativeTab(ComputerCraftAPI.getCreativeTab());
 	}
 
-	@Override
-	public TileEntity createNewTileEntity(World var1) {
-		return new TileEntityGauge();
-	}
-
-    @Override
-    public String getBlockName()
-    {
-    	return "openccsensors.tile.gaugeblock";
-    }
-    
-    @Override
-    public int getRenderType()
-    {
-        return 2700;
-    }
-    
-	@Override
-	public boolean isOpaqueCube()
-	{
-		return false;
-	}
-	@Override
-    public boolean renderAsNormalBlock()
-    {
-        return false;
-    }
-
-    /**
+	/**
      * Checks to see if its valid to put this block at the specified coordinates. Args: world, x, y, z
      */
     public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4)
@@ -69,6 +33,49 @@ public class BlockGauge extends BlockContainer {
                par1World.isBlockSolidOnSide(par2, par3, par4 - 1, SOUTH) ||
                par1World.isBlockSolidOnSide(par2, par3, par4 + 1, NORTH);
     }
+
+    @Override
+	public TileEntity createNewTileEntity(World var1) {
+		return new TileEntityGauge();
+	}
+    
+    @Override
+    public String getBlockName()
+    {
+    	return "openccsensors.tile.gaugeblock";
+    }
+    
+	/**
+     * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
+     * cleared to be reused)
+     */
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    {
+        this.setBlockBoundsBasedOnState(par1World, par2, par3, par4);
+        return super.getCollisionBoundingBoxFromPool(par1World, par2, par3, par4);
+    }
+	@Override
+    public int getRenderType()
+    {
+        return 2700;
+    }
+
+    @SideOnly(Side.CLIENT)
+
+    /**
+     * Returns the bounding box of the wired rectangular prism to render.
+     */
+    public AxisAlignedBB getSelectedBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    {
+        this.setBlockBoundsBasedOnState(par1World, par2, par3, par4);
+        return super.getSelectedBoundingBoxFromPool(par1World, par2, par3, par4);
+    }
+
+    @Override
+	public boolean isOpaqueCube()
+	{
+		return false;
+	}
 
     /**
      * Called when a block is placed using its ItemBlock. Args: World, X, Y, Z, side, hitX, hitY, hitZ, block metadata
@@ -138,25 +145,10 @@ public class BlockGauge extends BlockContainer {
         super.onNeighborBlockChange(par1World, par2, par3, par4, par5);
     }
 
-    /**
-     * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
-     * cleared to be reused)
-     */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    @Override
+    public boolean renderAsNormalBlock()
     {
-        this.setBlockBoundsBasedOnState(par1World, par2, par3, par4);
-        return super.getCollisionBoundingBoxFromPool(par1World, par2, par3, par4);
-    }
-
-    @SideOnly(Side.CLIENT)
-
-    /**
-     * Returns the bounding box of the wired rectangular prism to render.
-     */
-    public AxisAlignedBB getSelectedBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
-    {
-        this.setBlockBoundsBasedOnState(par1World, par2, par3, par4);
-        return super.getSelectedBoundingBoxFromPool(par1World, par2, par3, par4);
+        return false;
     }
 
     /**
