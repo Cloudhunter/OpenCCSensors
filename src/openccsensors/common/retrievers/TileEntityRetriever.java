@@ -35,7 +35,7 @@ public class TileEntityRetriever {
 						
 						for (ITileEntityValidatorCallback wrapper : targets) {
 							
-							ISensorTarget target = wrapper.getTargetIfValid(entity, sensorX, sensorY, sensorZ, x, y, z);
+							ISensorTarget target = wrapper.getTargetIfValid(entity, x, y, z);
 							
 							if (target != null)
 							{

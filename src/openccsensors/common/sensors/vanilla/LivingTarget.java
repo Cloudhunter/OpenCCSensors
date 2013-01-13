@@ -15,22 +15,22 @@ import openccsensors.common.helper.EntityHelper;
  */
 public class LivingTarget implements ISensorTarget {
 	private int id;
-	private Vec3 sensorPos;
+	private Vec3 relativePos;
 	protected String rawType;
 
-	LivingTarget(EntityLiving living, int sx, int sy, int sz) {
+	LivingTarget(EntityLiving living, double relativeX, double relativeY, double relativeZ) {
 		id = living.entityId;
-		sensorPos = Vec3.createVectorHelper(sx, sy, sz);
+		relativePos = Vec3.createVectorHelper(relativeX, relativeY, relativeZ);
 		rawType = (living instanceof EntityPlayer) ? "Player" : living
 				.getEntityName();
 
 	}
 
 	private void addPositionToMap(EntityLiving living, Map map) {
-		HashMap<String, Integer> pos = new HashMap<String, Integer>();
-		pos.put("X", ((Double) living.posX).intValue() - (int) (sensorPos.xCoord + 0.5));
-		pos.put("Y", ((Double) living.posY).intValue() - (int) (sensorPos.yCoord));
-		pos.put("Z", ((Double) living.posZ).intValue() - (int) (sensorPos.zCoord + 0.5));
+		HashMap<String, Double> pos = new HashMap<String, Double>();
+		pos.put("X", relativePos.xCoord);
+		pos.put("Y", relativePos.yCoord);
+		pos.put("Z", relativePos.zCoord);
 		map.put("Position", pos);
 	}
 
@@ -55,8 +55,6 @@ public class LivingTarget implements ISensorTarget {
 		if (entityLiving == null) {
 			return null;
 		}
-
-		retMap.put("type", rawType);
 
 		return retMap;
 	}

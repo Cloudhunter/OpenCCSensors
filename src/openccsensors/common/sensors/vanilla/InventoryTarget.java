@@ -12,8 +12,8 @@ import openccsensors.common.sensors.TileSensorTarget;
 
 public class InventoryTarget extends TileSensorTarget implements ISensorTarget {
 
-	protected InventoryTarget(TileEntity targetEntity) {
-		super(targetEntity);
+	protected InventoryTarget(TileEntity targetEntity, int relativeX, int relativeY, int relativeZ) {
+		super(targetEntity, relativeX, relativeY, relativeZ);
 	}
 
 	@Override

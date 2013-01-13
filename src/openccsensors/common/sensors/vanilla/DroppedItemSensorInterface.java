@@ -24,10 +24,10 @@ public class DroppedItemSensorInterface implements ISensorInterface {
 	public DroppedItemSensorInterface() {
 		retriever.registerTarget(new IEntityValidatorCallback() {
 			@Override
-			public ISensorTarget getTargetIfValid(Entity entity, double relativeX, double relativeY, double relativeZ, int sx, int sy, int sz) {
+			public ISensorTarget getTargetIfValid(Entity entity, double relativeX, double relativeY, double relativeZ) {
 				if (entity instanceof EntityItem && ((Entity)entity).isEntityAlive())
 				{
-					return new DroppedItemTarget((Entity) entity, sx, sy, sz);
+					return new DroppedItemTarget(entity, relativeX, relativeY, relativeZ);
 				}
 				return null;
 			}
