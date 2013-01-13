@@ -7,12 +7,12 @@ import openccsensors.common.sensors.SensorCard;
 
 public interface ISensorInterface 
 {
-	String getName();
-	int getId();
-	Map getBasicTarget(ISensorAccess sensor, World world, int x, int y, int z) throws Exception;
-	Map getTargetDetails(ISensorAccess sensor, World world, int x, int y, int z, String target) throws Exception;
-	boolean isDirectionalEnabled();
-	String[] getMethods();
 	Map callMethod(ISensorAccess sensor, World world, int x, int y, int z, int methodID, Object[] args) throws Exception;
+	Map getBasicTarget(ISensorAccess sensor, World world, int x, int y, int z) throws Exception;
+	int getId();
+	String[] getMethods();
+	String getName();
+	Map getTargetDetails(ISensorAccess sensor, World world, int x, int y, int z, String target) throws Exception;
 	void initRecipes(SensorCard card);
+	boolean isDirectionalEnabled();
 }

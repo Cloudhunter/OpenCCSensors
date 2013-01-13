@@ -1,12 +1,11 @@
 package openccsensors.client.sensorperipheral;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-import cpw.mods.fml.relauncher.SideOnly;
 import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class ModelSensor extends ModelBase
@@ -46,16 +45,6 @@ public class ModelSensor extends ModelBase
         
     }
 
-    /**
-     * Renders the sign model through TileEntitySignRenderer
-     */
-    public void renderSensor(float degrees)
-    {
-        this.sensorBase.render(0.0625F);
-        this.sensorAxel.rotateAngleY = (degrees*(float)Math.PI/180F)%360;
-        this.sensorAxel.render(0.0625F);
-    }
-    
     public void renderIcon(int iconIndex)
     {
     	iconIndex--;
@@ -73,5 +62,15 @@ public class ModelSensor extends ModelBase
     	
     	currentIconRenderer.rotateAngleX = (float) (Math.PI);
     	currentIconRenderer.render(0.0625F);
+    }
+    
+    /**
+     * Renders the sign model through TileEntitySignRenderer
+     */
+    public void renderSensor(float degrees)
+    {
+        this.sensorBase.render(0.0625F);
+        this.sensorAxel.rotateAngleY = (degrees*(float)Math.PI/180F)%360;
+        this.sensorAxel.render(0.0625F);
     }
 }

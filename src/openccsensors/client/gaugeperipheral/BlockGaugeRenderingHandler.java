@@ -1,19 +1,24 @@
 package openccsensors.client.gaugeperipheral;
 
-import openccsensors.OpenCCSensors;
-import openccsensors.common.gaugeperipheral.TileEntityGauge;
-import openccsensors.common.sensorperipheral.TileEntitySensor;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.world.IBlockAccess;
+import openccsensors.OpenCCSensors;
+import openccsensors.common.gaugeperipheral.TileEntityGauge;
+
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
+
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class BlockGaugeRenderingHandler implements ISimpleBlockRenderingHandler {
+
+	@Override
+	public int getRenderId() {
+		// TODO Auto-generated method stub
+		return 2700;
+	}
 
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelID,
@@ -37,12 +42,6 @@ public class BlockGaugeRenderingHandler implements ISimpleBlockRenderingHandler 
 	@Override
 	public boolean shouldRender3DInInventory() {
 		return true;
-	}
-
-	@Override
-	public int getRenderId() {
-		// TODO Auto-generated method stub
-		return 2700;
 	}
 
 

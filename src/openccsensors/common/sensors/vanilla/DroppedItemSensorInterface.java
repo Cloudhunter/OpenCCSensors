@@ -1,32 +1,30 @@
 package openccsensors.common.sensors.vanilla;
 
-import java.util.List;
 import java.util.Map;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.registry.GameRegistry;
-import openccsensors.OpenCCSensors;
 import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.api.ISensorTarget;
-import openccsensors.common.api.ITargetWrapper;
-import openccsensors.common.core.OCSLog;
 import openccsensors.common.helper.TargetHelper;
+import openccsensors.common.retrievers.EntityRetriever;
+import openccsensors.common.retrievers.IEntityValidatorCallback;
 import openccsensors.common.sensors.SensorCard;
-import openccsensors.common.sensors.TargetRetriever;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class DroppedItemSensorInterface implements ISensorInterface {
 
-	private TargetRetriever retriever = new TargetRetriever();
+	private EntityRetriever retriever = new EntityRetriever();
 	private final double sensingRadius = 16.0F;
 
 	public DroppedItemSensorInterface() {
-		retriever.registerTarget(new ITargetWrapper() {
+		retriever.registerTarget(new IEntityValidatorCallback() {
 			@Override
-			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
+			public ISensorTarget getTargetIfValid(Entity entity, double relativeX, double relativeY, double relativeZ, int sx, int sy, int sz) {
 				if (entity instanceof EntityItem && ((Entity)entity).isEntityAlive())
 				{
 					return new DroppedItemTarget((Entity) entity, sx, sy, sz);
@@ -38,16 +36,6 @@ public class DroppedItemSensorInterface implements ISensorInterface {
 	}
 	
 	@Override
-	public String getName() {
-		return "openccsensors.item.droppeditemsensor";
-	}
-
-	@Override
-	public String[] getMethods() {
-		return null;
-	}
-
-	@Override
 	public Map callMethod(ISensorAccess sensor, World world, int x, int y, int z, int methodID, Object[] args) throws Exception {
 		return null;
 	}
@@ -56,21 +44,31 @@ public class DroppedItemSensorInterface implements ISensorInterface {
 	public Map getBasicTarget(ISensorAccess sensor, World world, int x, int y, int z)
 			throws Exception {
 		return TargetHelper.getBasicInformationForTargets(
-				retriever.getEntities(world, x, y, z,  sensingRadius), world);
-
-	}
-
-	@Override
-	public Map getTargetDetails(ISensorAccess sensor, World world, int x, int y, int z, String target)
-			throws Exception {
-		return TargetHelper.getDetailedInformationForTarget(target,
-				retriever.getEntities(world, x, y, z, sensingRadius), world);
+				retriever.getSphere(world, x, y, z,  sensingRadius), world);
 
 	}
 
 	@Override
 	public int getId() {
 		return 22;
+	}
+
+	@Override
+	public String[] getMethods() {
+		return null;
+	}
+
+	@Override
+	public String getName() {
+		return "openccsensors.item.droppeditemsensor";
+	}
+
+	@Override
+	public Map getTargetDetails(ISensorAccess sensor, World world, int x, int y, int z, String target)
+			throws Exception {
+		return TargetHelper.getDetailedInformationForTarget(target,
+				retriever.getSphere(world, x, y, z, sensingRadius), world);
+
 	}
 
 	@Override

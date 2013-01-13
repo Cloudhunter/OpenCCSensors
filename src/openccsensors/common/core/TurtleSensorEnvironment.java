@@ -16,10 +16,9 @@ implements ISensorEnvironment
 		turtle = _turtle;
 	}
 	
-	@Override
-	public World getWorld()
+	public int getFacing()
 	{
-		return turtle.getWorld();
+		return (turtle.getFacingDir()+1)%4;
 	}
 
 	@Override
@@ -28,15 +27,16 @@ implements ISensorEnvironment
 		return turtle.getPosition();
 	}
 	
-	public int getFacing()
-	{
-		return (turtle.getFacingDir()+1)%4;
-	}
-
 	@Override
 	public ItemStack getSensorCard()
 	{
 		return turtle.getSlotContents(15);
+	}
+
+	@Override
+	public World getWorld()
+	{
+		return turtle.getWorld();
 	}
 	
 	

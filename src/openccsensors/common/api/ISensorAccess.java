@@ -4,8 +4,8 @@ import openccsensors.common.core.ISensorEnvironment;
 
 public interface ISensorAccess 
 {
-	public void setDirectional(boolean bool);
+	public ISensorEnvironment getSensorEnvironment();
 	public boolean isDirectional();
 	public boolean isTurtle();
-	public ISensorEnvironment getSensorEnvironment();
+	public void setDirectional(boolean bool);
 }

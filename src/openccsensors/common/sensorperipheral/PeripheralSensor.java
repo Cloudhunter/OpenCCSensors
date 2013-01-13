@@ -10,32 +10,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.FMLCommonHandler;
 import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorCard;
 import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.core.ISensorEnvironment;
-import openccsensors.common.core.OCSLog;
 import dan200.computer.api.IComputerAccess;
 import dan200.computer.api.IHostedPeripheral;
-import dan200.computer.api.IPeripheral;
-import dan200.turtle.api.ITurtleAccess;
 
 public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
-
-	private ISensorEnvironment env;
-
-	private ISensorInterface sensorCard;
-
-	private ItemStack sensorItemStack;
-
-	private boolean turtle;
-
-	private boolean directional;
-
-	public ConcurrentLinkedQueue<MethodCallQueueItem> callQueue = new ConcurrentLinkedQueue<MethodCallQueueItem>();
-
-	private int methodCallId = 0;
 
 	public class MethodCallQueueItem {
 		public IComputerAccess computer;
@@ -52,6 +34,20 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 		}
 	}
 
+	private ISensorEnvironment env;
+
+	private ISensorInterface sensorCard;
+
+	private ItemStack sensorItemStack;
+
+	private boolean turtle;
+
+	private boolean directional;
+
+	public ConcurrentLinkedQueue<MethodCallQueueItem> callQueue = new ConcurrentLinkedQueue<MethodCallQueueItem>();
+
+	private int methodCallId = 0;
+
 	public PeripheralSensor(ISensorEnvironment _env, boolean _turtle) {
 		env = _env;
 		turtle = _turtle;
@@ -59,29 +55,9 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 
 	}
 
-	public boolean isDirectional() {
-		return directional;
-	}
-
-	public void setDirectional(boolean isDirectional) {
-		directional = isDirectional;
-		Vec3 loc = env.getLocation();
-		World world = env.getWorld();
-		if (world != null) // can happen during loading
-			world.markBlockForUpdate((int) loc.xCoord, (int) loc.yCoord,
-					(int) loc.zCoord);
-	}
-
 	@Override
-	public String getType() {
-		return "sensor";
-	}
-
-	@Override
-	public String[] getMethodNames() {
-		return new String[] { "getTargets", "getTargetDetails",
-				"getSensorName", "getSensorMethods", "sensorCardCall",
-				"isDirectional", "setDirectional" };
+	public void attach(IComputerAccess computer) {
+		computer.mountFixedDir("ocs", "mods/OCSLua/lua", true, 0);
 	}
 
 	@Override
@@ -99,13 +75,55 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 	}
 
 	@Override
-	public void attach(IComputerAccess computer) {
-		computer.mountFixedDir("ocs", "mods/OCSLua/lua", true, 0);
+	public void detach(IComputerAccess computer) {
+
 	}
 
 	@Override
-	public void detach(IComputerAccess computer) {
+	public String[] getMethodNames() {
+		return new String[] { "getTargets", "getTargetDetails",
+				"getSensorName", "getSensorMethods", "sensorCardCall",
+				"isDirectional", "setDirectional" };
+	}
 
+	private ISensorInterface getSensorCard() throws Exception {
+		ItemStack itemstack = env.getSensorCard();
+
+		if (itemstack == null) {
+			return null;
+		}
+
+		Item item = itemstack.getItem();
+		if (item instanceof ISensorCard) {
+			ISensorInterface sensor = ((ISensorCard) item).getSensorInterface(
+					itemstack, turtle);
+
+			if (sensor != null) {
+				return sensor;
+			}
+
+		}
+
+		return null;
+	}
+
+	@Override
+	public ISensorEnvironment getSensorEnvironment() {
+		return env;
+	}
+
+	@Override
+	public String getType() {
+		return "sensor";
+	}
+
+	public boolean isDirectional() {
+		return directional;
+	}
+
+	@Override
+	public boolean isTurtle() {
+		return turtle;
 	}
 
 	private Object[] processQueueItem(MethodCallQueueItem item)
@@ -195,6 +213,19 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 	}
 
 	@Override
+	public void readFromNBT(NBTTagCompound paramNBTTagCompound) {
+	}
+
+	public void setDirectional(boolean isDirectional) {
+		directional = isDirectional;
+		Vec3 loc = env.getLocation();
+		World world = env.getWorld();
+		if (world != null) // can happen during loading
+			world.markBlockForUpdate((int) loc.xCoord, (int) loc.yCoord,
+					(int) loc.zCoord);
+	}
+
+	@Override
 	public void update() {
 		MethodCallQueueItem item = callQueue.poll();
 		while (item != null) {
@@ -210,41 +241,6 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 			item = callQueue.poll();
 		}
 
-	}
-
-	private ISensorInterface getSensorCard() throws Exception {
-		ItemStack itemstack = env.getSensorCard();
-
-		if (itemstack == null) {
-			return null;
-		}
-
-		Item item = itemstack.getItem();
-		if (item instanceof ISensorCard) {
-			ISensorInterface sensor = ((ISensorCard) item).getSensorInterface(
-					itemstack, turtle);
-
-			if (sensor != null) {
-				return sensor;
-			}
-
-		}
-
-		return null;
-	}
-
-	@Override
-	public boolean isTurtle() {
-		return turtle;
-	}
-
-	@Override
-	public ISensorEnvironment getSensorEnvironment() {
-		return env;
-	}
-
-	@Override
-	public void readFromNBT(NBTTagCompound paramNBTTagCompound) {
 	}
 
 	@Override

@@ -2,11 +2,11 @@ package openccsensors.common.sensors.thaumcraft;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import openccsensors.common.api.ISensorTarget;
-import openccsensors.common.helper.NetworkHelper;
 import openccsensors.common.sensors.TileSensorTarget;
 
 public class BrainInAJarTarget extends TileSensorTarget implements ISensorTarget {

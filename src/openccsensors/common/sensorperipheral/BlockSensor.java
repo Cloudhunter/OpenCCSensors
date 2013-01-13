@@ -2,10 +2,8 @@ package openccsensors.common.sensorperipheral;
 
 import java.util.Random;
 
-import dan200.computer.api.ComputerCraftAPI;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,7 +15,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import openccsensors.OpenCCSensors;
-import openccsensors.common.core.OCSLog;
+import dan200.computer.api.ComputerCraftAPI;
 
 public class BlockSensor extends BlockContainer 
 {
@@ -34,64 +32,6 @@ public class BlockSensor extends BlockContainer
 	}
 
 	@Override
-	public boolean isOpaqueCube()
-	{
-		return false;
-	}
-	
-	/**
-     * If this block doesn't render as an ordinary block it will return False (examples: signs, buttons, stairs, etc)
-     */
-	@Override
-    public boolean renderAsNormalBlock()
-    {
-        return false;
-    }
-	
-	/*
-    /**
-     * The type of render function that is called for this block
-     */
-    @Override
-    public int getRenderType()
-    {
-        return OpenCCSensors.Config.sensorBlockRenderID;
-    }
-	
-	@Override
-	public TileEntity createNewTileEntity( World world )
-	{
-		return new TileEntitySensor();
-	}
-	
-    public boolean onBlockActivated( World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ )
-    {
-        if (!world.isRemote)
-        {
-        	if (player.isSneaking())
-        	{
-        		return false;
-        	}
-        	player.openGui(OpenCCSensors.instance, 1987, world, x, y, z);
-        	return true;
-        }
-        
-        return true;
-    }
-    
-    @Override
-    public String getBlockName()
-    {
-    	return "openccsensors.tile.sensorblock";
-    }
-    
-    @Override
-    public int idDropped(int metadata, Random random, int zero)
-    {
-    	return this.blockID;
-    }
-    
-    @Override
     public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
     {
         TileEntitySensor var7 = (TileEntitySensor)par1World.getBlockTileEntity(par2, par3, par4);
@@ -135,6 +75,61 @@ public class BlockSensor extends BlockContainer
 
         super.breakBlock(par1World, par2, par3, par4, par5, par6);
     }
+	
+	@Override
+	public TileEntity createNewTileEntity( World world )
+	{
+		return new TileEntitySensor();
+	}
+	
+	@Override
+    public String getBlockName()
+    {
+    	return "openccsensors.tile.sensorblock";
+    }
+	
+	@Override
+    public int getFlammability(IBlockAccess world, int x, int y, int z, int metadata, ForgeDirection face)
+    {
+    	return 0;
+    }
+	
+    /*
+    /**
+     * The type of render function that is called for this block
+     */
+    @Override
+    public int getRenderType()
+    {
+        return OpenCCSensors.Config.sensorBlockRenderID;
+    }
+    
+    @Override
+    public int idDropped(int metadata, Random random, int zero)
+    {
+    	return this.blockID;
+    }
+    
+    @Override
+	public boolean isOpaqueCube()
+	{
+		return false;
+	}
+    
+    public boolean onBlockActivated( World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ )
+    {
+        if (!world.isRemote)
+        {
+        	if (player.isSneaking())
+        	{
+        		return false;
+        	}
+        	player.openGui(OpenCCSensors.instance, 1987, world, x, y, z);
+        	return true;
+        }
+        
+        return true;
+    }
 
     @Override
 	public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLiving par5EntityPlayer) {
@@ -162,10 +157,13 @@ public class BlockSensor extends BlockContainer
 		par1World.setBlockMetadataWithNotify(par2, par3, par4, byte0);
 	}
     
-    @Override
-    public int getFlammability(IBlockAccess world, int x, int y, int z, int metadata, ForgeDirection face)
+    /**
+     * If this block doesn't render as an ordinary block it will return False (examples: signs, buttons, stairs, etc)
+     */
+	@Override
+    public boolean renderAsNormalBlock()
     {
-    	return 0;
+        return false;
     }
     
 }

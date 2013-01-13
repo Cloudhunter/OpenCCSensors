@@ -1,6 +1,5 @@
 package openccsensors.common.sensors.vanilla;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +12,6 @@ import net.minecraftforge.liquids.ILiquidTank;
 import net.minecraftforge.liquids.ITankContainer;
 import net.minecraftforge.liquids.LiquidStack;
 import openccsensors.common.api.ISensorTarget;
-import openccsensors.common.core.OCSLog;
 import openccsensors.common.sensors.TileSensorTarget;
 
 public class LiquidTankTarget extends TileSensorTarget implements ISensorTarget{

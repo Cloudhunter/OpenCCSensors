@@ -11,6 +11,11 @@ public class OCSLog
 	
 	private static Logger logger;
 	
+	public static void info( String format, Object... data )
+	{
+		log( Level.INFO, format, data );
+	}
+	
 	public static void init()
 	{
 		// init logger
@@ -23,19 +28,14 @@ public class OCSLog
 		logger.log( level, String.format( format, data ) );
 	}
 	
-	public static void info( String format, Object... data )
+	public static void severe( String format, Object... data )
 	{
-		log( Level.INFO, format, data );
+		log( Level.SEVERE, format, data );
 	}
 	
 	public static void warn( String format, Object... data )
 	{
 		log( Level.WARNING, format, data );
-	}
-	
-	public static void severe( String format, Object... data )
-	{
-		log( Level.SEVERE, format, data );
 	}
 
 }

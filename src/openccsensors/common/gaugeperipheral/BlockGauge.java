@@ -1,26 +1,18 @@
 package openccsensors.common.gaugeperipheral;
 
-import static net.minecraftforge.common.ForgeDirection.DOWN;
 import static net.minecraftforge.common.ForgeDirection.EAST;
 import static net.minecraftforge.common.ForgeDirection.NORTH;
 import static net.minecraftforge.common.ForgeDirection.SOUTH;
-import static net.minecraftforge.common.ForgeDirection.UP;
 import static net.minecraftforge.common.ForgeDirection.WEST;
+import net.minecraft.block.BlockContainer;
+import net.minecraft.block.material.Material;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dan200.computer.api.ComputerCraftAPI;
-import openccsensors.OpenCCSensors;
-import openccsensors.common.sensorperipheral.TileEntitySensor;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.MathHelper;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
 
 public class BlockGauge extends BlockContainer {
 
@@ -31,35 +23,29 @@ public class BlockGauge extends BlockContainer {
 		setCreativeTab(ComputerCraftAPI.getCreativeTab());
 	}
 
-	@Override
+	/**
+     * Checks to see if its valid to put this block at the specified coordinates. Args: world, x, y, z
+     */
+    public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4)
+    {
+        return par1World.isBlockSolidOnSide(par2 - 1, par3, par4, EAST ) ||
+               par1World.isBlockSolidOnSide(par2 + 1, par3, par4, WEST ) ||
+               par1World.isBlockSolidOnSide(par2, par3, par4 - 1, SOUTH) ||
+               par1World.isBlockSolidOnSide(par2, par3, par4 + 1, NORTH);
+    }
+
+    @Override
 	public TileEntity createNewTileEntity(World var1) {
 		return new TileEntityGauge();
 	}
-
+    
     @Override
     public String getBlockName()
     {
     	return "openccsensors.tile.gaugeblock";
     }
     
-    @Override
-    public int getRenderType()
-    {
-        return 2700;
-    }
-    
-	@Override
-	public boolean isOpaqueCube()
-	{
-		return false;
-	}
-	@Override
-    public boolean renderAsNormalBlock()
-    {
-        return false;
-    }
-
-    /**
+	/**
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
@@ -67,6 +53,11 @@ public class BlockGauge extends BlockContainer {
     {
         this.setBlockBoundsBasedOnState(par1World, par2, par3, par4);
         return super.getCollisionBoundingBoxFromPool(par1World, par2, par3, par4);
+    }
+	@Override
+    public int getRenderType()
+    {
+        return 2700;
     }
 
     @SideOnly(Side.CLIENT)
@@ -80,54 +71,16 @@ public class BlockGauge extends BlockContainer {
         return super.getSelectedBoundingBoxFromPool(par1World, par2, par3, par4);
     }
 
-    /**
-     * Updates the blocks bounds based on its current state. Args: world, x, y, z
-     */
-    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
-    {
-        this.updateLadderBounds(par1IBlockAccess.getBlockMetadata(par2, par3, par4));
-    }
+    @Override
+	public boolean isOpaqueCube()
+	{
+		return false;
+	}
 
     /**
-     * Update the ladder block bounds based on the given metadata value.
+     * Called when a block is placed using its ItemBlock. Args: World, X, Y, Z, side, hitX, hitY, hitZ, block metadata
      */
-    public void updateLadderBounds(int par1)
-    {
-        float var3 = 0.125F;
-
-        if (par1 == 2)
-        {
-            this.setBlockBounds(0.0F, 0.0F, 1.0F - var3, 1.0F, 1.0F, 1.0F);
-        }
-
-        if (par1 == 3)
-        {
-            this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, var3);
-        }
-
-        if (par1 == 4)
-        {
-            this.setBlockBounds(1.0F - var3, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-        }
-
-        if (par1 == 5)
-        {
-            this.setBlockBounds(0.0F, 0.0F, 0.0F, var3, 1.0F, 1.0F);
-        }
-    }
-
-    /**
-     * Checks to see if its valid to put this block at the specified coordinates. Args: world, x, y, z
-     */
-    public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4)
-    {
-        return par1World.isBlockSolidOnSide(par2 - 1, par3, par4, EAST ) ||
-               par1World.isBlockSolidOnSide(par2 + 1, par3, par4, WEST ) ||
-               par1World.isBlockSolidOnSide(par2, par3, par4 - 1, SOUTH) ||
-               par1World.isBlockSolidOnSide(par2, par3, par4 + 1, NORTH);
-    }
-
-    public int func_85104_a(World par1World, int par2, int par3, int par4, int par5, float par6, float par7, float par8, int par9)
+    public int onBlockPlaced(World par1World, int par2, int par3, int par4, int par5, float par6, float par7, float par8, int par9)
     {
         int var10 = par9;
 
@@ -190,5 +143,47 @@ public class BlockGauge extends BlockContainer {
         }
 
         super.onNeighborBlockChange(par1World, par2, par3, par4, par5);
+    }
+
+    @Override
+    public boolean renderAsNormalBlock()
+    {
+        return false;
+    }
+
+    /**
+     * Updates the blocks bounds based on its current state. Args: world, x, y, z
+     */
+    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    {
+        this.updateLadderBounds(par1IBlockAccess.getBlockMetadata(par2, par3, par4));
+    }
+
+    /**
+     * Update the ladder block bounds based on the given metadata value.
+     */
+    public void updateLadderBounds(int par1)
+    {
+        float var3 = 0.125F;
+
+        if (par1 == 2)
+        {
+            this.setBlockBounds(0.0F, 0.0F, 1.0F - var3, 1.0F, 1.0F, 1.0F);
+        }
+
+        if (par1 == 3)
+        {
+            this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, var3);
+        }
+
+        if (par1 == 4)
+        {
+            this.setBlockBounds(1.0F - var3, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+        }
+
+        if (par1 == 5)
+        {
+            this.setBlockBounds(0.0F, 0.0F, 0.0F, var3, 1.0F, 1.0F);
+        }
     }
 }
