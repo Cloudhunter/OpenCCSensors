@@ -49,7 +49,7 @@ public class EntityRetriever {
 	}
 	
 
-	public void registerTarget(IEntityValidatorCallback wrapper) {
+	public void registerCallback(IEntityValidatorCallback wrapper) {
 		targets.add(wrapper);
 	}
 	

@@ -22,7 +22,7 @@ public class LiquidSensorInterface implements ISensorInterface {
 	
 	public LiquidSensorInterface ()
 	{
-		retriever.registerTarget(new ITileEntityValidatorCallback() {
+		retriever.registerCallback(new ITileEntityValidatorCallback() {
 			@Override
 			public ISensorTarget getTargetIfValid(TileEntity entity, int relativeX, int relativeY, int relativeZ) {
 				if (entity instanceof ITankContainer)

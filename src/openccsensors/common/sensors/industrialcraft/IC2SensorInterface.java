@@ -31,7 +31,7 @@ public class IC2SensorInterface implements ISensorInterface {
 	public final static String MASS_FAB_CLASS = "ic2.core.block.machine.tileentity.TileEntityMatter";
 	
 	public IC2SensorInterface() {
-		retriever.registerTarget(new ITileEntityValidatorCallback() {
+		retriever.registerCallback(new ITileEntityValidatorCallback() {
 			
 			@Override
 			public ISensorTarget getTargetIfValid(TileEntity entity, int relativeX, int relativeY, int relativeZ) {
@@ -48,7 +48,7 @@ public class IC2SensorInterface implements ISensorInterface {
 			}
 		});
 
-		retriever.registerTarget(new ITileEntityValidatorCallback() {
+		retriever.registerCallback(new ITileEntityValidatorCallback() {
 
 			@Override
 			public ISensorTarget getTargetIfValid(TileEntity entity, int relativeX, int relativeY, int relativeZ) {
@@ -62,7 +62,7 @@ public class IC2SensorInterface implements ISensorInterface {
 			
 		});
 		
-		retriever.registerTarget(new ITileEntityValidatorCallback() {
+		retriever.registerCallback(new ITileEntityValidatorCallback() {
 			@Override
 			public ISensorTarget getTargetIfValid(TileEntity entity, int relativeX, int relativeY, int relativeZ) {
 				if (entity instanceof IEnergyStorage)
@@ -74,7 +74,7 @@ public class IC2SensorInterface implements ISensorInterface {
 		});
 
 
-		retriever.registerTarget(new ITileEntityValidatorCallback() {
+		retriever.registerCallback(new ITileEntityValidatorCallback() {
 			@Override
 			public ISensorTarget getTargetIfValid(TileEntity entity, int relativeX, int relativeY, int relativeZ) {
 				if (entity instanceof IEnergySink ||

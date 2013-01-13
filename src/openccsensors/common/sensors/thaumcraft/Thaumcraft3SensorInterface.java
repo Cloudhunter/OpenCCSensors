@@ -23,7 +23,7 @@ public class Thaumcraft3SensorInterface  implements ISensorInterface {
 	public Thaumcraft3SensorInterface()
 	{
 
-		retriever.registerTarget(new ITileEntityValidatorCallback() {
+		retriever.registerCallback(new ITileEntityValidatorCallback() {
 			@Override
 			public ISensorTarget getTargetIfValid(TileEntity entity, int relativeX, int relativeY, int relativeZ) {
 				
