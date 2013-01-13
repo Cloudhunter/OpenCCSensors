@@ -12,20 +12,20 @@ import openccsensors.common.api.ISensorTarget;
 public class DroppedItemTarget implements ISensorTarget {
 
 	private int id;
-	private Vec3 sensorPos;
+	private Vec3 relativePos;
 	protected String rawType;
-	public DroppedItemTarget(Entity entity, int sx, int sy, int sz)
+	public DroppedItemTarget(Entity entity, double relativeX, double relativeY, double relativeZ)
 	{
 		id = entity.entityId;
-		sensorPos = Vec3.createVectorHelper(sx, sy, sz);
+		relativePos = Vec3.createVectorHelper(relativeX, relativeY, relativeZ);
 		rawType = ((EntityItem)entity).func_92014_d().getItemName();
 	}
 	
 	private void addPositionToMap(Entity entity, Map map) {
-		HashMap<String, Integer> pos = new HashMap<String, Integer>();
-		pos.put("X", ((Double) entity.posX).intValue() - (int) (sensorPos.xCoord + 0.5));
-		pos.put("Y", ((Double) entity.posY).intValue() - (int) (sensorPos.yCoord));
-		pos.put("Z", ((Double) entity.posZ).intValue() - (int) (sensorPos.zCoord + 0.5));
+		HashMap<String, Double> pos = new HashMap<String, Double>();
+		pos.put("X", relativePos.xCoord);
+		pos.put("Y", relativePos.yCoord);
+		pos.put("Z", relativePos.zCoord);
 		map.put("Position", pos);
 	}
 

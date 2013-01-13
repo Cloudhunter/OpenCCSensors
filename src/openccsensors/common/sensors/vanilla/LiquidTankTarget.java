@@ -16,9 +16,8 @@ import openccsensors.common.sensors.TileSensorTarget;
 
 public class LiquidTankTarget extends TileSensorTarget implements ISensorTarget{
 
-	protected LiquidTankTarget(TileEntity targetEntity) {
-		super(targetEntity);
-		// TODO Auto-generated constructor stub
+	protected LiquidTankTarget(TileEntity targetEntity, int relativeX, int relativeY, int relativeZ) {
+		super(targetEntity, relativeX, relativeY, relativeZ);
 	}
 
 	@Override

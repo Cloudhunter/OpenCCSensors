@@ -23,10 +23,10 @@ public class SignSensorInterface implements ISensorInterface {
 	public SignSensorInterface() {
 		retriever.registerTarget(new ITileEntityValidatorCallback() {
 			@Override
-			public ISensorTarget getTargetIfValid(TileEntity entity, int relativeX, int relativeY, int relativeZ, int x, int y, int z) {
+			public ISensorTarget getTargetIfValid(TileEntity entity, int relativeX, int relativeY, int relativeZ) {
 				if (entity instanceof TileEntitySign)
 				{
-					return new SignPostTarget((TileEntity) entity);
+					return new SignPostTarget(entity, relativeX, relativeY, relativeZ);
 				}
 				return null;
 			}

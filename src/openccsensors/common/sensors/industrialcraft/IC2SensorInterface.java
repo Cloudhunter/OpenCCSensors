@@ -34,15 +34,15 @@ public class IC2SensorInterface implements ISensorInterface {
 		retriever.registerTarget(new ITileEntityValidatorCallback() {
 			
 			@Override
-			public ISensorTarget getTargetIfValid(TileEntity entity, int relativeX, int relativeY, int relativeZ, int x, int y, int z) {
+			public ISensorTarget getTargetIfValid(TileEntity entity, int relativeX, int relativeY, int relativeZ) {
 				if (entity instanceof IReactor)
 				{
-					return new ReactorTarget(entity);
+					return new ReactorTarget(entity, relativeX, relativeY, relativeZ);
 				}
 				else if (entity instanceof IReactorChamber)
 				{
 					return new ReactorTarget(
-							(TileEntity) ((IReactorChamber) entity).getReactor());
+							(TileEntity) ((IReactorChamber) entity).getReactor(), relativeX, relativeY, relativeZ);
 				}
 				return null;
 			}
@@ -51,11 +51,11 @@ public class IC2SensorInterface implements ISensorInterface {
 		retriever.registerTarget(new ITileEntityValidatorCallback() {
 
 			@Override
-			public ISensorTarget getTargetIfValid(TileEntity entity, int relativeX, int relativeY, int relativeZ, int x, int y, int z) {
+			public ISensorTarget getTargetIfValid(TileEntity entity, int relativeX, int relativeY, int relativeZ) {
 				
 				if (entity instanceof TileEntity && entity.getClass().getName() == MASS_FAB_CLASS)
 				{
-					return new MassFabTarget(entity);
+					return new MassFabTarget(entity, relativeX, relativeY, relativeZ);
 				}
 				return null;
 			}
@@ -64,10 +64,10 @@ public class IC2SensorInterface implements ISensorInterface {
 		
 		retriever.registerTarget(new ITileEntityValidatorCallback() {
 			@Override
-			public ISensorTarget getTargetIfValid(TileEntity entity, int relativeX, int relativeY, int relativeZ, int x, int y, int z) {
+			public ISensorTarget getTargetIfValid(TileEntity entity, int relativeX, int relativeY, int relativeZ) {
 				if (entity instanceof IEnergyStorage)
 				{
-					return new EnergyStorageTarget(entity);
+					return new EnergyStorageTarget(entity, relativeX, relativeY, relativeZ);
 				}
 				return null;
 			}
@@ -76,12 +76,12 @@ public class IC2SensorInterface implements ISensorInterface {
 
 		retriever.registerTarget(new ITileEntityValidatorCallback() {
 			@Override
-			public ISensorTarget getTargetIfValid(TileEntity entity, int relativeX, int relativeY, int relativeZ, int x, int y, int z) {
+			public ISensorTarget getTargetIfValid(TileEntity entity, int relativeX, int relativeY, int relativeZ) {
 				if (entity instanceof IEnergySink ||
 					entity instanceof IEnergySource ||
 					entity instanceof IEnergyConductor)
 				{
-					return new EnergyConductorTarget(entity);
+					return new EnergyConductorTarget(entity, relativeX, relativeY, relativeZ);
 				}
 				return null;
 			}

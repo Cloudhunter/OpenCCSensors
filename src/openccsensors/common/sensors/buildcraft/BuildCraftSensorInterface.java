@@ -24,10 +24,10 @@ public class BuildCraftSensorInterface implements ISensorInterface {
 	public BuildCraftSensorInterface() {
 		retriever.registerTarget(new ITileEntityValidatorCallback() {
 			@Override
-			public ISensorTarget getTargetIfValid(TileEntity entity, int relativeX, int relativeY, int relativeZ, int x, int y, int z) {
+			public ISensorTarget getTargetIfValid(TileEntity entity, int relativeX, int relativeY, int relativeZ) {
 				if (entity instanceof IPowerReceptor)
 				{
-					return new PowerReceptorTarget(entity);
+					return new PowerReceptorTarget(entity, relativeX, relativeY, relativeZ);
 				}
 				return null;
 			}

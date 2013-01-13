@@ -21,8 +21,8 @@ public class DevSensorInterface implements ISensorInterface {
 		retriever.registerTarget(new ITileEntityValidatorCallback() {
 			@Override
 			public ISensorTarget getTargetIfValid(TileEntity entity, int relativeX,
-					int relativeY, int relativeZ, int x, int y, int z) {
-				return new DevTileTarget(entity);
+					int relativeY, int relativeZ) {
+				return new DevTileTarget(entity, relativeX, relativeY, relativeZ);
 			}
 		});
 	}

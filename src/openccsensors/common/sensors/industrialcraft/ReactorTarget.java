@@ -13,8 +13,8 @@ import openccsensors.common.sensors.TileSensorTarget;
 
 public class ReactorTarget extends TileSensorTarget implements ISensorTarget {
 
-	ReactorTarget(TileEntity targetEntity) {
-		super(targetEntity);
+	ReactorTarget(TileEntity targetEntity, int relativeX, int relativeY, int relativeZ) {
+		super(targetEntity, relativeX, relativeY, relativeZ);
 	}
 
 	@Override

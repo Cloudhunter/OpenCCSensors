@@ -25,10 +25,10 @@ public class ProximitySensorInterface implements ISensorInterface {
 	public ProximitySensorInterface() {
 		retriever.registerTarget(new IEntityValidatorCallback() {
 			@Override
-			public ISensorTarget getTargetIfValid(Entity entity, double relativeX, double relativeY, double relativeZ, int x, int y, int z) {
+			public ISensorTarget getTargetIfValid(Entity entity, double relativeX, double relativeY, double relativeZ) {
 				if (entity instanceof EntityLiving)
 				{
-					return new LivingTarget((EntityLiving) entity, x, y, z);
+					return new LivingTarget((EntityLiving) entity, relativeX, relativeY, relativeZ);
 				}
 				return null;
 			}

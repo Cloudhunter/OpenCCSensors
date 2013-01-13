@@ -11,8 +11,8 @@ import openccsensors.common.sensors.TileSensorTarget;
 
 public class SignPostTarget extends TileSensorTarget implements ISensorTarget {
 
-	protected SignPostTarget(TileEntity targetEntity) {
-		super(targetEntity);
+	protected SignPostTarget(TileEntity targetEntity, int relativeX, int relativeY, int relativeZ) {
+		super(targetEntity, relativeX, relativeY, relativeZ);
 	}
 
 	@Override
