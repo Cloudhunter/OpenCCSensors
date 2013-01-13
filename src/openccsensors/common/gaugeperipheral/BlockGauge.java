@@ -60,63 +60,6 @@ public class BlockGauge extends BlockContainer {
     }
 
     /**
-     * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
-     * cleared to be reused)
-     */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
-    {
-        this.setBlockBoundsBasedOnState(par1World, par2, par3, par4);
-        return super.getCollisionBoundingBoxFromPool(par1World, par2, par3, par4);
-    }
-
-    @SideOnly(Side.CLIENT)
-
-    /**
-     * Returns the bounding box of the wired rectangular prism to render.
-     */
-    public AxisAlignedBB getSelectedBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
-    {
-        this.setBlockBoundsBasedOnState(par1World, par2, par3, par4);
-        return super.getSelectedBoundingBoxFromPool(par1World, par2, par3, par4);
-    }
-
-    /**
-     * Updates the blocks bounds based on its current state. Args: world, x, y, z
-     */
-    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
-    {
-        this.updateLadderBounds(par1IBlockAccess.getBlockMetadata(par2, par3, par4));
-    }
-
-    /**
-     * Update the ladder block bounds based on the given metadata value.
-     */
-    public void updateLadderBounds(int par1)
-    {
-        float var3 = 0.125F;
-
-        if (par1 == 2)
-        {
-            this.setBlockBounds(0.0F, 0.0F, 1.0F - var3, 1.0F, 1.0F, 1.0F);
-        }
-
-        if (par1 == 3)
-        {
-            this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, var3);
-        }
-
-        if (par1 == 4)
-        {
-            this.setBlockBounds(1.0F - var3, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-        }
-
-        if (par1 == 5)
-        {
-            this.setBlockBounds(0.0F, 0.0F, 0.0F, var3, 1.0F, 1.0F);
-        }
-    }
-
-    /**
      * Checks to see if its valid to put this block at the specified coordinates. Args: world, x, y, z
      */
     public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4)
@@ -127,7 +70,10 @@ public class BlockGauge extends BlockContainer {
                par1World.isBlockSolidOnSide(par2, par3, par4 + 1, NORTH);
     }
 
-    public int func_85104_a(World par1World, int par2, int par3, int par4, int par5, float par6, float par7, float par8, int par9)
+    /**
+     * Called when a block is placed using its ItemBlock. Args: World, X, Y, Z, side, hitX, hitY, hitZ, block metadata
+     */
+    public int onBlockPlaced(World par1World, int par2, int par3, int par4, int par5, float par6, float par7, float par8, int par9)
     {
         int var10 = par9;
 
@@ -190,5 +136,62 @@ public class BlockGauge extends BlockContainer {
         }
 
         super.onNeighborBlockChange(par1World, par2, par3, par4, par5);
+    }
+
+    /**
+     * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
+     * cleared to be reused)
+     */
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    {
+        this.setBlockBoundsBasedOnState(par1World, par2, par3, par4);
+        return super.getCollisionBoundingBoxFromPool(par1World, par2, par3, par4);
+    }
+
+    @SideOnly(Side.CLIENT)
+
+    /**
+     * Returns the bounding box of the wired rectangular prism to render.
+     */
+    public AxisAlignedBB getSelectedBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    {
+        this.setBlockBoundsBasedOnState(par1World, par2, par3, par4);
+        return super.getSelectedBoundingBoxFromPool(par1World, par2, par3, par4);
+    }
+
+    /**
+     * Updates the blocks bounds based on its current state. Args: world, x, y, z
+     */
+    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    {
+        this.updateLadderBounds(par1IBlockAccess.getBlockMetadata(par2, par3, par4));
+    }
+
+    /**
+     * Update the ladder block bounds based on the given metadata value.
+     */
+    public void updateLadderBounds(int par1)
+    {
+        float var3 = 0.125F;
+
+        if (par1 == 2)
+        {
+            this.setBlockBounds(0.0F, 0.0F, 1.0F - var3, 1.0F, 1.0F, 1.0F);
+        }
+
+        if (par1 == 3)
+        {
+            this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, var3);
+        }
+
+        if (par1 == 4)
+        {
+            this.setBlockBounds(1.0F - var3, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+        }
+
+        if (par1 == 5)
+        {
+            this.setBlockBounds(0.0F, 0.0F, 0.0F, var3, 1.0F, 1.0F);
+        }
     }
 }

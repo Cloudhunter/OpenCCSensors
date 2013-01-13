@@ -72,22 +72,23 @@ public class TileEntityGauge extends TileEntity {
     @Override
     public void updateEntity()
     {
+    	OCSLog.info("metadata = "+this.getBlockMetadata());
     	updatePercentage();
         super.updateEntity();
+    	this.getWorldObj().markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
     }
     
     private void updatePercentage()
     {
 
-    	if (!this.worldObj.isRemote)
+    	if (monitors == null) addMonitors();
+    	if (!this.getWorldObj().isRemote)
     	{
-
-        	if (monitors == null) addMonitors();
-        	
+    	
 	    	TileEntity attachedTo = getAttachedTile();
 	    	if (attachedTo != null)
 	    	{
-	        	IGaugeCallback callback = getAvailableCallbackForTileEntity(attachedTo);
+	    		IGaugeCallback callback = getAvailableCallbackForTileEntity(attachedTo);
 		    	if (callback != null)
 		    	{
 		    		percentage = callback.getPercentage(attachedTo);
