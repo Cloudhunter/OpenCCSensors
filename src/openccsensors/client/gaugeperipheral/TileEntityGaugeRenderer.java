@@ -1,18 +1,12 @@
 package openccsensors.client.gaugeperipheral;
 
-import java.text.DecimalFormat;
-
-import org.lwjgl.opengl.GL11;
-
-import openccsensors.client.sensorperipheral.ModelSensor;
-import openccsensors.common.core.OCSLog;
-import openccsensors.common.gaugeperipheral.TileEntityGauge;
-import openccsensors.common.sensorperipheral.TileEntitySensor;
-import net.minecraft.block.Block;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.client.ForgeHooksClient;
+import openccsensors.common.core.OCSLog;
+import openccsensors.common.gaugeperipheral.TileEntityGauge;
+
+import org.lwjgl.opengl.GL11;
 
 public class TileEntityGaugeRenderer extends TileEntitySpecialRenderer {
 	private ModelGauge modelGauge = new ModelGauge();

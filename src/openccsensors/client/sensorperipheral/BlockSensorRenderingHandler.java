@@ -4,15 +4,20 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.world.IBlockAccess;
+import openccsensors.OpenCCSensors;
+import openccsensors.common.sensorperipheral.TileEntitySensor;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import openccsensors.OpenCCSensors;
-import openccsensors.common.sensorperipheral.TileEntitySensor;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class BlockSensorRenderingHandler implements ISimpleBlockRenderingHandler {
+
+	@Override
+	public int getRenderId() {
+		return OpenCCSensors.Config.sensorBlockRenderID;
+	}
 
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelID,
@@ -38,10 +43,5 @@ public class BlockSensorRenderingHandler implements ISimpleBlockRenderingHandler
 	@Override
 	public boolean shouldRender3DInInventory() {
 		return true;
-	}
-
-	@Override
-	public int getRenderId() {
-		return OpenCCSensors.Config.sensorBlockRenderID;
 	}
 }

@@ -22,97 +22,93 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import openccsensors.OpenCCSensors;
+import openccsensors.common.core.OCSLog;
+import openccsensors.common.gaugeperipheral.BlockGauge;
+import openccsensors.common.gaugeperipheral.TileEntityGauge;
+import openccsensors.common.sensorperipheral.BlockSensor;
+import openccsensors.common.sensorperipheral.ContainerSensor;
+import openccsensors.common.sensorperipheral.TileEntitySensor;
+import openccsensors.common.sensorperipheral.TurtleUpgradeSensor;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import openccsensors.OpenCCSensors;
-import openccsensors.OpenCCSensors.Blocks;
-import openccsensors.common.core.OCSLog;
-import openccsensors.common.gaugeperipheral.BlockGauge;
-import openccsensors.common.gaugeperipheral.TileEntityGauge;
-import openccsensors.common.sensorperipheral.ContainerSensor;
-import openccsensors.common.sensorperipheral.BlockSensor;
-import openccsensors.common.sensorperipheral.TurtleUpgradeSensor;
-import openccsensors.common.sensorperipheral.TileEntitySensor;
 
 public class CommonProxy
 {
 
-	public void init() 
+	private class GuiHandler implements IGuiHandler
 	{
-		// create block and register it
-		OpenCCSensors.Blocks.sensorBlock = new BlockSensor( OpenCCSensors.Config.sensorBlockID, Material.cloth );
-		GameRegistry.registerBlock(OpenCCSensors.Blocks.sensorBlock, "OCS");
-		GameRegistry.registerTileEntity(TileEntitySensor.class, "sensor");
-		OpenCCSensors.Blocks.sensorBlock.setHardness(0.5F);
-		GameRegistry.addRecipe(
-				new ItemStack(OpenCCSensors.Blocks.sensorBlock, 1, 0),
-				"ooo",
-				"ror",
-				"sss",
-				'o', new ItemStack(Block.obsidian),
-				'r', new ItemStack(Item.redstone),
-				's',new ItemStack(Block.stone));
-		
-		OpenCCSensors.Blocks.gaugeBlock = new BlockGauge( OpenCCSensors.Config.gaugeBlockID, Material.cloth );
-		GameRegistry.registerBlock(OpenCCSensors.Blocks.gaugeBlock, "OCS.gauge");
-		GameRegistry.registerTileEntity(TileEntityGauge.class, "gauge");
-		OpenCCSensors.Blocks.gaugeBlock.setHardness(0.5F);
-		
-		// register turtle peripheral if applicable
-		if (OpenCCSensors.Config.turtlePeripheralEnabled)
+
+		@Override
+		public Object getClientGuiElement(int ID, EntityPlayer player, World world,	int x, int y, int z)
 		{
-			dan200.turtle.api.TurtleAPI.registerUpgrade(new TurtleUpgradeSensor());
-		}
-		
-		// register GUI handler
-		NetworkRegistry.instance().registerGuiHandler( OpenCCSensors.instance, new GuiHandler() );
-		
-		// setup languages
-		setupLanguages();
-		
-		setupLuaFiles();
-		
-	}
-	
-	public void postInit()
-	{
-	}
-	
-	public File getBase()
-	{
-		return FMLCommonHandler.instance().getMinecraftServerInstance().getFile(".");
-	}
-	
-	private void setupLuaFiles()
-	{
-		
-		File modFile = FMLCommonHandler.instance().findContainerFor(OpenCCSensors.instance).getSource();
-		
-		File baseFile = getBase();
-		
-		String beginStr = "openccsensors/resources/lua/";
-		String destFolder = "mods\\OCSLua\\lua";
-		if (modFile.isDirectory())
-		{
-			File srcFile = new File(modFile, beginStr);
+			TileEntity tile = world.getBlockTileEntity( x, y, z );
 			
-			File destFile = new File(baseFile, destFolder);
-			
-			try {
-				copy(srcFile, destFile);
-			} catch (IOException e) {
-				OCSLog.warn("Error while copying Lua files. Peripheral may not automount Lua files! Exception follows.");
-				e.printStackTrace();
+			if (tile != null && tile instanceof TileEntitySensor)
+			{
+				return getGui(player.inventory, (TileEntitySensor) tile);
 			}
 			
-		} else {
-			extractZipToLocation(modFile, beginStr, destFolder);
+			return null;
+		}
+
+		@Override
+		public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
+		{
+			TileEntity tile = world.getBlockTileEntity( x, y, z );
+			
+			if (tile != null && tile instanceof TileEntitySensor)
+			{
+				return new ContainerSensor(player.inventory, (TileEntitySensor) tile);
+			}
+			
+			return null;
 		}
 		
+	}
+	
+	private static final void copy( File source, File destination ) throws IOException {
+		if( source.isDirectory() ) {
+			copyDirectory( source, destination );
+		} else {
+			copyFile( source, destination );
+		}
+	}
+	
+	private static final void copyDirectory( File source, File destination ) throws IOException {
+		if( !source.isDirectory() ) {
+			throw new IllegalArgumentException( "Source (" + source.getPath() + ") must be a directory." );
+		}
 
+		if( !source.exists() ) {
+			throw new IllegalArgumentException( "Source directory (" + source.getPath() + ") doesn't exist." );
+		}
+
+		if( destination.exists() ) {
+			//throw new IllegalArgumentException( "Destination (" + destination.getPath() + ") exists." );
+		}
+
+		destination.mkdirs();
+		File[] files = source.listFiles();
+
+		for( File file : files ) {
+			if( file.isDirectory() ) {
+				copyDirectory( file, new File( destination, file.getName() ) );
+			} else {
+				copyFile( file, new File( destination, file.getName() ) );
+			}
+		}
+	}
+	
+	private static final void copyFile( File source, File destination ) throws IOException {
+		FileChannel sourceChannel = new FileInputStream( source ).getChannel();
+		FileChannel targetChannel = new FileOutputStream( destination ).getChannel();
+		sourceChannel.transferTo(0, sourceChannel.size(), targetChannel);
+		sourceChannel.close();
+		targetChannel.close();
 	}
 	
 	private void extractZipToLocation(File zipFile, String sourceFolder, String destFolder)
@@ -171,45 +167,61 @@ public class CommonProxy
 	    }
 	}
 	
-	private static final void copy( File source, File destination ) throws IOException {
-		if( source.isDirectory() ) {
-			copyDirectory( source, destination );
-		} else {
-			copyFile( source, destination );
-		}
+	public File getBase()
+	{
+		return FMLCommonHandler.instance().getMinecraftServerInstance().getFile(".");
 	}
 
-	private static final void copyDirectory( File source, File destination ) throws IOException {
-		if( !source.isDirectory() ) {
-			throw new IllegalArgumentException( "Source (" + source.getPath() + ") must be a directory." );
-		}
-
-		if( !source.exists() ) {
-			throw new IllegalArgumentException( "Source directory (" + source.getPath() + ") doesn't exist." );
-		}
-
-		if( destination.exists() ) {
-			//throw new IllegalArgumentException( "Destination (" + destination.getPath() + ") exists." );
-		}
-
-		destination.mkdirs();
-		File[] files = source.listFiles();
-
-		for( File file : files ) {
-			if( file.isDirectory() ) {
-				copyDirectory( file, new File( destination, file.getName() ) );
-			} else {
-				copyFile( file, new File( destination, file.getName() ) );
-			}
-		}
+	// GUI Stuff
+	public Object getGui( InventoryPlayer inventory, TileEntitySensor tileentity )
+	{
+		// returns nothing on the common proxy - will only return the GUI on the client proxy
+		return null;
 	}
   
-	private static final void copyFile( File source, File destination ) throws IOException {
-		FileChannel sourceChannel = new FileInputStream( source ).getChannel();
-		FileChannel targetChannel = new FileOutputStream( destination ).getChannel();
-		sourceChannel.transferTo(0, sourceChannel.size(), targetChannel);
-		sourceChannel.close();
-		targetChannel.close();
+	public void init() 
+	{
+		// create block and register it
+		OpenCCSensors.Blocks.sensorBlock = new BlockSensor( OpenCCSensors.Config.sensorBlockID, Material.cloth );
+		GameRegistry.registerBlock(OpenCCSensors.Blocks.sensorBlock, "OCS");
+		GameRegistry.registerTileEntity(TileEntitySensor.class, "sensor");
+		OpenCCSensors.Blocks.sensorBlock.setHardness(0.5F);
+		GameRegistry.addRecipe(
+				new ItemStack(OpenCCSensors.Blocks.sensorBlock, 1, 0),
+				"ooo",
+				"ror",
+				"sss",
+				'o', new ItemStack(Block.obsidian),
+				'r', new ItemStack(Item.redstone),
+				's',new ItemStack(Block.stone));
+		
+		OpenCCSensors.Blocks.gaugeBlock = new BlockGauge( OpenCCSensors.Config.gaugeBlockID, Material.cloth );
+		GameRegistry.registerBlock(OpenCCSensors.Blocks.gaugeBlock, "OCS.gauge");
+		GameRegistry.registerTileEntity(TileEntityGauge.class, "gauge");
+		OpenCCSensors.Blocks.gaugeBlock.setHardness(0.5F);
+		
+		// register turtle peripheral if applicable
+		if (OpenCCSensors.Config.turtlePeripheralEnabled)
+		{
+			dan200.turtle.api.TurtleAPI.registerUpgrade(new TurtleUpgradeSensor());
+		}
+		
+		// register GUI handler
+		NetworkRegistry.instance().registerGuiHandler( OpenCCSensors.instance, new GuiHandler() );
+		
+		// setup languages
+		setupLanguages();
+		
+		setupLuaFiles();
+		
+	}
+	
+	public void postInit()
+	{
+	}
+	
+	public void registerRenderInformation()
+	{
 	}
 	
 	// Language setup (thinking ahead here!)
@@ -260,46 +272,33 @@ public class CommonProxy
 
 	}
 	
-	public void registerRenderInformation()
+	private void setupLuaFiles()
 	{
-	}
-	
-	// GUI Stuff
-	public Object getGui( InventoryPlayer inventory, TileEntitySensor tileentity )
-	{
-		// returns nothing on the common proxy - will only return the GUI on the client proxy
-		return null;
-	}
-	
-	private class GuiHandler implements IGuiHandler
-	{
-
-		@Override
-		public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
+		
+		File modFile = FMLCommonHandler.instance().findContainerFor(OpenCCSensors.instance).getSource();
+		
+		File baseFile = getBase();
+		
+		String beginStr = "openccsensors/resources/lua/";
+		String destFolder = "mods\\OCSLua\\lua";
+		if (modFile.isDirectory())
 		{
-			TileEntity tile = world.getBlockTileEntity( x, y, z );
+			File srcFile = new File(modFile, beginStr);
 			
-			if (tile != null && tile instanceof TileEntitySensor)
-			{
-				return new ContainerSensor(player.inventory, (TileEntitySensor) tile);
+			File destFile = new File(baseFile, destFolder);
+			
+			try {
+				copy(srcFile, destFile);
+			} catch (IOException e) {
+				OCSLog.warn("Error while copying Lua files. Peripheral may not automount Lua files! Exception follows.");
+				e.printStackTrace();
 			}
 			
-			return null;
-		}
-
-		@Override
-		public Object getClientGuiElement(int ID, EntityPlayer player, World world,	int x, int y, int z)
-		{
-			TileEntity tile = world.getBlockTileEntity( x, y, z );
-			
-			if (tile != null && tile instanceof TileEntitySensor)
-			{
-				return getGui(player.inventory, (TileEntitySensor) tile);
-			}
-			
-			return null;
+		} else {
+			extractZipToLocation(modFile, beginStr, destFolder);
 		}
 		
+
 	}
 
 }

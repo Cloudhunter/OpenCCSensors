@@ -20,11 +20,12 @@ import cpw.mods.fml.common.network.NetworkMod;
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class OpenCCSensors 
 {
-	@Instance( value = "OCS" )
-	public static OpenCCSensors instance;
-	
-	@SidedProxy( clientSide = "openccsensors.client.ClientProxy", serverSide = "openccsensors.common.CommonProxy" )
-	public static CommonProxy proxy;
+	// blocks class to keep all the blocks in
+	public static class Blocks
+	{
+		public static BlockSensor sensorBlock;
+		public static BlockGauge gaugeBlock;
+	}
 	
 	// config class to keep all the config data in
 	public static class Config
@@ -36,14 +37,50 @@ public class OpenCCSensors
 		public static boolean turtlePeripheralEnabled;
 	}
 	
-	// blocks class to keep all the blocks in
-	public static class Blocks
-	{
-		public static BlockSensor sensorBlock;
-		public static BlockGauge gaugeBlock;
-	}
+	@Instance( value = "OCS" )
+	public static OpenCCSensors instance;
+	
+	@SidedProxy( clientSide = "openccsensors.client.ClientProxy", serverSide = "openccsensors.common.CommonProxy" )
+	public static CommonProxy proxy;
 
 	public static Item sensorCard;
+	
+	private static void loadSensorPack(String sensor)
+	{
+		try
+		{
+			Class c = OpenCCSensors.class.getClassLoader().loadClass("openccsensors.common.sensors." + sensor + ".SensorPack");
+			c.getMethod("init", new Class[0]).invoke(null, new Object[0]);
+		}
+		catch (Throwable throwable)
+		{
+			OCSLog.info(sensor + " sensor not loaded");
+			return;
+		}
+		OCSLog.info(sensor + " sensor loaded");
+	}
+
+	@Mod.Init
+	public void init( FMLInitializationEvent evt )
+	{
+		// init logger
+		OCSLog.init();
+		
+		// we are starting!
+		OCSLog.info( "OpenCCSensors version %s starting", FMLCommonHandler.instance().findContainerFor(instance).getVersion() );
+		
+		// init our proxy
+		proxy.init();
+		
+		loadSensorPack("buildcraft");
+		loadSensorPack("vanilla");
+		loadSensorPack("industrialcraft");
+		loadSensorPack("thaumcraft");
+
+		sensorCard = new SensorCard(Config.sensorCardID);
+		
+		proxy.registerRenderInformation();
+	}
 	
 	@Mod.PreInit
 	public void preInit( FMLPreInitializationEvent evt )
@@ -71,42 +108,5 @@ public class OpenCCSensors
 		Config.sensorCardID = prop.getInt();
 		
 		configFile.save();
-	}
-
-	@Mod.Init
-	public void init( FMLInitializationEvent evt )
-	{
-		// init logger
-		OCSLog.init();
-		
-		// we are starting!
-		OCSLog.info( "OpenCCSensors version %s starting", FMLCommonHandler.instance().findContainerFor(instance).getVersion() );
-		
-		// init our proxy
-		proxy.init();
-		
-		loadSensorPack("buildcraft");
-		loadSensorPack("vanilla");
-		loadSensorPack("industrialcraft");
-		loadSensorPack("thaumcraft");
-
-		sensorCard = new SensorCard(Config.sensorCardID);
-		
-		proxy.registerRenderInformation();
-	}
-	
-	private static void loadSensorPack(String sensor)
-	{
-		try
-		{
-			Class c = OpenCCSensors.class.getClassLoader().loadClass("openccsensors.common.sensors." + sensor + ".SensorPack");
-			c.getMethod("init", new Class[0]).invoke(null, new Object[0]);
-		}
-		catch (Throwable throwable)
-		{
-			OCSLog.info(sensor + " sensor not loaded");
-			return;
-		}
-		OCSLog.info(sensor + " sensor loaded");
 	}
 }

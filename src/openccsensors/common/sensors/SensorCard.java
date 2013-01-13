@@ -4,20 +4,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import dan200.computer.api.ComputerCraftAPI;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import openccsensors.common.api.ISensorCard;
 import openccsensors.common.api.ISensorInterface;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import dan200.computer.api.ComputerCraftAPI;
 
 public class SensorCard extends Item implements ISensorCard
 {
 	private static HashMap<Integer, ISensorInterface> interfaces = new HashMap<Integer, ISensorInterface>();
 	
+	public static void registerInterface(ISensorInterface iface)
+	{
+		interfaces.put(iface.getId(), iface);
+	}
+
 	public SensorCard(int par1) {
 		super(par1);
 		setTextureFile("/openccsensors/resources/images/terrain.png");
@@ -31,9 +35,9 @@ public class SensorCard extends Item implements ISensorCard
 	}
 
 	@Override
-	public ISensorInterface getSensorInterface(ItemStack itemstack, boolean turtle) 
+	public int getIconFromDamage(int par1)
 	{
-		return interfaces.get(itemstack.getItemDamage());
+	    return par1;
 	}
 
 	@Override
@@ -48,13 +52,13 @@ public class SensorCard extends Item implements ISensorCard
 		
 		return "Sensor Card";
 	}
-
-	@Override
-	public int getIconFromDamage(int par1)
-	{
-	    return par1;
-	}
 	
+	@Override
+	public ISensorInterface getSensorInterface(ItemStack itemstack, boolean turtle) 
+	{
+		return interfaces.get(itemstack.getItemDamage());
+	}
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(int par1, CreativeTabs tab, List subItems)
@@ -63,11 +67,6 @@ public class SensorCard extends Item implements ISensorCard
 		{
 	    	subItems.add(new ItemStack(par1, 1, entry.getKey()));
 		}
-	}
-
-	public static void registerInterface(ISensorInterface iface)
-	{
-		interfaces.put(iface.getId(), iface);
 	}
 	
 

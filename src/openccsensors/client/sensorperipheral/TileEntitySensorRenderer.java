@@ -1,17 +1,11 @@
 package openccsensors.client.sensorperipheral;
 
-import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.client.FMLClientHandler;
-
-import openccsensors.OpenCCSensors;
-import openccsensors.client.sensorperipheral.ModelSensor;
-import openccsensors.common.core.OCSLog;
-import openccsensors.common.sensorperipheral.TileEntitySensor;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.client.ForgeHooksClient;
+import openccsensors.common.sensorperipheral.TileEntitySensor;
+
+import org.lwjgl.opengl.GL11;
 
 public class TileEntitySensorRenderer extends TileEntitySpecialRenderer {
 

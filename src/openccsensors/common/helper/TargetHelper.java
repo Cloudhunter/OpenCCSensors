@@ -7,7 +7,6 @@ import java.util.Map.Entry;
 
 import net.minecraft.world.World;
 import openccsensors.common.api.ISensorTarget;
-import openccsensors.common.core.OCSLog;
 
 public class TargetHelper {
 	

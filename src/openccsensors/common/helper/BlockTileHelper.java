@@ -4,9 +4,6 @@ import java.util.HashMap;
 
 import net.minecraft.tileentity.TileEntity;
 
-import openccsensors.common.api.ISensorTarget;
-import openccsensors.common.core.OCSLog;
-
 public class BlockTileHelper {
 
 	public static boolean addEntityToHashMapIfValid( TileEntity tile, HashMap<String, TileEntity> map, Class[] clazzes, String name )

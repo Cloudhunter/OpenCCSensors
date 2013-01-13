@@ -7,25 +7,19 @@ import java.util.Map;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-
-import cpw.mods.fml.common.registry.GameRegistry;
-import openccsensors.OpenCCSensors;
 import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.sensors.SensorCard;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class WorldSensorInterface implements ISensorInterface {
 
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	@Override
-	public String getName() {
-		return "openccsensors.item.worldsensor";
-	}
-
-	@Override
-	public int getId() {
-		return 21;
+	public Map callMethod(ISensorAccess sensor, World world, int x, int y, int z, int methodID, Object[] args) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -36,6 +30,22 @@ public class WorldSensorInterface implements ISensorInterface {
 		currentDetails.put("type", "World");
 		retMap.put("CURRENT", currentDetails);
 		return retMap;
+	}
+
+	@Override
+	public int getId() {
+		return 21;
+	}
+
+	@Override
+	public String[] getMethods() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getName() {
+		return "openccsensors.item.worldsensor";
 	}
 
 	@Override
@@ -51,18 +61,6 @@ public class WorldSensorInterface implements ISensorInterface {
 		retMap.put("Daytime", world.isDaytime());
 		
 		return retMap;
-	}
-
-	@Override
-	public String[] getMethods() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Map callMethod(ISensorAccess sensor, World world, int x, int y, int z, int methodID, Object[] args) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

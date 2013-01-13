@@ -21,6 +21,14 @@ public class DroppedItemTarget implements ISensorTarget {
 		rawType = ((EntityItem)entity).func_92014_d().getItemName();
 	}
 	
+	private void addPositionToMap(Entity entity, Map map) {
+		HashMap<String, Integer> pos = new HashMap<String, Integer>();
+		pos.put("X", ((Double) entity.posX).intValue() - (int) (sensorPos.xCoord + 0.5));
+		pos.put("Y", ((Double) entity.posY).intValue() - (int) (sensorPos.yCoord));
+		pos.put("Z", ((Double) entity.posZ).intValue() - (int) (sensorPos.zCoord + 0.5));
+		map.put("Position", pos);
+	}
+
 	@Override
 	public Map getBasicInformation(World world) {
 		Entity entity = (Entity) world.getEntityByID(id);
@@ -32,7 +40,7 @@ public class DroppedItemTarget implements ISensorTarget {
 
 		return retMap;
 	}
-
+	
 	@Override
 	public Map getDetailInformation(World world) {
 		EntityItem entity = (EntityItem) world.getEntityByID(id);
@@ -41,13 +49,5 @@ public class DroppedItemTarget implements ISensorTarget {
 		retMap.put("IsBurning", entity.isBurning());
 		retMap.put("StackSize", Integer.toString(entity.func_92014_d().stackSize));
 		return retMap;
-	}
-	
-	private void addPositionToMap(Entity entity, Map map) {
-		HashMap<String, Integer> pos = new HashMap<String, Integer>();
-		pos.put("X", ((Double) entity.posX).intValue() - (int) (sensorPos.xCoord + 0.5));
-		pos.put("Y", ((Double) entity.posY).intValue() - (int) (sensorPos.yCoord));
-		pos.put("Z", ((Double) entity.posZ).intValue() - (int) (sensorPos.zCoord + 0.5));
-		map.put("Position", pos);
 	}
 }

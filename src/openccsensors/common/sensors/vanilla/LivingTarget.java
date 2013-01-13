@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import net.minecraft.entity.player.EntityPlayer;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.helper.EntityHelper;
 
@@ -24,6 +24,14 @@ public class LivingTarget implements ISensorTarget {
 		rawType = (living instanceof EntityPlayer) ? "Player" : living
 				.getEntityName();
 
+	}
+
+	private void addPositionToMap(EntityLiving living, Map map) {
+		HashMap<String, Integer> pos = new HashMap<String, Integer>();
+		pos.put("X", ((Double) living.posX).intValue() - (int) (sensorPos.xCoord + 0.5));
+		pos.put("Y", ((Double) living.posY).intValue() - (int) (sensorPos.yCoord));
+		pos.put("Z", ((Double) living.posZ).intValue() - (int) (sensorPos.zCoord + 0.5));
+		map.put("Position", pos);
 	}
 
 	@Override
@@ -51,14 +59,6 @@ public class LivingTarget implements ISensorTarget {
 		retMap.put("type", rawType);
 
 		return retMap;
-	}
-
-	private void addPositionToMap(EntityLiving living, Map map) {
-		HashMap<String, Integer> pos = new HashMap<String, Integer>();
-		pos.put("X", ((Double) living.posX).intValue() - (int) (sensorPos.xCoord + 0.5));
-		pos.put("Y", ((Double) living.posY).intValue() - (int) (sensorPos.yCoord));
-		pos.put("Z", ((Double) living.posZ).intValue() - (int) (sensorPos.zCoord + 0.5));
-		map.put("Position", pos);
 	}
 
 }

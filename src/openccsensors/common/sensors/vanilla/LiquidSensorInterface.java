@@ -2,30 +2,29 @@ package openccsensors.common.sensors.vanilla;
 
 import java.util.Map;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.liquids.ITankContainer;
-import openccsensors.OpenCCSensors;
 import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.api.ISensorTarget;
-import openccsensors.common.api.ITargetWrapper;
 import openccsensors.common.helper.TargetHelper;
+import openccsensors.common.retrievers.ITileEntityValidatorCallback;
+import openccsensors.common.retrievers.TileEntityRetriever;
 import openccsensors.common.sensors.SensorCard;
-import openccsensors.common.sensors.TargetRetriever;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class LiquidSensorInterface implements ISensorInterface {
 
-	private TargetRetriever retriever = new TargetRetriever();
+	private TileEntityRetriever retriever = new TileEntityRetriever();
 	
 	public LiquidSensorInterface ()
 	{
-		retriever.registerTarget(new ITargetWrapper() {
+		retriever.registerTarget(new ITileEntityValidatorCallback() {
 			@Override
-			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
+			public ISensorTarget getTargetIfValid(TileEntity entity, int relativeX, int relativeY, int relativeZ, int x, int y, int z) {
 				if (entity instanceof ITankContainer)
 				{
 					return new LiquidTankTarget((TileEntity) entity);
@@ -36,13 +35,9 @@ public class LiquidSensorInterface implements ISensorInterface {
 	}
 	
 	@Override
-	public String getName() {
-		return "openccsensors.item.liquidsensor";
-	}
-
-	@Override
-	public int getId() {
-		return 20;
+	public Map callMethod(ISensorAccess sensor, World world, int x, int y, int z, int methodID, Object[] args) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -50,15 +45,13 @@ public class LiquidSensorInterface implements ISensorInterface {
 			throws Exception {
 
 		return TargetHelper.getBasicInformationForTargets(
-				retriever.getAdjacentTiles(world, x, y, z), world);
+				retriever.getCube(world, x, y, z), world);
 
 	}
 
 	@Override
-	public Map getTargetDetails(ISensorAccess sensor, World world, int x, int y, int z, String target)
-			throws Exception {
-		return TargetHelper.getDetailedInformationForTarget(target,
-				retriever.getAdjacentTiles(world, x, y, z), world);
+	public int getId() {
+		return 20;
 	}
 
 	@Override
@@ -68,9 +61,15 @@ public class LiquidSensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public Map callMethod(ISensorAccess sensor, World world, int x, int y, int z, int methodID, Object[] args) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public String getName() {
+		return "openccsensors.item.liquidsensor";
+	}
+
+	@Override
+	public Map getTargetDetails(ISensorAccess sensor, World world, int x, int y, int z, String target)
+			throws Exception {
+		return TargetHelper.getDetailedInformationForTarget(target,
+				retriever.getCube(world, x, y, z), world);
 	}
 
 	@Override

@@ -2,31 +2,28 @@ package openccsensors.common.sensors.vanilla;
 
 import java.util.Map;
 
-import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.registry.GameRegistry;
-import openccsensors.OpenCCSensors;
 import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.api.ISensorTarget;
-import openccsensors.common.api.ITargetWrapper;
 import openccsensors.common.helper.TargetHelper;
+import openccsensors.common.retrievers.ITileEntityValidatorCallback;
+import openccsensors.common.retrievers.TileEntityRetriever;
 import openccsensors.common.sensors.SensorCard;
-import openccsensors.common.sensors.TargetRetriever;
-import openccsensors.common.sensors.vanilla.SignPostTarget;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class SignSensorInterface implements ISensorInterface {
 
-	private TargetRetriever retriever = new TargetRetriever();
+	private TileEntityRetriever retriever = new TileEntityRetriever();
 
 	public SignSensorInterface() {
-		retriever.registerTarget(new ITargetWrapper() {
+		retriever.registerTarget(new ITileEntityValidatorCallback() {
 			@Override
-			public ISensorTarget createNew(Object entity, int sx, int sy, int sz) {
+			public ISensorTarget getTargetIfValid(TileEntity entity, int relativeX, int relativeY, int relativeZ, int x, int y, int z) {
 				if (entity instanceof TileEntitySign)
 				{
 					return new SignPostTarget((TileEntity) entity);
@@ -35,16 +32,6 @@ public class SignSensorInterface implements ISensorInterface {
 			}
 		});
 
-	}
-
-	@Override
-	public String getName() {
-		return "openccsensors.item.signsensor";
-	}
-
-	@Override
-	public String[] getMethods() {
-		return null;
 	}
 
 	@Override
@@ -57,8 +44,23 @@ public class SignSensorInterface implements ISensorInterface {
 			throws Exception {
 
 		return TargetHelper.getBasicInformationForTargets(
-				retriever.getAdjacentTiles(world, x, y, z, 5), world);
+				retriever.getCube(world, x, y, z), world);
 
+	}
+
+	@Override
+	public int getId() {
+		return 23;
+	}
+
+	@Override
+	public String[] getMethods() {
+		return null;
+	}
+
+	@Override
+	public String getName() {
+		return "openccsensors.item.signsensor";
 	}
 
 	@Override
@@ -66,13 +68,8 @@ public class SignSensorInterface implements ISensorInterface {
 			throws Exception {
 
 		return TargetHelper.getDetailedInformationForTarget(target,
-				retriever.getAdjacentTiles(world, x, y, z, 5), world);
+				retriever.getCube(world, x, y, z), world);
 
-	}
-
-	@Override
-	public int getId() {
-		return 23;
 	}
 
 	@Override
