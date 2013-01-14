@@ -41,6 +41,7 @@ public class LivingTarget implements ISensorTarget {
 		HashMap retMap = new HashMap();
 
 		retMap.put("type", rawType);
+		
 		addPositionToMap(entityLiving, retMap);
 
 		return retMap;
