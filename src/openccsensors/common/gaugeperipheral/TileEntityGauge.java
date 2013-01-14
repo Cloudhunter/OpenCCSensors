@@ -17,7 +17,7 @@ import openccsensors.common.sensors.industrialcraft.IC2SensorInterface;
 
 public class TileEntityGauge extends TileEntity {
 	
-    private double percentage = 0;
+    private int percentage = 0;
     
     public TileEntityGauge()
     {
@@ -48,11 +48,11 @@ public class TileEntityGauge extends TileEntity {
 			ISensorTarget target = entry.getValue().getRelevantTargetForGauge(this.worldObj, this.xCoord + x, this.yCoord, this.zCoord + z);
 			if (target != null)
 			{
-		    	this.percentage = target.getGaugePercentage(this.worldObj);
+		    	this.percentage = (int)target.getGaugePercentage(this.worldObj);
 		    	return;
 			}
 		}
-    	this.percentage = 0.0;
+    	this.percentage = 0;
     }
     
     @Override
@@ -85,7 +85,7 @@ public class TileEntityGauge extends TileEntity {
     	return (worldObj == null) ? 0 : this.getBlockMetadata();
     }
     
-    public double getPercentage()
+    public int getPercentage()
     {
     	return percentage;
     }
@@ -99,14 +99,14 @@ public class TileEntityGauge extends TileEntity {
     @Override
     public void readFromNBT(NBTTagCompound nbttagcompound)
     {
-    	this.percentage = nbttagcompound.getDouble("percentage");
+    	this.percentage = nbttagcompound.getInteger("percentage");
         super.readFromNBT(nbttagcompound);
     }
     
     @Override
     public void writeToNBT(NBTTagCompound nbttagcompound)
     {
-    	nbttagcompound.setDouble("percentage", this.percentage);
+    	nbttagcompound.setInteger("percentage", this.percentage);
         super.writeToNBT(nbttagcompound);
     }
     

@@ -43,7 +43,7 @@ public class EnergyStorageTarget extends TileSensorTarget implements
 		IEnergyStorage storage = (IEnergyStorage) world.getBlockTileEntity(
 				xCoord, yCoord, zCoord);
 		
-		return 100 / storage.getCapacity() * storage.getStored();
+		return (100.0 / storage.getCapacity()) * storage.getStored();
 		
 	}
 

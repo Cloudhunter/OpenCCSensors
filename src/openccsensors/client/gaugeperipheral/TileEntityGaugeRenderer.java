@@ -42,16 +42,15 @@ public class TileEntityGaugeRenderer extends TileEntitySpecialRenderer {
         GL11.glPopMatrix();
         
         FontRenderer fontRenderer = this.getFontRenderer();
-        GL11.glScalef(0.03F, 0.03F, 0.03F);
-        GL11.glTranslatef(0.0F, -5.0F, -5.0F);
-        GL11.glNormal3f(0.0F, 0.0F, -1.0F * var12);
+        GL11.glTranslatef(0.0F, 0.1F, -0.43F);
+        GL11.glScalef(0.02F, 0.02F, 0.02F);
         GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
+        GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
         GL11.glDepthMask(false);
-        byte var13 = 0;
 
         if (fontRenderer != null){
-        	String stringPercentage = String.format("%.2g", tile.getPercentage());
-        	fontRenderer.drawString(stringPercentage, -fontRenderer.getStringWidth(stringPercentage) / 2, 5, 0);
+        	String stringPercentage = tile.getPercentage() + "%";
+        	fontRenderer.drawString(stringPercentage, -fontRenderer.getStringWidth(stringPercentage) / 2, 0, 16777215);
         }
         
         GL11.glDepthMask(true);
