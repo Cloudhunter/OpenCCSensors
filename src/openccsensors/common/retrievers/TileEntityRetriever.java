@@ -59,6 +59,24 @@ public class TileEntityRetriever {
 		return map;
 	}
 	
+	public ISensorTarget getFirstValidTargetForTile(World world, int x, int y, int z)
+	{
+		TileEntity entity = world.getBlockTileEntity(x, y, z);
+		
+		for (ITileEntityValidatorCallback wrapper : targets) {
+			
+			ISensorTarget target = wrapper.getTargetIfValid(entity, x, y, z);
+			
+			if (target != null && target.hasGaugePercentage())
+			{
+				return target;
+			}
+		}
+		
+		return null;
+			
+	}
+	
 	public void registerCallback(ITileEntityValidatorCallback wrapper) {
 		targets.add(wrapper);
 	}

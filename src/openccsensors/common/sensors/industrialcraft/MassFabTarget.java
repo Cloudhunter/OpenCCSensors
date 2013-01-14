@@ -12,6 +12,8 @@ import openccsensors.common.sensors.TileSensorTarget;
 public class MassFabTarget extends TileSensorTarget implements
 		ISensorTarget {
 
+	public static int MASSFAB_MAX_ENERGY = 1100000;
+	
 	MassFabTarget(TileEntity targetEntity, int relativeX, int relativeY, int relativeZ) {
 		super(targetEntity, relativeX, relativeY, relativeZ);
 	}
@@ -21,12 +23,32 @@ public class MassFabTarget extends TileSensorTarget implements
 		
 		HashMap retMap = new HashMap();
 		
-		NBTTagCompound tagCompound = new NBTTagCompound();
 		TileEntity machine = (TileEntity) world.getBlockTileEntity(xCoord, yCoord, zCoord);
-		machine.writeToNBT(tagCompound);
-		retMap.put("PercentComplete", (100.0/IC2SensorInterface.MASSFAB_MAX_ENERGY) * tagCompound.getInteger("energy"));
+		
+		NBTTagCompound tagCompound = getTagCompound(machine);
+		
+		retMap.put("PercentComplete", getPercentComplete(tagCompound.getInteger("energy")));
 		retMap.put("Energy", tagCompound.getInteger("energy"));
 		return retMap;
 		
+	}
+	
+	@Override
+	public boolean hasGaugePercentage() {
+		return true;
+	}
+
+	@Override
+	public double getGaugePercentage(World world) {
+		
+		TileEntity machine = world.getBlockTileEntity(xCoord, yCoord, zCoord);
+		
+		NBTTagCompound tagCompound = getTagCompound(machine);
+		return getPercentComplete(tagCompound.getInteger("energy"));
+		
+	}
+	
+	private double getPercentComplete(int energy) {
+		return (100.0 / MASSFAB_MAX_ENERGY) * energy;
 	}
 }

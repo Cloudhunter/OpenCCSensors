@@ -1,5 +1,6 @@
 package openccsensors.common.sensors.industrialcraft;
 
+import openccsensors.common.SensorInterfaceManager;
 import openccsensors.common.sensors.SensorCard;
 
 public class SensorPack {
@@ -8,7 +9,7 @@ public class SensorPack {
 	{
 		if (ic2.api.Items.getItem("copperCableItem") != null)
 		{
-			SensorCard.registerInterface(new IC2SensorInterface());
+			SensorInterfaceManager.registerInterface(new IC2SensorInterface());
 		}
 	}
 }

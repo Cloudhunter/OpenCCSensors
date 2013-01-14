@@ -2,6 +2,7 @@ package openccsensors.common.sensors;
 
 import java.util.HashMap;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import openccsensors.common.helper.SensorHelper;
@@ -41,4 +42,10 @@ public class TileSensorTarget {
 		return retMap;
 	}
 	
+	protected NBTTagCompound getTagCompound(TileEntity tile)
+	{
+		NBTTagCompound tagCompound = new NBTTagCompound();
+		tile.writeToNBT(tagCompound);
+		return tagCompound;
+	}
 }

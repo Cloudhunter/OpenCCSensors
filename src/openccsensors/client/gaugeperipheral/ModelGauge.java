@@ -11,7 +11,7 @@ public class ModelGauge extends ModelBase
     public ModelRenderer box = (new ModelRenderer(this, 0, 0)).setTextureSize(64, 32);
 	public ModelGauge()
 	{
-        this.box.addBox(-12.0F, -14.0F, -1.0F, 24, 12, 2, 0.0F);
+        this.box.addBox(-7.0F, -7.0F, -8.0F, 14, 14, 1, 0.0F);
 	}
 	
 	public void renderGauge()

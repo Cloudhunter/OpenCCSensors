@@ -47,6 +47,12 @@ public class BuildCraftSensorInterface implements ISensorInterface {
 				retriever.getCube(world, x, y, z), world);
 
 	}
+	
+	@Override
+	public ISensorTarget getRelevantTargetForGauge(World world, int x, int y,
+			int z) {
+		return null;
+	}
 
 	@Override
 	public int getId() {
@@ -87,5 +93,6 @@ public class BuildCraftSensorInterface implements ISensorInterface {
 	@Override
 	public boolean isDirectionalEnabled() {
 		return false;
-	}	
+	}
+
 }

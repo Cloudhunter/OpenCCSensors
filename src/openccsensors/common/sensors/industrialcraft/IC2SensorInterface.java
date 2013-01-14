@@ -24,7 +24,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class IC2SensorInterface implements ISensorInterface {
 
-	public final static int MASSFAB_MAX_ENERGY = 1100000;
 	
 	private TileEntityRetriever retriever = new TileEntityRetriever();
 
@@ -100,6 +99,21 @@ public class IC2SensorInterface implements ISensorInterface {
 	}
 
 	@Override
+	public Map getTargetDetails(ISensorAccess sensor, World world, int x, int y, int z, String target)
+			throws Exception {
+
+		return TargetHelper.getDetailedInformationForTarget(target,
+				retriever.getCube(world, x, y, z), world);
+
+	}
+	
+	@Override
+	public ISensorTarget getRelevantTargetForGauge(World world, int x, int y,
+			int z) {
+		return retriever.getFirstValidTargetForTile(world, x, y, z);
+	}
+
+	@Override
 	public int getId() {
 		return 18;
 	}
@@ -112,15 +126,6 @@ public class IC2SensorInterface implements ISensorInterface {
 	@Override
 	public String getName() {
 		return "openccsensors.item.ic2sensor";
-	}
-
-	@Override
-	public Map getTargetDetails(ISensorAccess sensor, World world, int x, int y, int z, String target)
-			throws Exception {
-
-		return TargetHelper.getDetailedInformationForTarget(target,
-				retriever.getCube(world, x, y, z), world);
-
 	}
 
 	@Override

@@ -41,6 +41,7 @@ public class LivingTarget implements ISensorTarget {
 		HashMap retMap = new HashMap();
 
 		retMap.put("type", rawType);
+		
 		addPositionToMap(entityLiving, retMap);
 
 		return retMap;
@@ -57,6 +58,16 @@ public class LivingTarget implements ISensorTarget {
 		}
 
 		return retMap;
+	}
+	
+	@Override
+	public boolean hasGaugePercentage() {
+		return false;
+	}
+
+	@Override
+	public double getGaugePercentage(World world) {
+		return 0;
 	}
 
 }
