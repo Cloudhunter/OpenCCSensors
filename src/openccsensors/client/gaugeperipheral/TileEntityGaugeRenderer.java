@@ -13,7 +13,7 @@ public class TileEntityGaugeRenderer extends TileEntitySpecialRenderer {
 	public void render(TileEntityGauge tile, double x, double y, double z,
 			float partialTick) {
 
-        int var16 = tile.getBlockMetadata();
+        int var16 = tile.getFacing();
         
         GL11.glPushMatrix();
         float var12;

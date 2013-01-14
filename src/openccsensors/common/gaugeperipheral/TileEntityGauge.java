@@ -55,16 +55,6 @@ public class TileEntityGauge extends TileEntity {
     	this.percentage = 0;
     }
     
-    @Override
-    public int getBlockMetadata()
-    {
-        if (this.blockMetadata == -1)
-        {
-            return 4;
-        }
-
-        return this.blockMetadata;
-    }
     
     @Override 
     public Packet getDescriptionPacket()
