@@ -16,7 +16,6 @@ public class TileEntityGaugeRenderer extends TileEntitySpecialRenderer {
         int var16 = tile.getBlockMetadata();
         
         GL11.glPushMatrix();
-        float var10 = 0.6666667F;
         float var12;
         var12 = 0.0F;
 
@@ -35,32 +34,29 @@ public class TileEntityGaugeRenderer extends TileEntitySpecialRenderer {
             var12 = -90.0F;
         }
 
-        GL11.glTranslatef((float)x + 0.5F, (float)y + 0.75F * var10, (float)z + 0.5F);
+		GL11.glTranslatef((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.5F);
         GL11.glRotatef(-var12, 0.0F, 1.0F, 0.0F);
-        GL11.glTranslatef(0.0F, -0.3125F, -0.4375F);
-
-        this.bindTextureByName("/item/sign.png");
+        this.bindTextureByName("/openccsensors/resources/images/gauge.png");
         GL11.glPushMatrix();
-        GL11.glScalef(var10, -var10, -var10);
         this.modelGauge.renderGauge();
         GL11.glPopMatrix();
+        
         FontRenderer fontRenderer = this.getFontRenderer();
-        var12 = 0.016666668F * var10;
-        GL11.glTranslatef(0.0F, 0.5F * var10, 0.07F * var10);
-        GL11.glScalef(var12, -var12, var12);
+        GL11.glScalef(0.03F, 0.03F, 0.03F);
+        GL11.glTranslatef(0.0F, -5.0F, -5.0F);
         GL11.glNormal3f(0.0F, 0.0F, -1.0F * var12);
+        GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
         GL11.glDepthMask(false);
         byte var13 = 0;
 
         if (fontRenderer != null){
         	String stringPercentage = String.format("%.2g", tile.getPercentage());
-        	OCSLog.info("Double = " + tile.getPercentage() + "");
-        	OCSLog.info("String = " + stringPercentage);
         	fontRenderer.drawString(stringPercentage, -fontRenderer.getStringWidth(stringPercentage) / 2, 5, 0);
         }
         
         GL11.glDepthMask(true);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        
         GL11.glPopMatrix();
 	}
 
