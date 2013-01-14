@@ -59,5 +59,15 @@ public class LivingTarget implements ISensorTarget {
 
 		return retMap;
 	}
+	
+	@Override
+	public boolean hasGaugePercentage() {
+		return false;
+	}
+
+	@Override
+	public double getGaugePercentage(World world) {
+		return 0;
+	}
 
 }
