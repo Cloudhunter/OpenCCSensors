@@ -156,13 +156,10 @@ public class BlockGauge extends BlockContainer {
      */
     public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
     {
-        this.updateLadderBounds(par1IBlockAccess.getBlockMetadata(par2, par3, par4));
+        this.updateGaugeBounds(par1IBlockAccess.getBlockMetadata(par2, par3, par4));
     }
 
-    /**
-     * Update the ladder block bounds based on the given metadata value.
-     */
-    public void updateLadderBounds(int par1)
+    public void updateGaugeBounds(int par1)
     {
         float var3 = 0.125F;
 

@@ -63,5 +63,15 @@ public class LiquidTankTarget extends TileSensorTarget implements ISensorTarget{
 
 		return retMap;
 	}
+	
+	@Override
+	public boolean hasGaugePercentage() {
+		return false;
+	}
+
+	@Override
+	public double getGaugePercentage(World world) {
+		return 0;
+	}
 
 }

@@ -30,6 +30,16 @@ public class DevTileTarget extends TileSensorTarget implements ISensorTarget {
 		
 		return map;
 	}
+	
+	@Override
+	public boolean hasGaugePercentage() {
+		return false;
+	}
+
+	@Override
+	public double getGaugePercentage(World world) {
+		return 0;
+	}
 
 
 }

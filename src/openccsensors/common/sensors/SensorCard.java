@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import openccsensors.common.SensorInterfaceManager;
 import openccsensors.common.api.ISensorCard;
 import openccsensors.common.api.ISensorInterface;
 import cpw.mods.fml.relauncher.Side;
@@ -15,20 +16,13 @@ import dan200.computer.api.ComputerCraftAPI;
 
 public class SensorCard extends Item implements ISensorCard
 {
-	private static HashMap<Integer, ISensorInterface> interfaces = new HashMap<Integer, ISensorInterface>();
-	
-	public static void registerInterface(ISensorInterface iface)
-	{
-		interfaces.put(iface.getId(), iface);
-	}
-
 	public SensorCard(int par1) {
 		super(par1);
 		setTextureFile("/openccsensors/resources/images/terrain.png");
 		setHasSubtypes(true);
         this.setMaxDamage(0);
 		setCreativeTab(ComputerCraftAPI.getCreativeTab());
-		for (Entry<Integer, ISensorInterface> entry : interfaces.entrySet())
+		for (Entry<Integer, ISensorInterface> entry : SensorInterfaceManager.Interfaces.entrySet())
 		{
 			entry.getValue().initRecipes(this);
 		}
@@ -44,7 +38,7 @@ public class SensorCard extends Item implements ISensorCard
 	public String getItemNameIS(ItemStack itemstack)
 	{
 		int dmgValue = itemstack.getItemDamage();
-		ISensorInterface iface = interfaces.get(dmgValue);
+		ISensorInterface iface = SensorInterfaceManager.Interfaces.get(dmgValue);
 		if (iface != null)
 		{
 			return iface.getName();
@@ -56,14 +50,14 @@ public class SensorCard extends Item implements ISensorCard
 	@Override
 	public ISensorInterface getSensorInterface(ItemStack itemstack, boolean turtle) 
 	{
-		return interfaces.get(itemstack.getItemDamage());
+		return SensorInterfaceManager.Interfaces.get(itemstack.getItemDamage());
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(int par1, CreativeTabs tab, List subItems)
 	{
-		for (Entry<Integer, ISensorInterface> entry : interfaces.entrySet())
+		for (Entry<Integer, ISensorInterface> entry : SensorInterfaceManager.Interfaces.entrySet())
 		{
 	    	subItems.add(new ItemStack(par1, 1, entry.getKey()));
 		}

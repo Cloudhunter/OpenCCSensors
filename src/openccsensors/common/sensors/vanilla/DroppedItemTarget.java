@@ -50,4 +50,14 @@ public class DroppedItemTarget implements ISensorTarget {
 		retMap.put("StackSize", Integer.toString(entity.func_92014_d().stackSize));
 		return retMap;
 	}
+	
+	@Override
+	public boolean hasGaugePercentage() {
+		return false;
+	}
+
+	@Override
+	public double getGaugePercentage(World world) {
+		return 0;
+	}
 }

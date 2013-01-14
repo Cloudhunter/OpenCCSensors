@@ -32,7 +32,7 @@ public class EntityHelper {
 					for (Entity entity : subchunk)
 					{
 						Entity entityLiving = (Entity)entity;
-						Vec3 livingPos = Vec3.createVectorHelper(entityLiving.posX, entityLiving.posY, entityLiving.posZ);
+						Vec3 livingPos = Vec3.createVectorHelper(entityLiving.posX + 0.5, entityLiving.posY + 0.5, entityLiving.posZ + 0.5);
 						if (sensorPos.distanceTo(livingPos) <= radius)
 						{
 							// Only append the id when it's not a player. EntityPlayer already appends the id: 

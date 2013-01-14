@@ -27,4 +27,13 @@ public class InventoryTarget extends TileSensorTarget implements ISensorTarget {
 
 	}
 
+	@Override
+	public boolean hasGaugePercentage() {
+		return false;
+	}
+
+	@Override
+	public double getGaugePercentage(World world) {
+		return 0;
+	}
 }

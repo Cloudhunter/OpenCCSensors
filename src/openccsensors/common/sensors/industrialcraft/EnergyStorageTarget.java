@@ -31,5 +31,20 @@ public class EnergyStorageTarget extends TileSensorTarget implements
 		return retMap;
 
 	}
+	
+	@Override
+	public boolean hasGaugePercentage() {
+		return true;
+	}
+
+	@Override
+	public double getGaugePercentage(World world) {
+
+		IEnergyStorage storage = (IEnergyStorage) world.getBlockTileEntity(
+				xCoord, yCoord, zCoord);
+		
+		return (100.0 / storage.getCapacity()) * storage.getStored();
+		
+	}
 
 }

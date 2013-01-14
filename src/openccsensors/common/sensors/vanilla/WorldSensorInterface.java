@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorInterface;
+import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.sensors.SensorCard;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -61,6 +62,12 @@ public class WorldSensorInterface implements ISensorInterface {
 		retMap.put("Daytime", world.isDaytime());
 		
 		return retMap;
+	}
+	
+	@Override
+	public ISensorTarget getRelevantTargetForGauge(World world, int x, int y,
+			int z) {
+		return null;
 	}
 
 	@Override
