@@ -219,8 +219,8 @@ public class CommonProxy
 
 		// register interfaces for the proximity card
 		Items.sensorCard = new ItemSensorCard(Config.sensorCardID);
-		Items.sensorCard.registerInterface(new SensorCardInterface(16, "openccsensors.item.proximitysensor", new SensorUpgrade(), ProximitySensor.class));
-		Items.sensorCard.registerInterface(new SensorCardInterface(32, "test", new SensorUpgrade(), ProximitySensor.class));
+		Items.sensorCard.registerInterface(new SensorCardInterface(17, "openccsensors.item.proximitysensor", new SensorUpgrade(), ProximitySensor.class));
+		Items.sensorCard.registerInterface(new SensorCardInterface(33, "test", new SensorUpgrade(), ProximitySensor.class));
 		
 		Items.sensorUpgrade = new ItemSensorUpgrade(Config.sensorUpgradeID);
 		

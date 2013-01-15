@@ -48,7 +48,7 @@ public class EntityHelper {
 		return map;
 	}
 
-	public static Map livingToMap( EntityLiving living )
+	public static HashMap livingToMap( EntityLiving living )
 	{
 		HashMap map = new HashMap();
 		

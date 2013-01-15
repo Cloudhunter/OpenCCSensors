@@ -31,132 +31,127 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 	private ISensorEnvironment env;
 
 	private boolean isTurtle;
-	
+
 	private CallbackEventManager eventManager = new CallbackEventManager();
-	
+
 	public PeripheralSensor(ISensorEnvironment _env, boolean _turtle) {
-		
+
 		env = _env;
 		isTurtle = _turtle;
-		
+
 		/**
 		 * These are the methods exposed to LUA
 		 */
 		eventManager.registerCallback(new IMethodCallback() {
 			@Override
-			public String getMethodName()
-			{
+			public String getMethodName() {
 				return "getTargets";
 			}
 
 			@Override
-			public Object execute(IComputerAccess computer, Object[] arguments) throws Exception {
-				
+			public Object execute(IComputerAccess computer, Object[] arguments)
+					throws Exception {
+
 				SensorCardInterface sensorInterface = getSensorCardInterface();
-				if (sensorInterface != null)
-				{
+				if (sensorInterface != null) {
 					Vec3 vec = env.getLocation();
 
 					ISensor sensor = sensorInterface.getSensor();
-					
+
 					if (sensor != null) {
-					
-						HashMap<String, ArrayList<ISensorTarget>> targets = sensor.getSurroundingTargets(
-								env.getWorld(),
-								(int) vec.xCoord,
-								(int) vec.yCoord,
-								(int) vec.zCoord,
-								sensorInterface.getSensorUpgrade()
-						);
-						
-						return TargetHelper.mergeSensorTargets(targets, env.getWorld());
-					
+
+						HashMap<String, ArrayList<ISensorTarget>> targets = sensor
+								.getSurroundingTargets(env.getWorld(),
+										(int) vec.xCoord, (int) vec.yCoord,
+										(int) vec.zCoord,
+										sensorInterface.getSensorUpgrade());
+
+						return TargetHelper.mergeSensorTargets(targets,
+								env.getWorld());
+
 					}
-					
-					throw new Exception("There was a problem with your sensor card. Please report details on the OpenCCSensors bug tracker");
+
+					throw new Exception(
+							"There was a problem with your sensor card. Please report details on the OpenCCSensors bug tracker");
 				}
 				throw new Exception("Could not find a valid sensor card");
 			}
-			
+
 		});
-		
+
 		eventManager.registerCallback(new IMethodCallback() {
-			
+
 			@Override
-			public String getMethodName()
-			{
+			public String getMethodName() {
 				return "getTargetDetails";
 			}
 
 			@Override
-			public Object execute(IComputerAccess computer, Object[] arguments) throws Exception {
-				
-				if (arguments.length != 1 || !(arguments[0] instanceof String))
-				{
-					throw new Exception("getTargetDetails takes just one argument, which should be the name of the target you're trying to retrieve");
+			public Object execute(IComputerAccess computer, Object[] arguments)
+					throws Exception {
+
+				if (arguments.length != 1 || !(arguments[0] instanceof String)) {
+					throw new Exception(
+							"getTargetDetails takes just one argument, which should be the name of the target you're trying to retrieve");
 				}
-				
-				String targetName = (String)arguments[0];
-				
+
+				String targetName = (String) arguments[0];
+
 				SensorCardInterface sensorInterface = getSensorCardInterface();
-				if (sensorInterface != null)
-				{
+				if (sensorInterface != null) {
 					Vec3 vec = env.getLocation();
 
 					ISensor sensor = sensorInterface.getSensor();
-					
+
 					if (sensor != null) {
-					
-						HashMap<String, ArrayList<ISensorTarget>> targets = sensor.getSurroundingTargets(
-								env.getWorld(),
-								(int) vec.xCoord,
-								(int) vec.yCoord,
-								(int) vec.zCoord,
-								sensorInterface.getSensorUpgrade()
-						);
-						
+
+						HashMap<String, ArrayList<ISensorTarget>> targets = sensor
+								.getSurroundingTargets(env.getWorld(),
+										(int) vec.xCoord, (int) vec.yCoord,
+										(int) vec.zCoord,
+										sensorInterface.getSensorUpgrade());
+
 						if (!targets.containsKey(targetName)) {
-							throw new Exception("Please specify a valid target name");
+							throw new Exception(
+									"Please specify a valid target name");
 						}
-						
-						return TargetHelper.mergeTargetDetails(targets.get(targetName), env.getWorld());
-					
+
+						return TargetHelper.mergeTargetDetails(
+								targets.get(targetName), env.getWorld());
+
 					}
-					
+
 					throw new UnknownSensorCardException();
 				}
-				
+
 				throw new CardNotFoundException(isTurtle);
 			}
-			
+
 		});
-		
 
 		eventManager.registerCallback(new IMethodCallback() {
-			
+
 			@Override
-			public String getMethodName()
-			{
+			public String getMethodName() {
 				return "getSensorName";
 			}
 
 			@Override
-			public Object execute(IComputerAccess computer, Object[] arguments) throws Exception {
-				
-				if (arguments.length > 0)
-				{
-					throw new Exception("getSensorName does not take any arguments");
+			public Object execute(IComputerAccess computer, Object[] arguments)
+					throws Exception {
+
+				if (arguments.length > 0) {
+					throw new Exception(
+							"getSensorName does not take any arguments");
 				}
 
-				
 				SensorCardInterface sensorInterface = getSensorCardInterface();
-				
-				if (sensorInterface != null)
-				{
+
+				if (sensorInterface != null) {
 
 					return sensorInterface.getName();
 				}
-				
+
 				throw new CardNotFoundException(isTurtle);
 			}
 
@@ -172,11 +167,10 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 	@Override
 	public Object[] callMethod(IComputerAccess computer, int method,
 			Object[] arguments) throws Exception {
-		
-		return new Object[] { 
-				//. returns queue id
-				eventManager.queueMethodCall(computer, method, arguments)
-		};
+
+		return new Object[] {
+		// . returns queue id
+		eventManager.queueMethodCall(computer, method, arguments) };
 	}
 
 	@Override
@@ -193,7 +187,6 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 	public String[] getMethodNames() {
 		return eventManager.getMethodNames();
 	}
-
 
 	@Override
 	public ISensorEnvironment getSensorEnvironment() {
@@ -214,7 +207,6 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 	public void readFromNBT(NBTTagCompound paramNBTTagCompound) {
 	}
 
-
 	@Override
 	public void writeToNBT(NBTTagCompound paramNBTTagCompound) {
 	}
@@ -229,28 +221,28 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 
 	/**
 	 * Get the sensor card interface for the current card
+	 * 
 	 * @return
 	 */
-	public SensorCardInterface getSensorCardInterface()
-	{
-		if (env != null)
-		{
-			
+	public SensorCardInterface getSensorCardInterface() {
+		if (env != null) {
+
 			/*
-			 * Get the stack (on turtles this'll be slot 16, on blocks
-			 * it'll be the only slot
+			 * Get the stack (on turtles this'll be slot 16, on blocks it'll be
+			 * the only slot
 			 */
 			ItemStack stack = env.getSensorCardStack();
-			
-			if (stack == null) return null;
-			
+
+			if (stack == null)
+				return null;
+
 			Item card = stack.getItem();
-			
+
 			/* If there's a card there and it's a sensor card.. */
-			if (card != null && card instanceof ItemSensorCard)
-			{
+			if (card != null && card instanceof ItemSensorCard) {
 				/* Get the interface for the current damage value */
-				return ((ItemSensorCard)card).getInterfaceForDamageValue(stack.getItemDamage());
+				return ((ItemSensorCard) card).getInterfaceForDamageValue(stack
+						.getItemDamage());
 			}
 		}
 		return null;

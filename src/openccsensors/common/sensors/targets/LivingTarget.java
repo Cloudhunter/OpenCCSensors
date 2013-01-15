@@ -2,6 +2,8 @@ package openccsensors.common.sensors.targets;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.Vec3;
@@ -9,37 +11,22 @@ import net.minecraft.world.World;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.helper.EntityHelper;
 
-public class LivingTarget implements ISensorTarget {
+public class LivingTarget extends EntityTarget implements ISensorTarget {
 
-	private boolean isValid = false;
-	private int id;
-	private Vec3 relativePos;
-	protected String rawType;
 
 	public LivingTarget(Object obj, double relativeX, double relativeY, double relativeZ) {
+		super((Entity)obj, relativeX, relativeY, relativeZ);
 
-		isValid = obj instanceof EntityLiving;
-		
-		if (isValid) {
-			EntityLiving living = (EntityLiving) obj;
-			id = living.entityId;
-			relativePos = Vec3.createVectorHelper(relativeX, relativeY, relativeZ);
-			rawType = (living instanceof EntityPlayer) ? "Player" : living
-					.getEntityName();
-		}
-	}
-
-	@Override
-	public HashMap getBasicDetails(World world) {
-
-		return new HashMap();
+		rawType = (obj instanceof EntityPlayer) ? "Player" : ((Entity)obj)
+				.getEntityName();
 	}
 
 	@Override
 	public HashMap getExtendedDetails(World world) {
+		
+		EntityLiving entityLiving = (EntityLiving) world.getEntityByID(id);
 
-		HashMap retMap = new HashMap();
-
+		HashMap retMap = EntityHelper.livingToMap(entityLiving);
 		retMap.putAll(getBasicDetails(world));
 
 		return retMap;
