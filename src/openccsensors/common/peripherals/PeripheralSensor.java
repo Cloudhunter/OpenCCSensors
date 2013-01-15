@@ -11,9 +11,11 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import openccsensors.common.api.IMethodCallback;
 import openccsensors.common.api.ISensorAccess;
+import openccsensors.common.api.MethodCallItem;
 import openccsensors.common.api.SensorCardInterface;
 import openccsensors.common.core.CallbackEventManager;
 import openccsensors.common.core.ISensorEnvironment;
+import openccsensors.common.items.ItemSensorCard;
 import dan200.computer.api.IComputerAccess;
 import dan200.computer.api.IHostedPeripheral;
 
@@ -24,23 +26,26 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 	private boolean isTurtle;
 	
 	private CallbackEventManager eventManager = new CallbackEventManager();
-
+	
 	public PeripheralSensor(ISensorEnvironment _env, boolean _turtle) {
 		
 		env = _env;
 		isTurtle = _turtle;
 		
+		/**
+		 * These are the methods exposed to LUA
+		 */
 		eventManager.registerCallback(new IMethodCallback() {
 			@Override
 			public String getMethodName() {
 				return "getTargets";
 			}
-			@Override
-			public void execute(int id, IComputerAccess computer, int method,
-					Object[] arguments) {
 
-				
+			@Override
+			public Object execute(MethodCallItem item) {
+				return "Hello";
 			}
+			
 		});
 
 	}
@@ -55,6 +60,7 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 			Object[] arguments) throws Exception {
 		
 		return new Object[] { 
+				//. returns queue id
 				eventManager.queueMethodCall(computer, method, arguments)
 		};
 	}
@@ -99,12 +105,38 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 	public void writeToNBT(NBTTagCompound paramNBTTagCompound) {
 	}
 
+	/*
+	 * On every game tick we process any waiting events
+	 */
 	@Override
 	public void update() {
-		
-		eventManager.process("ocs_response", "ocs_error");
-		
+		eventManager.process();
 	}
 
+	/**
+	 * Get the sensor card interface for the current card
+	 * @return
+	 */
+	public SensorCardInterface getSensorCardInterface()
+	{
+		if (env != null)
+		{
+			
+			/*
+			 * Get the stack (on turtles this'll be slot 16, on blocks
+			 * it'll be the only slot
+			 */
+			ItemStack stack = env.getSensorCardStack();
+			Item card = stack.getItem();
+			
+			/* If there's a card there and it's a sensor card.. */
+			if (card != null && card instanceof ItemSensorCard)
+			{
+				/* Get the interface for the current damage value */
+				return ((ItemSensorCard)card).getInterfaceForDamageValue(stack.getItemDamage());
+			}
+		}
+		return null;
+	}
 
 }

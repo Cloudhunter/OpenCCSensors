@@ -28,7 +28,7 @@ implements ISensorEnvironment
 	}
 	
 	@Override
-	public ItemStack getSensorCard()
+	public ItemStack getSensorCardStack()
 	{
 		return turtle.getSlotContents(15);
 	}

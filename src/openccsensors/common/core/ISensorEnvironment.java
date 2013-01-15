@@ -8,6 +8,6 @@ public interface ISensorEnvironment
 {
 	public int getFacing();
 	public Vec3 getLocation();
-	public ItemStack getSensorCard();
+	public ItemStack getSensorCardStack();
 	public World getWorld();
 }

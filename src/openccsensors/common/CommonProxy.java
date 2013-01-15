@@ -214,9 +214,12 @@ public class CommonProxy
 			TurtleAPI.registerUpgrade(new TurtleUpgradeSensor());
 		}
 
+		// register all sensors
+		SensorManager.registerSensor(new ProximitySensor());
 
+		// register interfaces for the proximity card
 		Items.sensorCard = new ItemSensorCard(Config.sensorCardID);
-		Items.sensorCard.registerInterface(new SensorCardInterface(16, "test", new SensorUpgrade(), ProximitySensor.class));
+		Items.sensorCard.registerInterface(new SensorCardInterface(16, "openccsensors.item.proximitysensor", new SensorUpgrade(), ProximitySensor.class));
 		Items.sensorCard.registerInterface(new SensorCardInterface(32, "test", new SensorUpgrade(), ProximitySensor.class));
 		
 		Items.sensorUpgrade = new ItemSensorUpgrade(Config.sensorUpgradeID);
@@ -225,8 +228,6 @@ public class CommonProxy
 		NetworkRegistry.instance().registerGuiHandler( OpenCCSensors.instance, new GuiHandler() );
 		
 		
-		// register all sensors
-		SensorManager.registerSensor(new ProximitySensor());
 		
 		setupLanguages();
 		setupLuaFiles();

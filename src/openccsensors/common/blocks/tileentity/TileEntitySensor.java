@@ -118,7 +118,7 @@ implements ISensorEnvironment, IPeripheral, IInventory
     	return rotation;
     }
 
-	public ItemStack getSensorCard()
+	public ItemStack getSensorCardStack()
 	{
 		return getStackInSlot(0);
 	}
