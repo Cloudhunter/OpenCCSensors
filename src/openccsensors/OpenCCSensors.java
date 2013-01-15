@@ -4,11 +4,11 @@ import net.minecraft.item.Item;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.Property;
 import openccsensors.common.CommonProxy;
+import openccsensors.common.blocks.BlockGauge;
+import openccsensors.common.blocks.BlockSensor;
 import openccsensors.common.core.OCSLog;
-import openccsensors.common.gaugeperipheral.BlockGauge;
+import openccsensors.common.items.ItemSensorCard;
 import openccsensors.common.items.ItemSensorUpgrade;
-import openccsensors.common.sensorperipheral.BlockSensor;
-import openccsensors.common.sensors.SensorCard;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Instance;
@@ -21,14 +21,12 @@ import cpw.mods.fml.common.network.NetworkMod;
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class OpenCCSensors 
 {
-	// blocks class to keep all the blocks in
 	public static class Blocks
 	{
 		public static BlockSensor sensorBlock;
 		public static BlockGauge gaugeBlock;
 	}
 	
-	// config class to keep all the config data in
 	public static class Config
 	{
 		public static int sensorBlockID;
@@ -39,49 +37,27 @@ public class OpenCCSensors
 		public static boolean turtlePeripheralEnabled;
 	}
 	
+	public static class Items
+	{
+		public static ItemSensorUpgrade sensorUpgrade;
+		public static ItemSensorCard sensorCard;
+	}
+	
 	@Instance( value = "OCS" )
 	public static OpenCCSensors instance;
 	
 	@SidedProxy( clientSide = "openccsensors.client.ClientProxy", serverSide = "openccsensors.common.CommonProxy" )
 	public static CommonProxy proxy;
 
-	public static Item sensorCard;
-	public static Item sensorUpgrade;
-	
-	private static void loadSensorPack(String sensor)
-	{
-		try
-		{
-			Class c = OpenCCSensors.class.getClassLoader().loadClass("openccsensors.common.sensors." + sensor + ".SensorPack");
-			c.getMethod("init", new Class[0]).invoke(null, new Object[0]);
-		}
-		catch (Throwable throwable)
-		{
-			OCSLog.info(sensor + " sensor not loaded");
-			return;
-		}
-		OCSLog.info(sensor + " sensor loaded");
-	}
 
 	@Mod.Init
 	public void init( FMLInitializationEvent evt )
 	{
-		// init logger
 		OCSLog.init();
 		
-		// we are starting!
 		OCSLog.info( "OpenCCSensors version %s starting", FMLCommonHandler.instance().findContainerFor(instance).getVersion() );
 		
-		// init our proxy
 		proxy.init();
-		
-		loadSensorPack("buildcraft");
-		loadSensorPack("vanilla");
-		loadSensorPack("industrialcraft");
-		loadSensorPack("thaumcraft");
-
-		sensorCard = new SensorCard(Config.sensorCardID);
-		sensorUpgrade = new ItemSensorUpgrade(Config.sensorUpgradeID);
 		
 		proxy.registerRenderInformation();
 	}

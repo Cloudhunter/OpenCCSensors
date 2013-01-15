@@ -3,8 +3,8 @@ package openccsensors.client.sensorperipheral;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.StatCollector;
-import openccsensors.common.sensorperipheral.ContainerSensor;
-import openccsensors.common.sensorperipheral.TileEntitySensor;
+import openccsensors.common.blocks.tileentity.TileEntitySensor;
+import openccsensors.common.peripherals.ContainerSensor;
 
 import org.lwjgl.opengl.GL11;
 

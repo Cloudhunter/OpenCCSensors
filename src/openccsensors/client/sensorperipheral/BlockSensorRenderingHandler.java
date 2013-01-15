@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.world.IBlockAccess;
 import openccsensors.OpenCCSensors;
-import openccsensors.common.sensorperipheral.TileEntitySensor;
+import openccsensors.common.blocks.tileentity.TileEntitySensor;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;

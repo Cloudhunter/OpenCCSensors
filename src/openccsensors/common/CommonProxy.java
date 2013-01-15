@@ -23,25 +23,35 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import openccsensors.OpenCCSensors;
+import openccsensors.OpenCCSensors.Config;
+import openccsensors.OpenCCSensors.Items;
+import openccsensors.common.api.ISensor;
+import openccsensors.common.api.SensorCardInterface;
+import openccsensors.common.api.SensorManager;
+import openccsensors.common.api.SensorUpgrade;
+import openccsensors.common.blocks.BlockGauge;
+import openccsensors.common.blocks.BlockSensor;
+import openccsensors.common.blocks.tileentity.TileEntityGauge;
+import openccsensors.common.blocks.tileentity.TileEntitySensor;
 import openccsensors.common.core.OCSLog;
-import openccsensors.common.gaugeperipheral.BlockGauge;
-import openccsensors.common.gaugeperipheral.TileEntityGauge;
-import openccsensors.common.sensorperipheral.BlockSensor;
-import openccsensors.common.sensorperipheral.ContainerSensor;
-import openccsensors.common.sensorperipheral.TileEntitySensor;
-import openccsensors.common.sensorperipheral.TurtleUpgradeSensor;
+import openccsensors.common.items.ItemSensorCard;
+import openccsensors.common.items.ItemSensorUpgrade;
+import openccsensors.common.peripherals.ContainerSensor;
+import openccsensors.common.sensors.ProximitySensor;
+import openccsensors.common.turtles.TurtleUpgradeSensor;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import dan200.turtle.api.TurtleAPI;
 
 public class CommonProxy
 {
-
+	
 	private class GuiHandler implements IGuiHandler
 	{
-
+	
 		@Override
 		public Object getClientGuiElement(int ID, EntityPlayer player, World world,	int x, int y, int z)
 		{
@@ -54,7 +64,7 @@ public class CommonProxy
 			
 			return null;
 		}
-
+	
 		@Override
 		public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
 		{
@@ -69,7 +79,7 @@ public class CommonProxy
 		}
 		
 	}
-	
+		
 	private static final void copy( File source, File destination ) throws IOException {
 		if( source.isDirectory() ) {
 			copyDirectory( source, destination );
@@ -185,7 +195,6 @@ public class CommonProxy
 		OpenCCSensors.Blocks.sensorBlock = new BlockSensor( OpenCCSensors.Config.sensorBlockID, Material.cloth );
 		GameRegistry.registerBlock(OpenCCSensors.Blocks.sensorBlock, "OCS");
 		GameRegistry.registerTileEntity(TileEntitySensor.class, "sensor");
-		OpenCCSensors.Blocks.sensorBlock.setHardness(0.5F);
 		GameRegistry.addRecipe(
 				new ItemStack(OpenCCSensors.Blocks.sensorBlock, 1, 0),
 				"ooo",
@@ -198,20 +207,28 @@ public class CommonProxy
 		OpenCCSensors.Blocks.gaugeBlock = new BlockGauge( OpenCCSensors.Config.gaugeBlockID, Material.cloth );
 		GameRegistry.registerBlock(OpenCCSensors.Blocks.gaugeBlock, "OCS.gauge");
 		GameRegistry.registerTileEntity(TileEntityGauge.class, "gauge");
-		OpenCCSensors.Blocks.gaugeBlock.setHardness(0.5F);
 		
-		// register turtle peripheral if applicable
+		
 		if (OpenCCSensors.Config.turtlePeripheralEnabled)
 		{
-			dan200.turtle.api.TurtleAPI.registerUpgrade(new TurtleUpgradeSensor());
+			TurtleAPI.registerUpgrade(new TurtleUpgradeSensor());
 		}
+
+
+		Items.sensorCard = new ItemSensorCard(Config.sensorCardID);
+		Items.sensorCard.registerInterface(new SensorCardInterface(16, "test", new SensorUpgrade(), ProximitySensor.class));
+		Items.sensorCard.registerInterface(new SensorCardInterface(32, "test", new SensorUpgrade(), ProximitySensor.class));
+		
+		Items.sensorUpgrade = new ItemSensorUpgrade(Config.sensorUpgradeID);
 		
 		// register GUI handler
 		NetworkRegistry.instance().registerGuiHandler( OpenCCSensors.instance, new GuiHandler() );
 		
-		// setup languages
-		setupLanguages();
 		
+		// register all sensors
+		SensorManager.registerSensor(new ProximitySensor());
+		
+		setupLanguages();
 		setupLuaFiles();
 		
 	}

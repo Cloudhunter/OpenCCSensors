@@ -3,8 +3,8 @@ package openccsensors.client.gaugeperipheral;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
+import openccsensors.common.blocks.tileentity.TileEntityGauge;
 import openccsensors.common.core.OCSLog;
-import openccsensors.common.gaugeperipheral.TileEntityGauge;
 
 import org.lwjgl.opengl.GL11;
 
