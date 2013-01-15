@@ -42,8 +42,21 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 			}
 
 			@Override
-			public Object execute(MethodCallItem item) {
-				return "Hello";
+			public Object execute(IComputerAccess computer, Object[] arguments) throws Exception {
+				
+				SensorCardInterface sensorInterface = getSensorCardInterface();
+				if (sensorInterface != null)
+				{
+					Vec3 vec = env.getLocation();
+					return sensorInterface.getSensor().getSurroundingTargets(
+						env.getWorld(),
+						(int) vec.xCoord,
+						(int) vec.yCoord,
+						(int) vec.zCoord,
+						sensorInterface.getSensorUpgrade()
+					);
+				}
+				throw new Exception("Could not find a valid sensor card");
 			}
 			
 		});
@@ -127,6 +140,9 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 			 * it'll be the only slot
 			 */
 			ItemStack stack = env.getSensorCardStack();
+			
+			if (stack == null) return null;
+			
 			Item card = stack.getItem();
 			
 			/* If there's a card there and it's a sensor card.. */

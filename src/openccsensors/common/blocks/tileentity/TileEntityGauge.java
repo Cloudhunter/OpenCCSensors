@@ -2,19 +2,40 @@ package openccsensors.common.blocks.tileentity;
 
 import java.util.Map.Entry;
 
+import dan200.computer.api.IComputerAccess;
+import dan200.computer.api.IPeripheral;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
+import openccsensors.common.api.IMethodCallback;
 import openccsensors.common.api.ISensorTarget;
+import openccsensors.common.api.MethodCallItem;
+import openccsensors.common.core.CallbackEventManager;
 
-public class TileEntityGauge extends TileEntity {
+public class TileEntityGauge extends TileEntity implements IPeripheral {
 	
     private int percentage = 0;
+
+	private CallbackEventManager eventManager = new CallbackEventManager();
     
     public TileEntityGauge()
     {
+    	eventManager.registerCallback(new IMethodCallback() {
+
+			@Override
+			public String getMethodName() {
+				return "getPercentage";
+			}
+
+			@Override
+			public Object execute(IComputerAccess computer, Object[] arguments) throws Exception {
+				return percentage;
+			}
+    		
+    	});
     }
     
     private void updatePercentage()
@@ -87,13 +108,50 @@ public class TileEntityGauge extends TileEntity {
     @Override
     public void updateEntity()
     {
+    	super.updateEntity();
+    	
     	if (!this.getWorldObj().isRemote)
     	{
         	updatePercentage();
     	}
-        super.updateEntity();
+    	
+    	eventManager.process();
+    	
     	this.getWorldObj().markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
+        
     }
+
+	@Override
+	public String getType() {
+		return "gauge";
+	}
+
+	@Override
+	public String[] getMethodNames() {
+		return eventManager.getMethodNames();
+	}
+	
+	@Override
+	public Object[] callMethod(IComputerAccess computer, int method,
+			Object[] arguments) throws Exception {
+		
+		return new Object[] { 
+				eventManager.queueMethodCall(computer, method, arguments)
+		};
+	}
+
+	@Override
+	public boolean canAttachToSide(int paramInt) {
+		return true;
+	}
+
+	@Override
+	public void attach(IComputerAccess paramIComputerAccess) {
+	}
+
+	@Override
+	public void detach(IComputerAccess paramIComputerAccess) {
+	}
 
     
     

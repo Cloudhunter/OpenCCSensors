@@ -68,14 +68,14 @@ public class CallbackEventManager {
 				
 				Object[] response = new Object[] {
 						item.getCallId(),
-						callback.execute(item)
+						callback.execute(item.getComputer(), item.getArguments())
 				};
 				
-				item.getComputer().queueEvent("ocs_response", response);
+				item.getComputer().queueEvent("ocs_success", response);
 				
 			} catch (Exception e) {
 				
-				item.getComputer().queueEvent("ocs_error", new Object[] { e.getMessage() });
+				item.getComputer().queueEvent("ocs_error", new Object[] { item.getCallId(), e.getMessage() });
 			
 			}
 			
