@@ -6,6 +6,7 @@ import net.minecraftforge.common.Property;
 import openccsensors.common.CommonProxy;
 import openccsensors.common.core.OCSLog;
 import openccsensors.common.gaugeperipheral.BlockGauge;
+import openccsensors.common.items.ItemSensorUpgrade;
 import openccsensors.common.sensorperipheral.BlockSensor;
 import openccsensors.common.sensors.SensorCard;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -34,6 +35,7 @@ public class OpenCCSensors
 		public static int gaugeBlockID;
 		public static int sensorBlockRenderID;
 		public static int sensorCardID;
+		public static int sensorUpgradeID;
 		public static boolean turtlePeripheralEnabled;
 	}
 	
@@ -44,6 +46,7 @@ public class OpenCCSensors
 	public static CommonProxy proxy;
 
 	public static Item sensorCard;
+	public static Item sensorUpgrade;
 	
 	private static void loadSensorPack(String sensor)
 	{
@@ -78,6 +81,7 @@ public class OpenCCSensors
 		loadSensorPack("thaumcraft");
 
 		sensorCard = new SensorCard(Config.sensorCardID);
+		sensorUpgrade = new ItemSensorUpgrade(Config.sensorUpgradeID);
 		
 		proxy.registerRenderInformation();
 	}
@@ -106,6 +110,10 @@ public class OpenCCSensors
 		prop = configFile.getItem("sensorCardID", 7486);
 		prop.comment = "The block ID for the sensor card";
 		Config.sensorCardID = prop.getInt();
+		
+		prop = configFile.getItem("sensorUpgradeID", 7487);
+		prop.comment = "The block ID for the sensor upgrades";
+		Config.sensorUpgradeID = prop.getInt();
 		
 		configFile.save();
 	}

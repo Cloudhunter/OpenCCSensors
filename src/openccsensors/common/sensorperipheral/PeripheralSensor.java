@@ -14,6 +14,7 @@ import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorCard;
 import openccsensors.common.api.ISensorInterface;
 import openccsensors.common.core.ISensorEnvironment;
+import openccsensors.common.helper.SensorHelper;
 import dan200.computer.api.IComputerAccess;
 import dan200.computer.api.IHostedPeripheral;
 
@@ -86,12 +87,7 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 				"isDirectional", "setDirectional" };
 	}
 
-	private ISensorInterface getSensorCard() throws Exception {
-		ItemStack itemstack = env.getSensorCard();
-
-		if (itemstack == null) {
-			return null;
-		}
+	private ISensorInterface getSensor(ItemStack itemstack) throws Exception {
 
 		Item item = itemstack.getItem();
 		if (item instanceof ISensorCard) {
@@ -136,8 +132,12 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 			sensorCard = null;
 		}
 
+		if (sensorItemStack == null) {
+			return new Object[] { item.methodCallId, null };
+		}
+		
 		if (sensorCard == null) {
-			sensorCard = getSensorCard();
+			sensorCard = getSensor(sensorItemStack);
 		}
 
 		if (sensorCard == null) {
@@ -146,13 +146,17 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 
 		Vec3 vec = env.getLocation();
 
+		int cardMark = SensorHelper.getMark(
+			sensorItemStack.getItemDamage()
+		);
+		
 		switch (method) {
 		case 0:
 			return new Object[] {
 					item.methodCallId,
 					sensorCard.getBasicTarget(this, env.getWorld(),
 							(int) vec.xCoord, (int) vec.yCoord,
-							(int) vec.zCoord) };
+							(int) vec.zCoord, cardMark) };
 		case 1:
 			if (arguments.length > 0) {
 				if (arguments[0] instanceof String) {
@@ -160,7 +164,7 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 							methodCallId,
 							sensorCard.getTargetDetails(this, env.getWorld(),
 									(int) vec.xCoord, (int) vec.yCoord,
-									(int) vec.zCoord, arguments[0].toString()) };
+									(int) vec.zCoord, cardMark, arguments[0].toString()) };
 				}
 			}
 			throw new Exception("Invalid arguments. Expected String.");
@@ -191,7 +195,7 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 					return new Object[] { item.methodCallId,
 							sensorCard.callMethod(this, env.getWorld(),
 									(int) vec.xCoord, (int) vec.yCoord,
-									(int) vec.zCoord, newMethod, newArray) };
+									(int) vec.zCoord, newMethod, newArray, cardMark) };
 				}
 			}
 			throw new Exception("Invalid arguments. Expected String.");

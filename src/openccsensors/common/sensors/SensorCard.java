@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import openccsensors.common.SensorInterfaceManager;
 import openccsensors.common.api.ISensorCard;
 import openccsensors.common.api.ISensorInterface;
+import openccsensors.common.helper.SensorHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dan200.computer.api.ComputerCraftAPI;
@@ -33,12 +34,17 @@ public class SensorCard extends Item implements ISensorCard
 	{
 	    return par1;
 	}
+	
 
 	@Override
 	public String getItemNameIS(ItemStack itemstack)
 	{
 		int dmgValue = itemstack.getItemDamage();
-		ISensorInterface iface = SensorInterfaceManager.Interfaces.get(dmgValue);
+		
+		ISensorInterface iface = SensorInterfaceManager.Interfaces.get(
+				SensorHelper.getSensorInterfaceId(itemstack.getItemDamage()
+		));
+		
 		if (iface != null)
 		{
 			return iface.getName();
@@ -50,7 +56,9 @@ public class SensorCard extends Item implements ISensorCard
 	@Override
 	public ISensorInterface getSensorInterface(ItemStack itemstack, boolean turtle) 
 	{
-		return SensorInterfaceManager.Interfaces.get(itemstack.getItemDamage());
+		return SensorInterfaceManager.Interfaces.get(
+					SensorHelper.getSensorInterfaceId(itemstack.getItemDamage()
+			));
 	}
 
 	@Override
@@ -59,9 +67,11 @@ public class SensorCard extends Item implements ISensorCard
 	{
 		for (Entry<Integer, ISensorInterface> entry : SensorInterfaceManager.Interfaces.entrySet())
 		{
-	    	subItems.add(new ItemStack(par1, 1, entry.getKey()));
+			for (int i = 0; i < 4; i++)
+			{
+				subItems.add(new ItemStack(par1, 1, entry.getKey() + (i * 16)));
+			}
 		}
 	}
-	
 
 }

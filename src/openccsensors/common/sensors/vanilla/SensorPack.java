@@ -12,6 +12,7 @@ public class SensorPack {
 		SensorInterfaceManager.registerInterface(new WorldSensorInterface());
 		SensorInterfaceManager.registerInterface(new DroppedItemSensorInterface());
 		SensorInterfaceManager.registerInterface(new SignSensorInterface());
+		SensorInterfaceManager.registerInterface(new MinecartSensorInterface());
 		SensorInterfaceManager.registerInterface(new DevSensorInterface());
 	}
 }

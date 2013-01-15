@@ -36,12 +36,12 @@ public class ProximitySensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public Map callMethod(ISensorAccess sensor, World world, int x, int y, int z, int methodID, Object[] args) throws Exception {
+	public Map callMethod(ISensorAccess sensor, World world, int x, int y, int z, int methodID, Object[] args, int cardMark) throws Exception {
 		return null;
 	}
 
 	@Override
-	public Map getBasicTarget(ISensorAccess sensor, World world, int x, int y, int z)
+	public Map getBasicTarget(ISensorAccess sensor, World world, int x, int y, int z, int cardMark)
 			throws Exception {
 		
 		return TargetHelper.getBasicInformationForTargets(
@@ -72,7 +72,7 @@ public class ProximitySensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public Map getTargetDetails(ISensorAccess sensor, World world, int x, int y, int z, String target)
+	public Map getTargetDetails(ISensorAccess sensor, World world, int x, int y, int z, int cardMark, String target)
 			throws Exception {
 
 		return TargetHelper.getDetailedInformationForTarget(target,

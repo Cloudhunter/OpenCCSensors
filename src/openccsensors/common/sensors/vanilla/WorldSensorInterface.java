@@ -18,13 +18,13 @@ public class WorldSensorInterface implements ISensorInterface {
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	@Override
-	public Map callMethod(ISensorAccess sensor, World world, int x, int y, int z, int methodID, Object[] args) throws Exception {
+	public Map callMethod(ISensorAccess sensor, World world, int x, int y, int z, int methodID, Object[] args, int cardMark) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Map getBasicTarget(ISensorAccess sensor, World world, int x, int y, int z)
+	public Map getBasicTarget(ISensorAccess sensor, World world, int x, int y, int z, int cardMark)
 			throws Exception {
 		HashMap retMap = new HashMap();
 		HashMap currentDetails = new HashMap();
@@ -50,7 +50,7 @@ public class WorldSensorInterface implements ISensorInterface {
 	}
 
 	@Override
-	public Map getTargetDetails(ISensorAccess sensor, World world, int x, int y, int z, String target)
+	public Map getTargetDetails(ISensorAccess sensor, World world, int x, int y, int z, int cardMark, String target)
 			throws Exception {
 		
 		HashMap retMap = new HashMap();

@@ -48,13 +48,13 @@ public class Thaumcraft3SensorInterface  implements ISensorInterface {
 	
 	@Override
 	public Map callMethod(ISensorAccess sensor, World world, int x, int y,
-			int z, int methodID, Object[] args) throws Exception {
+			int z, int methodID, Object[] args, int cardMark) throws Exception {
 		return null;
 	}
 
 	@Override
 	public Map getBasicTarget(ISensorAccess sensor, World world, int x, int y,
-			int z) throws Exception {
+			int z, int cardMark) throws Exception {
 		
 		return TargetHelper.getBasicInformationForTargets(
 				retriever.getCube(world, x, y, z), world);
@@ -84,7 +84,7 @@ public class Thaumcraft3SensorInterface  implements ISensorInterface {
 
 	@Override
 	public Map getTargetDetails(ISensorAccess sensor, World world, int x,
-			int y, int z, String target) throws Exception {
+			int y, int z, int cardMark, String target) throws Exception {
 
 		return TargetHelper.getDetailedInformationForTarget(target,
 				retriever.getCube(world, x, y, z), world);
