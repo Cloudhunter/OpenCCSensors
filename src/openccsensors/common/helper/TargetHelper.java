@@ -10,48 +10,31 @@ import openccsensors.common.api.ISensorTarget;
 
 public class TargetHelper {
 	
-	public static Map getBasicInformationForTargets(HashMap<String, ArrayList<ISensorTarget>> directions, World world)
+	public static HashMap mergeSensorTargets(HashMap<String, ArrayList<ISensorTarget>> targetMap, World world)
 	{
-		HashMap<String, Object> retMap = new HashMap<String, Object>();
-		
-		for (Entry<String, ArrayList<ISensorTarget>> entry : directions.entrySet())
+		HashMap<String, HashMap> results = new HashMap<String, HashMap>();
+		HashMap properties;
+		for (Entry<String, ArrayList<ISensorTarget>> entry : targetMap.entrySet())
 		{
-			ArrayList<ISensorTarget> targets = entry.getValue();
-
-			for (ISensorTarget target : targets)
+			properties = new HashMap();
+			for (ISensorTarget target : entry.getValue())
 			{
-				if (target != null)
-				{
-					Map map = (Map) retMap.get(entry.getKey());
-					if (map == null)
-					{
-						map = new HashMap();
-						retMap.put(entry.getKey(), map);
-					}
-					map.putAll(target.getBasicInformation(world));
-				}
+				properties.putAll(target.getBasicDetails(world));
 			}
+			results.put(entry.getKey(), properties);
+		}
+		return results;
+	}
+	
+	public static HashMap mergeTargetDetails(ArrayList<ISensorTarget> targets, World world) {
+		
+		HashMap details = new HashMap();
+		for (ISensorTarget target : targets)
+		{
+			details.putAll(target.getExtendedDetails(world));
 		}
 		
-		return retMap;
+		return details;
 	}
-	public static Map getDetailedInformationForTarget(String targetId, HashMap<String, ArrayList<ISensorTarget>> targets, World world) {
-
-		if (targets.containsKey(targetId))
-		{
-			ArrayList<ISensorTarget> sensorTargets = targets.get(targetId);
-			HashMap rtn = new HashMap();
-			if (sensorTargets != null)
-			{
-				for (ISensorTarget target : sensorTargets)
-				{
-					rtn.putAll(target.getBasicInformation(world));
-					rtn.putAll(target.getDetailInformation(world));
-				}
-			}
-			return rtn;
-		}
-		
-		return null;
-	}
+	
 }

@@ -1,5 +1,6 @@
 package openccsensors.common.peripherals;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,11 +11,17 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import openccsensors.common.api.IMethodCallback;
+import openccsensors.common.api.ISensor;
 import openccsensors.common.api.ISensorAccess;
+import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.MethodCallItem;
 import openccsensors.common.api.SensorCardInterface;
 import openccsensors.common.core.CallbackEventManager;
 import openccsensors.common.core.ISensorEnvironment;
+import openccsensors.common.core.OCSLog;
+import openccsensors.common.exceptions.CardNotFoundException;
+import openccsensors.common.exceptions.UnknownSensorCardException;
+import openccsensors.common.helper.TargetHelper;
 import openccsensors.common.items.ItemSensorCard;
 import dan200.computer.api.IComputerAccess;
 import dan200.computer.api.IHostedPeripheral;
@@ -37,7 +44,8 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 		 */
 		eventManager.registerCallback(new IMethodCallback() {
 			@Override
-			public String getMethodName() {
+			public String getMethodName()
+			{
 				return "getTargets";
 			}
 
@@ -48,17 +56,110 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 				if (sensorInterface != null)
 				{
 					Vec3 vec = env.getLocation();
-					return sensorInterface.getSensor().getSurroundingTargets(
-						env.getWorld(),
-						(int) vec.xCoord,
-						(int) vec.yCoord,
-						(int) vec.zCoord,
-						sensorInterface.getSensorUpgrade()
-					);
+
+					ISensor sensor = sensorInterface.getSensor();
+					
+					if (sensor != null) {
+					
+						HashMap<String, ArrayList<ISensorTarget>> targets = sensor.getSurroundingTargets(
+								env.getWorld(),
+								(int) vec.xCoord,
+								(int) vec.yCoord,
+								(int) vec.zCoord,
+								sensorInterface.getSensorUpgrade()
+						);
+						
+						return TargetHelper.mergeSensorTargets(targets, env.getWorld());
+					
+					}
+					
+					throw new Exception("There was a problem with your sensor card. Please report details on the OpenCCSensors bug tracker");
 				}
 				throw new Exception("Could not find a valid sensor card");
 			}
 			
+		});
+		
+		eventManager.registerCallback(new IMethodCallback() {
+			
+			@Override
+			public String getMethodName()
+			{
+				return "getTargetDetails";
+			}
+
+			@Override
+			public Object execute(IComputerAccess computer, Object[] arguments) throws Exception {
+				
+				if (arguments.length != 1 || !(arguments[0] instanceof String))
+				{
+					throw new Exception("getTargetDetails takes just one argument, which should be the name of the target you're trying to retrieve");
+				}
+				
+				String targetName = (String)arguments[0];
+				
+				SensorCardInterface sensorInterface = getSensorCardInterface();
+				if (sensorInterface != null)
+				{
+					Vec3 vec = env.getLocation();
+
+					ISensor sensor = sensorInterface.getSensor();
+					
+					if (sensor != null) {
+					
+						HashMap<String, ArrayList<ISensorTarget>> targets = sensor.getSurroundingTargets(
+								env.getWorld(),
+								(int) vec.xCoord,
+								(int) vec.yCoord,
+								(int) vec.zCoord,
+								sensorInterface.getSensorUpgrade()
+						);
+						
+						if (!targets.containsKey(targetName)) {
+							throw new Exception("Please specify a valid target name");
+						}
+						
+						return TargetHelper.mergeTargetDetails(targets.get(targetName), env.getWorld());
+					
+					}
+					
+					throw new UnknownSensorCardException();
+				}
+				
+				throw new CardNotFoundException(isTurtle);
+			}
+			
+		});
+		
+
+		eventManager.registerCallback(new IMethodCallback() {
+			
+			@Override
+			public String getMethodName()
+			{
+				return "getSensorName";
+			}
+
+			@Override
+			public Object execute(IComputerAccess computer, Object[] arguments) throws Exception {
+				
+				if (arguments.length > 0)
+				{
+					throw new Exception("getSensorName does not take any arguments");
+				}
+
+				
+				SensorCardInterface sensorInterface = getSensorCardInterface();
+				
+				if (sensorInterface != null)
+				{
+
+					return sensorInterface.getName();
+				}
+				
+				throw new CardNotFoundException(isTurtle);
+			}
+
 		});
 
 	}
