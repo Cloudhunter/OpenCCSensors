@@ -33,7 +33,7 @@ public class ItemSensorCard extends Item {
 	@Override
 	public String getItemNameIS(ItemStack itemstack)
 	{
-		return "Sensor Card";
+		return getInterfaceForDamageValue(itemstack.getItemDamage()).getName();
 	}
 	
 	public void registerInterface(SensorCardInterface sensorInterface)

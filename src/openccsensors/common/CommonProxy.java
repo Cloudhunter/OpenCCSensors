@@ -37,6 +37,7 @@ import openccsensors.common.core.OCSLog;
 import openccsensors.common.items.ItemSensorCard;
 import openccsensors.common.items.ItemSensorUpgrade;
 import openccsensors.common.peripherals.ContainerSensor;
+import openccsensors.common.sensors.DroppedItemSensor;
 import openccsensors.common.sensors.ProximitySensor;
 import openccsensors.common.turtles.TurtleUpgradeSensor;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -216,11 +217,13 @@ public class CommonProxy
 
 		// register all sensors
 		SensorManager.registerSensor(new ProximitySensor());
+		SensorManager.registerSensor(new DroppedItemSensor());
 
 		// register interfaces for the proximity card
 		Items.sensorCard = new ItemSensorCard(Config.sensorCardID);
 		Items.sensorCard.registerInterface(new SensorCardInterface(17, "openccsensors.item.proximitysensor", new SensorUpgrade(), ProximitySensor.class));
-		Items.sensorCard.registerInterface(new SensorCardInterface(33, "test", new SensorUpgrade(), ProximitySensor.class));
+		Items.sensorCard.registerInterface(new SensorCardInterface(33, "openccsensors.item.proximitysensor", new SensorUpgrade(), ProximitySensor.class));
+		Items.sensorCard.registerInterface(new SensorCardInterface(22, "openccsensors.item.droppeditemsensor", new SensorUpgrade(), DroppedItemSensor.class));
 		
 		Items.sensorUpgrade = new ItemSensorUpgrade(Config.sensorUpgradeID);
 		
