@@ -1,24 +1,19 @@
 package openccsensors.common.peripherals;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ConcurrentLinkedQueue;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Vec3;
-import net.minecraft.world.World;
 import openccsensors.common.api.IMethodCallback;
 import openccsensors.common.api.ISensor;
 import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorTarget;
-import openccsensors.common.api.MethodCallItem;
 import openccsensors.common.api.SensorCardInterface;
 import openccsensors.common.core.CallbackEventManager;
 import openccsensors.common.core.ISensorEnvironment;
-import openccsensors.common.core.OCSLog;
 import openccsensors.common.exceptions.CardNotFoundException;
 import openccsensors.common.exceptions.UnknownSensorCardException;
 import openccsensors.common.helper.TargetHelper;

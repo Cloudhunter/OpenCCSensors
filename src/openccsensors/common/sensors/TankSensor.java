@@ -1,22 +1,22 @@
 package openccsensors.common.sensors;
 
-import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.liquids.ITankContainer;
 import openccsensors.common.api.ISensor;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITileEntityValidatorCallback;
-import openccsensors.common.sensors.targets.InventoryTarget;
+import openccsensors.common.sensors.targets.TankTarget;
 
-public class InventorySensor extends TileEntitySensor implements ISensor {
+public class TankSensor extends TileEntitySensor implements ISensor {
 
-	public InventorySensor() {
+	public TankSensor() {
 		registerCallback(new ITileEntityValidatorCallback() {
 
 			@Override
 			public ISensorTarget getTargetIfValid(TileEntity entity,
 					int relativeX, int relativeY, int relativeZ) {
-				if (entity instanceof IInventory) {
-					return new InventoryTarget(entity, relativeX, relativeY,
+				if (entity instanceof ITankContainer) {
+					return new TankTarget(entity, relativeX, relativeY,
 							relativeZ);
 				}
 				return null;

@@ -13,7 +13,8 @@ import openccsensors.common.sensors.targets.TileSensorTarget;
 
 public class ReactorTarget extends TileSensorTarget implements ISensorTarget {
 
-	public ReactorTarget(TileEntity targetEntity, int relativeX, int relativeY, int relativeZ) {
+	public ReactorTarget(TileEntity targetEntity, int relativeX, int relativeY,
+			int relativeZ) {
 		super(targetEntity, relativeX, relativeY, relativeZ);
 	}
 
@@ -32,7 +33,7 @@ public class ReactorTarget extends TileSensorTarget implements ISensorTarget {
 		return retMap;
 
 	}
-	
+
 	@Override
 	public boolean hasGaugePercentage() {
 		return false;

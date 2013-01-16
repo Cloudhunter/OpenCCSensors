@@ -1,9 +1,7 @@
 package openccsensors.common.sensors.targets;
 
 import java.util.HashMap;
-import java.util.Map;
 
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import openccsensors.common.api.ISensorTarget;
@@ -11,7 +9,8 @@ import openccsensors.common.helper.NetworkHelper;
 
 public class DevTileTarget extends TileSensorTarget implements ISensorTarget {
 
-	public DevTileTarget(TileEntity targetEntity, int relativeX, int relativeY, int relativeZ) {
+	public DevTileTarget(TileEntity targetEntity, int relativeX, int relativeY,
+			int relativeZ) {
 		super(targetEntity, relativeX, relativeY, relativeZ);
 	}
 
@@ -32,6 +31,5 @@ public class DevTileTarget extends TileSensorTarget implements ISensorTarget {
 	public int getTrackableProperty(World world, String name) {
 		return 0;
 	}
-
 
 }

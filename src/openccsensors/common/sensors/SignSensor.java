@@ -15,13 +15,13 @@ public class SignSensor extends TileEntitySensor implements ISensor {
 			@Override
 			public ISensorTarget getTargetIfValid(TileEntity entity,
 					int relativeX, int relativeY, int relativeZ) {
-				if (entity instanceof TileEntitySign)
-				{
-					return new SignPostTarget(entity, relativeX, relativeY, relativeZ);
+				if (entity instanceof TileEntitySign) {
+					return new SignPostTarget(entity, relativeX, relativeY,
+							relativeZ);
 				}
 				return null;
 			}
-			
+
 		});
 	}
 

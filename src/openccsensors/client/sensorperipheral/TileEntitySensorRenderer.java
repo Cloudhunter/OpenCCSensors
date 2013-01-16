@@ -31,8 +31,8 @@ public class TileEntitySensorRenderer extends TileEntitySpecialRenderer {
 		this.bindTextureByName("/openccsensors/resources/images/sensorblock.png");
 		GL11.glPushMatrix();
 
-		int placing = tile.getFacing()*90;
-		int rotation = (int)tile.getRotation();
+		int placing = tile.getFacing() * 90;
+		int rotation = (int) tile.getRotation();
 		this.modelSensor.renderSensor(rotation);
 
 		GL11.glPopMatrix();

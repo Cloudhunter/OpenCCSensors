@@ -13,7 +13,8 @@ import openccsensors.common.sensors.targets.TileSensorTarget;
 public class EnergyConductorTarget extends TileSensorTarget implements
 		ISensorTarget {
 
-	public EnergyConductorTarget(TileEntity targetEntity, int relativeX, int relativeY, int relativeZ) {
+	public EnergyConductorTarget(TileEntity targetEntity, int relativeX,
+			int relativeY, int relativeZ) {
 		super(targetEntity, relativeX, relativeY, relativeZ);
 	}
 
@@ -30,7 +31,7 @@ public class EnergyConductorTarget extends TileSensorTarget implements
 
 		return retMap;
 	}
-	
+
 	@Override
 	public boolean hasGaugePercentage() {
 		return false;

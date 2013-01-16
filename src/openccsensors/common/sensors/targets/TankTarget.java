@@ -13,63 +13,58 @@ import net.minecraftforge.liquids.ITankContainer;
 import net.minecraftforge.liquids.LiquidStack;
 import openccsensors.common.api.ISensorTarget;
 
-public class LiquidTankTarget extends TileSensorTarget implements ISensorTarget{
+public class TankTarget extends TileSensorTarget implements ISensorTarget {
 
-	public LiquidTankTarget(TileEntity targetEntity, int relativeX, int relativeY, int relativeZ) {
+	public TankTarget(TileEntity targetEntity, int relativeX, int relativeY,
+			int relativeZ) {
 		super(targetEntity, relativeX, relativeY, relativeZ);
+
 	}
 
 	@Override
-	public Map getDetailInformation(World world) {
-		ITankContainer tankContainer = (ITankContainer) world.getBlockTileEntity(xCoord,
-				yCoord, zCoord);
-
-		HashMap retMap = new HashMap();
+	public HashMap getExtendedDetails(World world) {
+		HashMap retMap = getBasicDetails(world);
+		ITankContainer tankContainer = (ITankContainer) world
+				.getBlockTileEntity(xCoord, yCoord, zCoord);
 		ILiquidTank[] tanks = tankContainer.getTanks(ForgeDirection.UNKNOWN);
 		LiquidStack stack;
 		ItemStack istack;
 		Item item;
 		Map tankProperties;
 		int i = 0;
-		for (ILiquidTank tank : tanks)
-		{
+		for (ILiquidTank tank : tanks) {
 			tankProperties = new HashMap();
-			tankProperties.put("Capacity",  tank.getCapacity());
-			
+			tankProperties.put("Capacity", tank.getCapacity());
+
 			stack = tank.getLiquid();
-			
-			if (stack != null)
-			{
+
+			if (stack != null) {
 				istack = stack.asItemStack();
-				if (istack != null)
-				{
-					if (istack.getItem() != null)
-					{
-						tankProperties.put("Name",  istack.getDisplayName());
-						tankProperties.put("Amount",  stack.amount);
-				
+				if (istack != null) {
+					if (istack.getItem() != null) {
+						tankProperties.put("Name", istack.getDisplayName());
+						tankProperties.put("Amount", stack.amount);
+
 					}
 				}
 			}
-			if (!tankProperties.containsKey("Amount"))
-			{
+			if (!tankProperties.containsKey("Amount")) {
 				tankProperties.put("Amount", 0);
 			}
-			
+
 			retMap.put(i, tankProperties);
 			i++;
 		}
-
 		return retMap;
 	}
-	
+
 	@Override
-	public boolean hasGaugePercentage() {
-		return false;
+	public String[] getTrackablePropertyNames(World world) {
+		return null;
 	}
 
 	@Override
-	public double getGaugePercentage(World world) {
+	public int getTrackableProperty(World world, String name) {
 		return 0;
 	}
 

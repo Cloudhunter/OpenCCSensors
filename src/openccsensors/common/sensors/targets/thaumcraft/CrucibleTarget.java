@@ -12,7 +12,8 @@ import thaumcraft.api.EnumTag;
 
 public class CrucibleTarget extends TileSensorTarget implements ISensorTarget {
 
-	public CrucibleTarget(TileEntity targetEntity, int relativeX, int relativeY, int relativeZ) {
+	public CrucibleTarget(TileEntity targetEntity, int relativeX,
+			int relativeY, int relativeZ) {
 		super(targetEntity, relativeX, relativeY, relativeZ);
 	}
 
@@ -28,32 +29,31 @@ public class CrucibleTarget extends TileSensorTarget implements ISensorTarget {
 		retMap.put("Heat", compound.getShort("Heat"));
 		retMap.put("Liquid", compound.getBoolean("Liquid"));
 		retMap.put("LiquidQty", compound.getShort("liquidQty"));
-        int[] tb = compound.getIntArray("Tags");
-        EnumTag tag;
-        int a = 1;
-        HashMap tagMap;
-        HashMap tags = new HashMap();
-        for (int i = 0; i < tb.length; i++)
-        {
-        	try {
-        		if (tb[i] > 0) 
-        		{
-        			tagMap = new HashMap();
-        			tag = EnumTag.get(i);
-        			tagMap.put("Name", tag.name);
-        			tagMap.put("Aggro", tag.aggro);
-        			tagMap.put("Amount", tb[i]);
-        			tags.put(a, tagMap);
-        			a++;
-        			
-        		}
-        	}catch (Exception e) {}
-        }
+		int[] tb = compound.getIntArray("Tags");
+		EnumTag tag;
+		int a = 1;
+		HashMap tagMap;
+		HashMap tags = new HashMap();
+		for (int i = 0; i < tb.length; i++) {
+			try {
+				if (tb[i] > 0) {
+					tagMap = new HashMap();
+					tag = EnumTag.get(i);
+					tagMap.put("Name", tag.name);
+					tagMap.put("Aggro", tag.aggro);
+					tagMap.put("Amount", tb[i]);
+					tags.put(a, tagMap);
+					a++;
+
+				}
+			} catch (Exception e) {
+			}
+		}
 		retMap.put("Aspects", tags);
-				
+
 		return retMap;
 	}
-	
+
 	@Override
 	public boolean hasGaugePercentage() {
 		return false;

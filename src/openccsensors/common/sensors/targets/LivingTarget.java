@@ -1,29 +1,27 @@
 package openccsensors.common.sensors.targets;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.helper.EntityHelper;
 
 public class LivingTarget extends EntityTarget implements ISensorTarget {
 
+	public LivingTarget(Object obj, double relativeX, double relativeY,
+			double relativeZ) {
+		super((Entity) obj, relativeX, relativeY, relativeZ);
 
-	public LivingTarget(Object obj, double relativeX, double relativeY, double relativeZ) {
-		super((Entity)obj, relativeX, relativeY, relativeZ);
-
-		rawType = (obj instanceof EntityPlayer) ? "Player" : ((Entity)obj)
+		rawType = (obj instanceof EntityPlayer) ? "Player" : ((Entity) obj)
 				.getEntityName();
 	}
 
 	@Override
 	public HashMap getExtendedDetails(World world) {
-		
+
 		EntityLiving entityLiving = (EntityLiving) world.getEntityByID(id);
 
 		HashMap retMap = EntityHelper.livingToMap(entityLiving);

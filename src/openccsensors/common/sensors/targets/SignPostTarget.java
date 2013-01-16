@@ -1,7 +1,6 @@
 package openccsensors.common.sensors.targets;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySign;
@@ -10,7 +9,8 @@ import openccsensors.common.api.ISensorTarget;
 
 public class SignPostTarget extends TileSensorTarget implements ISensorTarget {
 
-	public SignPostTarget(TileEntity targetEntity, int relativeX, int relativeY, int relativeZ) {
+	public SignPostTarget(TileEntity targetEntity, int relativeX,
+			int relativeY, int relativeZ) {
 		super(targetEntity, relativeX, relativeY, relativeZ);
 	}
 
@@ -22,16 +22,14 @@ public class SignPostTarget extends TileSensorTarget implements ISensorTarget {
 				yCoord, zCoord);
 
 		String signText = "";
-		for (int i = 0; i < sign.signText.length; i++)
-		{
+		for (int i = 0; i < sign.signText.length; i++) {
 			signText = signText + sign.signText[i];
-			if (i < 3 && sign.signText[i] != "")
-			{
+			if (i < 3 && sign.signText[i] != "") {
 				signText = signText + " ";
 			}
 		}
 		retMap.put("Text", signText.trim());
-		
+
 		return retMap;
 	}
 

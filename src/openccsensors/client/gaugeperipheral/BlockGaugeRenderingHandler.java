@@ -25,12 +25,12 @@ public class BlockGaugeRenderingHandler implements ISimpleBlockRenderingHandler 
 			RenderBlocks renderer) {
 
 		GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
-        GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-		if (block == OpenCCSensors.Blocks.gaugeBlock)
-        {
-        	TileEntityRenderer.instance.renderTileEntityAt(new TileEntityGauge(), 0.0D, 0.0D, 0.0D, 0.0F);
-        	GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-        }
+		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
+		if (block == OpenCCSensors.Blocks.gaugeBlock) {
+			TileEntityRenderer.instance.renderTileEntityAt(
+					new TileEntityGauge(), 0.0D, 0.0D, 0.0D, 0.0F);
+			GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+		}
 	}
 
 	@Override
@@ -43,7 +43,5 @@ public class BlockGaugeRenderingHandler implements ISimpleBlockRenderingHandler 
 	public boolean shouldRender3DInInventory() {
 		return true;
 	}
-
-
 
 }

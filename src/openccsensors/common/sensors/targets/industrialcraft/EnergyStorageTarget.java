@@ -13,7 +13,8 @@ import openccsensors.common.sensors.targets.TileSensorTarget;
 public class EnergyStorageTarget extends TileSensorTarget implements
 		ISensorTarget {
 
-	public EnergyStorageTarget(TileEntity targetEntity, int relativeX, int relativeY, int relativeZ) {
+	public EnergyStorageTarget(TileEntity targetEntity, int relativeX,
+			int relativeY, int relativeZ) {
 		super(targetEntity, relativeX, relativeY, relativeZ);
 	}
 
@@ -31,7 +32,7 @@ public class EnergyStorageTarget extends TileSensorTarget implements
 		return retMap;
 
 	}
-	
+
 	@Override
 	public boolean hasGaugePercentage() {
 		return true;
@@ -42,9 +43,9 @@ public class EnergyStorageTarget extends TileSensorTarget implements
 
 		IEnergyStorage storage = (IEnergyStorage) world.getBlockTileEntity(
 				xCoord, yCoord, zCoord);
-		
+
 		return (100.0 / storage.getCapacity()) * storage.getStored();
-		
+
 	}
 
 }

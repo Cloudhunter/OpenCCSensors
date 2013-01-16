@@ -3,38 +3,33 @@ package openccsensors.common.api;
 import dan200.computer.api.IComputerAccess;
 
 public class MethodCallItem {
-	
+
 	private IComputerAccess computer;
 	private int methodId;
 	private int callId;
 	private Object[] arguments;
-	
+
 	public MethodCallItem(int callId, IComputerAccess computer, int methodId,
-			Object[] arguments)
-	{
+			Object[] arguments) {
 		this.computer = computer;
 		this.methodId = methodId;
 		this.callId = callId;
 		this.arguments = arguments;
 	}
-	
-	public IComputerAccess getComputer()
-	{
+
+	public IComputerAccess getComputer() {
 		return computer;
 	}
-	
-	public Object[] getArguments()
-	{
+
+	public Object[] getArguments() {
 		return arguments;
 	}
-	
-	public int getCallId()
-	{
+
+	public int getCallId() {
 		return this.callId;
 	}
-	
-	public int getMethodId()
-	{
+
+	public int getMethodId() {
 		return methodId;
 	}
 }
