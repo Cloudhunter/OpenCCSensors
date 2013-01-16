@@ -29,6 +29,7 @@ public class InventoryHelper {
 			map.put("Name", "empty");
 			map.put("Size", 0);
 			map.put("Damagevalue", 0);
+			map.put("MaxStack", 64);
 			return map; // empty item
 		}
 		
@@ -37,11 +38,15 @@ public class InventoryHelper {
 		map.put("Name", item.getItemNameIS(itemstack));
 		map.put("Size", itemstack.stackSize);
 		map.put("DamageValue", itemstack.getItemDamage());
+		map.put("MaxStack", itemstack.getMaxStackSize());
 		
+		/*
+		 * temporarily disabled
 		if (itemstack.hasTagCompound())
 		{
 			map.put("nbt", NetworkHelper.NBTToMap(itemstack.getTagCompound()));
 		}
+		 */
 		
 		return map;
 	}

@@ -37,8 +37,11 @@ import openccsensors.common.core.OCSLog;
 import openccsensors.common.items.ItemSensorCard;
 import openccsensors.common.items.ItemSensorUpgrade;
 import openccsensors.common.peripherals.ContainerSensor;
+import openccsensors.common.sensors.DevSensor;
 import openccsensors.common.sensors.DroppedItemSensor;
+import openccsensors.common.sensors.InventorySensor;
 import openccsensors.common.sensors.ProximitySensor;
+import openccsensors.common.sensors.SignSensor;
 import openccsensors.common.turtles.TurtleUpgradeSensor;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.IGuiHandler;
@@ -218,12 +221,18 @@ public class CommonProxy
 		// register all sensors
 		SensorManager.registerSensor(new ProximitySensor());
 		SensorManager.registerSensor(new DroppedItemSensor());
+		SensorManager.registerSensor(new DevSensor());
+		SensorManager.registerSensor(new InventorySensor());
+		SensorManager.registerSensor(new SignSensor());
 
 		// register interfaces for the proximity card
 		Items.sensorCard = new ItemSensorCard(Config.sensorCardID);
 		Items.sensorCard.registerInterface(new SensorCardInterface(17, "openccsensors.item.proximitysensor", new SensorUpgrade(), ProximitySensor.class));
 		Items.sensorCard.registerInterface(new SensorCardInterface(33, "openccsensors.item.proximitysensor", new SensorUpgrade(), ProximitySensor.class));
 		Items.sensorCard.registerInterface(new SensorCardInterface(22, "openccsensors.item.droppeditemsensor", new SensorUpgrade(), DroppedItemSensor.class));
+		Items.sensorCard.registerInterface(new SensorCardInterface(99, "openccsensors.item.devsensor", new SensorUpgrade(), DevSensor.class));
+		Items.sensorCard.registerInterface(new SensorCardInterface(16, "openccsensors.item.inventorysensor", new SensorUpgrade(), InventorySensor.class));
+		Items.sensorCard.registerInterface(new SensorCardInterface(23, "openccsensors.item.signsensor", new SensorUpgrade(), SignSensor.class));
 		
 		Items.sensorUpgrade = new ItemSensorUpgrade(Config.sensorUpgradeID);
 		

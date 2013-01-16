@@ -16,27 +16,20 @@ public class DevTileTarget extends TileSensorTarget implements ISensorTarget {
 	}
 
 	@Override
-	public Map getDetailInformation(World world)
-	{
-		HashMap map = getBasicInformation(world);
-		
-		TileEntity entity = world.getBlockTileEntity(xCoord, yCoord, zCoord);
-		
-		NBTTagCompound compound = new NBTTagCompound();
-		entity.writeToNBT(compound);
-		
-		map.putAll(NetworkHelper.NBTToMap(compound));
-		
-		return map;
-	}
-	
-	@Override
-	public boolean hasGaugePercentage() {
-		return false;
+	public HashMap getExtendedDetails(World world) {
+		TileEntity tile = world.getBlockTileEntity(xCoord, yCoord, zCoord);
+		HashMap retMap = getBasicDetails(world);
+		retMap.putAll(NetworkHelper.NBTToMap(getTagCompound(tile)));
+		return retMap;
 	}
 
 	@Override
-	public double getGaugePercentage(World world) {
+	public String[] getTrackablePropertyNames(World world) {
+		return null;
+	}
+
+	@Override
+	public int getTrackableProperty(World world, String name) {
 		return 0;
 	}
 

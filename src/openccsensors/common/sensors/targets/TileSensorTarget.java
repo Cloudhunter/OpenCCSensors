@@ -33,11 +33,18 @@ public class TileSensorTarget {
 	}
 
 
-	public HashMap getBasicInformation(World world) {
+	public HashMap getBasicDetails(World world) {
 		
 		HashMap retMap = new HashMap();
 
+		HashMap<String, Integer> pos = new HashMap<String, Integer>();
+		pos.put("X", relativeX);
+		pos.put("Y", relativeY);
+		pos.put("Z", relativeZ);
+
 		retMap.put("Type", SensorHelper.getType(rawType));
+		retMap.put("Position", pos);
+		
 
 		return retMap;
 	}

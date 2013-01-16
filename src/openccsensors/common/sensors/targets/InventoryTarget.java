@@ -8,6 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.helper.InventoryHelper;
+import openccsensors.common.helper.NetworkHelper;
 
 public class InventoryTarget extends TileSensorTarget implements ISensorTarget {
 
@@ -16,23 +17,21 @@ public class InventoryTarget extends TileSensorTarget implements ISensorTarget {
 	}
 
 	@Override
-	public Map getDetailInformation(World world) {
-
-		IInventory inventory = (IInventory) world.getBlockTileEntity(xCoord,
-				yCoord, zCoord);
-		HashMap items = new HashMap();
-		items.put("Items", InventoryHelper.invToMap(inventory));
-		return items;
-
+	public HashMap getExtendedDetails(World world) {
+		TileEntity tile = world.getBlockTileEntity(xCoord, yCoord, zCoord);
+		HashMap retMap = getBasicDetails(world);
+		retMap.putAll(InventoryHelper.invToMap((IInventory)tile));
+		return retMap;
 	}
 
 	@Override
-	public boolean hasGaugePercentage() {
-		return false;
+	public String[] getTrackablePropertyNames(World world) {
+		return null;
 	}
 
 	@Override
-	public double getGaugePercentage(World world) {
+	public int getTrackableProperty(World world, String name) {
 		return 0;
 	}
+
 }
