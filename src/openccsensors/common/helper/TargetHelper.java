@@ -44,6 +44,10 @@ public class TargetHelper {
 			String[] propertyNames = target.getTrackablePropertyNames();
 			if (propertyNames != null) {
 				for (String propertyName : propertyNames) {
+					int result = 0;
+					if (!(targetDetails.get(propertyName) instanceof Integer)) {
+						continue;
+					}
 					properties.put(propertyName, (Integer)targetDetails.get(propertyName));
 				}
 			}

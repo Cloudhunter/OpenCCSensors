@@ -28,13 +28,17 @@ public class MassFabTarget extends TileSensorTarget implements ISensorTarget {
 		NBTTagCompound tagCompound = getTagCompound(machine);
 		retMap.put("Energy", tagCompound.getInteger("energy"));
 		retMap.put("MaxEnergy", MASSFAB_MAX_ENERGY);
+		retMap.put("Progress", 0);
+		int progress = (int)((100.0 / MASSFAB_MAX_ENERGY) * tagCompound.getInteger("energy"));
+		
+		retMap.put("Progress",  Math.min(Math.max(0, progress), 100));
 		
 		return retMap;
 	}
 
 	@Override
 	public String[] getTrackablePropertyNames() {
-		return null;
+		return new String[] { "Progress" };
 	}
 
 
