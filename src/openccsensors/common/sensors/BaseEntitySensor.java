@@ -11,7 +11,7 @@ import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.SensorUpgrade;
 import openccsensors.common.helper.EntityHelper;
 
-public abstract class EntitySensor {
+public abstract class BaseEntitySensor {
 
 	ArrayList<IEntityValidatorCallback> validatorCallbacks = new ArrayList<IEntityValidatorCallback>();
 

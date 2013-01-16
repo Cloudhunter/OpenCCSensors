@@ -19,18 +19,14 @@ public class InventoryTarget extends TileSensorTarget implements ISensorTarget {
 	public HashMap getExtendedDetails(World world) {
 		TileEntity tile = world.getBlockTileEntity(xCoord, yCoord, zCoord);
 		HashMap retMap = getBasicDetails(world);
-		retMap.putAll(InventoryHelper.invToMap((IInventory) tile));
+		retMap.put("Slots", InventoryHelper.invToMap((IInventory) tile));
 		return retMap;
 	}
 
 	@Override
-	public String[] getTrackablePropertyNames(World world) {
+	public String[] getTrackablePropertyNames() {
 		return null;
 	}
 
-	@Override
-	public int getTrackableProperty(World world, String name) {
-		return 0;
-	}
 
 }

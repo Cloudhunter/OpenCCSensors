@@ -6,7 +6,7 @@ import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITileEntityValidatorCallback;
 import openccsensors.common.sensors.targets.DevTileTarget;
 
-public class DevSensor extends TileEntitySensor implements ISensor {
+public class DevSensor extends BaseTileEntitySensor implements ISensor {
 
 	public DevSensor() {
 		registerCallback(new ITileEntityValidatorCallback() {

@@ -7,7 +7,7 @@ import openccsensors.common.api.ISensor;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.sensors.targets.DroppedItemTarget;
 
-public class DroppedItemSensor extends EntitySensor implements ISensor {
+public class DroppedItemSensor extends BaseEntitySensor implements ISensor {
 
 	public DroppedItemSensor() {
 		registerCallback(new IEntityValidatorCallback() {

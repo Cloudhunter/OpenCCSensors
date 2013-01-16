@@ -28,18 +28,15 @@ public class EnergyStorageTarget extends TileSensorTarget implements
 		retMap.put("Stored", storage.getStored());
 		retMap.put("Capacity", storage.getCapacity());
 		retMap.put("Output", storage.getOutput());
+		retMap.put("StoredPercentage", (100.0 / storage.getCapacity()) * storage.getStored());
 		
 		return retMap;
 	}
 
 	@Override
-	public String[] getTrackablePropertyNames(World world) {
-		return null;
+	public String[] getTrackablePropertyNames() {
+		return new String[] { "StoredPercentage" };
 	}
 
-	@Override
-	public int getTrackableProperty(World world, String name) {
-		return 0;
-	}
 
 }

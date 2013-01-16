@@ -15,7 +15,7 @@ import openccsensors.common.sensors.targets.industrialcraft.EnergyStorageTarget;
 import openccsensors.common.sensors.targets.industrialcraft.MassFabTarget;
 import openccsensors.common.sensors.targets.industrialcraft.ReactorTarget;
 
-public class IndustrialCraftSensor extends TileEntitySensor implements ISensor {
+public class IndustrialCraftSensor extends BaseTileEntitySensor implements ISensor {
 
 	protected static final String MASS_FAB_CLASS = "ic2.core.block.machine.tileentity.TileEntityMatter";
 

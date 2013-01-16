@@ -7,7 +7,7 @@ import openccsensors.common.api.ISensor;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.sensors.targets.MinecartTarget;
 
-public class MinecartSensor extends EntitySensor implements ISensor {
+public class MinecartSensor extends BaseEntitySensor implements ISensor {
 
 	public MinecartSensor() {
 		registerCallback(new IEntityValidatorCallback(){

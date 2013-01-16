@@ -35,4 +35,19 @@ public class TargetHelper {
 		return details;
 	}
 
+	public static HashMap<String, Integer> getAvailableTrackingProperties(World world, ArrayList<ISensorTarget> targets)
+	{
+		HashMap<String, Integer> properties = new HashMap<String, Integer>();
+		HashMap targetDetails = mergeTargetDetails(targets, world);
+		
+		for (ISensorTarget target : targets) {
+			String[] propertyNames = target.getTrackablePropertyNames();
+			if (propertyNames != null) {
+				for (String propertyName : propertyNames) {
+					properties.put(propertyName, (Integer)targetDetails.get(propertyName));
+				}
+			}
+		}
+		return properties;
+	}
 }

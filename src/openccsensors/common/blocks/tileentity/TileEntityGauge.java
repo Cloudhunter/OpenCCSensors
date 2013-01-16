@@ -1,18 +1,31 @@
 package openccsensors.common.blocks.tileentity;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
 import openccsensors.common.api.IMethodCallback;
+import openccsensors.common.api.ISensorTarget;
+import openccsensors.common.api.SensorManager;
 import openccsensors.common.core.CallbackEventManager;
+import openccsensors.common.helper.TargetHelper;
+import openccsensors.common.sensors.BaseTileEntitySensor;
+import openccsensors.common.api.ISensor;
 import dan200.computer.api.IComputerAccess;
 import dan200.computer.api.IPeripheral;
 
 public class TileEntityGauge extends TileEntity implements IPeripheral {
 
 	private int percentage = 0;
+	private String updatePropertyName = "";
 
 	private CallbackEventManager eventManager = new CallbackEventManager();
 
@@ -50,6 +63,33 @@ public class TileEntityGauge extends TileEntity implements IPeripheral {
 			x = 1;
 			break;
 		}
+		
+		for (Entry<Class, ISensor> entry : SensorManager.registry.entrySet())
+		{
+			ISensor sensor = entry.getValue();
+			if (sensor instanceof BaseTileEntitySensor) {
+				BaseTileEntitySensor teSensor = (BaseTileEntitySensor) sensor;
+				
+				ArrayList<ISensorTarget> targets = teSensor.getTargetsForTile(this.getWorldObj(),
+						((int)xCoord)+x, (int)yCoord, ((int) zCoord)+z, x, 0, z);
+				if (targets != null && this.getWorldObj() != null)
+				{
+					HashMap<String, Integer> trackers = TargetHelper.getAvailableTrackingProperties(this.getWorldObj(), targets);
+					if (trackers.containsKey(updatePropertyName)) {
+						this.percentage = trackers.get(updatePropertyName);
+						return;
+					}else {
+						if (trackers.size() > 0) {
+							List<String> list = new ArrayList<String>(trackers.keySet());
+							this.updatePropertyName = list.get(0);
+							this.percentage = trackers.get(this.updatePropertyName);
+							return;
+						}
+					}
+				}
+			}
+		}
+		
 		this.percentage = 0;
 	}
 
@@ -82,12 +122,14 @@ public class TileEntityGauge extends TileEntity implements IPeripheral {
 	@Override
 	public void readFromNBT(NBTTagCompound nbttagcompound) {
 		this.percentage = nbttagcompound.getInteger("percentage");
+		this.updatePropertyName = nbttagcompound.getString("property");
 		super.readFromNBT(nbttagcompound);
 	}
 
 	@Override
 	public void writeToNBT(NBTTagCompound nbttagcompound) {
 		nbttagcompound.setInteger("percentage", this.percentage);
+		nbttagcompound.setString("property", this.updatePropertyName);
 		super.writeToNBT(nbttagcompound);
 	}
 

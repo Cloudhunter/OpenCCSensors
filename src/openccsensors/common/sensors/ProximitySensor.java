@@ -7,7 +7,7 @@ import openccsensors.common.api.ISensor;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.sensors.targets.LivingTarget;
 
-public class ProximitySensor extends EntitySensor implements ISensor {
+public class ProximitySensor extends BaseEntitySensor implements ISensor {
 
 	public ProximitySensor() {
 		registerCallback(new IEntityValidatorCallback() {

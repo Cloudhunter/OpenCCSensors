@@ -7,7 +7,7 @@ import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITileEntityValidatorCallback;
 import openccsensors.common.sensors.targets.buildcraft.PowerReceptorTarget;
 
-public class BuildCraftSensor extends TileEntitySensor implements ISensor {
+public class BuildCraftSensor extends BaseTileEntitySensor implements ISensor {
 
 	public BuildCraftSensor() {
 		

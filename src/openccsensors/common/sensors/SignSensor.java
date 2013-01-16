@@ -7,7 +7,7 @@ import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITileEntityValidatorCallback;
 import openccsensors.common.sensors.targets.SignPostTarget;
 
-public class SignSensor extends TileEntitySensor implements ISensor {
+public class SignSensor extends BaseTileEntitySensor implements ISensor {
 
 	public SignSensor() {
 		registerCallback(new ITileEntityValidatorCallback() {

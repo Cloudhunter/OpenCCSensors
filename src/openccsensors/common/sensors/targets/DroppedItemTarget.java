@@ -26,15 +26,10 @@ public class DroppedItemTarget extends EntityTarget implements ISensorTarget {
 	}
 
 	@Override
-	public String[] getTrackablePropertyNames(World world) {
+	public String[] getTrackablePropertyNames() {
 		return null;
 	}
 
-	@Override
-	public int getTrackableProperty(World world, String name) {
-		return 0;
-	}
-	
 	@Override
 	public String getType(Entity entity) {
 		return ((EntityItem)entity).func_92014_d().getItemName();

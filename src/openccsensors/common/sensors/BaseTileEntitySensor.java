@@ -9,7 +9,7 @@ import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITileEntityValidatorCallback;
 import openccsensors.common.api.SensorUpgrade;
 
-public abstract class TileEntitySensor {
+public abstract class BaseTileEntitySensor {
 	ArrayList<ITileEntityValidatorCallback> validatorCallbacks = new ArrayList<ITileEntityValidatorCallback>();
 
 	public void registerCallback(ITileEntityValidatorCallback wrapper) {
@@ -28,36 +28,43 @@ public abstract class TileEntitySensor {
 					int tileX = x + sx;
 					int tileY = y + sy;
 					int tileZ = z + sz;
+					
+					String name = String
+							.format("%s,%s,%s", x, y, z);
+					
 
-					TileEntity entity = world.getBlockTileEntity(tileX, tileY,
-							tileZ);
-
-					if (entity != null) {
-
-						for (ITileEntityValidatorCallback wrapper : validatorCallbacks) {
-
-							ISensorTarget target = wrapper.getTargetIfValid(
-									entity, x, y, z);
-
-							if (target != null) {
-								String name = String
-										.format("%s,%s,%s", x, y, z);
-								ArrayList<ISensorTarget> arr = map.get(name);
-
-								if (arr == null) {
-
-									arr = new ArrayList<ISensorTarget>();
-									map.put(name, arr);
-
-								}
-
-								arr.add(target);
-							}
-						}
+					ArrayList<ISensorTarget> targets = getTargetsForTile(world, tileX, tileY, tileZ, x, y, z);
+					if (targets.size() > 0)
+					{
+						map.put(name, targets);
 					}
+					
 				}
 			}
 		}
 		return map;
+	}
+	
+	public ArrayList<ISensorTarget> getTargetsForTile(World world, int tileX, int tileY, int tileZ, int relX, int relY, int relZ)
+	{
+		ArrayList<ISensorTarget> arr = new ArrayList<ISensorTarget>();
+		
+		TileEntity entity = world.getBlockTileEntity(tileX, tileY,
+				tileZ);
+
+		if (entity != null) {
+
+			for (ITileEntityValidatorCallback wrapper : validatorCallbacks) {
+
+				ISensorTarget target = wrapper.getTargetIfValid(
+						entity, relX, relY, relZ);
+
+				if (target != null) {
+					
+					arr.add(target);
+				}
+			}
+		}
+		return arr;
 	}
 }

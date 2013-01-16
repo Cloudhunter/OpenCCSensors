@@ -7,7 +7,7 @@ import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITileEntityValidatorCallback;
 import openccsensors.common.sensors.targets.TankTarget;
 
-public class TankSensor extends TileEntitySensor implements ISensor {
+public class TankSensor extends BaseTileEntitySensor implements ISensor {
 
 	public TankSensor() {
 		registerCallback(new ITileEntityValidatorCallback() {

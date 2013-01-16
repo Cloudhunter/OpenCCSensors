@@ -7,7 +7,7 @@ import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITileEntityValidatorCallback;
 import openccsensors.common.sensors.targets.InventoryTarget;
 
-public class InventorySensor extends TileEntitySensor implements ISensor {
+public class InventorySensor extends BaseTileEntitySensor implements ISensor {
 
 	public InventorySensor() {
 		registerCallback(new ITileEntityValidatorCallback() {

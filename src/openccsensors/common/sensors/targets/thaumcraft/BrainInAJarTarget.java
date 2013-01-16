@@ -28,14 +28,10 @@ public class BrainInAJarTarget extends TileSensorTarget implements
 	}
 
 	@Override
-	public String[] getTrackablePropertyNames(World world) {
+	public String[] getTrackablePropertyNames() {
 		return null;
 	}
 
-	@Override
-	public int getTrackableProperty(World world, String name) {
-		return 0;
-	}
 
 
 }

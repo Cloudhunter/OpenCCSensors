@@ -8,7 +8,7 @@ import openccsensors.common.sensors.targets.thaumcraft.BrainInAJarTarget;
 import openccsensors.common.sensors.targets.thaumcraft.CrucibleTarget;
 import openccsensors.common.sensors.targets.thaumcraft.FilledJarTarget;
 
-public class ThaumCraftSensor extends TileEntitySensor implements ISensor {
+public class ThaumCraftSensor extends BaseTileEntitySensor implements ISensor {
 
 	public static final String BRAIN_IN_A_JAR_CLASS = "thaumcraft.common.blocks.jars.TileJarBrain";
 	public static final String CRUCIBLE_CLASS = "thaumcraft.common.blocks.TileCrucible";
