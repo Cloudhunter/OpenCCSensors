@@ -29,13 +29,14 @@ public class ReactorTarget extends TileSensorTarget implements ISensorTarget {
 		retMap.put("MaxHeat", reactor.getMaxHeat());
 		retMap.put("Output", reactor.getOutput() * IC2Reactor.getEUOutput());
 		retMap.put("Active", reactor.produceEnergy());
+		retMap.put("HeatPercentage", (int)((100.0 / reactor.getMaxHeat()) * reactor.getHeat()));
 		
 		return retMap;
 	}
 
 	@Override
 	public String[] getTrackablePropertyNames() {
-		return null;
+		return new String[] { "HeatPercentage" };
 	}
 
 
