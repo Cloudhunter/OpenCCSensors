@@ -16,7 +16,7 @@ It should download the repository and cd into the repository.
 
 Next, run: ant
 
-It should find the Buildfile and start downloading MCP and Forge.
+It should find the Buildfile and start downloading Forge and MCP.
 
 It will start decompiling Minecraft and then after a few minutes there should be a file called 'OpenCCSensors-VERSION.jar' in build/dist. That is the compiled version of OpenCCSensors.
 
