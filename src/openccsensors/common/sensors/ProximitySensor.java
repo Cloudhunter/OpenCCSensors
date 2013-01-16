@@ -2,9 +2,12 @@ package openccsensors.common.sensors;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.world.World;
 import openccsensors.common.api.IEntityValidatorCallback;
 import openccsensors.common.api.ISensor;
+import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorTarget;
+import openccsensors.common.api.SensorUpgrade;
 import openccsensors.common.sensors.targets.LivingTarget;
 
 public class ProximitySensor extends BaseEntitySensor implements ISensor {
@@ -24,12 +27,12 @@ public class ProximitySensor extends BaseEntitySensor implements ISensor {
 	}
 
 	@Override
-	public String[] getCustomMethods() {
+	public String[] getCustomMethods(SensorUpgrade upgrade) {
 		return null;
 	}
 
 	@Override
-	public Object[] callCustomMethod() {
+	public Object callCustomMethod(ISensorAccess sensor, World world, int x, int y, int z, int methodID, Object[] args, SensorUpgrade upgrade) {
 		return null;
 	}
 
