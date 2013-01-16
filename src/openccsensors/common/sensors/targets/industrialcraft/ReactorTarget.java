@@ -25,17 +25,24 @@ public class ReactorTarget extends TileSensorTarget implements ISensorTarget {
 		IReactor reactor = (IReactor) world.getBlockTileEntity(xCoord, yCoord,
 				zCoord);
 
-		retMap.put("Heat", reactor.getHeat());
-		retMap.put("MaxHeat", reactor.getMaxHeat());
+		int maxHeat = reactor.getMaxHeat();
+		int heat = reactor.getHeat();
+		
+		retMap.put("Heat", heat);
+		retMap.put("MaxHeat", maxHeat);
 		retMap.put("Output", reactor.getOutput() * IC2Reactor.getEUOutput());
 		retMap.put("Active", reactor.produceEnergy());
-		
+		retMap.put("HeatPercentage", 0);
+		if (maxHeat > 0) {
+			int heatPercentage = (int)((100.0 / maxHeat) * heat);
+			retMap.put("HeatPercentage", Math.max(Math.min(maxHeat, 100), 0));
+		}
 		return retMap;
 	}
 
 	@Override
 	public String[] getTrackablePropertyNames() {
-		return null;
+		return new String[] { "HeatPercentage" };
 	}
 
 
