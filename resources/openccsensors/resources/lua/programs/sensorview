@@ -64,8 +64,9 @@ local function redraw()
 		targetNameMenuTable = {}
 		if targetNames then
 			for k,v in pairs(targetNames) do
-				table.insert(targetNameMenuTable, k)
+				table.insert(targetNameMenuTable, tostring(k)) --all targets are strings by definition in the ISensorInterface
 			end
+			table.sort(targetNameMenuTable)
 			if #targetNameMenuTable > 0 then
 				toLines(sensor.call(sideNames[sideSelection], "getTargetDetails", targetNameMenuTable[targetSelection]), detailLines, {}, 0)
 			end
@@ -95,6 +96,7 @@ local function redraw()
 		--make sure we have valid targets, even if we have a valid sensor.
 		if #targetNameMenuTable > 0 then
 			term.setCursorPos(1, 4)
+			targetOffset=(targetSelection>h-5) and targetSelection-(h-5) or 1
 			if targetOffset > 1 then
 				term.write("/\\")
 			else
@@ -107,7 +109,7 @@ local function redraw()
 			end
 			if #targetNameMenuTable >= h then
 				term.setCursorPos(1, h)
-				if #targetNameMenuTable > targetOffset + h - 1 then
+				if #targetNameMenuTable > ((targetOffset==1) and (h - 4) or (h-5)) then
 					term.write("\\/")
 				else
 					writeEntry(targetNameMenuTable, #targetNameMenuTable, targetSelection)
@@ -273,3 +275,4 @@ while true do
 		end
 	end
 end
+
