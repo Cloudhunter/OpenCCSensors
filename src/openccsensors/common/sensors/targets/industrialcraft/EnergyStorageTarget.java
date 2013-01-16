@@ -28,7 +28,7 @@ public class EnergyStorageTarget extends TileSensorTarget implements
 		retMap.put("Stored", storage.getStored());
 		retMap.put("Capacity", storage.getCapacity());
 		retMap.put("Output", storage.getOutput());
-		retMap.put("StoredPercentage", (100.0 / storage.getCapacity()) * storage.getStored());
+		retMap.put("StoredPercentage", (int)((100.0 / storage.getCapacity()) * storage.getStored()));
 		
 		return retMap;
 	}
