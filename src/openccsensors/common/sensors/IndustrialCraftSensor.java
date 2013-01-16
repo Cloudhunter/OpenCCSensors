@@ -7,9 +7,12 @@ import ic2.api.energy.tile.IEnergyConductor;
 import ic2.api.energy.tile.IEnergySink;
 import ic2.api.energy.tile.IEnergySource;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import openccsensors.common.api.ISensor;
+import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITileEntityValidatorCallback;
+import openccsensors.common.api.SensorUpgrade;
 import openccsensors.common.sensors.targets.industrialcraft.EnergyConductorTarget;
 import openccsensors.common.sensors.targets.industrialcraft.EnergyStorageTarget;
 import openccsensors.common.sensors.targets.industrialcraft.MassFabTarget;
@@ -77,12 +80,12 @@ public class IndustrialCraftSensor extends BaseTileEntitySensor implements ISens
 	}
 	
 	@Override
-	public String[] getCustomMethods() {
+	public String[] getCustomMethods(SensorUpgrade upgrade) {
 		return null;
 	}
 
 	@Override
-	public Object[] callCustomMethod() {
+	public Object callCustomMethod(ISensorAccess sensor, World world, int x, int y, int z, int methodID, Object[] args, SensorUpgrade upgrade) {
 		return null;
 	}
 
