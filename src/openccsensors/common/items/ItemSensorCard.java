@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import openccsensors.common.api.SensorCardInterface;
@@ -29,6 +30,7 @@ public class ItemSensorCard extends Item {
 		return par1;
 	}
 
+	
 	@Override
 	public String getItemNameIS(ItemStack itemstack) {
 		return getInterfaceForDamageValue(itemstack.getItemDamage()).getName();
@@ -43,6 +45,12 @@ public class ItemSensorCard extends Item {
 	public SensorCardInterface getInterfaceForDamageValue(int dmgValue) {
 		return interfaces.get(dmgValue);
 	}
+	
+	@Override
+    public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean par4) {
+		list.add("Tier 1");
+	}
+
 
 	@Override
 	@SideOnly(Side.CLIENT)

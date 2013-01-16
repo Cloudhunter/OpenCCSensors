@@ -1,6 +1,7 @@
 package openccsensors.common.peripherals;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import net.minecraft.item.Item;
@@ -28,6 +29,11 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 	private boolean isTurtle;
 
 	private CallbackEventManager eventManager = new CallbackEventManager();
+	
+	// forgive me.
+	public ISensorAccess getThis() {
+		return this;
+	}
 
 	public PeripheralSensor(ISensorEnvironment _env, boolean _turtle) {
 
@@ -150,6 +156,81 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 				throw new CardNotFoundException(isTurtle);
 			}
 
+		});
+
+		eventManager.registerCallback(new IMethodCallback() {
+
+			@Override
+			public String getMethodName() {
+				return "getSensorMethods";
+			}
+
+			@Override
+			public Object execute(IComputerAccess item, Object[] args)
+					throws Exception {
+				
+				HashMap hash = new HashMap(); 
+				SensorCardInterface sensorInterface = getSensorCardInterface();
+				
+				if (sensorInterface == null) {
+					throw new CardNotFoundException(isTurtle);
+				}
+				
+				ISensor sensor = sensorInterface.getSensor();
+				if (sensor == null) {
+					throw new Exception("Unknown sensor error");
+				}
+				
+				String[] methods = sensor.getCustomMethods(sensorInterface.getSensorUpgrade());
+				for(int i = 0 ; i < methods.length; i++)
+				{
+				   hash.put(i, methods[i]);
+				}
+				
+				return hash;
+			}
+		});
+		
+		eventManager.registerCallback(new IMethodCallback() {
+
+			@Override
+			public String getMethodName() {
+				return "sensorCardCall";
+			}
+
+			@Override
+			public Object execute(IComputerAccess item, Object[] args)
+					throws Exception {
+				SensorCardInterface sensorInterface = getSensorCardInterface();
+				
+				if (sensorInterface == null) {
+					throw new CardNotFoundException(isTurtle);
+				}
+				
+				ISensor sensor = sensorInterface.getSensor();
+				if (sensor == null) {
+					throw new Exception("Unknown sensor error");
+				}
+				
+				if (args.length > 0 && args[0] instanceof String) {
+					
+					String[] sensorMethods = sensor.getCustomMethods(sensorInterface.getSensorUpgrade());
+					int newMethod = Arrays.asList(sensorMethods).indexOf(args[0].toString());
+
+					if (newMethod < 0)
+						throw new Exception("Invalid sensor command");
+
+					Object[] newArray = new Object[args.length - 1];
+					System.arraycopy(args, 1, newArray, 0,
+							args.length - 1);
+					Vec3 vec = env.getLocation();
+					
+					return sensor.callCustomMethod(getThis(), env.getWorld(),
+									(int) vec.xCoord, (int) vec.yCoord,
+									(int) vec.zCoord, newMethod, newArray, sensorInterface.getSensorUpgrade());
+				}
+				throw new Exception("Invalid arguments. Expected String.");
+			}
 		});
 
 	}

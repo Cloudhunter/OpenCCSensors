@@ -172,7 +172,8 @@ public class TileEntityGauge extends TileEntity implements IPeripheral {
 	}
 
 	@Override
-	public void attach(IComputerAccess paramIComputerAccess) {
+	public void attach(IComputerAccess computer) {
+		computer.mountFixedDir("ocs", "mods/OCSLua/lua", true, 0);
 	}
 
 	@Override
