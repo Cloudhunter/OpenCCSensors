@@ -18,10 +18,10 @@ public class FilledJarTarget extends TileSensorTarget implements ISensorTarget {
 	}
 
 	@Override
-	public Map getDetailInformation(World world) {
-
-		HashMap retMap = new HashMap();
-
+	public HashMap getExtendedDetails(World world) {
+		
+		HashMap retMap = getBasicDetails(world);
+		
 		TileEntity filledJar = world.getBlockTileEntity(xCoord, yCoord, zCoord);
 
 		NBTTagCompound compound = new NBTTagCompound();
@@ -39,13 +39,12 @@ public class FilledJarTarget extends TileSensorTarget implements ISensorTarget {
 	}
 
 	@Override
-	public boolean hasGaugePercentage() {
-		return false;
+	public String[] getTrackablePropertyNames(World world) {
+		return null;
 	}
 
 	@Override
-	public double getGaugePercentage(World world) {
+	public int getTrackableProperty(World world, String name) {
 		return 0;
 	}
-
 }

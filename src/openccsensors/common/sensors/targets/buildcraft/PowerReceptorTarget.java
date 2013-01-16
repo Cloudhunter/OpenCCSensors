@@ -20,15 +20,15 @@ public class PowerReceptorTarget extends TileSensorTarget implements
 	}
 
 	@Override
-	public Map getDetailInformation(World world) {
+	public HashMap getExtendedDetails(World world) {
 
-		HashMap retMap = new HashMap();
+		HashMap retMap = getBasicDetails(world);
 		IPowerReceptor tileEngine = (IPowerReceptor) world.getBlockTileEntity(
 				xCoord, yCoord, zCoord);
 		IPowerProvider provider = tileEngine.getPowerProvider();
 
 		if (provider == null) {
-			return null;
+			return retMap;
 		}
 
 		retMap.put("MaxEnergyReceived", provider.getMaxEnergyReceived());
@@ -71,12 +71,12 @@ public class PowerReceptorTarget extends TileSensorTarget implements
 	}
 
 	@Override
-	public boolean hasGaugePercentage() {
-		return false;
+	public String[] getTrackablePropertyNames(World world) {
+		return null;
 	}
 
 	@Override
-	public double getGaugePercentage(World world) {
+	public int getTrackableProperty(World world, String name) {
 		return 0;
 	}
 

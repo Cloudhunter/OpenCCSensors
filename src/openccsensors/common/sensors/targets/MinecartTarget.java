@@ -7,6 +7,7 @@ import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import openccsensors.common.api.ISensorTarget;
+import openccsensors.common.helper.SensorHelper;
 
 public class MinecartTarget extends EntityTarget implements ISensorTarget {
 

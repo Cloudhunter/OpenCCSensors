@@ -36,12 +36,17 @@ import openccsensors.common.core.OCSLog;
 import openccsensors.common.items.ItemSensorCard;
 import openccsensors.common.items.ItemSensorUpgrade;
 import openccsensors.common.peripherals.ContainerSensor;
+import openccsensors.common.sensors.BuildCraftSensor;
 import openccsensors.common.sensors.DevSensor;
 import openccsensors.common.sensors.DroppedItemSensor;
+import openccsensors.common.sensors.IndustrialCraftSensor;
 import openccsensors.common.sensors.InventorySensor;
+import openccsensors.common.sensors.MinecartSensor;
 import openccsensors.common.sensors.ProximitySensor;
 import openccsensors.common.sensors.SignSensor;
 import openccsensors.common.sensors.TankSensor;
+import openccsensors.common.sensors.ThaumCraftSensor;
+import openccsensors.common.sensors.WorldSensor;
 import openccsensors.common.turtles.TurtleUpgradeSensor;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.IGuiHandler;
@@ -148,13 +153,13 @@ public class CommonProxy {
 					zipentry = zipinputstream.getNextEntry();
 					continue;
 				}
-
 				String entryName = destinationName
 						+ zipentryName.substring(Math.min(
 								zipentryName.length(),
 								sourceFolder.length() - 1));
 				entryName = entryName.replace('/', File.separatorChar);
 				entryName = entryName.replace('\\', File.separatorChar);
+				OCSLog.info("Extracting " + entryName);
 				int n;
 				FileOutputStream fileoutputstream;
 				File newFile = new File(entryName);
@@ -225,6 +230,11 @@ public class CommonProxy {
 		SensorManager.registerSensor(new InventorySensor());
 		SensorManager.registerSensor(new SignSensor());
 		SensorManager.registerSensor(new TankSensor());
+		SensorManager.registerSensor(new MinecartSensor());
+		SensorManager.registerSensor(new WorldSensor());
+		SensorManager.registerSensor(new BuildCraftSensor());
+		SensorManager.registerSensor(new IndustrialCraftSensor());
+		SensorManager.registerSensor(new ThaumCraftSensor());
 		
 		// register upgrade
 		Items.sensorUpgrade = new ItemSensorUpgrade(Config.sensorUpgradeID);
@@ -238,6 +248,11 @@ public class CommonProxy {
 		Items.sensorCard.registerInterface(new SensorCardInterface(16, "openccsensors.item.inventorysensor", new SensorUpgrade(), InventorySensor.class));
 		Items.sensorCard.registerInterface(new SensorCardInterface(23, "openccsensors.item.signsensor", new SensorUpgrade(), SignSensor.class));
 		Items.sensorCard.registerInterface(new SensorCardInterface(20, "openccsensors.item.tanksensor", new SensorUpgrade(), TankSensor.class));
+		Items.sensorCard.registerInterface(new SensorCardInterface(25, "openccsensors.item.minecartsensor", new SensorUpgrade(), MinecartSensor.class));
+		Items.sensorCard.registerInterface(new SensorCardInterface(21, "openccsensors.item.worldsensor", new SensorUpgrade(), WorldSensor.class));
+		Items.sensorCard.registerInterface(new SensorCardInterface(19, "openccsensors.item.buildcraftsensor", new SensorUpgrade(), BuildCraftSensor.class));
+		Items.sensorCard.registerInterface(new SensorCardInterface(18, "openccsensors.item.industrialcraftsensor", new SensorUpgrade(), IndustrialCraftSensor.class));
+		Items.sensorCard.registerInterface(new SensorCardInterface(24, "openccsensors.item.thaumcraftsensor", new SensorUpgrade(), ThaumCraftSensor.class));
 
 
 		// register GUI handler

@@ -19,8 +19,8 @@ public class EnergyStorageTarget extends TileSensorTarget implements
 	}
 
 	@Override
-	public Map getDetailInformation(World world) {
-		HashMap retMap = new HashMap();
+	public HashMap getExtendedDetails(World world) {
+		HashMap retMap = getBasicDetails(world);
 
 		IEnergyStorage storage = (IEnergyStorage) world.getBlockTileEntity(
 				xCoord, yCoord, zCoord);
@@ -28,24 +28,18 @@ public class EnergyStorageTarget extends TileSensorTarget implements
 		retMap.put("Stored", storage.getStored());
 		retMap.put("Capacity", storage.getCapacity());
 		retMap.put("Output", storage.getOutput());
-
+		
 		return retMap;
-
 	}
 
 	@Override
-	public boolean hasGaugePercentage() {
-		return true;
+	public String[] getTrackablePropertyNames(World world) {
+		return null;
 	}
 
 	@Override
-	public double getGaugePercentage(World world) {
-
-		IEnergyStorage storage = (IEnergyStorage) world.getBlockTileEntity(
-				xCoord, yCoord, zCoord);
-
-		return (100.0 / storage.getCapacity()) * storage.getStored();
-
+	public int getTrackableProperty(World world, String name) {
+		return 0;
 	}
 
 }

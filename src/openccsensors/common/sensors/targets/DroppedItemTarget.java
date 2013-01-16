@@ -12,7 +12,6 @@ public class DroppedItemTarget extends EntityTarget implements ISensorTarget {
 	public DroppedItemTarget(Object entity, double relativeX, double relativeY,
 			double relativeZ) {
 		super((Entity) entity, relativeX, relativeY, relativeZ);
-		rawType = ((EntityItem) entity).func_92014_d().getItemName();
 	}
 
 	@Override
@@ -28,13 +27,16 @@ public class DroppedItemTarget extends EntityTarget implements ISensorTarget {
 
 	@Override
 	public String[] getTrackablePropertyNames(World world) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public int getTrackableProperty(World world, String name) {
-		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	@Override
+	public String getType(Entity entity) {
+		return ((EntityItem)entity).func_92014_d().getItemName();
 	}
 }

@@ -35,7 +35,9 @@ public class ItemSensorCard extends Item {
 	}
 
 	public void registerInterface(SensorCardInterface sensorInterface) {
-		interfaces.put(sensorInterface.getId(), sensorInterface);
+		if (sensorInterface.getSensor() != null) {
+			interfaces.put(sensorInterface.getId(), sensorInterface);
+		}
 	}
 
 	public SensorCardInterface getInterfaceForDamageValue(int dmgValue) {

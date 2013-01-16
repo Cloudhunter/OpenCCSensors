@@ -19,27 +19,25 @@ public class EnergyConductorTarget extends TileSensorTarget implements
 	}
 
 	@Override
-	public Map getDetailInformation(World world) {
-
-		HashMap retMap = new HashMap();
-
+	public HashMap getExtendedDetails(World world) {
+		HashMap retMap = getBasicDetails(world);
 		TileEntity conductor = world.getBlockTileEntity(xCoord, yCoord, zCoord);
-		Long energyConducted = EnergyNet.getForWorld(world)
-				.getTotalEnergyConducted(conductor);
-
-		retMap.put("EnergyConducted", energyConducted);
-
+		long emitted = EnergyNet.getForWorld(world).getTotalEnergyEmitted(conductor);
+		long sunken = EnergyNet.getForWorld(world).getTotalEnergySunken(conductor);
+		retMap.put("EnergyEmitted", emitted);
+		retMap.put("EnergySunken", sunken);
 		return retMap;
 	}
 
 	@Override
-	public boolean hasGaugePercentage() {
-		return false;
+	public String[] getTrackablePropertyNames(World world) {
+		return null;
 	}
 
 	@Override
-	public double getGaugePercentage(World world) {
+	public int getTrackableProperty(World world, String name) {
 		return 0;
 	}
+
 
 }

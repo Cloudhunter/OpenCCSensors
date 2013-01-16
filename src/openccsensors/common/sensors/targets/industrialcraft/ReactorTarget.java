@@ -19,9 +19,9 @@ public class ReactorTarget extends TileSensorTarget implements ISensorTarget {
 	}
 
 	@Override
-	public Map getDetailInformation(World world) {
-		HashMap retMap = new HashMap();
-
+	public HashMap getExtendedDetails(World world) {
+		
+		HashMap retMap = getBasicDetails(world);
 		IReactor reactor = (IReactor) world.getBlockTileEntity(xCoord, yCoord,
 				zCoord);
 
@@ -29,19 +29,20 @@ public class ReactorTarget extends TileSensorTarget implements ISensorTarget {
 		retMap.put("MaxHeat", reactor.getMaxHeat());
 		retMap.put("Output", reactor.getOutput() * IC2Reactor.getEUOutput());
 		retMap.put("Active", reactor.produceEnergy());
-
+		
 		return retMap;
-
 	}
 
 	@Override
-	public boolean hasGaugePercentage() {
-		return false;
+	public String[] getTrackablePropertyNames(World world) {
+		return null;
 	}
 
 	@Override
-	public double getGaugePercentage(World world) {
+	public int getTrackableProperty(World world, String name) {
 		return 0;
 	}
+
+
 
 }

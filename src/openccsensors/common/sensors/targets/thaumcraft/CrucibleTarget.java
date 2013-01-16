@@ -18,14 +18,13 @@ public class CrucibleTarget extends TileSensorTarget implements ISensorTarget {
 	}
 
 	@Override
-	public Map getDetailInformation(World world) {
+	public HashMap getExtendedDetails(World world) {
 
-		HashMap retMap = new HashMap();
+		HashMap retMap = getBasicDetails(world);
 
 		TileEntity crucible = world.getBlockTileEntity(xCoord, yCoord, zCoord);
 
-		NBTTagCompound compound = new NBTTagCompound();
-		crucible.writeToNBT(compound);
+		NBTTagCompound compound = this.getTagCompound(crucible);
 		retMap.put("Heat", compound.getShort("Heat"));
 		retMap.put("Liquid", compound.getBoolean("Liquid"));
 		retMap.put("LiquidQty", compound.getShort("liquidQty"));
@@ -55,13 +54,14 @@ public class CrucibleTarget extends TileSensorTarget implements ISensorTarget {
 	}
 
 	@Override
-	public boolean hasGaugePercentage() {
-		return false;
+	public String[] getTrackablePropertyNames(World world) {
+		return null;
 	}
 
 	@Override
-	public double getGaugePercentage(World world) {
+	public int getTrackableProperty(World world, String name) {
 		return 0;
 	}
+
 
 }

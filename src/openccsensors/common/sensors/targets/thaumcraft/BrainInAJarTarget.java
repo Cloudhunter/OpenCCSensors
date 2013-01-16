@@ -18,28 +18,24 @@ public class BrainInAJarTarget extends TileSensorTarget implements
 	}
 
 	@Override
-	public Map getDetailInformation(World world) {
-
-		HashMap retMap = new HashMap();
-
-		TileEntity brainInJar = world
-				.getBlockTileEntity(xCoord, yCoord, zCoord);
-
-		NBTTagCompound compound = new NBTTagCompound();
-		brainInJar.writeToNBT(compound);
+	public HashMap getExtendedDetails(World world) {
+		
+		TileEntity brainInJar = world.getBlockTileEntity(xCoord, yCoord, zCoord);
+		HashMap retMap = getBasicDetails(world);
+		NBTTagCompound compound = this.getTagCompound(brainInJar);
 		retMap.put("XP", compound.getInteger("XP"));
-
 		return retMap;
 	}
 
 	@Override
-	public boolean hasGaugePercentage() {
-		return false;
+	public String[] getTrackablePropertyNames(World world) {
+		return null;
 	}
 
 	@Override
-	public double getGaugePercentage(World world) {
+	public int getTrackableProperty(World world, String name) {
 		return 0;
 	}
+
 
 }

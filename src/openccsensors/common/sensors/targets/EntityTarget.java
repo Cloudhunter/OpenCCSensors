@@ -2,7 +2,10 @@ package openccsensors.common.sensors.targets;
 
 import java.util.HashMap;
 
+import openccsensors.common.helper.SensorHelper;
+
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
@@ -10,7 +13,6 @@ public abstract class EntityTarget {
 
 	protected int id;
 	protected Vec3 relativePos;
-	protected String rawType;
 
 	public EntityTarget(Entity obj, double relativeX, double relativeY,
 			double relativeZ) {
@@ -29,10 +31,14 @@ public abstract class EntityTarget {
 		pos.put("Y", relativePos.yCoord);
 		pos.put("Z", relativePos.zCoord);
 
-		retMap.put("Type", rawType);
+		retMap.put("Type", getType(entityLiving));
 		retMap.put("Position", pos);
 
 		return retMap;
+	}
+	
+	public String getType(Entity e) {
+		return SensorHelper.getType(e.getClass().getName());
 	}
 
 }

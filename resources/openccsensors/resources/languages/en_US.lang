@@ -3,7 +3,7 @@ openccsensors.tile.gaugeblock.name=Gauge
 
 openccsensors.item.inventorysensor.name=Inventory Sensorcard
 openccsensors.item.proximitysensor.name=Proximity Sensorcard
-openccsensors.item.ic2sensor.name=IndustrialCraft 2 Sensorcard
+openccsensors.item.industrialcraftsensor.name=IndustrialCraft 2 Sensorcard
 openccsensors.item.buildcraftsensor.name=BuildCraft Sensorcard
 openccsensors.item.tanksensor.name=Tank Sensorcard
 openccsensors.item.worldsensor.name=World Sensorcard

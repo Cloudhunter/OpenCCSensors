@@ -15,8 +15,6 @@ public class LivingTarget extends EntityTarget implements ISensorTarget {
 			double relativeZ) {
 		super((Entity) obj, relativeX, relativeY, relativeZ);
 
-		rawType = (obj instanceof EntityPlayer) ? "Player" : ((Entity) obj)
-				.getEntityName();
 	}
 
 	@Override
@@ -40,6 +38,11 @@ public class LivingTarget extends EntityTarget implements ISensorTarget {
 	public int getTrackableProperty(World world, String name) {
 
 		return 0;
+	}
+	
+	@Override
+	public String getType(Entity entity) {
+		return (entity instanceof EntityPlayer) ? "Player" : entity.getEntityName();
 	}
 
 }

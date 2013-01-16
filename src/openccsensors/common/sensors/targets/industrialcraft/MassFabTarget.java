@@ -19,38 +19,27 @@ public class MassFabTarget extends TileSensorTarget implements ISensorTarget {
 	}
 
 	@Override
-	public Map getDetailInformation(World world) {
-
-		HashMap retMap = new HashMap();
-
+	public HashMap getExtendedDetails(World world) {
+		HashMap retMap = getBasicDetails(world);
+		
 		TileEntity machine = (TileEntity) world.getBlockTileEntity(xCoord,
 				yCoord, zCoord);
 
 		NBTTagCompound tagCompound = getTagCompound(machine);
-
-		retMap.put("PercentComplete",
-				getPercentComplete(tagCompound.getInteger("energy")));
 		retMap.put("Energy", tagCompound.getInteger("energy"));
+		retMap.put("MaxEnergy", MASSFAB_MAX_ENERGY);
+		
 		return retMap;
-
 	}
 
 	@Override
-	public boolean hasGaugePercentage() {
-		return true;
+	public String[] getTrackablePropertyNames(World world) {
+		return null;
 	}
 
 	@Override
-	public double getGaugePercentage(World world) {
-
-		TileEntity machine = world.getBlockTileEntity(xCoord, yCoord, zCoord);
-
-		NBTTagCompound tagCompound = getTagCompound(machine);
-		return getPercentComplete(tagCompound.getInteger("energy"));
-
+	public int getTrackableProperty(World world, String name) {
+		return 0;
 	}
 
-	private double getPercentComplete(int energy) {
-		return (100.0 / MASSFAB_MAX_ENERGY) * energy;
-	}
 }
