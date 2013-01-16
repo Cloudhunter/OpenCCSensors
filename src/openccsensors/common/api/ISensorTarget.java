@@ -1,14 +1,15 @@
 package openccsensors.common.api;
 
-import java.util.Map;
+import java.util.HashMap;
 
 import net.minecraft.world.World;
 
 public interface ISensorTarget {
-	public Map getBasicInformation(World world);
-	public Map getDetailInformation(World world);
-	public boolean hasGaugePercentage();
-	public double getGaugePercentage(World world);
+	
+	public HashMap getBasicDetails(World world);
+
+	public HashMap getExtendedDetails(World world);
+
+	public String[] getTrackablePropertyNames();
+
 }
-
-

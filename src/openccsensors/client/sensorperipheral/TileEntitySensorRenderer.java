@@ -3,7 +3,8 @@ package openccsensors.client.sensorperipheral;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import openccsensors.common.sensorperipheral.TileEntitySensor;
+import openccsensors.common.blocks.tileentity.TileEntitySensor;
+import openccsensors.common.items.ItemSensorCard;
 
 import org.lwjgl.opengl.GL11;
 
@@ -19,7 +20,7 @@ public class TileEntitySensorRenderer extends TileEntitySpecialRenderer {
 		int iconIndex = 0;
 		ItemStack itemStack = tile.getStackInSlot(0);
 		if ((itemStack != null)
-				&& (itemStack.getItem() instanceof openccsensors.common.api.ISensorCard)) {
+				&& (itemStack.getItem() instanceof ItemSensorCard)) {
 			renderIcon = true;
 			iconIndex = itemStack.getIconIndex();
 			iconTexture = tile.getStackInSlot(0).getItem().getTextureFile();
@@ -30,8 +31,8 @@ public class TileEntitySensorRenderer extends TileEntitySpecialRenderer {
 		this.bindTextureByName("/openccsensors/resources/images/sensorblock.png");
 		GL11.glPushMatrix();
 
-		int placing = tile.getFacing()*90;
-		int rotation = tile.isDirectional() ? placing : (int)tile.getRotation();
+		int placing = tile.getFacing() * 90;
+		int rotation = (int) tile.getRotation();
 		this.modelSensor.renderSensor(rotation);
 
 		GL11.glPopMatrix();

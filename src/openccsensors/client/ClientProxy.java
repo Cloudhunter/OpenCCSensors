@@ -10,35 +10,36 @@ import openccsensors.client.sensorperipheral.BlockSensorRenderingHandler;
 import openccsensors.client.sensorperipheral.GuiSensor;
 import openccsensors.client.sensorperipheral.TileEntitySensorRenderer;
 import openccsensors.common.CommonProxy;
-import openccsensors.common.gaugeperipheral.TileEntityGauge;
-import openccsensors.common.sensorperipheral.TileEntitySensor;
+import openccsensors.common.blocks.tileentity.TileEntityGauge;
+import openccsensors.common.blocks.tileentity.TileEntitySensor;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
-public class ClientProxy extends CommonProxy 
-{
+public class ClientProxy extends CommonProxy {
 	@Override
-	public File getBase()
-	{
+	public File getBase() {
 		return FMLClientHandler.instance().getClient().getMinecraftDir();
 	}
-	
-	@Override
-	public Object getGui( InventoryPlayer inventory, TileEntitySensor tileentity )
-	{
-		return new GuiSensor( inventory, tileentity);
-	}
-	
-	@Override
-	public void registerRenderInformation()
-	{
-		MinecraftForgeClient.preloadTexture("/openccsensors/resources/images/terrain.png");
-		RenderingRegistry.registerBlockHandler(new BlockSensorRenderingHandler());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySensor.class, new TileEntitySensorRenderer());
 
-		RenderingRegistry.registerBlockHandler(new BlockGaugeRenderingHandler());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityGauge.class, new TileEntityGaugeRenderer());
+	@Override
+	public Object getGui(InventoryPlayer inventory, TileEntitySensor tileentity) {
+		return new GuiSensor(inventory, tileentity);
+	}
+
+	@Override
+	public void registerRenderInformation() {
+		MinecraftForgeClient
+				.preloadTexture("/openccsensors/resources/images/terrain.png");
+		RenderingRegistry
+				.registerBlockHandler(new BlockSensorRenderingHandler());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySensor.class,
+				new TileEntitySensorRenderer());
+
+		RenderingRegistry
+				.registerBlockHandler(new BlockGaugeRenderingHandler());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityGauge.class,
+				new TileEntityGaugeRenderer());
 
 	}
 }
