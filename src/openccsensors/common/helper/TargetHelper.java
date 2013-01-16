@@ -2,56 +2,52 @@ package openccsensors.common.helper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Map.Entry;
 
 import net.minecraft.world.World;
 import openccsensors.common.api.ISensorTarget;
 
 public class TargetHelper {
-	
-	public static Map getBasicInformationForTargets(HashMap<String, ArrayList<ISensorTarget>> directions, World world)
-	{
-		HashMap<String, Object> retMap = new HashMap<String, Object>();
-		
-		for (Entry<String, ArrayList<ISensorTarget>> entry : directions.entrySet())
-		{
-			ArrayList<ISensorTarget> targets = entry.getValue();
 
-			for (ISensorTarget target : targets)
-			{
-				if (target != null)
-				{
-					Map map = (Map) retMap.get(entry.getKey());
-					if (map == null)
-					{
-						map = new HashMap();
-						retMap.put(entry.getKey(), map);
-					}
-					map.putAll(target.getBasicInformation(world));
-				}
+	public static HashMap mergeSensorTargets(
+			HashMap<String, ArrayList<ISensorTarget>> targetMap, World world) {
+		HashMap<String, HashMap> results = new HashMap<String, HashMap>();
+		HashMap properties;
+		for (Entry<String, ArrayList<ISensorTarget>> entry : targetMap
+				.entrySet()) {
+			properties = new HashMap();
+			for (ISensorTarget target : entry.getValue()) {
+				properties.putAll(target.getBasicDetails(world));
 			}
+			results.put(entry.getKey(), properties);
 		}
-		
-		return retMap;
+		return results;
 	}
-	public static Map getDetailedInformationForTarget(String targetId, HashMap<String, ArrayList<ISensorTarget>> targets, World world) {
 
-		if (targets.containsKey(targetId))
-		{
-			ArrayList<ISensorTarget> sensorTargets = targets.get(targetId);
-			HashMap rtn = new HashMap();
-			if (sensorTargets != null)
-			{
-				for (ISensorTarget target : sensorTargets)
-				{
-					rtn.putAll(target.getBasicInformation(world));
-					rtn.putAll(target.getDetailInformation(world));
+	public static HashMap mergeTargetDetails(ArrayList<ISensorTarget> targets,
+			World world) {
+
+		HashMap details = new HashMap();
+		for (ISensorTarget target : targets) {
+			details.putAll(target.getExtendedDetails(world));
+		}
+
+		return details;
+	}
+
+	public static HashMap<String, Integer> getAvailableTrackingProperties(World world, ArrayList<ISensorTarget> targets)
+	{
+		HashMap<String, Integer> properties = new HashMap<String, Integer>();
+		HashMap targetDetails = mergeTargetDetails(targets, world);
+		
+		for (ISensorTarget target : targets) {
+			String[] propertyNames = target.getTrackablePropertyNames();
+			if (propertyNames != null) {
+				for (String propertyName : propertyNames) {
+					properties.put(propertyName, (Integer)targetDetails.get(propertyName));
 				}
 			}
-			return rtn;
 		}
-		
-		return null;
+		return properties;
 	}
 }

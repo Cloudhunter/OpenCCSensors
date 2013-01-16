@@ -1,8 +1,12 @@
 local function waitForResponse( _id )
 	while true do
 		local event = {os.pullEvent()}
-		if event[1] == "ocs_response" and event[2] == _id then
+		if event[2] == _id then
+		  if event[1] == "ocs_success" then
 			return event[3]
+		  elseif event[1] == "ocs_error" then
+		    error(event[3])
+		  end
 		end
 	end
 end
