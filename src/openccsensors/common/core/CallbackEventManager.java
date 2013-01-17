@@ -9,7 +9,7 @@ import dan200.computer.api.IComputerAccess;
 
 public class CallbackEventManager {
 
-	private int callId = 1;
+	private int callId = 0;
 
 	public ConcurrentLinkedQueue<MethodCallItem> callQueue = new ConcurrentLinkedQueue<MethodCallItem>();
 
@@ -48,6 +48,9 @@ public class CallbackEventManager {
 			Object[] arguments) {
 
 		callId++;
+		if (callId > 1000) {
+			callId = 0;
+		}
 		callQueue.add(new MethodCallItem(callId, computer, method, arguments));
 		return callId;
 	}
