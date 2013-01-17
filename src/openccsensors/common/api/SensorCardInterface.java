@@ -4,7 +4,7 @@ public class SensorCardInterface {
 
 	private int id;
 	private String name;
-	private SensorUpgrade upgrade;
+	private SensorUpgradeTier upgrade;
 	private Class sensorClass;
 
 	/**
@@ -18,7 +18,7 @@ public class SensorCardInterface {
 	 * @param sensor
 	 *            The sensor type
 	 */
-	public SensorCardInterface(int id, String name, SensorUpgrade upgrade,
+	public SensorCardInterface(int id, String name, SensorUpgradeTier upgrade,
 			Class sensorClass) {
 		this.id = id;
 		this.name = name;
@@ -34,8 +34,8 @@ public class SensorCardInterface {
 		return this.name;
 	}
 
-	public SensorUpgrade getSensorUpgrade() {
-		return null;
+	public SensorUpgradeTier getSensorUpgrade() {
+		return this.upgrade;
 	}
 
 	public ISensor getSensor() {

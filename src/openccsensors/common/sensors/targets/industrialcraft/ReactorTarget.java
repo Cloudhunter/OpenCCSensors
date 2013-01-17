@@ -35,7 +35,7 @@ public class ReactorTarget extends TileSensorTarget implements ISensorTarget {
 		retMap.put("HeatPercentage", 0);
 		if (maxHeat > 0) {
 			int heatPercentage = (int)((100.0 / maxHeat) * heat);
-			retMap.put("HeatPercentage", Math.max(Math.min(maxHeat, 100), 0));
+			retMap.put("HeatPercentage", Math.max(Math.min(heatPercentage, 100), 0));
 		}
 		return retMap;
 	}

@@ -8,7 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 import openccsensors.common.api.IEntityValidatorCallback;
 import openccsensors.common.api.ISensorTarget;
-import openccsensors.common.api.SensorUpgrade;
+import openccsensors.common.api.SensorUpgradeTier;
 import openccsensors.common.helper.EntityHelper;
 
 public abstract class BaseEntitySensor {
@@ -20,7 +20,7 @@ public abstract class BaseEntitySensor {
 	}
 
 	public HashMap<String, ArrayList<ISensorTarget>> getSurroundingTargets(
-			World world, int sx, int sy, int sz, SensorUpgrade upgrade) {
+			World world, int sx, int sy, int sz, SensorUpgradeTier upgrade) {
 
 		HashMap<String, ArrayList<ISensorTarget>> map = new HashMap<String, ArrayList<ISensorTarget>>();
 
