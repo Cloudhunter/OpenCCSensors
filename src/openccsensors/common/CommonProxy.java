@@ -33,8 +33,9 @@ import openccsensors.common.blocks.BlockSensor;
 import openccsensors.common.blocks.tileentity.TileEntityGauge;
 import openccsensors.common.blocks.tileentity.TileEntitySensor;
 import openccsensors.common.core.OCSLog;
+import openccsensors.common.items.ItemMetaData;
 import openccsensors.common.items.ItemSensorCard;
-import openccsensors.common.items.ItemSensorUpgrade;
+import openccsensors.common.items.ItemGeneric;
 import openccsensors.common.peripherals.ContainerSensor;
 import openccsensors.common.sensors.BuildCraftSensor;
 import openccsensors.common.sensors.DevSensor;
@@ -236,8 +237,13 @@ public class CommonProxy {
 		SensorManager.registerSensor(new IndustrialCraftSensor());
 		SensorManager.registerSensor(new ThaumCraftSensor());
 		
+		// register generic items
+		ItemGeneric.register(new ItemMetaData(240, "openccsensors.item.rangeextensionantenna"));
+		ItemGeneric.register(new ItemMetaData(241, "openccsensors.item.signalamplifier"));
+		ItemGeneric.register(new ItemMetaData(242, "openccsensors.item.advancedamplifier"));
+		
 		// register upgrade
-		Items.sensorUpgrade = new ItemSensorUpgrade(Config.sensorUpgradeID);
+		Items.genericItem = new ItemGeneric(Config.genericItemID);
 		Items.sensorCard = new ItemSensorCard(Config.sensorCardID);
 		
 		// register GUI handler
