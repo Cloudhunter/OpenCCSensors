@@ -8,7 +8,7 @@ import openccsensors.common.blocks.BlockGauge;
 import openccsensors.common.blocks.BlockSensor;
 import openccsensors.common.core.OCSLog;
 import openccsensors.common.items.ItemSensorCard;
-import openccsensors.common.items.ItemSensorUpgrade;
+import openccsensors.common.items.ItemGeneric;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Instance;
@@ -33,13 +33,13 @@ public class OpenCCSensors
 		public static int gaugeBlockID;
 		public static int sensorBlockRenderID;
 		public static int sensorCardID;
-		public static int sensorUpgradeID;
+		public static int genericItemID;
 		public static boolean turtlePeripheralEnabled;
 	}
 	
 	public static class Items
 	{
-		public static ItemSensorUpgrade sensorUpgrade;
+		public static ItemGeneric genericItem;
 		public static ItemSensorCard sensorCard;
 	}
 	
@@ -88,8 +88,8 @@ public class OpenCCSensors
 		Config.sensorCardID = prop.getInt();
 		
 		prop = configFile.getItem("sensorUpgradeID", 7487);
-		prop.comment = "The block ID for the sensor upgrades";
-		Config.sensorUpgradeID = prop.getInt();
+		prop.comment = "The block ID for the generic item";
+		Config.genericItemID = prop.getInt();
 		
 		configFile.save();
 	}
