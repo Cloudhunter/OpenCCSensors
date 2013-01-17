@@ -87,7 +87,6 @@ public class ItemSensorCard extends Item {
 		registerInterface(new SensorCardInterface(56, "openccsensors.item.thaumcraftsensor", SensorUpgradeTier.TIER3, ThaumCraftSensor.class));
 		registerInterface(new SensorCardInterface(72, "openccsensors.item.thaumcraftsensor", SensorUpgradeTier.TIER4, ThaumCraftSensor.class));
 
-
 	}
 
 	@Override
