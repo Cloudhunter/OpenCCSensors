@@ -27,7 +27,7 @@ import openccsensors.OpenCCSensors.Config;
 import openccsensors.OpenCCSensors.Items;
 import openccsensors.common.api.SensorCardInterface;
 import openccsensors.common.api.SensorManager;
-import openccsensors.common.api.SensorUpgrade;
+import openccsensors.common.api.SensorUpgradeTier;
 import openccsensors.common.blocks.BlockGauge;
 import openccsensors.common.blocks.BlockSensor;
 import openccsensors.common.blocks.tileentity.TileEntityGauge;
@@ -238,26 +238,10 @@ public class CommonProxy {
 		
 		// register upgrade
 		Items.sensorUpgrade = new ItemSensorUpgrade(Config.sensorUpgradeID);
-
-		// register interfaces for the proximity card
 		Items.sensorCard = new ItemSensorCard(Config.sensorCardID);
-		Items.sensorCard.registerInterface(new SensorCardInterface(17, "openccsensors.item.proximitysensor", new SensorUpgrade(), ProximitySensor.class));
-		Items.sensorCard.registerInterface(new SensorCardInterface(33, "openccsensors.item.proximitysensor", new SensorUpgrade(), ProximitySensor.class));
-		Items.sensorCard.registerInterface(new SensorCardInterface(22, "openccsensors.item.droppeditemsensor", new SensorUpgrade(), DroppedItemSensor.class));
-		Items.sensorCard.registerInterface(new SensorCardInterface(99, "openccsensors.item.devsensor", new SensorUpgrade(), DevSensor.class));
-		Items.sensorCard.registerInterface(new SensorCardInterface(16, "openccsensors.item.inventorysensor", new SensorUpgrade(), InventorySensor.class));
-		Items.sensorCard.registerInterface(new SensorCardInterface(23, "openccsensors.item.signsensor", new SensorUpgrade(), SignSensor.class));
-		Items.sensorCard.registerInterface(new SensorCardInterface(20, "openccsensors.item.tanksensor", new SensorUpgrade(), TankSensor.class));
-		Items.sensorCard.registerInterface(new SensorCardInterface(25, "openccsensors.item.minecartsensor", new SensorUpgrade(), MinecartSensor.class));
-		Items.sensorCard.registerInterface(new SensorCardInterface(21, "openccsensors.item.worldsensor", new SensorUpgrade(), WorldSensor.class));
-		Items.sensorCard.registerInterface(new SensorCardInterface(19, "openccsensors.item.buildcraftsensor", new SensorUpgrade(), BuildCraftSensor.class));
-		Items.sensorCard.registerInterface(new SensorCardInterface(18, "openccsensors.item.industrialcraftsensor", new SensorUpgrade(), IndustrialCraftSensor.class));
-		Items.sensorCard.registerInterface(new SensorCardInterface(24, "openccsensors.item.thaumcraftsensor", new SensorUpgrade(), ThaumCraftSensor.class));
-
-
+		
 		// register GUI handler
-		NetworkRegistry.instance().registerGuiHandler(OpenCCSensors.instance,
-				new GuiHandler());
+		NetworkRegistry.instance().registerGuiHandler(OpenCCSensors.instance, new GuiHandler());
 
 		setupLanguages();
 		setupLuaFiles();
