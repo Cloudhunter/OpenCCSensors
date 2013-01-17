@@ -25,7 +25,7 @@ public abstract class BaseEntitySensor {
 		HashMap<String, ArrayList<ISensorTarget>> map = new HashMap<String, ArrayList<ISensorTarget>>();
 
 		for (Entry<String, Entity> entity : EntityHelper.getEntities(world, sx,
-				sy, sz, 16.0F).entrySet()) {
+				sy, sz, upgrade.getMultiplier()*4).entrySet()) {
 
 			double relativeX = entity.getValue().posX - (sx + 0.5);
 			double relativeY = entity.getValue().posY - (sy + 0.5);

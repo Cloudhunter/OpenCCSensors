@@ -10,6 +10,7 @@ import openccsensors.common.api.ITileEntityValidatorCallback;
 import openccsensors.common.api.SensorUpgradeTier;
 
 public abstract class BaseTileEntitySensor {
+	
 	ArrayList<ITileEntityValidatorCallback> validatorCallbacks = new ArrayList<ITileEntityValidatorCallback>();
 
 	public void registerCallback(ITileEntityValidatorCallback wrapper) {
@@ -20,7 +21,7 @@ public abstract class BaseTileEntitySensor {
 			World world, int sx, int sy, int sz, SensorUpgradeTier upgrade) {
 
 		HashMap<String, ArrayList<ISensorTarget>> map = new HashMap<String, ArrayList<ISensorTarget>>();
-		int distance = 5;
+		int distance = (int) upgrade.getMultiplier();
 		for (int x = -distance; x <= distance; x++) {
 			for (int y = -distance; y <= distance; y++) {
 				for (int z = -distance; z <= distance; z++) {

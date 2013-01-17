@@ -50,6 +50,12 @@ public class ItemGeneric extends Item {
 		return getMetaDataForItemStack(itemstack).getName();
 	}
 	
+	public void initRecipes() {
+		for (Entry<Integer, ItemMetaData> entry : metadata.entrySet()) {
+			entry.getValue().initRecipes();
+		}
+	}
+	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(int par1, CreativeTabs tab, List subItems) {

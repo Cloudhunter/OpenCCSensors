@@ -6,11 +6,11 @@ public class SensorUpgradeTier {
 
 	public static final SensorUpgradeTier TIER1 = new SensorUpgradeTier(1, 1,
 			EnumRarity.common);
-	public static final SensorUpgradeTier TIER2 = new SensorUpgradeTier(2, 2,
+	public static final SensorUpgradeTier TIER2 = new SensorUpgradeTier(2, 3,
 			EnumRarity.uncommon);
-	public static final SensorUpgradeTier TIER3 = new SensorUpgradeTier(3, 3,
+	public static final SensorUpgradeTier TIER3 = new SensorUpgradeTier(3, 5,
 			EnumRarity.rare);
-	public static final SensorUpgradeTier TIER4 = new SensorUpgradeTier(4, 4,
+	public static final SensorUpgradeTier TIER4 = new SensorUpgradeTier(4, 7,
 			EnumRarity.epic);
 
 	private int level;
