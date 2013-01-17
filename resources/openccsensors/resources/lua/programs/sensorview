@@ -66,6 +66,7 @@ local function redraw()
 			for k,v in pairs(targetNames) do
 				table.insert(targetNameMenuTable, k)
 			end
+			table.sort(targetNameMenuTable)
 			if #targetNameMenuTable > 0 then
 				toLines(sensor.call(sideNames[sideSelection], "getTargetDetails", targetNameMenuTable[targetSelection]), detailLines, {}, 0)
 			end
@@ -107,7 +108,7 @@ local function redraw()
 			end
 			if #targetNameMenuTable >= h then
 				term.setCursorPos(1, h)
-				if #targetNameMenuTable > targetOffset + h - 1 then
+				if #targetNameMenuTable > targetOffset + h - 4 then
 					term.write("\\/")
 				else
 					writeEntry(targetNameMenuTable, #targetNameMenuTable, targetSelection)
@@ -180,11 +181,13 @@ while true do
 	redraw()
 	local e, p1 = os.pullEvent()
 	if e == "key" then
+		local w, h = term.getSize()
 		if p1 == 203 then
 			--left, selects previous side
 			if sideSelection > 1 then
 				sideSelection = sideSelection - 1
 				targetSelection = 1
+				targetOffset = 1
 				detailOffset = 1
 				detailLines = nil
 			end
@@ -193,19 +196,26 @@ while true do
 			if sideSelection < 6 then
 				sideSelection = sideSelection + 1
 				targetSelection = 1
+				targetOffset = 1
 				detailOffset = 1
 				detailLines = nil
 			end
 		elseif p1 == 200 then
-			--up, selects previous target
+			--up, selects previous target, adjusting offset if necessary.
 			if targetSelection > 1 then
+				if targetSelection - targetOffset + 1 == 2 and targetOffset > 1 then
+					targetOffset = targetOffset - 1
+				end
 				targetSelection = targetSelection - 1
 				detailOffset = 1
 				detailLines = nil
 			end
 		elseif p1 == 208 then
-			--down, selects next target
+			--down, selects next target, adjusting offset if necessary.
 			if targetNameMenuTable and targetSelection < #targetNameMenuTable then
+				if targetSelection - targetOffset + 1 == h - 4 and targetSelection ~= #targetNameMenuTable - 1 then
+					targetOffset = targetOffset + 1
+				end
 				targetSelection = targetSelection + 1
 				detailOffset = 1
 				detailLines = nil
