@@ -14,7 +14,7 @@ import openccsensors.common.api.ISensor;
 import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITileEntityValidatorCallback;
-import openccsensors.common.api.SensorUpgrade;
+import openccsensors.common.api.SensorUpgradeTier;
 import openccsensors.common.sensors.targets.InventoryTarget;
 
 public class InventorySensor extends BaseTileEntitySensor implements ISensor {
@@ -53,13 +53,13 @@ public class InventorySensor extends BaseTileEntitySensor implements ISensor {
 	}
 
 	@Override
-	public String[] getCustomMethods(SensorUpgrade upgrade) {
+	public String[] getCustomMethods(SensorUpgradeTier upgrade) {
 		return new String[] { "getMapData" };
 	}
 
 	@Override
 	public Object callCustomMethod(ISensorAccess sensor, World world, int x,
-			int y, int z, int methodID, Object[] args, SensorUpgrade upgrade)
+			int y, int z, int methodID, Object[] args, SensorUpgradeTier upgrade)
 			throws Exception {
 		switch (methodID) {
 		case 0:

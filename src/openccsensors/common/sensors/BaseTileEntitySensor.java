@@ -7,7 +7,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITileEntityValidatorCallback;
-import openccsensors.common.api.SensorUpgrade;
+import openccsensors.common.api.SensorUpgradeTier;
 
 public abstract class BaseTileEntitySensor {
 	ArrayList<ITileEntityValidatorCallback> validatorCallbacks = new ArrayList<ITileEntityValidatorCallback>();
@@ -17,7 +17,7 @@ public abstract class BaseTileEntitySensor {
 	}
 
 	public HashMap<String, ArrayList<ISensorTarget>> getSurroundingTargets(
-			World world, int sx, int sy, int sz, SensorUpgrade upgrade) {
+			World world, int sx, int sy, int sz, SensorUpgradeTier upgrade) {
 
 		HashMap<String, ArrayList<ISensorTarget>> map = new HashMap<String, ArrayList<ISensorTarget>>();
 		int distance = 5;

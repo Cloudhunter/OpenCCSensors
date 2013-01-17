@@ -1,4 +1,6 @@
 *.class
+build/
+download/
 
 # Package Files #
 *.jar
