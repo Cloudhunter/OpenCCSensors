@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -12,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import openccsensors.OpenCCSensors.Items;
 import openccsensors.common.api.SensorCardInterface;
 import openccsensors.common.api.SensorUpgradeTier;
+import openccsensors.common.helper.RecipeHelper;
 import openccsensors.common.sensors.BuildCraftSensor;
 import openccsensors.common.sensors.DevSensor;
 import openccsensors.common.sensors.DroppedItemSensor;
@@ -42,6 +44,7 @@ public class ItemSensorCard extends Item {
 		registerInterface(new SensorCardInterface(33, "openccsensors.item.proximitysensor", SensorUpgradeTier.TIER2, ProximitySensor.class));
 		registerInterface(new SensorCardInterface(49, "openccsensors.item.proximitysensor", SensorUpgradeTier.TIER3, ProximitySensor.class));
 		registerInterface(new SensorCardInterface(65, "openccsensors.item.proximitysensor", SensorUpgradeTier.TIER4, ProximitySensor.class));
+		
 		
 		registerInterface(new SensorCardInterface(22, "openccsensors.item.droppeditemsensor", SensorUpgradeTier.TIER1, DroppedItemSensor.class));
 		registerInterface(new SensorCardInterface(38, "openccsensors.item.droppeditemsensor", SensorUpgradeTier.TIER2, DroppedItemSensor.class));
@@ -86,7 +89,7 @@ public class ItemSensorCard extends Item {
 		registerInterface(new SensorCardInterface(40, "openccsensors.item.thaumcraftsensor", SensorUpgradeTier.TIER2, ThaumCraftSensor.class));
 		registerInterface(new SensorCardInterface(56, "openccsensors.item.thaumcraftsensor", SensorUpgradeTier.TIER3, ThaumCraftSensor.class));
 		registerInterface(new SensorCardInterface(72, "openccsensors.item.thaumcraftsensor", SensorUpgradeTier.TIER4, ThaumCraftSensor.class));
-
+		
 	}
 
 	@Override

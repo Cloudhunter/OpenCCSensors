@@ -33,6 +33,7 @@ import openccsensors.common.blocks.BlockSensor;
 import openccsensors.common.blocks.tileentity.TileEntityGauge;
 import openccsensors.common.blocks.tileentity.TileEntitySensor;
 import openccsensors.common.core.OCSLog;
+import openccsensors.common.helper.RecipeHelper;
 import openccsensors.common.items.ItemMetaData;
 import openccsensors.common.items.ItemSensorCard;
 import openccsensors.common.items.ItemGeneric;
@@ -245,6 +246,17 @@ public class CommonProxy {
 		// register upgrade
 		Items.genericItem = new ItemGeneric(Config.genericItemID);
 		Items.sensorCard = new ItemSensorCard(Config.sensorCardID);
+		
+		RecipeHelper.addCardRecipe(23, new ItemStack(Item.diamond));
+		RecipeHelper.addCardRecipe(18, new ItemStack(Item.flint));
+		RecipeHelper.addCardRecipe(19, new ItemStack(Item.coal));
+		RecipeHelper.addCardRecipe(21, new ItemStack(Item.enderPearl));
+		RecipeHelper.addCardRecipe(25, new ItemStack(Item.minecartEmpty));
+		RecipeHelper.addCardRecipe(20, new ItemStack(Item.bucketEmpty));
+		RecipeHelper.addCardRecipe(23, new ItemStack(Item.sign));
+		RecipeHelper.addCardRecipe(22, "plankWood");
+		RecipeHelper.addCardRecipe(22, new ItemStack(Item.slimeBall));
+		RecipeHelper.addCardRecipe(17, new ItemStack(Block.pressurePlateStone));
 		
 		// register GUI handler
 		NetworkRegistry.instance().registerGuiHandler(OpenCCSensors.instance, new GuiHandler());
