@@ -238,25 +238,23 @@ public class CommonProxy {
 		SensorManager.registerSensor(new IndustrialCraftSensor());
 		SensorManager.registerSensor(new ThaumCraftSensor());
 		
-		// register generic items
-		ItemGeneric.register(new ItemMetaData(240, "openccsensors.item.rangeextensionantenna"));
-		ItemGeneric.register(new ItemMetaData(241, "openccsensors.item.signalamplifier"));
-		ItemGeneric.register(new ItemMetaData(242, "openccsensors.item.advancedamplifier"));
 		
 		// register upgrade
 		Items.genericItem = new ItemGeneric(Config.genericItemID);
 		Items.sensorCard = new ItemSensorCard(Config.sensorCardID);
 		
-		RecipeHelper.addCardRecipe(23, new ItemStack(Item.diamond));
-		RecipeHelper.addCardRecipe(18, new ItemStack(Item.flint));
-		RecipeHelper.addCardRecipe(19, new ItemStack(Item.coal));
-		RecipeHelper.addCardRecipe(21, new ItemStack(Item.enderPearl));
-		RecipeHelper.addCardRecipe(25, new ItemStack(Item.minecartEmpty));
-		RecipeHelper.addCardRecipe(20, new ItemStack(Item.bucketEmpty));
-		RecipeHelper.addCardRecipe(23, new ItemStack(Item.sign));
-		RecipeHelper.addCardRecipe(22, "plankWood");
-		RecipeHelper.addCardRecipe(22, new ItemStack(Item.slimeBall));
-		RecipeHelper.addCardRecipe(17, new ItemStack(Block.pressurePlateStone));
+		RecipeHelper.addTier1CardRecipe(ItemSensorCard.THAUMCRAFT_TIER_1, new ItemStack(Item.diamond));
+		RecipeHelper.addTier1CardRecipe(ItemSensorCard.INDUSTRIALCRAFT_TIER_1, new ItemStack(Item.flint));
+		RecipeHelper.addTier1CardRecipe(ItemSensorCard.BUILDCRAFT_TIER_1, new ItemStack(Item.coal));
+		RecipeHelper.addTier1CardRecipe(ItemSensorCard.WORLD_TIER_1, new ItemStack(Item.enderPearl));
+		RecipeHelper.addTier1CardRecipe(ItemSensorCard.MINECART_TIER_1, new ItemStack(Item.minecartEmpty));
+		RecipeHelper.addTier1CardRecipe(ItemSensorCard.TANK_TIER_1, new ItemStack(Item.bucketEmpty));
+		RecipeHelper.addTier1CardRecipe(ItemSensorCard.SIGN_TIER_1, new ItemStack(Item.sign));
+		RecipeHelper.addTier1CardRecipe(ItemSensorCard.INVENTORY_TIER_1, "plankWood");
+		RecipeHelper.addTier1CardRecipe(ItemSensorCard.DROPPED_TIER_1, new ItemStack(Item.slimeBall));
+		RecipeHelper.addTier1CardRecipe(ItemSensorCard.PROXIMITY_TIER_1, new ItemStack(Block.pressurePlateStone));
+		RecipeHelper.addTierUpgradeRecipes();
+		RecipeHelper.addUpgradeItemRecipes();
 		
 		// register GUI handler
 		NetworkRegistry.instance().registerGuiHandler(OpenCCSensors.instance, new GuiHandler());

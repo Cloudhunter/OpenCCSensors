@@ -10,13 +10,21 @@ import dan200.computer.api.ComputerCraftAPI;
 
 import openccsensors.common.api.SensorCardInterface;
 import openccsensors.common.api.SensorUpgradeTier;
+import openccsensors.common.sensors.ProximitySensor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class ItemGeneric extends Item {
-
+	
+	/**
+	 * STATIC
+	 */
+	
+	public static final ItemMetaData RANGE_EXTENSION_ANTENNA = 	new ItemMetaData(240, "openccsensors.item.rangeextensionantenna");
+	public static final ItemMetaData SIGNAL_AMPLIFIER = 		new ItemMetaData(241, "openccsensors.item.signalamplifier");
+	public static final ItemMetaData ADVANCED_AMPLIFIER = 		new ItemMetaData(242, "openccsensors.item.advancedamplifier");
 	
 	private static HashMap<Integer, ItemMetaData> metadata = new HashMap<Integer, ItemMetaData>();
 	
@@ -30,7 +38,11 @@ public class ItemGeneric extends Item {
 	
 	public static ItemMetaData getMetaDataForDamageValue(int damageValue) {
 		return metadata.get(damageValue);
-	}	
+	}
+	
+	/**
+	 * ItemGeneric
+	 */
 
 	public ItemGeneric(int par1) {
 		super(par1);
@@ -38,6 +50,10 @@ public class ItemGeneric extends Item {
 		setHasSubtypes(true);
 		this.setMaxDamage(0);
 		setCreativeTab(ComputerCraftAPI.getCreativeTab());
+		
+		register(RANGE_EXTENSION_ANTENNA);
+		register(SIGNAL_AMPLIFIER);
+		register(ADVANCED_AMPLIFIER);
 	}
 	
 	@Override
@@ -48,12 +64,6 @@ public class ItemGeneric extends Item {
 	@Override
 	public String getItemNameIS(ItemStack itemstack) {
 		return getMetaDataForItemStack(itemstack).getName();
-	}
-	
-	public void initRecipes() {
-		for (Entry<Integer, ItemMetaData> entry : metadata.entrySet()) {
-			entry.getValue().initRecipes();
-		}
 	}
 	
 	@Override

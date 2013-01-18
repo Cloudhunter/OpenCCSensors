@@ -1,5 +1,8 @@
 package openccsensors.common.api;
 
+import net.minecraft.item.ItemStack;
+import openccsensors.OpenCCSensors;
+
 public class SensorCardInterface {
 
 	private int id;
@@ -40,6 +43,10 @@ public class SensorCardInterface {
 
 	public ISensor getSensor() {
 		return SensorManager.getSensor(sensorClass);
+	}
+	
+	public ItemStack newItemStack(int count) {
+		return new ItemStack(OpenCCSensors.Items.sensorCard, count, this.id);
 	}
 
 }

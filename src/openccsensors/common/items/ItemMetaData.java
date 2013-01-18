@@ -5,14 +5,13 @@ import net.minecraft.item.ItemStack;
 import openccsensors.OpenCCSensors;
 
 public class ItemMetaData {
+	
 	private int id;
 	private String name;
-	private Object[] recipe;
 	
-	public ItemMetaData(int id, String name, Object... recipe) {
+	public ItemMetaData(int id, String name) {
 		this.id = id;
 		this.name = name;
-		this.recipe = recipe;
 	}
 
 	public String getName() {
@@ -23,9 +22,8 @@ public class ItemMetaData {
 		return this.id;
 	}
 	
-	public void initRecipes() {
-		GameRegistry.addRecipe(
-				new ItemStack(OpenCCSensors.Items.genericItem, 1, this.getId()),
-				this.recipe);
+	public ItemStack newItemStack(int count)
+	{
+		return new ItemStack(OpenCCSensors.Items.genericItem, count, this.id);
 	}
 }
