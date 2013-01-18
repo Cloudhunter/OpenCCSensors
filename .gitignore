@@ -1,6 +1,7 @@
 *.class
 build/
 download/
+.DS_Store
 
 # Package Files #
 *.jar
