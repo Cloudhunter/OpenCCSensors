@@ -16,6 +16,7 @@ import openccsensors.common.api.IMethodCallback;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.SensorManager;
 import openccsensors.common.core.CallbackEventManager;
+import openccsensors.common.core.OCSLog;
 import openccsensors.common.helper.TargetHelper;
 import openccsensors.common.sensors.BaseTileEntitySensor;
 import openccsensors.common.api.ISensor;
@@ -136,7 +137,7 @@ public class TileEntityGauge extends TileEntity implements IPeripheral {
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
-
+		
 		if (!this.getWorldObj().isRemote) {
 			updatePercentage();
 		}

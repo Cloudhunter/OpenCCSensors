@@ -17,7 +17,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 
-@Mod( modid = "OCS", name = "OpenCCSensors", version = "0.1.1", dependencies = "required-after:ComputerCraft;after:CCTurtle")
+@Mod( modid = "OCS", name = "OpenCCSensors", version = "0.1.1", dependencies = "required-after:ComputerCraft;after:CCTurtle;after:BuildCraft|Core;after:IC2;after:Thaumcraft")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class OpenCCSensors 
 {
@@ -48,7 +48,6 @@ public class OpenCCSensors
 	
 	@SidedProxy( clientSide = "openccsensors.client.ClientProxy", serverSide = "openccsensors.common.CommonProxy" )
 	public static CommonProxy proxy;
-
 
 	@Mod.Init
 	public void init( FMLInitializationEvent evt )
