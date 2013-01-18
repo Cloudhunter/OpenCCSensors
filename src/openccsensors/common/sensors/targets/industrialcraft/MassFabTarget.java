@@ -1,8 +1,6 @@
 package openccsensors.common.sensors.targets.industrialcraft;
 
 import java.util.HashMap;
-import java.util.Map;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -22,7 +20,7 @@ public class MassFabTarget extends TileSensorTarget implements ISensorTarget {
 	public HashMap getExtendedDetails(World world) {
 		HashMap retMap = getBasicDetails(world);
 		
-		TileEntity machine = (TileEntity) world.getBlockTileEntity(xCoord,
+		TileEntity machine = world.getBlockTileEntity(xCoord,
 				yCoord, zCoord);
 
 		NBTTagCompound tagCompound = getTagCompound(machine);

@@ -25,21 +25,20 @@ import net.minecraft.world.World;
 import openccsensors.OpenCCSensors;
 import openccsensors.OpenCCSensors.Config;
 import openccsensors.OpenCCSensors.Items;
-import openccsensors.common.api.SensorCardInterface;
 import openccsensors.common.api.SensorManager;
-import openccsensors.common.api.SensorUpgradeTier;
 import openccsensors.common.blocks.BlockGauge;
 import openccsensors.common.blocks.BlockSensor;
 import openccsensors.common.blocks.tileentity.TileEntityGauge;
 import openccsensors.common.blocks.tileentity.TileEntitySensor;
 import openccsensors.common.core.OCSLog;
+import openccsensors.common.helper.BCHelper;
+import openccsensors.common.helper.IC2Helper;
 import openccsensors.common.helper.RecipeHelper;
-import openccsensors.common.items.ItemMetaData;
+import openccsensors.common.helper.ThaumcraftHelper;
 import openccsensors.common.items.ItemSensorCard;
 import openccsensors.common.items.ItemGeneric;
 import openccsensors.common.peripherals.ContainerSensor;
 import openccsensors.common.sensors.BuildCraftSensor;
-import openccsensors.common.sensors.DevSensor;
 import openccsensors.common.sensors.DroppedItemSensor;
 import openccsensors.common.sensors.IndustrialCraftSensor;
 import openccsensors.common.sensors.InventorySensor;
@@ -235,7 +234,7 @@ public class CommonProxy {
 		// register all sensors
 		SensorManager.registerSensor(new ProximitySensor());
 		SensorManager.registerSensor(new DroppedItemSensor());
-		SensorManager.registerSensor(new DevSensor());
+		//SensorManager.registerSensor(new DevSensor());
 		SensorManager.registerSensor(new InventorySensor());
 		SensorManager.registerSensor(new SignSensor());
 		SensorManager.registerSensor(new TankSensor());
@@ -251,16 +250,31 @@ public class CommonProxy {
 			SensorManager.registerSensor(new ThaumCraftSensor());
 		
 		
-		OpenCCSensors.Items.sensorCard.init();
+		ItemSensorCard.init();
 		
-		if (Loader.isModLoaded("Thaumcraft"))
-			RecipeHelper.addTier1CardRecipe(ItemSensorCard.THAUMCRAFT_TIER_1, new ItemStack(Item.diamond));
-
-		if (Loader.isModLoaded("IC2"))
-			RecipeHelper.addTier1CardRecipe(ItemSensorCard.INDUSTRIALCRAFT_TIER_1, new ItemStack(Item.flint));
+		if (Loader.isModLoaded("Thaumcraft")) {
+			Item tcItem = ThaumcraftHelper.getGoggles();
+			if (tcItem == null) {
+				tcItem = Item.eyeOfEnder;
+			}
+			RecipeHelper.addTier1CardRecipe(ItemSensorCard.THAUMCRAFT_TIER_1, new ItemStack(tcItem));
+		}
 		
-		if (Loader.isModLoaded("BuildCraft|Core"))
-			RecipeHelper.addTier1CardRecipe(ItemSensorCard.BUILDCRAFT_TIER_1, new ItemStack(Item.coal));
+		if (Loader.isModLoaded("IC2")) {
+			ItemStack icStack = IC2Helper.getItemStack("copperCableItem");
+			if (icStack == null) {
+				icStack = new ItemStack(Item.flint);
+			}
+			RecipeHelper.addTier1CardRecipe(ItemSensorCard.INDUSTRIALCRAFT_TIER_1, icStack);
+		}
+		
+		if (Loader.isModLoaded("BuildCraft|Core")) {
+			Item bcItem = BCHelper.getStoneGear();
+			if (bcItem == null) {
+				bcItem = Item.coal;
+			}
+			RecipeHelper.addTier1CardRecipe(ItemSensorCard.BUILDCRAFT_TIER_1, new ItemStack(bcItem));
+		}
 		
 		RecipeHelper.addTier1CardRecipe(ItemSensorCard.WORLD_TIER_1, new ItemStack(Item.enderPearl));
 		RecipeHelper.addTier1CardRecipe(ItemSensorCard.MINECART_TIER_1, new ItemStack(Item.minecartEmpty));

@@ -4,8 +4,6 @@ import ic2.api.IC2Reactor;
 import ic2.api.IReactor;
 
 import java.util.HashMap;
-import java.util.Map;
-
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import openccsensors.common.api.ISensorTarget;

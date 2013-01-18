@@ -4,10 +4,8 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 import openccsensors.OpenCCSensors;
-import openccsensors.OpenCCSensors.Items;
 import openccsensors.common.api.SensorCardInterface;
 import openccsensors.common.api.SensorUpgradeTier;
-import openccsensors.common.core.OCSLog;
 import openccsensors.common.items.ItemGeneric;
 import openccsensors.common.items.ItemSensorCard;
 import net.minecraft.block.Block;
@@ -16,12 +14,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class RecipeHelper {
 	
 	public static void addTierUpgradeRecipes() {
-		HashMap<Integer, SensorCardInterface> allInterfaces = OpenCCSensors.Items.sensorCard.getAllInterfaces();
+		HashMap<Integer, SensorCardInterface> allInterfaces = ItemSensorCard.getAllInterfaces();
 		SensorCardInterface iface;
 		int id;
 		for (Entry<Integer, SensorCardInterface> entry : allInterfaces.entrySet()) {
