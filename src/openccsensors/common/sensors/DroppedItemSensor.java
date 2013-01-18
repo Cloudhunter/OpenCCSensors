@@ -18,8 +18,8 @@ public class DroppedItemSensor extends BaseEntitySensor implements ISensor {
 			public ISensorTarget getTargetIfValid(Entity entity,
 					double relativeX, double relativeY, double relativeZ) {
 				if (entity instanceof EntityItem
-						&& ((Entity) entity).isEntityAlive()) {
-					return new DroppedItemTarget((EntityItem) entity,
+						&& entity.isEntityAlive()) {
+					return new DroppedItemTarget(entity,
 							relativeX, relativeY, relativeZ);
 				}
 				return null;

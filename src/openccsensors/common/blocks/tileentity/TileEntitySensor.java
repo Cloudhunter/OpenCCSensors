@@ -79,6 +79,7 @@ public class TileEntitySensor extends TileEntity implements ISensorEnvironment,
 	// IPeripheral interface - basically a proxy to the SensorPeripheral,
 	// allowing us to reuse code for the turtle peripheral
 
+	@Override
 	public int getFacing() {
 		return (worldObj == null) ? 0 : this.getBlockMetadata();
 	}
@@ -107,6 +108,7 @@ public class TileEntitySensor extends TileEntity implements ISensorEnvironment,
 		return rotation;
 	}
 
+	@Override
 	public ItemStack getSensorCardStack() {
 		return getStackInSlot(0);
 	}
@@ -154,6 +156,7 @@ public class TileEntitySensor extends TileEntity implements ISensorEnvironment,
 	public void openChest() {
 	}
 
+	@Override
 	public void readFromNBT(NBTTagCompound nbttagcompound) {
 		super.readFromNBT(nbttagcompound);
 
@@ -177,6 +180,7 @@ public class TileEntitySensor extends TileEntity implements ISensorEnvironment,
 		rotation = (rotation + rotationSpeed) % 360;
 	}
 
+	@Override
 	public void writeToNBT(NBTTagCompound nbttagcompound) {
 		super.writeToNBT(nbttagcompound);
 

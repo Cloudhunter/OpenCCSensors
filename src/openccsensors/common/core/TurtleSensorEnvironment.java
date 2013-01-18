@@ -13,6 +13,7 @@ public class TurtleSensorEnvironment implements ISensorEnvironment {
 		turtle = _turtle;
 	}
 
+	@Override
 	public int getFacing() {
 		return (turtle.getFacingDir() + 1) % 4;
 	}

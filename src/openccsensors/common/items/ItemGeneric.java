@@ -8,11 +8,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dan200.computer.api.ComputerCraftAPI;
 
-import openccsensors.common.api.SensorCardInterface;
-import openccsensors.common.api.SensorUpgradeTier;
-import openccsensors.common.sensors.ProximitySensor;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 

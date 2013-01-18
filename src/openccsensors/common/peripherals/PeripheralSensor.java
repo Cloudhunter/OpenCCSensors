@@ -317,7 +317,7 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 			/* If there's a card there and it's a sensor card.. */
 			if (card != null && card instanceof ItemSensorCard) {
 				/* Get the interface for the current damage value */
-				return ((ItemSensorCard) card).getInterfaceForDamageValue(stack
+				return ItemSensorCard.getInterfaceForDamageValue(stack
 						.getItemDamage());
 			}
 		}
