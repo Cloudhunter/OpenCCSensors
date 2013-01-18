@@ -5,7 +5,7 @@ local function waitForResponse( _id )
 		  if event[1] == "ocs_success" then
 			return event[3]
 		  elseif event[1] == "ocs_error" then
-		    error(event[3],2)--This way stuff get's reported to the caller. Ps: Why 2 and not 3? Replace "return waitForResponse(id)" by "local x=waitForResponse(id) return x" below and the right choice is 3!! There's some weird tail-cat recursion Lua function rules going on here...
+		    error(event[3],2)
 		  end
 		end
 	end
