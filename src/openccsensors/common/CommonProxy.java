@@ -51,6 +51,7 @@ import openccsensors.common.sensors.ThaumCraftSensor;
 import openccsensors.common.sensors.WorldSensor;
 import openccsensors.common.turtles.TurtleUpgradeSensor;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -224,6 +225,12 @@ public class CommonProxy {
 		if (OpenCCSensors.Config.turtlePeripheralEnabled) {
 			TurtleAPI.registerUpgrade(new TurtleUpgradeSensor());
 		}
+		
+
+		// register upgrade
+		Items.genericItem = new ItemGeneric(Config.genericItemID);
+		Items.sensorCard = new ItemSensorCard(Config.sensorCardID);
+
 
 		// register all sensors
 		SensorManager.registerSensor(new ProximitySensor());
@@ -234,18 +241,27 @@ public class CommonProxy {
 		SensorManager.registerSensor(new TankSensor());
 		SensorManager.registerSensor(new MinecartSensor());
 		SensorManager.registerSensor(new WorldSensor());
-		SensorManager.registerSensor(new BuildCraftSensor());
-		SensorManager.registerSensor(new IndustrialCraftSensor());
-		SensorManager.registerSensor(new ThaumCraftSensor());
+		if (Loader.isModLoaded("BuildCraft|Core"))
+			SensorManager.registerSensor(new BuildCraftSensor());
+		
+		if (Loader.isModLoaded("IC2"))
+			SensorManager.registerSensor(new IndustrialCraftSensor());
+		
+		if (Loader.isModLoaded("Thaumcraft"))
+			SensorManager.registerSensor(new ThaumCraftSensor());
 		
 		
-		// register upgrade
-		Items.genericItem = new ItemGeneric(Config.genericItemID);
-		Items.sensorCard = new ItemSensorCard(Config.sensorCardID);
+		OpenCCSensors.Items.sensorCard.init();
 		
-		RecipeHelper.addTier1CardRecipe(ItemSensorCard.THAUMCRAFT_TIER_1, new ItemStack(Item.diamond));
-		RecipeHelper.addTier1CardRecipe(ItemSensorCard.INDUSTRIALCRAFT_TIER_1, new ItemStack(Item.flint));
-		RecipeHelper.addTier1CardRecipe(ItemSensorCard.BUILDCRAFT_TIER_1, new ItemStack(Item.coal));
+		if (Loader.isModLoaded("Thaumcraft"))
+			RecipeHelper.addTier1CardRecipe(ItemSensorCard.THAUMCRAFT_TIER_1, new ItemStack(Item.diamond));
+
+		if (Loader.isModLoaded("IC2"))
+			RecipeHelper.addTier1CardRecipe(ItemSensorCard.INDUSTRIALCRAFT_TIER_1, new ItemStack(Item.flint));
+		
+		if (Loader.isModLoaded("BuildCraft|Core"))
+			RecipeHelper.addTier1CardRecipe(ItemSensorCard.BUILDCRAFT_TIER_1, new ItemStack(Item.coal));
+		
 		RecipeHelper.addTier1CardRecipe(ItemSensorCard.WORLD_TIER_1, new ItemStack(Item.enderPearl));
 		RecipeHelper.addTier1CardRecipe(ItemSensorCard.MINECART_TIER_1, new ItemStack(Item.minecartEmpty));
 		RecipeHelper.addTier1CardRecipe(ItemSensorCard.TANK_TIER_1, new ItemStack(Item.bucketEmpty));
@@ -254,17 +270,14 @@ public class CommonProxy {
 		RecipeHelper.addTier1CardRecipe(ItemSensorCard.DROPPED_TIER_1, new ItemStack(Item.slimeBall));
 		RecipeHelper.addTier1CardRecipe(ItemSensorCard.PROXIMITY_TIER_1, new ItemStack(Block.pressurePlateStone));
 		RecipeHelper.addTierUpgradeRecipes();
-		RecipeHelper.addUpgradeItemRecipes();
-		
+		RecipeHelper.addUpgradeItemRecipes();	
+	
 		// register GUI handler
 		NetworkRegistry.instance().registerGuiHandler(OpenCCSensors.instance, new GuiHandler());
 
 		setupLanguages();
 		setupLuaFiles();
 
-	}
-
-	public void postInit() {
 	}
 
 	public void registerRenderInformation() {
