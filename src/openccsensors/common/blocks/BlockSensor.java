@@ -55,18 +55,18 @@ public class BlockSensor extends BlockContainer {
 
 						var9.stackSize -= var13;
 						var14 = new EntityItem(par1World,
-								(double) ((float) par2 + var10),
-								(double) ((float) par3 + var11),
-								(double) ((float) par4 + var12), new ItemStack(
+								par2 + var10,
+								par3 + var11,
+								par4 + var12, new ItemStack(
 										var9.itemID, var13,
 										var9.getItemDamage()));
 						float var15 = 0.05F;
-						var14.motionX = (double) ((float) this.random
-								.nextGaussian() * var15);
-						var14.motionY = (double) ((float) this.random
-								.nextGaussian() * var15 + 0.2F);
-						var14.motionZ = (double) ((float) this.random
-								.nextGaussian() * var15);
+						var14.motionX = (float) this.random
+								.nextGaussian() * var15;
+						var14.motionY = (float) this.random
+								.nextGaussian() * var15 + 0.2F;
+						var14.motionZ = (float) this.random
+								.nextGaussian() * var15;
 
 						if (var9.hasTagCompound()) {
 							var14.func_92014_d().setTagCompound(
@@ -115,6 +115,7 @@ public class BlockSensor extends BlockContainer {
 		return false;
 	}
 
+	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z,
 			EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote) {
@@ -132,7 +133,7 @@ public class BlockSensor extends BlockContainer {
 	public void onBlockPlacedBy(World par1World, int par2, int par3, int par4,
 			EntityLiving par5EntityPlayer) {
 		int p = MathHelper
-				.floor_double((double) ((par5EntityPlayer.rotationYaw * 4F) / 360F) + 0.5D) & 3; // this
+				.floor_double((par5EntityPlayer.rotationYaw * 4F) / 360F + 0.5D) & 3; // this
 																									// is
 																									// a
 																									// smart

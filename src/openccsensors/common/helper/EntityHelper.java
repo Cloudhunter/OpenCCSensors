@@ -29,7 +29,7 @@ public class EntityHelper {
 						* dz);
 				for (List<Entity> subchunk : chunk.entityLists) {
 					for (Entity entity : subchunk) {
-						Entity entityLiving = (Entity) entity;
+						Entity entityLiving = entity;
 						Vec3 livingPos = Vec3.createVectorHelper(
 								entityLiving.posX + 0.5,
 								entityLiving.posY + 0.5,

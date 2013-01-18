@@ -1,22 +1,16 @@
 package openccsensors.common.items;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import openccsensors.OpenCCSensors.Items;
-import openccsensors.common.api.ISensor;
 import openccsensors.common.api.SensorCardInterface;
 import openccsensors.common.api.SensorUpgradeTier;
-import openccsensors.common.core.OCSLog;
-import openccsensors.common.helper.RecipeHelper;
 import openccsensors.common.sensors.BuildCraftSensor;
 import openccsensors.common.sensors.DevSensor;
 import openccsensors.common.sensors.DroppedItemSensor;
@@ -184,7 +178,6 @@ public class ItemSensorCard extends Item {
 				INDUSTRIALCRAFT_TIER_1, INDUSTRIALCRAFT_TIER_2, INDUSTRIALCRAFT_TIER_3, INDUSTRIALCRAFT_TIER_4,
 				THAUMCRAFT_TIER_1, THAUMCRAFT_TIER_2, THAUMCRAFT_TIER_3, THAUMCRAFT_TIER_4
 		});
-		OCSLog.info("init init iniiiitt");
 	}
 	
 	public static void registerInterfaces(SensorCardInterface[] sensorInterfaces) {

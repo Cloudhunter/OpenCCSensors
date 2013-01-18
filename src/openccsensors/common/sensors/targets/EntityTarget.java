@@ -5,7 +5,6 @@ import java.util.HashMap;
 import openccsensors.common.helper.SensorHelper;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 

@@ -1,8 +1,6 @@
 package openccsensors.common.sensors.targets.thaumcraft;
 
 import java.util.HashMap;
-import java.util.Map;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;

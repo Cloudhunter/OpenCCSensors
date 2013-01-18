@@ -1,6 +1,5 @@
 package openccsensors;
 
-import net.minecraft.item.Item;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.Property;
 import openccsensors.common.CommonProxy;

@@ -3,10 +3,7 @@ package openccsensors.common.blocks.tileentity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
@@ -16,7 +13,6 @@ import openccsensors.common.api.IMethodCallback;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.SensorManager;
 import openccsensors.common.core.CallbackEventManager;
-import openccsensors.common.core.OCSLog;
 import openccsensors.common.helper.TargetHelper;
 import openccsensors.common.sensors.BaseTileEntitySensor;
 import openccsensors.common.api.ISensor;
@@ -72,7 +68,7 @@ public class TileEntityGauge extends TileEntity implements IPeripheral {
 				BaseTileEntitySensor teSensor = (BaseTileEntitySensor) sensor;
 				
 				ArrayList<ISensorTarget> targets = teSensor.getTargetsForTile(this.getWorldObj(),
-						((int)xCoord)+x, (int)yCoord, ((int) zCoord)+z, x, 0, z);
+						(xCoord)+x, yCoord, (zCoord)+z, x, 0, z);
 				if (targets != null && this.getWorldObj() != null)
 				{
 					HashMap<String, Integer> trackers = TargetHelper.getAvailableTrackingProperties(this.getWorldObj(), targets);

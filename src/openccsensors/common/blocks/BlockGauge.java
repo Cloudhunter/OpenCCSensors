@@ -28,6 +28,7 @@ public class BlockGauge extends BlockContainer {
 	 * Checks to see if its valid to put this block at the specified
 	 * coordinates. Args: world, x, y, z
 	 */
+	@Override
 	public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4) {
 		return par1World.isBlockSolidOnSide(par2 - 1, par3, par4, EAST)
 				|| par1World.isBlockSolidOnSide(par2 + 1, par3, par4, WEST)
@@ -49,6 +50,7 @@ public class BlockGauge extends BlockContainer {
 	 * Returns a bounding box from the pool of bounding boxes (this means this
 	 * box can change after the pool has been cleared to be reused)
 	 */
+	@Override
 	public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World,
 			int par2, int par3, int par4) {
 		this.setBlockBoundsBasedOnState(par1World, par2, par3, par4);
@@ -61,6 +63,7 @@ public class BlockGauge extends BlockContainer {
 		return 2700;
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	/**
 	 * Returns the bounding box of the wired rectangular prism to render.
@@ -81,6 +84,7 @@ public class BlockGauge extends BlockContainer {
 	 * Called when a block is placed using its ItemBlock. Args: World, X, Y, Z,
 	 * side, hitX, hitY, hitZ, block metadata
 	 */
+	@Override
 	public int onBlockPlaced(World par1World, int par2, int par3, int par4,
 			int par5, float par6, float par7, float par8, int par9) {
 		int var10 = par9;
@@ -113,6 +117,7 @@ public class BlockGauge extends BlockContainer {
 	 * neighbor changed (coordinates passed are their own) Args: x, y, z,
 	 * neighbor blockID
 	 */
+	@Override
 	public void onNeighborBlockChange(World par1World, int par2, int par3,
 			int par4, int par5) {
 		int var6 = par1World.getBlockMetadata(par2, par3, par4);
@@ -155,6 +160,7 @@ public class BlockGauge extends BlockContainer {
 	 * Updates the blocks bounds based on its current state. Args: world, x, y,
 	 * z
 	 */
+	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess,
 			int par2, int par3, int par4) {
 		this.updateGaugeBounds(par1IBlockAccess.getBlockMetadata(par2, par3,

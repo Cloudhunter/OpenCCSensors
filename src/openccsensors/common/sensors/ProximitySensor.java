@@ -18,7 +18,7 @@ public class ProximitySensor extends BaseEntitySensor implements ISensor {
 			public ISensorTarget getTargetIfValid(Entity entity,
 					double relativeX, double relativeY, double relativeZ) {
 				if (entity instanceof EntityLiving) {
-					return new LivingTarget((EntityLiving) entity, relativeX,
+					return new LivingTarget(entity, relativeX,
 							relativeY, relativeZ);
 				}
 				return null;

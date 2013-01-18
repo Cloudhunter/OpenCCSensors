@@ -2,6 +2,7 @@ package openccsensors.client;
 
 import java.io.File;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.client.MinecraftForgeClient;
 import openccsensors.client.gaugeperipheral.BlockGaugeRenderingHandler;
@@ -19,7 +20,8 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 public class ClientProxy extends CommonProxy {
 	@Override
 	public File getBase() {
-		return FMLClientHandler.instance().getClient().getMinecraftDir();
+		FMLClientHandler.instance().getClient();
+		return Minecraft.getMinecraftDir();
 	}
 
 	@Override
