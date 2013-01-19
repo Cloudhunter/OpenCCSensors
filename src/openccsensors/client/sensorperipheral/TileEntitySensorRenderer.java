@@ -4,6 +4,7 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import openccsensors.common.blocks.tileentity.TileEntitySensor;
+import openccsensors.common.core.OCSLog;
 import openccsensors.common.items.ItemSensorCard;
 
 import org.lwjgl.opengl.GL11;
