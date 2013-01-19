@@ -220,6 +220,7 @@ public class CommonProxy {
 		GameRegistry
 				.registerBlock(OpenCCSensors.Blocks.gaugeBlock, "OCS.gauge");
 		GameRegistry.registerTileEntity(TileEntityGauge.class, "gauge");
+		RecipeHelper.addGaugeRecipe();
 
 		if (OpenCCSensors.Config.turtlePeripheralEnabled) {
 			TurtleAPI.registerUpgrade(new TurtleUpgradeSensor());
