@@ -139,10 +139,10 @@ public class ItemSensorCard extends Item {
 		TANK_TIER_3 = 		new SensorCardInterface(52, "openccsensors.item.tanksensor", SensorUpgradeTier.TIER3, TankSensor.class);
 		TANK_TIER_4 = 		new SensorCardInterface(68, "openccsensors.item.tanksensor", SensorUpgradeTier.TIER4, TankSensor.class);
 		
-		MINECART_TIER_1 = 	new SensorCardInterface(24, "openccsensors.item.minecartsensor", SensorUpgradeTier.TIER1, MinecartSensor.class);
-		MINECART_TIER_2 = 	new SensorCardInterface(40, "openccsensors.item.minecartsensor", SensorUpgradeTier.TIER2, MinecartSensor.class);
-		MINECART_TIER_3 = 	new SensorCardInterface(56, "openccsensors.item.minecartsensor", SensorUpgradeTier.TIER3, MinecartSensor.class);
-		MINECART_TIER_4 = 	new SensorCardInterface(72, "openccsensors.item.minecartsensor", SensorUpgradeTier.TIER4, MinecartSensor.class);
+		MINECART_TIER_1 = 	new SensorCardInterface(80, "openccsensors.item.minecartsensor", SensorUpgradeTier.TIER1, MinecartSensor.class);
+		MINECART_TIER_2 = 	new SensorCardInterface(96, "openccsensors.item.minecartsensor", SensorUpgradeTier.TIER2, MinecartSensor.class);
+		MINECART_TIER_3 = 	new SensorCardInterface(112, "openccsensors.item.minecartsensor", SensorUpgradeTier.TIER3, MinecartSensor.class);
+		MINECART_TIER_4 = 	new SensorCardInterface(128, "openccsensors.item.minecartsensor", SensorUpgradeTier.TIER4, MinecartSensor.class);
 		
 		WORLD_TIER_1 = 		new SensorCardInterface(21, "openccsensors.item.worldsensor", SensorUpgradeTier.TIER1, WorldSensor.class);
 		
@@ -159,10 +159,10 @@ public class ItemSensorCard extends Item {
 			INDUSTRIALCRAFT_TIER_4 = new SensorCardInterface(66, "openccsensors.item.industrialcraftsensor", SensorUpgradeTier.TIER4, IndustrialCraftSensor.class);
 		}
 		if (Loader.isModLoaded("Thaumcraft")) {
-			THAUMCRAFT_TIER_1 = new SensorCardInterface(25, "openccsensors.item.thaumcraftsensor", SensorUpgradeTier.TIER1, ThaumCraftSensor.class);
-			THAUMCRAFT_TIER_2 = new SensorCardInterface(41, "openccsensors.item.thaumcraftsensor", SensorUpgradeTier.TIER2, ThaumCraftSensor.class);
-			THAUMCRAFT_TIER_3 = new SensorCardInterface(57, "openccsensors.item.thaumcraftsensor", SensorUpgradeTier.TIER3, ThaumCraftSensor.class);
-			THAUMCRAFT_TIER_4 = new SensorCardInterface(73, "openccsensors.item.thaumcraftsensor", SensorUpgradeTier.TIER4, ThaumCraftSensor.class);
+			THAUMCRAFT_TIER_1 = new SensorCardInterface(81, "openccsensors.item.thaumcraftsensor", SensorUpgradeTier.TIER1, ThaumCraftSensor.class);
+			THAUMCRAFT_TIER_2 = new SensorCardInterface(97, "openccsensors.item.thaumcraftsensor", SensorUpgradeTier.TIER2, ThaumCraftSensor.class);
+			THAUMCRAFT_TIER_3 = new SensorCardInterface(113, "openccsensors.item.thaumcraftsensor", SensorUpgradeTier.TIER3, ThaumCraftSensor.class);
+			THAUMCRAFT_TIER_4 = new SensorCardInterface(129, "openccsensors.item.thaumcraftsensor", SensorUpgradeTier.TIER4, ThaumCraftSensor.class);
 		}
 		
 		registerInterfaces(new SensorCardInterface[] {
@@ -216,7 +216,17 @@ public class ItemSensorCard extends Item {
     @Override
     public EnumRarity getRarity(ItemStack itemStack)
     {
-        return getInterfaceForStack(itemStack).getSensorUpgrade().getRarity();
+    	SensorCardInterface iface = getInterfaceForStack(itemStack);
+    	if (iface == null) return null;
+    	SensorUpgradeTier tier = iface.getSensorUpgrade();
+    	if (tier == null) return null;
+    	switch(tier.getLevel()) {
+	    	case 1: return EnumRarity.common;
+	    	case 2: return EnumRarity.uncommon;
+	    	case 3: return EnumRarity.rare;
+	    	case 4: return EnumRarity.epic;
+    	}
+    	return EnumRarity.common;
     }
 
 	@Override
