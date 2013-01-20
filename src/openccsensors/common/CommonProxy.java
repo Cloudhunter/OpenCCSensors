@@ -207,7 +207,7 @@ public class CommonProxy {
 	public void init() {
 		// create block and register it
 		OpenCCSensors.Blocks.sensorBlock = new BlockSensor(
-				OpenCCSensors.Config.sensorBlockID, Material.cloth);
+				OpenCCSensors.Config.sensorBlockID, Material.ground);
 		GameRegistry.registerBlock(OpenCCSensors.Blocks.sensorBlock, "OCS");
 		GameRegistry.registerTileEntity(TileEntitySensor.class, "sensor");
 		GameRegistry.addRecipe(new ItemStack(OpenCCSensors.Blocks.sensorBlock,
@@ -216,7 +216,7 @@ public class CommonProxy {
 						Block.stone));
 
 		OpenCCSensors.Blocks.gaugeBlock = new BlockGauge(
-				OpenCCSensors.Config.gaugeBlockID, Material.cloth);
+				OpenCCSensors.Config.gaugeBlockID, Material.ground);
 		GameRegistry
 				.registerBlock(OpenCCSensors.Blocks.gaugeBlock, "OCS.gauge");
 		GameRegistry.registerTileEntity(TileEntityGauge.class, "gauge");

@@ -24,6 +24,6 @@ net.minecraft.src.TileEntityFurnace=Furnace
 #vanilla stuff - obfuscated
 and=Beacon
 ane=Brewing Stand
-anf=Chest
+anm=Chest
 anh=Dispenser
 ank=Furnace
