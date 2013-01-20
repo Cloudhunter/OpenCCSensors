@@ -45,6 +45,7 @@ import openccsensors.common.sensors.InventorySensor;
 import openccsensors.common.sensors.MinecartSensor;
 import openccsensors.common.sensors.ProximitySensor;
 import openccsensors.common.sensors.SignSensor;
+import openccsensors.common.sensors.SonicSensor;
 import openccsensors.common.sensors.TankSensor;
 import openccsensors.common.sensors.ThaumCraftSensor;
 import openccsensors.common.sensors.WorldSensor;
@@ -241,6 +242,7 @@ public class CommonProxy {
 		SensorManager.registerSensor(new TankSensor());
 		SensorManager.registerSensor(new MinecartSensor());
 		SensorManager.registerSensor(new WorldSensor());
+		SensorManager.registerSensor(new SonicSensor());
 		if (Loader.isModLoaded("BuildCraft|Core"))
 			SensorManager.registerSensor(new BuildCraftSensor());
 		
@@ -284,6 +286,7 @@ public class CommonProxy {
 		RecipeHelper.addTier1CardRecipe(ItemSensorCard.INVENTORY_TIER_1, "plankWood");
 		RecipeHelper.addTier1CardRecipe(ItemSensorCard.DROPPED_TIER_1, new ItemStack(Item.slimeBall));
 		RecipeHelper.addTier1CardRecipe(ItemSensorCard.PROXIMITY_TIER_1, new ItemStack(Block.pressurePlateStone));
+		RecipeHelper.addTier1CardRecipe(ItemSensorCard.SONIC_TIER_1, new ItemStack(Block.music));
 		RecipeHelper.addTierUpgradeRecipes();
 		RecipeHelper.addUpgradeItemRecipes();	
 	
