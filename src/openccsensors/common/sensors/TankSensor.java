@@ -28,12 +28,12 @@ public class TankSensor extends BaseTileEntitySensor implements ISensor {
 					int relativeX, int relativeY, int relativeZ) {
 				
 				if (entity instanceof ITankContainer) {
-					
-					return new TankTarget(((ITankContainer)entity).getTanks(ForgeDirection.UNKNOWN), relativeX, relativeY,
-							relativeZ);
+					ILiquidTank[] tanks = ((ITankContainer)entity).getTanks(ForgeDirection.UNKNOWN);
+					if (tanks.length > 0) {
+						return new TankTarget(tanks, relativeX, relativeY, relativeZ);
+					}
 					
 				} else if (ModLoader.isModLoaded("Railcraft")) {
-					
 					ILiquidTank tankTile = RCHelper.getTankIfTankTile(entity);
 					if (tankTile != null) {
 						ILiquidTank[] tanks = new ILiquidTank[] {  (ILiquidTank)tankTile };

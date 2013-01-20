@@ -12,6 +12,7 @@ import net.minecraftforge.liquids.ILiquidTank;
 import net.minecraftforge.liquids.ITankContainer;
 import net.minecraftforge.liquids.LiquidStack;
 import openccsensors.common.api.ISensorTarget;
+import openccsensors.common.helper.SensorHelper;
 
 public class TankTarget implements ISensorTarget {
 
@@ -71,7 +72,14 @@ public class TankTarget implements ISensorTarget {
 
 	@Override
 	public HashMap getBasicDetails(World world) {
-		return new HashMap();
+		HashMap retMap = new HashMap();
+		HashMap<String, Integer> pos = new HashMap<String, Integer>();
+		pos.put("X", relativeX);
+		pos.put("Y", relativeY);
+		pos.put("Z", relativeZ);
+
+		retMap.put("Position", pos);
+		return retMap;
 	}
 
 
