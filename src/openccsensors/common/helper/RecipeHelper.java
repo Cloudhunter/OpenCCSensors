@@ -1,11 +1,13 @@
 package openccsensors.common.helper;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
 import openccsensors.OpenCCSensors;
 import openccsensors.common.api.SensorCardInterface;
 import openccsensors.common.api.SensorUpgradeTier;
+import openccsensors.common.core.OCSLog;
 import openccsensors.common.items.ItemGeneric;
 import openccsensors.common.items.ItemSensorCard;
 import net.minecraft.block.Block;
@@ -127,5 +129,42 @@ public class RecipeHelper {
 					Character.valueOf('p'), uniqueItem				
 				}
 			));
+	}
+	
+	public static void addGaugeRecipe()
+	{
+		CraftingManager.getInstance().getRecipeList().add(new ShapedOreRecipe(
+				new ItemStack(OpenCCSensors.Blocks.gaugeBlock),
+				new Object[] {
+					"grm",
+					Character.valueOf('g'), new ItemStack(Block.thinGlass),
+					Character.valueOf('r'), new ItemStack(Item.redstone),
+					Character.valueOf('m'), new ItemStack(getMonitor(), 1, 2)
+				}
+			));		
+	}
+	
+	private static Block getMonitor() {
+		Block monitor = null;
+		try {
+			Class cc = Class.forName("dan200.ComputerCraft$Blocks");
+			if (cc != null) {
+				Field peripheralField = cc.getDeclaredField("peripheral");
+				if (peripheralField != null) {
+					monitor = (Block) peripheralField.get(cc);
+				}
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (NoSuchFieldException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		return monitor;
 	}
 }

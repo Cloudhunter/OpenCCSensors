@@ -67,11 +67,11 @@ public class TileEntityGauge extends TileEntity implements IPeripheral {
 			if (sensor instanceof BaseTileEntitySensor) {
 				BaseTileEntitySensor teSensor = (BaseTileEntitySensor) sensor;
 				
-				ArrayList<ISensorTarget> targets = teSensor.getTargetsForTile(this.getWorldObj(),
+				ArrayList<ISensorTarget> targets = teSensor.getTargetsForTile(this.worldObj,
 						(xCoord)+x, yCoord, (zCoord)+z, x, 0, z);
-				if (targets != null && this.getWorldObj() != null)
+				if (targets != null && this.worldObj != null)
 				{
-					HashMap<String, Integer> trackers = TargetHelper.getAvailableTrackingProperties(this.getWorldObj(), targets);
+					HashMap<String, Integer> trackers = TargetHelper.getAvailableTrackingProperties(this.worldObj, targets);
 					if (trackers.containsKey(updatePropertyName)) {
 						this.percentage = trackers.get(updatePropertyName);
 						return;
@@ -133,16 +133,16 @@ public class TileEntityGauge extends TileEntity implements IPeripheral {
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
-		
-		if (!this.getWorldObj().isRemote) {
-			updatePercentage();
+		if (this.worldObj != null) {
+			if (!this.worldObj.isRemote) {
+				updatePercentage();
+			}
+	
+			eventManager.process();
+	
+			worldObj.markBlockForUpdate(this.xCoord, this.yCoord,
+					this.zCoord);
 		}
-
-		eventManager.process();
-
-		this.getWorldObj().markBlockForUpdate(this.xCoord, this.yCoord,
-				this.zCoord);
-
 	}
 
 	@Override
