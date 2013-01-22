@@ -36,7 +36,9 @@ public class TankTarget implements ISensorTarget {
 		ItemStack istack;
 		Item item;
 		Map tankProperties;
-		int i = 0;
+		Map tankMap = new HashMap();
+		
+		int i = 1;
 		if (tanks != null) {
 			for (ILiquidTank tank : tanks) {
 				tankProperties = new HashMap();
@@ -50,7 +52,6 @@ public class TankTarget implements ISensorTarget {
 						if (istack.getItem() != null) {
 							tankProperties.put("Name", istack.getDisplayName());
 							tankProperties.put("Amount", stack.amount);
-	
 						}
 					}
 				}
@@ -58,10 +59,11 @@ public class TankTarget implements ISensorTarget {
 					tankProperties.put("Amount", 0);
 				}
 	
-				retMap.put(i, tankProperties);
+				tankMap.put(i, tankProperties);
 				i++;
 			}
 		}
+		retMap.put("Tanks", tankMap);
 		return retMap;
 	}
 

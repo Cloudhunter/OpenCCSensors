@@ -27,7 +27,6 @@ public class RCHelper {
 		ILiquidTank tank = null;
 		if (tankTile != null) {
 			if (tankTile.isAssignableFrom(entity.getClass())) {
-				Item goggles = null;
 				Method tankMethod = null;
 				try {
 					tankMethod = tankTile.getMethod("getTank");
