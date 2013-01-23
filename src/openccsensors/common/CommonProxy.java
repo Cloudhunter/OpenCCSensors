@@ -300,7 +300,7 @@ public class CommonProxy {
 		// relevant mod installed
 		SensorManager.registerSensor(new ProximitySensor());
 		SensorManager.registerSensor(new DroppedItemSensor());
-		SensorManager.registerSensor(new DevSensor());
+		//SensorManager.registerSensor(new DevSensor());
 		SensorManager.registerSensor(new InventorySensor());
 		SensorManager.registerSensor(new SignSensor());
 		SensorManager.registerSensor(new TankSensor());
