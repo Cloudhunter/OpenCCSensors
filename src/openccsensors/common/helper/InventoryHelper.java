@@ -3,6 +3,8 @@ package openccsensors.common.helper;
 import java.util.HashMap;
 import java.util.Map;
 
+import openccsensors.common.core.OCSLog;
+
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -30,8 +32,9 @@ public class InventoryHelper {
 		}
 
 		Item item = itemstack.getItem();
-
-		map.put("Name", item.getItemNameIS(itemstack));
+		
+		map.put("Name", InventoryHelper.getNameForItemStack(itemstack));
+		map.put("RawName", itemstack.getItemName());
 		map.put("Size", itemstack.stackSize);
 		map.put("DamageValue", itemstack.getItemDamage());
 		map.put("MaxStack", itemstack.getMaxStackSize());
@@ -42,6 +45,19 @@ public class InventoryHelper {
 		 */
 
 		return map;
+	}
+	
+	public static String getNameForItemStack(ItemStack is) {
+		String name = "Unknown";
+		try {
+			name = is.getDisplayName();
+		}catch(Exception e) {
+			try {
+				name = is.getItemName();
+			}catch(Exception e2) {
+			}
+		}
+		return name;
 	}
 
 }

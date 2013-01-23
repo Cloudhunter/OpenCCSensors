@@ -82,6 +82,10 @@ public class EntityHelper {
 		map.put("IsSprinting", living.isSprinting());
 		map.put("IsWet", living.isWet());
 		map.put("IsHome", living.isWithinHomeDistanceCurrentPosition());
+	
+		map.put("Yaw", living.rotationYaw);
+		map.put("Pitch", living.rotationPitch);
+		map.put("YawHead", living.rotationYawHead);
 
 		HashMap potionEffects = new HashMap();
 		Collection<PotionEffect> effects = living.getActivePotionEffects();

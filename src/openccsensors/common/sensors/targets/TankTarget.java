@@ -12,6 +12,8 @@ import net.minecraftforge.liquids.ILiquidTank;
 import net.minecraftforge.liquids.ITankContainer;
 import net.minecraftforge.liquids.LiquidStack;
 import openccsensors.common.api.ISensorTarget;
+import openccsensors.common.core.OCSLog;
+import openccsensors.common.helper.InventoryHelper;
 import openccsensors.common.helper.SensorHelper;
 
 public class TankTarget implements ISensorTarget {
@@ -20,13 +22,17 @@ public class TankTarget implements ISensorTarget {
 	private int relativeX;
 	private int relativeY;
 	private int relativeZ;
+	private String rawName;
+	private String displayName;
 	
-	public TankTarget(ILiquidTank[] tanks, int relativeX, int relativeY,
+	public TankTarget(ILiquidTank[] tanks, String rawName, String displayName, int relativeX, int relativeY,
 			int relativeZ) {
 		this.tanks = tanks;
 		this.relativeX = relativeX;
 		this.relativeY = relativeY;
 		this.relativeZ = relativeZ;
+		this.rawName = rawName;
+		this.displayName = displayName;
 	}
 
 	@Override
@@ -37,7 +43,6 @@ public class TankTarget implements ISensorTarget {
 		Item item;
 		Map tankProperties;
 		Map tankMap = new HashMap();
-		
 		int i = 1;
 		if (tanks != null) {
 			for (ILiquidTank tank : tanks) {
@@ -50,7 +55,8 @@ public class TankTarget implements ISensorTarget {
 					istack = stack.asItemStack();
 					if (istack != null) {
 						if (istack.getItem() != null) {
-							tankProperties.put("Name", istack.getDisplayName());
+							tankProperties.put("Name", InventoryHelper.getNameForItemStack(istack));
+							tankProperties.put("RawName", istack.getItemName());
 							tankProperties.put("Amount", stack.amount);
 						}
 					}
@@ -80,6 +86,8 @@ public class TankTarget implements ISensorTarget {
 		pos.put("Y", relativeY);
 		pos.put("Z", relativeZ);
 
+		retMap.put("Type", this.rawName);
+		retMap.put("DisplayType", this.displayName);
 		retMap.put("Position", pos);
 		return retMap;
 	}

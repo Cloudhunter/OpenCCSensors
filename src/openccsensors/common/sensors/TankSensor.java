@@ -1,5 +1,6 @@
 package openccsensors.common.sensors;
 
+import net.minecraft.block.Block;
 import net.minecraft.src.ModLoader;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -13,6 +14,7 @@ import openccsensors.common.api.ITileEntityValidatorCallback;
 import openccsensors.common.api.SensorUpgradeTier;
 import openccsensors.common.core.OCSLog;
 import openccsensors.common.helper.RCHelper;
+import openccsensors.common.helper.SensorHelper;
 import openccsensors.common.sensors.targets.TankTarget;
 
 public class TankSensor extends BaseTileEntitySensor implements ISensor {
@@ -26,18 +28,21 @@ public class TankSensor extends BaseTileEntitySensor implements ISensor {
 			@Override
 			public ISensorTarget getTargetIfValid(TileEntity entity,
 					int relativeX, int relativeY, int relativeZ) {
+
+				String rawName = SensorHelper.getRawType(entity);
+				String displayName = SensorHelper.getDisplayType(entity);
 				
 				if (entity instanceof ITankContainer) {
 					ILiquidTank[] tanks = ((ITankContainer)entity).getTanks(ForgeDirection.UNKNOWN);
 					if (tanks.length > 0) {
-						return new TankTarget(tanks, relativeX, relativeY, relativeZ);
+						return new TankTarget(tanks, rawName, displayName, relativeX, relativeY, relativeZ);
 					}
 					
 				} else if (ModLoader.isModLoaded("Railcraft")) {
 					ILiquidTank tankTile = RCHelper.getTankIfTankTile(entity);
 					if (tankTile != null) {
 						ILiquidTank[] tanks = new ILiquidTank[] {  (ILiquidTank)tankTile };
-						return new TankTarget(tanks, relativeX, relativeY,
+						return new TankTarget(tanks, rawName, displayName, relativeX, relativeY,
 								relativeZ);
 					}
 					

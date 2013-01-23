@@ -18,6 +18,7 @@ public class TileSensorTarget {
 	public int relativeZ;
 
 	public String rawType;
+	public String displayType;
 
 	protected TileSensorTarget(TileEntity targetEntity, int relativeX,
 			int relativeY, int relativeZ) {
@@ -30,7 +31,8 @@ public class TileSensorTarget {
 		this.relativeY = relativeY;
 		this.relativeZ = relativeZ;
 
-		rawType = targetEntity.getClass().getName();
+		rawType = SensorHelper.getRawType(targetEntity);
+		displayType = SensorHelper.getDisplayType(targetEntity);
 	}
 
 	public HashMap getBasicDetails(World world) {
@@ -42,7 +44,8 @@ public class TileSensorTarget {
 		pos.put("Y", relativeY);
 		pos.put("Z", relativeZ);
 
-		retMap.put("Type", SensorHelper.getType(rawType));
+		retMap.put("RawType", rawType);
+		retMap.put("DisplayType", displayType);
 		retMap.put("Position", pos);
 
 		return retMap;
