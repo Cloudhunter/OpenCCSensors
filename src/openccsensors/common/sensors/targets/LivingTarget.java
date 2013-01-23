@@ -32,11 +32,4 @@ public class LivingTarget extends EntityTarget implements ISensorTarget {
 	public String[] getTrackablePropertyNames() {
 		return null;
 	}
-
-	
-	@Override
-	public String getType(Entity entity) {
-		return (entity instanceof EntityPlayer) ? "Player" : entity.getEntityName();
-	}
-
 }

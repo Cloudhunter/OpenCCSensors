@@ -44,8 +44,8 @@ public class TileSensorTarget {
 		pos.put("Y", relativeY);
 		pos.put("Z", relativeZ);
 
-		retMap.put("RawType", rawType);
-		retMap.put("DisplayType", displayType);
+		retMap.put("RawName", rawType);
+		retMap.put("Name", displayType);
 		retMap.put("Position", pos);
 
 		return retMap;

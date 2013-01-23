@@ -20,7 +20,8 @@ public class WorldTarget implements ISensorTarget {
 	@Override
 	public HashMap getBasicDetails(World world) {
 		HashMap retMap = new HashMap();
-		retMap.put("Type",  "World");
+		retMap.put("Name",  "World");
+		retMap.put("RawName",  "world");
 		return retMap;
 	}
 

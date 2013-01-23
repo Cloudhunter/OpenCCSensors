@@ -86,8 +86,8 @@ public class TankTarget implements ISensorTarget {
 		pos.put("Y", relativeY);
 		pos.put("Z", relativeZ);
 
-		retMap.put("Type", this.rawName);
-		retMap.put("DisplayType", this.displayName);
+		retMap.put("RawName", this.rawName);
+		retMap.put("Name", this.displayName);
 		retMap.put("Position", pos);
 		return retMap;
 	}
