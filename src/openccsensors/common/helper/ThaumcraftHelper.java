@@ -5,7 +5,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+import openccsensors.common.items.ItemSensorCard;
+import cpw.mods.fml.common.Loader;
+
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class ThaumcraftHelper {
@@ -32,6 +36,15 @@ public class ThaumcraftHelper {
 			e.printStackTrace();
 		}
 		return goggles;
+	}
+
+	public static void addTier1CardRecipe() {
+		Item tcItem = ThaumcraftHelper.getGoggles();
+		if (tcItem == null) {
+			tcItem = Item.eyeOfEnder;
+		}
+		RecipeHelper.addTier1CardRecipe(ItemSensorCard.THAUMCRAFT_TIER_1, new ItemStack(tcItem));
+	
 	}
 
 }
