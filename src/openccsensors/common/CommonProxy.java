@@ -39,6 +39,7 @@ import openccsensors.common.items.ItemSensorCard;
 import openccsensors.common.items.ItemGeneric;
 import openccsensors.common.peripherals.ContainerSensor;
 import openccsensors.common.sensors.BuildCraftSensor;
+import openccsensors.common.sensors.DevSensor;
 import openccsensors.common.sensors.DroppedItemSensor;
 import openccsensors.common.sensors.IndustrialCraftSensor;
 import openccsensors.common.sensors.InventorySensor;
@@ -59,8 +60,15 @@ import dan200.turtle.api.TurtleAPI;
 
 public class CommonProxy {
 
+	/**
+	 * The GuiHandler currently only deals with the Sensor Peripherals GUI
+	 *
+	 */
 	private class GuiHandler implements IGuiHandler {
 
+		/**
+		 * Gets the Gui Element on the client
+		 */
 		@Override
 		public Object getClientGuiElement(int ID, EntityPlayer player,
 				World world, int x, int y, int z) {
@@ -73,6 +81,9 @@ public class CommonProxy {
 			return null;
 		}
 
+		/**
+		 * Gets the Gui Container on the server
+		 */
 		@Override
 		public Object getServerGuiElement(int ID, EntityPlayer player,
 				World world, int x, int y, int z) {
@@ -88,6 +99,9 @@ public class CommonProxy {
 
 	}
 
+	/**
+	 * Copies a file or directory from source to destination
+	 */
 	private static final void copy(File source, File destination)
 			throws IOException {
 		if (source.isDirectory()) {
@@ -97,6 +111,10 @@ public class CommonProxy {
 		}
 	}
 
+	/**
+	 * Recursively copies a directory from source to destination including
+	 * all the files within the folders
+	 */
 	private static final void copyDirectory(File source, File destination)
 			throws IOException {
 		if (!source.isDirectory()) {
@@ -107,11 +125,6 @@ public class CommonProxy {
 		if (!source.exists()) {
 			throw new IllegalArgumentException("Source directory ("
 					+ source.getPath() + ") doesn't exist.");
-		}
-
-		if (destination.exists()) {
-			// throw new IllegalArgumentException( "Destination (" +
-			// destination.getPath() + ") exists." );
 		}
 
 		destination.mkdirs();
@@ -126,6 +139,9 @@ public class CommonProxy {
 		}
 	}
 
+	/**
+	 * Copies a file from source to destination
+	 */
 	private static final void copyFile(File source, File destination)
 			throws IOException {
 		FileChannel sourceChannel = new FileInputStream(source).getChannel();
@@ -136,6 +152,9 @@ public class CommonProxy {
 		targetChannel.close();
 	}
 
+	/**
+	 * Extract a zip in sourceFolder into destFolder
+	 */
 	private void extractZipToLocation(File zipFile, String sourceFolder,
 			String destFolder) {
 		try {
@@ -204,17 +223,23 @@ public class CommonProxy {
 		return null;
 	}
 
+	/**
+	 * Copies a directory from source to destination
+	 */
 	public void init() {
-		// create block and register it
+		// create the sensor block
 		OpenCCSensors.Blocks.sensorBlock = new BlockSensor(
 				OpenCCSensors.Config.sensorBlockID, Material.ground);
+		// register it in the gameregistry
 		GameRegistry.registerBlock(OpenCCSensors.Blocks.sensorBlock, "OCS");
+		// register the tile entity associated with it
 		GameRegistry.registerTileEntity(TileEntitySensor.class, "sensor");
+		// add the recipe for it
 		GameRegistry.addRecipe(new ItemStack(OpenCCSensors.Blocks.sensorBlock,
 				1, 0), "ooo", "ror", "sss", 'o', new ItemStack(Block.obsidian),
 				'r', new ItemStack(Item.redstone), 's', new ItemStack(
 						Block.stone));
-
+		// create the gauge block
 		OpenCCSensors.Blocks.gaugeBlock = new BlockGauge(
 				OpenCCSensors.Config.gaugeBlockID, Material.ground);
 		GameRegistry
@@ -227,15 +252,55 @@ public class CommonProxy {
 		}
 		
 
-		// register upgrade
+		// register the generic item
 		Items.genericItem = new ItemGeneric(Config.genericItemID);
+		// register the sensor card
 		Items.sensorCard = new ItemSensorCard(Config.sensorCardID);
 
+		// register all our sensors
+		registerSensors();
+		
+		// init the sensor card. this'll set up all the
+		// different variations of card
+		ItemSensorCard.init();
+		
+		// add the recipes for the tier 1 cards
+		RecipeHelper.addTier1CardRecipe(ItemSensorCard.WORLD_TIER_1, new ItemStack(Item.enderPearl));
+		RecipeHelper.addTier1CardRecipe(ItemSensorCard.MINECART_TIER_1, new ItemStack(Item.minecartEmpty));
+		RecipeHelper.addTier1CardRecipe(ItemSensorCard.TANK_TIER_1, new ItemStack(Item.bucketEmpty));
+		RecipeHelper.addTier1CardRecipe(ItemSensorCard.SIGN_TIER_1, new ItemStack(Item.sign));
+		RecipeHelper.addTier1CardRecipe(ItemSensorCard.INVENTORY_TIER_1, "plankWood");
+		RecipeHelper.addTier1CardRecipe(ItemSensorCard.DROPPED_TIER_1, new ItemStack(Item.slimeBall));
+		RecipeHelper.addTier1CardRecipe(ItemSensorCard.PROXIMITY_TIER_1, new ItemStack(Block.pressurePlateStone));
+		// add the mod specific ones
+		if (Loader.isModLoaded("Thaumcraft"))
+			ThaumcraftHelper.addTier1CardRecipe();
+		if (Loader.isModLoaded("IC2"))
+			IC2Helper.addTier1CardRecipe();
+		if (Loader.isModLoaded("BuildCraft|Core"))
+			BCHelper.addTier1CardRecipe();
+		
+		// add the tier upgrade recipes
+		RecipeHelper.addTierUpgradeRecipes();
+		
+		// add the recipes for the upgrade items
+		RecipeHelper.addUpgradeItemRecipes();	
+	
+		// register GUI handler
+		NetworkRegistry.instance().registerGuiHandler(OpenCCSensors.instance, new GuiHandler());
 
-		// register all sensors
+		setupLanguages();
+		setupLuaFiles();
+
+	}
+
+	private void registerSensors() {
+		// register all sensors with the sensormanager.
+		// no point in registering sensors if we dont have their
+		// relevant mod installed
 		SensorManager.registerSensor(new ProximitySensor());
 		SensorManager.registerSensor(new DroppedItemSensor());
-		//SensorManager.registerSensor(new DevSensor());
+		SensorManager.registerSensor(new DevSensor());
 		SensorManager.registerSensor(new InventorySensor());
 		SensorManager.registerSensor(new SignSensor());
 		SensorManager.registerSensor(new TankSensor());
@@ -250,49 +315,6 @@ public class CommonProxy {
 		if (Loader.isModLoaded("Thaumcraft"))
 			SensorManager.registerSensor(new ThaumCraftSensor());
 		
-		
-		ItemSensorCard.init();
-		
-		if (Loader.isModLoaded("Thaumcraft")) {
-			Item tcItem = ThaumcraftHelper.getGoggles();
-			if (tcItem == null) {
-				tcItem = Item.eyeOfEnder;
-			}
-			RecipeHelper.addTier1CardRecipe(ItemSensorCard.THAUMCRAFT_TIER_1, new ItemStack(tcItem));
-		}
-		
-		if (Loader.isModLoaded("IC2")) {
-			ItemStack icStack = IC2Helper.getItemStack("copperCableItem");
-			if (icStack == null) {
-				icStack = new ItemStack(Item.flint);
-			}
-			RecipeHelper.addTier1CardRecipe(ItemSensorCard.INDUSTRIALCRAFT_TIER_1, icStack);
-		}
-		
-		if (Loader.isModLoaded("BuildCraft|Core")) {
-			Item bcItem = BCHelper.getStoneGear();
-			if (bcItem == null) {
-				bcItem = Item.coal;
-			}
-			RecipeHelper.addTier1CardRecipe(ItemSensorCard.BUILDCRAFT_TIER_1, new ItemStack(bcItem));
-		}
-		
-		RecipeHelper.addTier1CardRecipe(ItemSensorCard.WORLD_TIER_1, new ItemStack(Item.enderPearl));
-		RecipeHelper.addTier1CardRecipe(ItemSensorCard.MINECART_TIER_1, new ItemStack(Item.minecartEmpty));
-		RecipeHelper.addTier1CardRecipe(ItemSensorCard.TANK_TIER_1, new ItemStack(Item.bucketEmpty));
-		RecipeHelper.addTier1CardRecipe(ItemSensorCard.SIGN_TIER_1, new ItemStack(Item.sign));
-		RecipeHelper.addTier1CardRecipe(ItemSensorCard.INVENTORY_TIER_1, "plankWood");
-		RecipeHelper.addTier1CardRecipe(ItemSensorCard.DROPPED_TIER_1, new ItemStack(Item.slimeBall));
-		RecipeHelper.addTier1CardRecipe(ItemSensorCard.PROXIMITY_TIER_1, new ItemStack(Block.pressurePlateStone));
-		RecipeHelper.addTierUpgradeRecipes();
-		RecipeHelper.addUpgradeItemRecipes();	
-	
-		// register GUI handler
-		NetworkRegistry.instance().registerGuiHandler(OpenCCSensors.instance, new GuiHandler());
-
-		setupLanguages();
-		setupLuaFiles();
-
 	}
 
 	public void registerRenderInformation() {
