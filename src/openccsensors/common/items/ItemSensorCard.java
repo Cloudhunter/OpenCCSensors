@@ -122,7 +122,7 @@ public class ItemSensorCard extends Item {
 		DROPPED_TIER_3 = 	new SensorCardInterface(54, "openccsensors.item.droppeditemsensor", SensorUpgradeTier.TIER3, DroppedItemSensor.class);
 		DROPPED_TIER_4 = 	new SensorCardInterface(70, "openccsensors.item.droppeditemsensor", SensorUpgradeTier.TIER4, DroppedItemSensor.class);
 		
-		DEV_SENSOR = 		new SensorCardInterface(99, "openccsensors.item.devsensor", SensorUpgradeTier.TIER4, DevSensor.class);
+		//DEV_SENSOR = 		new SensorCardInterface(99, "openccsensors.item.devsensor", SensorUpgradeTier.TIER4, DevSensor.class);
 		
 		INVENTORY_TIER_1 = 	new SensorCardInterface(16, "openccsensors.item.inventorysensor", SensorUpgradeTier.TIER1, InventorySensor.class);
 		INVENTORY_TIER_2 = 	new SensorCardInterface(32, "openccsensors.item.inventorysensor", SensorUpgradeTier.TIER2, InventorySensor.class);
@@ -168,7 +168,6 @@ public class ItemSensorCard extends Item {
 		registerInterfaces(new SensorCardInterface[] {
 				PROXIMITY_TIER_1, PROXIMITY_TIER_2, PROXIMITY_TIER_3, PROXIMITY_TIER_4,
 				DROPPED_TIER_1, DROPPED_TIER_2, DROPPED_TIER_3, DROPPED_TIER_4,
-				DEV_SENSOR,
 				INVENTORY_TIER_1, INVENTORY_TIER_2, INVENTORY_TIER_3, INVENTORY_TIER_4, 
 				SIGN_TIER_1, SIGN_TIER_2, SIGN_TIER_3, SIGN_TIER_4,
 				TANK_TIER_1, TANK_TIER_2, TANK_TIER_3, TANK_TIER_4, 
