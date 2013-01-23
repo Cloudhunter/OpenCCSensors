@@ -5,7 +5,7 @@ local function waitForResponse( _id )
 		  if event[1] == "ocs_success" then
 			return event[3]
 		  elseif event[1] == "ocs_error" then
-		    error(event[3])
+		    error(event[3],2)
 		  end
 		end
 	end

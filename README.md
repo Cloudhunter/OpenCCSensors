@@ -5,6 +5,10 @@ An open source sensor peripheral for ComputerCraft
 
 Official thread: http://www.computercraft.info/forums2/index.php?/topic/5996-146-cc-148-openccsensors/
 
+Starting development
+==========
+https://github.com/Cloudhunter/OpenCCSensors/wiki/Getting-started-Dev
+
 Compiling
 =======
 
