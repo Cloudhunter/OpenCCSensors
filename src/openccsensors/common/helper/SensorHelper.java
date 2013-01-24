@@ -15,19 +15,7 @@ public class SensorHelper {
 	
 	public static String getRawType(TileEntity entity) {
 		ItemStack stack = new ItemStack(entity.getBlockType(), 1, entity.getBlockMetadata());
-		
-		String rawName = entity.getClass().getName().toLowerCase();
-		try {
-			rawName = stack.getItemName().toLowerCase();
-		}catch(Exception e) {			
-		}
-		String packageName = entity.getClass().getName().toLowerCase();
-		String[] packageLevels = packageName.split("\\.");
-		if (!rawName.startsWith(packageLevels[0])) {
-			rawName = packageLevels[0] + "." + rawName;
-		}
-		
-		return rawName;
+		return InventoryHelper.getRawNameForStack(stack);
 	}
 	
 	public static String getDisplayType(TileEntity entity) {

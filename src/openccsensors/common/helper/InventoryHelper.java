@@ -34,7 +34,7 @@ public class InventoryHelper {
 		Item item = itemstack.getItem();
 		
 		map.put("Name", InventoryHelper.getNameForItemStack(itemstack));
-		map.put("RawName", itemstack.getItemName());
+		map.put("RawName", InventoryHelper.getRawNameForStack(itemstack));
 		map.put("Size", itemstack.stackSize);
 		map.put("DamageValue", itemstack.getItemDamage());
 		map.put("MaxStack", itemstack.getMaxStackSize());
@@ -60,4 +60,26 @@ public class InventoryHelper {
 		return name;
 	}
 
+	public static String getRawNameForStack(ItemStack is) {
+			
+		String rawName = "unknown";
+		
+		try {
+			rawName = is.getItemName().toLowerCase();
+		}catch(Exception e) {			
+		}
+		try {
+			if (rawName.length() - rawName.replaceAll("\\.", "").length() == 0) {
+				String packageName = is.getItem().getClass().getName().toLowerCase();
+				String[] packageLevels = packageName.split("\\.");
+				if (!rawName.startsWith(packageLevels[0]) && packageLevels.length > 1) {
+					rawName = packageLevels[0] + "." + rawName;
+				}
+			}
+		}catch(Exception e) {
+			
+		}
+		
+		return rawName;
+	}
 }
