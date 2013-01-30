@@ -19,6 +19,7 @@ import openccsensors.common.sensors.InventorySensor;
 import openccsensors.common.sensors.MinecartSensor;
 import openccsensors.common.sensors.ProximitySensor;
 import openccsensors.common.sensors.SignSensor;
+import openccsensors.common.sensors.SonicSensor;
 import openccsensors.common.sensors.TankSensor;
 import openccsensors.common.sensors.ThaumCraftSensor;
 import openccsensors.common.sensors.WorldSensor;
@@ -64,6 +65,11 @@ public class ItemSensorCard extends Item {
 	public static SensorCardInterface MINECART_TIER_4 = 	null;
 	
 	public static SensorCardInterface WORLD_TIER_1 = 		null;
+	
+	public static SensorCardInterface SONIC_TIER_1 = null;
+	public static SensorCardInterface SONIC_TIER_2 = null;
+	public static SensorCardInterface SONIC_TIER_3 = null;
+	public static SensorCardInterface SONIC_TIER_4 = null;
 	
 	public static SensorCardInterface BUILDCRAFT_TIER_1 = null;
 	public static SensorCardInterface BUILDCRAFT_TIER_2 = null;
@@ -146,6 +152,11 @@ public class ItemSensorCard extends Item {
 		
 		WORLD_TIER_1 = 		new SensorCardInterface(21, "openccsensors.item.worldsensor", SensorUpgradeTier.TIER1, WorldSensor.class);
 		
+		SONIC_TIER_1 = 	new SensorCardInterface(82, "openccsensors.item.sonicsensor", SensorUpgradeTier.TIER1, SonicSensor.class);
+		SONIC_TIER_2 = 	new SensorCardInterface(98, "openccsensors.item.sonicsensor", SensorUpgradeTier.TIER2, SonicSensor.class);
+		SONIC_TIER_3 = 	new SensorCardInterface(114, "openccsensors.item.sonicsensor", SensorUpgradeTier.TIER3, SonicSensor.class);
+		SONIC_TIER_4 = 	new SensorCardInterface(130, "openccsensors.item.sonicsensor", SensorUpgradeTier.TIER4, SonicSensor.class);
+		
 		if (Loader.isModLoaded("BuildCraft|Core")) {
 			BUILDCRAFT_TIER_1 = new SensorCardInterface(19, "openccsensors.item.buildcraftsensor", SensorUpgradeTier.TIER1, BuildCraftSensor.class);
 			BUILDCRAFT_TIER_2 = new SensorCardInterface(35, "openccsensors.item.buildcraftsensor", SensorUpgradeTier.TIER2, BuildCraftSensor.class);
@@ -173,6 +184,7 @@ public class ItemSensorCard extends Item {
 				TANK_TIER_1, TANK_TIER_2, TANK_TIER_3, TANK_TIER_4, 
 				MINECART_TIER_1, MINECART_TIER_2, MINECART_TIER_3, MINECART_TIER_4, 
 				WORLD_TIER_1,
+				SONIC_TIER_1,SONIC_TIER_2,SONIC_TIER_3,SONIC_TIER_4,
 				BUILDCRAFT_TIER_1, BUILDCRAFT_TIER_2, BUILDCRAFT_TIER_3, BUILDCRAFT_TIER_4,
 				INDUSTRIALCRAFT_TIER_1, INDUSTRIALCRAFT_TIER_2, INDUSTRIALCRAFT_TIER_3, INDUSTRIALCRAFT_TIER_4,
 				THAUMCRAFT_TIER_1, THAUMCRAFT_TIER_2, THAUMCRAFT_TIER_3, THAUMCRAFT_TIER_4

@@ -11,6 +11,7 @@ openccsensors.item.droppeditemsensor.name=Dropped Item Sensor Card
 openccsensors.item.thaumcraftsensor.name=Thaumcraft Sensor Card
 openccsensors.item.signsensor.name=Sign Sensor Card
 openccsensors.item.minecartsensor.name=Minecart Sensor Card
+openccsensors.item.sonicsensor.name=Sonic Sensor Card
 openccsensors.item.devsensor.name=Dev Sensor Card
 
 openccsensors.item.rangeextensionantenna.name=Range Extension Antenna
