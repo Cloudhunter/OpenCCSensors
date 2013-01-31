@@ -113,8 +113,7 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 										sensorInterface.getSensorUpgrade());
 
 						if (!targets.containsKey(targetName)) {
-							throw new Exception(
-									"Please specify a valid target name");
+							return null;
 						}
 
 						return TargetHelper.mergeTargetDetails(

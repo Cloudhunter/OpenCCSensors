@@ -30,8 +30,4 @@ public class DroppedItemTarget extends EntityTarget implements ISensorTarget {
 		return null;
 	}
 
-	@Override
-	public String getType(Entity entity) {
-		return ((EntityItem)entity).func_92014_d().getItemName();
-	}
 }

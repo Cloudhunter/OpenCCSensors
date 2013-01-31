@@ -2,9 +2,13 @@ package openccsensors.common.sensors.targets;
 
 import java.util.HashMap;
 
+import openccsensors.common.helper.InventoryHelper;
 import openccsensors.common.helper.SensorHelper;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
@@ -21,7 +25,7 @@ public abstract class EntityTarget {
 
 	public HashMap getBasicDetails(World world) {
 
-		Entity entityLiving = world.getEntityByID(id);
+		Entity entity = world.getEntityByID(id);
 
 		HashMap retMap = new HashMap();
 
@@ -30,14 +34,18 @@ public abstract class EntityTarget {
 		pos.put("Y", relativePos.yCoord);
 		pos.put("Z", relativePos.zCoord);
 
-		retMap.put("Type", getType(entityLiving));
+		if (entity instanceof EntityItem) {
+			ItemStack stack = ((EntityItem)entity).func_92014_d();
+			retMap.put("Name", InventoryHelper.getNameForItemStack(stack));
+			retMap.put("RawName", stack.getItemName());
+		}else {
+			retMap.put("Name", (entity instanceof EntityPlayer) ? "Player" : entity.getEntityName());
+			retMap.put("RawName", entity.getClass().getName());
+		}
 		retMap.put("Position", pos);
 
 		return retMap;
 	}
 	
-	public String getType(Entity e) {
-		return SensorHelper.getType(e.getClass().getName());
-	}
 
 }
