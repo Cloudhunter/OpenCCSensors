@@ -295,7 +295,7 @@ public class CommonProxy {
 		setupLuaFiles();
 
 	}
-//
+
 	private void registerSensors() {
 		// register all sensors with the sensormanager.
 		// no point in registering sensors if we dont have their
