@@ -44,31 +44,33 @@ public class TankTarget implements ISensorTarget {
 		Map tankProperties;
 		Map tankMap = new HashMap();
 		int i = 1;
-		if (tanks != null) {
-			for (ILiquidTank tank : tanks) {
-				tankProperties = new HashMap();
-				tankProperties.put("Capacity", tank.getCapacity());
-	
-				stack = tank.getLiquid();
-	
-				if (stack != null) {
-					istack = stack.asItemStack();
-					if (istack != null) {
-						if (istack.getItem() != null) {
-							tankProperties.put("Name", InventoryHelper.getNameForItemStack(istack));
-							tankProperties.put("RawName", istack.getItemName());
-							tankProperties.put("Amount", stack.amount);
+		try {
+			if (tanks != null) {
+				for (ILiquidTank tank : tanks) {
+					tankProperties = new HashMap();
+					tankProperties.put("Capacity", tank.getCapacity());
+		
+					stack = tank.getLiquid();
+		
+					if (stack != null) {
+						istack = stack.asItemStack();
+						if (istack != null) {
+							if (istack.getItem() != null) {
+								tankProperties.put("Name", InventoryHelper.getNameForItemStack(istack));
+								tankProperties.put("RawName", InventoryHelper.getRawNameForStack(istack));
+								tankProperties.put("Amount", stack.amount);
+							}
 						}
 					}
+					if (!tankProperties.containsKey("Amount")) {
+						tankProperties.put("Amount", 0);
+					}
+		
+					tankMap.put(i, tankProperties);
+					i++;
 				}
-				if (!tankProperties.containsKey("Amount")) {
-					tankProperties.put("Amount", 0);
-				}
-	
-				tankMap.put(i, tankProperties);
-				i++;
 			}
-		}
+		}catch(Exception e) {}
 		retMap.put("Tanks", tankMap);
 		return retMap;
 	}
