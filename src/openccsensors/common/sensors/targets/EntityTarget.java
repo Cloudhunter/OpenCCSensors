@@ -35,7 +35,7 @@ public abstract class EntityTarget {
 		pos.put("Z", relativePos.zCoord);
 
 		if (entity instanceof EntityItem) {
-			ItemStack stack = ((EntityItem)entity).func_92014_d();
+			ItemStack stack = ((EntityItem)entity).getEntityItem();
 			retMap.put("Name", InventoryHelper.getNameForItemStack(stack));
 			retMap.put("RawName", stack.getItemName());
 		}else {

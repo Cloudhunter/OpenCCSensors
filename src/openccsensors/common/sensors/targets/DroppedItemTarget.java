@@ -21,7 +21,7 @@ public class DroppedItemTarget extends EntityTarget implements ISensorTarget {
 		retMap.putAll(getBasicDetails(world));
 		retMap.put("IsBurning", entity.isBurning());
 		retMap.put("StackSize",
-				Integer.toString(entity.func_92014_d().stackSize));
+				Integer.toString(entity.getEntityItem().stackSize));
 		return retMap;
 	}
 
