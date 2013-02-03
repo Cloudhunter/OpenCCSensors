@@ -34,16 +34,8 @@ public class InventoryHelper {
 			map.put("Damagevalue", 0);
 			map.put("MaxStack", 64);
 			return map; // empty item
-		}
-		else if(BeeHelper.isBee(itemstack)){
-			try{
-				map.put("Name", InventoryHelper.getNameForItemStack(itemstack));
-			
-				return BeeHelper.beeMap(itemstack, map);
-			}catch(Exception e){
-				System.out.println("Somting whent wrong in Invhelper");
-				return null;
-			}
+		
+		
 		}
 		
 		else{
@@ -54,6 +46,12 @@ public class InventoryHelper {
 			map.put("Size", itemstack.stackSize);
 			map.put("DamageValue", itemstack.getItemDamage());
 			map.put("MaxStack", itemstack.getMaxStackSize());
+			if(BeeHelper.isBee(itemstack)){
+				try{
+					map = BeeHelper.beeMap(itemstack, map);
+				}catch(Exception e){}
+				
+			}
 		}
 		/*
 		 * temporarily disabled if (itemstack.hasTagCompound()) { map.put("nbt",
