@@ -2,17 +2,10 @@ package openccsensors.common.helper;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import openccsensors.common.core.OCSLog;
-
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import forestry.api.*;// f the police
-import forestry.api.apiculture.IAlleleBeeSpecies;
-import forestry.api.apiculture.IBee;
-import forestry.api.apiculture.IBeeGenome;
-import forestry.api.apiculture.IBeeInterface;
 
 public class InventoryHelper {
 
@@ -46,12 +39,11 @@ public class InventoryHelper {
 			map.put("Size", itemstack.stackSize);
 			map.put("DamageValue", itemstack.getItemDamage());
 			map.put("MaxStack", itemstack.getMaxStackSize());
-			if(BeeHelper.isBee(itemstack)){
-				try{
-					map = BeeHelper.beeMap(itemstack, map);
-				}catch(Exception e){}
-				
-			}
+			try{
+				if(BeeHelper.isBee(itemstack)){
+					BeeHelper.beeMap(itemstack, map);
+				}
+			}catch(Exception e){}
 		}
 		/*
 		 * temporarily disabled if (itemstack.hasTagCompound()) { map.put("nbt",

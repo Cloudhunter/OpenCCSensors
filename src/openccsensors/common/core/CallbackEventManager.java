@@ -78,9 +78,12 @@ public class CallbackEventManager {
 				item.getComputer().queueEvent("ocs_success", response);
 
 			} catch (Exception e) {
-
-				item.getComputer().queueEvent("ocs_error",
-						new Object[] { item.getCallId(), e.getMessage() });
+				try {
+					item.getComputer().queueEvent("ocs_error",
+							new Object[] { item.getCallId(), e.getMessage() });
+				}catch(Exception errorerror) {
+					// the computer got destroyed?
+				}
 
 			}
 
