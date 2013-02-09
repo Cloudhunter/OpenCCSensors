@@ -8,6 +8,11 @@ import openccsensors.common.core.OCSLog;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import forestry.api.*;// f the police
+import forestry.api.apiculture.IAlleleBeeSpecies;
+import forestry.api.apiculture.IBee;
+import forestry.api.apiculture.IBeeGenome;
+import forestry.api.apiculture.IBeeInterface;
 
 public class InventoryHelper {
 
@@ -29,16 +34,25 @@ public class InventoryHelper {
 			map.put("Damagevalue", 0);
 			map.put("MaxStack", 64);
 			return map; // empty item
-		}
-
-		Item item = itemstack.getItem();
 		
-		map.put("Name", InventoryHelper.getNameForItemStack(itemstack));
-		map.put("RawName", InventoryHelper.getRawNameForStack(itemstack));
-		map.put("Size", itemstack.stackSize);
-		map.put("DamageValue", itemstack.getItemDamage());
-		map.put("MaxStack", itemstack.getMaxStackSize());
-
+		
+		}
+		
+		else{
+			Item item = itemstack.getItem();
+			
+			map.put("Name", InventoryHelper.getNameForItemStack(itemstack));
+			map.put("RawName", InventoryHelper.getRawNameForStack(itemstack));
+			map.put("Size", itemstack.stackSize);
+			map.put("DamageValue", itemstack.getItemDamage());
+			map.put("MaxStack", itemstack.getMaxStackSize());
+			if(BeeHelper.isBee(itemstack)){
+				try{
+					map = BeeHelper.beeMap(itemstack, map);
+				}catch(Exception e){}
+				
+			}
+		}
 		/*
 		 * temporarily disabled if (itemstack.hasTagCompound()) { map.put("nbt",
 		 * NetworkHelper.NBTToMap(itemstack.getTagCompound())); }
