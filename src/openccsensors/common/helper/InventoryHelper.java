@@ -6,15 +6,30 @@ import openccsensors.common.core.OCSLog;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 
 public class InventoryHelper {
-
+	public static final String FACTORIZATION_BARREL_CLASS = "factorization.common.TileEntityBarrel";
 	public static Map invToMap(IInventory inventory) {
 		HashMap map = new HashMap();
-		for (int i = 0; i < inventory.getSizeInventory(); i++) {
-			map.put(i + 1, itemstackToMap(inventory.getStackInSlot(i)));
-		}
+		if (inventory.getClass().getName() == FACTORIZATION_BARREL_CLASS) {
+			Map details = itemstackToMap(inventory.getStackInSlot(0));
+			try {
+				TileEntity barrel = (TileEntity) inventory;
+				NBTTagCompound compound = new NBTTagCompound();
+				barrel.writeToNBT(compound);
+				details.put("Size", compound.getInteger("item_count"));
+				details.put("MaxStack", compound.getInteger("upgrade") == 1 ?  65536 : 4096);
 
+			}catch(Exception e) {
+			}
+			map.put(1, details);
+		}else {
+			for (int i = 0; i < inventory.getSizeInventory(); i++) {
+				map.put(i + 1, itemstackToMap(inventory.getStackInSlot(i)));
+			}
+		}
 		return map;
 	}
 
