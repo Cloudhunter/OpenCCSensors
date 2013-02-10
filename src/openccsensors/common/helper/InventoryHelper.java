@@ -2,12 +2,13 @@ package openccsensors.common.helper;
 
 import java.util.HashMap;
 import java.util.Map;
-import openccsensors.common.core.OCSLog;
+
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import cpw.mods.fml.common.Loader;
 
 public class InventoryHelper {
 	public static final String FACTORIZATION_BARREL_CLASS = "factorization.common.TileEntityBarrel";
@@ -54,11 +55,13 @@ public class InventoryHelper {
 			map.put("Size", itemstack.stackSize);
 			map.put("DamageValue", itemstack.getItemDamage());
 			map.put("MaxStack", itemstack.getMaxStackSize());
-			try{
-				if(BeeHelper.isBee(itemstack)){
-					BeeHelper.beeMap(itemstack, map);
-				}
-			}catch(Exception e){}
+			if (Loader.isModLoaded("Forestry")) {
+				try{
+					if(BeeHelper.isBee(itemstack)){
+						BeeHelper.beeMap(itemstack, map);
+					}
+				}catch(Exception e){}
+			}
 		}
 		/*
 		 * temporarily disabled if (itemstack.hasTagCompound()) { map.put("nbt",

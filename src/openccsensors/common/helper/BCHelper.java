@@ -6,13 +6,10 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-import openccsensors.common.core.OCSLog;
-import openccsensors.common.items.ItemSensorCard;
-import cpw.mods.fml.common.Loader;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import openccsensors.common.items.ItemSensorCard;
 
 public class BCHelper {
 	

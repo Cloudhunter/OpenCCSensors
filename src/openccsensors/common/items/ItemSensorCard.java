@@ -12,7 +12,6 @@ import net.minecraft.item.ItemStack;
 import openccsensors.common.api.SensorCardInterface;
 import openccsensors.common.api.SensorUpgradeTier;
 import openccsensors.common.sensors.BuildCraftSensor;
-import openccsensors.common.sensors.DevSensor;
 import openccsensors.common.sensors.DroppedItemSensor;
 import openccsensors.common.sensors.IndustrialCraftSensor;
 import openccsensors.common.sensors.InventorySensor;

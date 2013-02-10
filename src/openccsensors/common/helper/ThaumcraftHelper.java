@@ -1,16 +1,10 @@
 package openccsensors.common.helper;
 
 import java.lang.reflect.Field;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-
-import openccsensors.common.items.ItemSensorCard;
-import cpw.mods.fml.common.Loader;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
+import openccsensors.common.items.ItemSensorCard;
 
 public class ThaumcraftHelper {
 	

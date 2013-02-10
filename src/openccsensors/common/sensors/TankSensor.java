@@ -1,6 +1,5 @@
 package openccsensors.common.sensors;
 
-import net.minecraft.block.Block;
 import net.minecraft.src.ModLoader;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -12,7 +11,6 @@ import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITileEntityValidatorCallback;
 import openccsensors.common.api.SensorUpgradeTier;
-import openccsensors.common.core.OCSLog;
 import openccsensors.common.helper.RCHelper;
 import openccsensors.common.helper.SensorHelper;
 import openccsensors.common.sensors.targets.TankTarget;

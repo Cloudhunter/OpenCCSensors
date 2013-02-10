@@ -1,7 +1,5 @@
 package openccsensors.common.helper;
 
-import openccsensors.common.core.OCSLog;
-import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import cpw.mods.fml.common.registry.LanguageRegistry;
