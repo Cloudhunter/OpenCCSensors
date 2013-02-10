@@ -1,6 +1,7 @@
 package openccsensors.common.sensors.targets.industrialcraft;
 
 import java.util.HashMap;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;

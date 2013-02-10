@@ -5,16 +5,11 @@ import java.util.Map;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.liquids.ILiquidTank;
-import net.minecraftforge.liquids.ITankContainer;
 import net.minecraftforge.liquids.LiquidStack;
 import openccsensors.common.api.ISensorTarget;
-import openccsensors.common.core.OCSLog;
 import openccsensors.common.helper.InventoryHelper;
-import openccsensors.common.helper.SensorHelper;
 
 public class TankTarget implements ISensorTarget {
 

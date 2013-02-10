@@ -1,9 +1,8 @@
 package openccsensors.common.helper;
 
-import openccsensors.common.items.ItemSensorCard;
-import cpw.mods.fml.common.Loader;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import openccsensors.common.items.ItemSensorCard;
 
 public class IC2Helper {
 	public static ItemStack getItemStack(String itemName) {

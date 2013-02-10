@@ -4,18 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.minecraft.block.Block;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntitySign;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import openccsensors.common.api.ISensor;
 import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorTarget;
-import openccsensors.common.api.ITileEntityValidatorCallback;
 import openccsensors.common.api.SensorUpgradeTier;
-import openccsensors.common.core.OCSLog;
 import openccsensors.common.sensors.targets.SonicTarget;
 
 public class SonicSensor implements ISensor {
