@@ -3,8 +3,6 @@ package openccsensors.common.sensors.targets;
 import java.util.HashMap;
 
 import net.minecraft.block.Block;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.world.World;
 import openccsensors.common.api.ISensorTarget;
 

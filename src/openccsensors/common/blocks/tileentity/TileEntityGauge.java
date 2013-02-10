@@ -4,18 +4,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
 import openccsensors.common.api.IMethodCallback;
+import openccsensors.common.api.ISensor;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.SensorManager;
 import openccsensors.common.core.CallbackEventManager;
 import openccsensors.common.helper.TargetHelper;
 import openccsensors.common.sensors.BaseTileEntitySensor;
-import openccsensors.common.api.ISensor;
 import dan200.computer.api.IComputerAccess;
 import dan200.computer.api.IPeripheral;
 

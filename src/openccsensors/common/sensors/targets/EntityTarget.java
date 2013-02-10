@@ -2,15 +2,13 @@ package openccsensors.common.sensors.targets;
 
 import java.util.HashMap;
 
-import openccsensors.common.helper.InventoryHelper;
-import openccsensors.common.helper.SensorHelper;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import openccsensors.common.helper.InventoryHelper;
 
 public abstract class EntityTarget {
 

@@ -1,12 +1,11 @@
 package openccsensors.common.helper;
 
 import java.util.HashMap;
+
 import net.minecraft.item.ItemStack;
-import forestry.api.apiculture.IAlleleBeeSpecies;
+import forestry.api.apiculture.BeeManager;
 import forestry.api.apiculture.IBee;
 import forestry.api.apiculture.IBeeGenome;
-import forestry.api.apiculture.IBeeInterface;
-import forestry.api.apiculture.BeeManager;
 
 public class BeeHelper {
 

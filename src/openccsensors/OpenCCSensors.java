@@ -6,8 +6,8 @@ import openccsensors.common.CommonProxy;
 import openccsensors.common.blocks.BlockGauge;
 import openccsensors.common.blocks.BlockSensor;
 import openccsensors.common.core.OCSLog;
-import openccsensors.common.items.ItemSensorCard;
 import openccsensors.common.items.ItemGeneric;
+import openccsensors.common.items.ItemSensorCard;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Instance;
@@ -16,7 +16,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 
-@Mod( modid = "OCS", name = "OpenCCSensors", version = "0.1.3", dependencies = "required-after:ComputerCraft;after:CCTurtle;after:BuildCraft|Core;after:IC2;after:Thaumcraft")
+@Mod( modid = "OCS", name = "OpenCCSensors", version = "0.1.4", dependencies = "required-after:ComputerCraft;after:CCTurtle;after:BuildCraft|Core;after:IC2;after:Thaumcraft")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class OpenCCSensors 
 {

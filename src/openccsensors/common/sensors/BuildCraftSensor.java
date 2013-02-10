@@ -1,6 +1,5 @@
 package openccsensors.common.sensors;
 
-import buildcraft.api.power.IPowerReceptor;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import openccsensors.common.api.ISensor;
@@ -9,6 +8,7 @@ import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITileEntityValidatorCallback;
 import openccsensors.common.api.SensorUpgradeTier;
 import openccsensors.common.sensors.targets.buildcraft.PowerReceptorTarget;
+import buildcraft.api.power.IPowerReceptor;
 
 public class BuildCraftSensor extends BaseTileEntitySensor implements ISensor {
 

@@ -4,18 +4,17 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import openccsensors.OpenCCSensors;
-import openccsensors.common.api.SensorCardInterface;
-import openccsensors.common.api.SensorUpgradeTier;
-import openccsensors.common.core.OCSLog;
-import openccsensors.common.items.ItemGeneric;
-import openccsensors.common.items.ItemSensorCard;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+import openccsensors.OpenCCSensors;
+import openccsensors.common.api.SensorCardInterface;
+import openccsensors.common.api.SensorUpgradeTier;
+import openccsensors.common.items.ItemGeneric;
+import openccsensors.common.items.ItemSensorCard;
 
 public class RecipeHelper {
 	
