@@ -29,22 +29,26 @@ public class TankSensor extends BaseTileEntitySensor implements ISensor {
 			public ISensorTarget getTargetIfValid(TileEntity entity,
 					int relativeX, int relativeY, int relativeZ) {
 
-				String rawName = SensorHelper.getRawType(entity);
-				String displayName = SensorHelper.getDisplayType(entity);
-				
-				if (entity instanceof ITankContainer) {
-					ILiquidTank[] tanks = ((ITankContainer)entity).getTanks(ForgeDirection.UNKNOWN);
-					if (tanks.length > 0) {
-						return new TankTarget(tanks, rawName, displayName, relativeX, relativeY, relativeZ);
-					}
+				try {
+					String rawName = SensorHelper.getRawType(entity);
+					String displayName = SensorHelper.getDisplayType(entity);
 					
-				} else if (ModLoader.isModLoaded("Railcraft")) {
-					ILiquidTank tankTile = RCHelper.getTankIfTankTile(entity);
-					if (tankTile != null) {
-						ILiquidTank[] tanks = new ILiquidTank[] {  (ILiquidTank)tankTile };
-						return new TankTarget(tanks, rawName, displayName, relativeX, relativeY,
-								relativeZ);
+					if (entity instanceof ITankContainer) {
+						ILiquidTank[] tanks = ((ITankContainer)entity).getTanks(ForgeDirection.UNKNOWN);
+						if (tanks.length > 0) {
+							return new TankTarget(tanks, rawName, displayName, relativeX, relativeY, relativeZ);
+						}
+						
+					} else if (ModLoader.isModLoaded("Railcraft")) {
+						ILiquidTank tankTile = RCHelper.getTankIfTankTile(entity);
+						if (tankTile != null) {
+							ILiquidTank[] tanks = new ILiquidTank[] {  (ILiquidTank)tankTile };
+							return new TankTarget(tanks, rawName, displayName, relativeX, relativeY,
+									relativeZ);
+						}
+						
 					}
+				}catch(Exception e) {
 					
 				}
 				

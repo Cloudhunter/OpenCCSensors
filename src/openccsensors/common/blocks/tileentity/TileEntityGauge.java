@@ -23,6 +23,7 @@ public class TileEntityGauge extends TileEntity implements IPeripheral {
 
 	private int percentage = 0;
 	private String updatePropertyName = "";
+	private boolean sentClientUpdate = false;
 
 	private CallbackEventManager eventManager = new CallbackEventManager();
 
@@ -133,15 +134,25 @@ public class TileEntityGauge extends TileEntity implements IPeripheral {
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
+		
 		if (this.worldObj != null) {
+			
 			if (!this.worldObj.isRemote) {
+				int oldPercentage = this.percentage;
 				updatePercentage();
+				if (oldPercentage != percentage) {
+					worldObj.markBlockForUpdate(this.xCoord, this.yCoord,
+							this.zCoord);
+				}
 			}
 	
 			eventManager.process();
-	
-			worldObj.markBlockForUpdate(this.xCoord, this.yCoord,
-					this.zCoord);
+			
+		}else {
+			if (!sentClientUpdate) {
+				worldObj.markBlockForUpdate(this.xCoord, this.yCoord,
+						this.zCoord);			
+			}
 		}
 	}
 
