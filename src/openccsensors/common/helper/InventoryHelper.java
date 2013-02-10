@@ -2,26 +2,34 @@ package openccsensors.common.helper;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import openccsensors.common.core.OCSLog;
-
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import forestry.api.*;// f the police
-import forestry.api.apiculture.IAlleleBeeSpecies;
-import forestry.api.apiculture.IBee;
-import forestry.api.apiculture.IBeeGenome;
-import forestry.api.apiculture.IBeeInterface;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 
 public class InventoryHelper {
-
+	public static final String FACTORIZATION_BARREL_CLASS = "factorization.common.TileEntityBarrel";
 	public static Map invToMap(IInventory inventory) {
 		HashMap map = new HashMap();
-		for (int i = 0; i < inventory.getSizeInventory(); i++) {
-			map.put(i + 1, itemstackToMap(inventory.getStackInSlot(i)));
-		}
+		if (inventory.getClass().getName() == FACTORIZATION_BARREL_CLASS) {
+			Map details = itemstackToMap(inventory.getStackInSlot(0));
+			try {
+				TileEntity barrel = (TileEntity) inventory;
+				NBTTagCompound compound = new NBTTagCompound();
+				barrel.writeToNBT(compound);
+				details.put("Size", compound.getInteger("item_count"));
+				details.put("MaxStack", compound.getInteger("upgrade") == 1 ?  65536 : 4096);
 
+			}catch(Exception e) {
+			}
+			map.put(1, details);
+		}else {
+			for (int i = 0; i < inventory.getSizeInventory(); i++) {
+				map.put(i + 1, itemstackToMap(inventory.getStackInSlot(i)));
+			}
+		}
 		return map;
 	}
 
@@ -46,12 +54,11 @@ public class InventoryHelper {
 			map.put("Size", itemstack.stackSize);
 			map.put("DamageValue", itemstack.getItemDamage());
 			map.put("MaxStack", itemstack.getMaxStackSize());
-			if(BeeHelper.isBee(itemstack)){
-				try{
-					map = BeeHelper.beeMap(itemstack, map);
-				}catch(Exception e){}
-				
-			}
+			try{
+				if(BeeHelper.isBee(itemstack)){
+					BeeHelper.beeMap(itemstack, map);
+				}
+			}catch(Exception e){}
 		}
 		/*
 		 * temporarily disabled if (itemstack.hasTagCompound()) { map.put("nbt",
