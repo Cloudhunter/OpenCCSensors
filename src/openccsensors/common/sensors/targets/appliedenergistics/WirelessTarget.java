@@ -11,6 +11,7 @@ import appeng.api.me.util.IMEInventoryHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.sensors.targets.TileSensorTarget;
 
