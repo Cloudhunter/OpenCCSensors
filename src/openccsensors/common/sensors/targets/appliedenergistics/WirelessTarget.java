@@ -13,6 +13,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 import openccsensors.common.api.ISensorTarget;
+import openccsensors.common.helper.InventoryHelper;
 import openccsensors.common.sensors.targets.TileSensorTarget;
 
 public class WirelessTarget extends TileSensorTarget implements ISensorTarget {
@@ -25,31 +26,48 @@ public class WirelessTarget extends TileSensorTarget implements ISensorTarget {
 	@Override
 	public HashMap getExtendedDetails(World world) {
 		HashMap retMap = getBasicDetails(world);
-
-		HashMap<String, Integer> stacks = new HashMap<String, Integer>();
-				
+		
 		IGridMachine entity = (IGridMachine)world.getBlockTileEntity(xCoord, yCoord, zCoord);
-		IGridInterface gi = entity.getGrid();
-		IMEInventoryHandler imivh = gi.getFullCellArray();
+		retMap.put("Powered", false);
 		
-		int totalCount = 0;
-		List<ItemStack> list = imivh.getAvailableItems(new ArrayList());
-		for (ItemStack l : list) {
-			String name = l.getDisplayName();
-			Integer count = l.stackSize;
-			totalCount += count;
-			stacks.put(name, count);
+		if(!entity.isValid()) {
+			return retMap;
 		}
-
-		retMap.put("GridIndex", gi.getGridIndex());
-		retMap.put("FreeTypes", (int)imivh.remainingItemTypes());
-		retMap.put("FreeCount", (int)imivh.remainingItemCount());
-		retMap.put("FreeBytes", (int)imivh.freeBytes());
-		retMap.put("UsedTypes", list.size());
-		retMap.put("UsedCount", totalCount);
-		retMap.put("UsedBytes", (int)imivh.usedBytes());
 		
-		retMap.put("Items", stacks);
+		IGridInterface gi = entity.getGrid();
+		if(gi == null) {			
+			return retMap;
+		}
+		
+		IMEInventoryHandler imivh = gi.getFullCellArray();		
+		retMap.put("GridIndex", gi.getGridIndex());
+		
+		if(entity.isPowered()) {
+			retMap.put("Powered", true);
+			
+			retMap.put("FreeTypes", (int)imivh.remainingItemTypes());
+			retMap.put("FreeCount", (int)imivh.remainingItemCount());
+			retMap.put("FreeBytes", (int)imivh.freeBytes());
+			retMap.put("UsedBytes", (int)imivh.usedBytes());
+						
+			List<ItemStack> list = imivh.getAvailableItems(new ArrayList());
+			
+			int totalCount = 0;
+			HashMap stacks = new HashMap();
+			for (int i = 0; i < list.size(); i++) {
+				ItemStack items = list.get(i);
+				stacks.put(i + 1, InventoryHelper.itemstackToMap(items));
+				
+				Integer count = items.stackSize;
+				totalCount += count;				
+			}
+			
+			retMap.put("UsedTypes", list.size());
+			retMap.put("UsedCount", totalCount);			
+			
+			retMap.put("Items", stacks);
+		}
+		
 		return retMap;
 	}
 
