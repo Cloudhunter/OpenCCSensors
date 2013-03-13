@@ -31,6 +31,7 @@ import openccsensors.common.blocks.BlockSensor;
 import openccsensors.common.blocks.tileentity.TileEntityGauge;
 import openccsensors.common.blocks.tileentity.TileEntitySensor;
 import openccsensors.common.core.OCSLog;
+import openccsensors.common.helper.AppliedEnergisticsHelper;
 import openccsensors.common.helper.BCHelper;
 import openccsensors.common.helper.IC2Helper;
 import openccsensors.common.helper.RecipeHelper;
@@ -38,6 +39,7 @@ import openccsensors.common.helper.ThaumcraftHelper;
 import openccsensors.common.items.ItemGeneric;
 import openccsensors.common.items.ItemSensorCard;
 import openccsensors.common.peripherals.ContainerSensor;
+import openccsensors.common.sensors.AppliedEnergisticsSensor;
 import openccsensors.common.sensors.BuildCraftSensor;
 import openccsensors.common.sensors.DroppedItemSensor;
 import openccsensors.common.sensors.IndustrialCraftSensor;
@@ -280,6 +282,8 @@ public class CommonProxy {
 			IC2Helper.addTier1CardRecipe();
 		if (Loader.isModLoaded("BuildCraft|Core"))
 			BCHelper.addTier1CardRecipe();
+		if (Loader.isModLoaded("AppliedEnergistics"))
+			AppliedEnergisticsHelper.addTier1CardRecipe();
 		
 		// add the tier upgrade recipes
 		RecipeHelper.addTierUpgradeRecipes();
@@ -317,6 +321,8 @@ public class CommonProxy {
 		if (Loader.isModLoaded("Thaumcraft"))
 			SensorManager.registerSensor(new ThaumCraftSensor());
 		
+		if (Loader.isModLoaded("AppliedEnergistics"))
+			SensorManager.registerSensor(new AppliedEnergisticsSensor());		
 	}
 
 	public void registerRenderInformation() {
