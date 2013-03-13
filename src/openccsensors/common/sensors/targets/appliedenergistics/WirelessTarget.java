@@ -29,18 +29,13 @@ public class WirelessTarget extends TileSensorTarget implements ISensorTarget {
 		
 		IGridMachine entity = (IGridMachine)world.getBlockTileEntity(xCoord, yCoord, zCoord);
 		retMap.put("Powered", false);
-		
-		if(!entity.isValid()) {
-			return retMap;
-		}
-		
+			
 		IGridInterface gi = entity.getGrid();
-		if(gi == null) {			
+		if(gi == null || !gi.isValid()) {			
 			return retMap;
 		}
 		
 		IMEInventoryHandler imivh = gi.getFullCellArray();		
-		retMap.put("GridIndex", gi.getGridIndex());
 		
 		if(entity.isPowered()) {
 			retMap.put("Powered", true);
