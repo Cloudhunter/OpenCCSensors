@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import openccsensors.common.api.SensorCardInterface;
 import openccsensors.common.api.SensorUpgradeTier;
+import openccsensors.common.sensors.AppliedEnergisticsSensor;
 import openccsensors.common.sensors.BuildCraftSensor;
 import openccsensors.common.sensors.DroppedItemSensor;
 import openccsensors.common.sensors.IndustrialCraftSensor;
@@ -84,6 +85,11 @@ public class ItemSensorCard extends Item {
 	public static SensorCardInterface THAUMCRAFT_TIER_2 = null;
 	public static SensorCardInterface THAUMCRAFT_TIER_3 = null;
 	public static SensorCardInterface THAUMCRAFT_TIER_4 = null;
+
+	public static SensorCardInterface APPLIEDENERGISTICS_TIER_1 = null;
+	public static SensorCardInterface APPLIEDENERGISTICS_TIER_2 = null;
+	public static SensorCardInterface APPLIEDENERGISTICS_TIER_3 = null;
+	public static SensorCardInterface APPLIEDENERGISTICS_TIER_4 = null;
 	
 	public ItemSensorCard(int par1) {
 		super(par1);
@@ -174,6 +180,13 @@ public class ItemSensorCard extends Item {
 			THAUMCRAFT_TIER_3 = new SensorCardInterface(113, "openccsensors.item.thaumcraftsensor", SensorUpgradeTier.TIER3, ThaumCraftSensor.class);
 			THAUMCRAFT_TIER_4 = new SensorCardInterface(129, "openccsensors.item.thaumcraftsensor", SensorUpgradeTier.TIER4, ThaumCraftSensor.class);
 		}
+
+		if (Loader.isModLoaded("AppliedEnergistics")) {
+			APPLIEDENERGISTICS_TIER_1 = new SensorCardInterface(83, "openccsensors.item.appliedenergisticssensor", SensorUpgradeTier.TIER1, AppliedEnergisticsSensor.class);
+			APPLIEDENERGISTICS_TIER_2 = new SensorCardInterface(99, "openccsensors.item.appliedenergisticssensor", SensorUpgradeTier.TIER2, AppliedEnergisticsSensor.class);
+			APPLIEDENERGISTICS_TIER_3 = new SensorCardInterface(115, "openccsensors.item.appliedenergisticssensor", SensorUpgradeTier.TIER3, AppliedEnergisticsSensor.class);
+			APPLIEDENERGISTICS_TIER_4 = new SensorCardInterface(131, "openccsensors.item.appliedenergisticssensor", SensorUpgradeTier.TIER4, AppliedEnergisticsSensor.class);
+		}
 		
 		registerInterfaces(new SensorCardInterface[] {
 				PROXIMITY_TIER_1, PROXIMITY_TIER_2, PROXIMITY_TIER_3, PROXIMITY_TIER_4,
@@ -186,7 +199,8 @@ public class ItemSensorCard extends Item {
 				SONIC_TIER_1,SONIC_TIER_2,SONIC_TIER_3,SONIC_TIER_4,
 				BUILDCRAFT_TIER_1, BUILDCRAFT_TIER_2, BUILDCRAFT_TIER_3, BUILDCRAFT_TIER_4,
 				INDUSTRIALCRAFT_TIER_1, INDUSTRIALCRAFT_TIER_2, INDUSTRIALCRAFT_TIER_3, INDUSTRIALCRAFT_TIER_4,
-				THAUMCRAFT_TIER_1, THAUMCRAFT_TIER_2, THAUMCRAFT_TIER_3, THAUMCRAFT_TIER_4
+				THAUMCRAFT_TIER_1, THAUMCRAFT_TIER_2, THAUMCRAFT_TIER_3, THAUMCRAFT_TIER_4,
+				APPLIEDENERGISTICS_TIER_1, APPLIEDENERGISTICS_TIER_2, APPLIEDENERGISTICS_TIER_3, APPLIEDENERGISTICS_TIER_4
 		});
 	}
 	
