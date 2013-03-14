@@ -11,6 +11,7 @@ import openccsensors.common.api.ISensor;
 import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.SensorUpgradeTier;
+import openccsensors.common.core.OCSLog;
 import openccsensors.common.sensors.targets.SonicTarget;
 
 public class SonicSensor implements ISensor {
@@ -36,45 +37,54 @@ public class SonicSensor implements ISensor {
 		
 		int range = (new Double(upgrade.getMultiplier())).intValue()
 				* BASE_RANGE;
-		
+
 		for (int x = -range; x <= range; x++) {
 			for (int y = -range; y <= range; y++) {
 				for (int z = -range; z <= range; z++) {
 					
-					if (!(x == 0 && y == 0 && z == 0)) {
-						
-						int id = world.getBlockId(sx + x, sy + y, sz + z);
-						
-						Block block = Block.blocksList[id];
-						
-						if (!(id == 0 || block == null)) {
+					if (!(x == 0 && y == 0 && z == 0) && world.blockExists(sx + x, sy + y, sz + z)) {
+ 
+						try {
+							int id = world.getBlockId(sx + x, sy + y, sz + z);
+	
+							Block block = Block.blocksList[id];
 							
-							MovingObjectPosition hit = world.rayTraceBlocks(
-									
-									Vec3.createVectorHelper(
-											sx + (x == 0 ? 0.5 : (x > 0 ? 1.5 : -0.5)),
-											sy + (y == 0 ? 0.5 : (y > 0 ? 1.5 : -0.5)),
-											sz + (z == 0 ? 0.5 : (z > 0 ? 1.5 : -0.5))
-									),
-									Vec3.createVectorHelper(
-											sx + x + 0.5,
-											sy + y + 0.5,
-											sz + z + 0.5
-									)
-							);
-							
-							if (	hit == null ||
-								  ( hit.blockX == sx + x &&
-									hit.blockY == sy + y &&
-									hit.blockZ == sz + z )
-							) {
+							if (!(id == 0 || block == null)) {
 								
-								ArrayList<ISensorTarget> arr = new ArrayList<ISensorTarget>();
-								arr.add(new SonicTarget(block, x, y, z));
-								ret.put(x + "," + y + "," + z, arr);
+								MovingObjectPosition hit = null;
+								
+								try {
+									hit = world.rayTraceBlocks(
+											
+											Vec3.createVectorHelper(
+													sx + (x == 0 ? 0.5 : (x > 0 ? 1.5 : -0.5)),
+													sy + (y == 0 ? 0.5 : (y > 0 ? 1.5 : -0.5)),
+													sz + (z == 0 ? 0.5 : (z > 0 ? 1.5 : -0.5))
+											),
+											Vec3.createVectorHelper(
+													sx + x + 0.5,
+													sy + y + 0.5,
+													sz + z + 0.5
+											)
+									);
+								
+								}catch(Exception e) {
+									OCSLog.info("Error!" + e.getMessage());
+								}
+								
+								if (	hit == null ||
+									  ( hit.blockX == sx + x &&
+										hit.blockY == sy + y &&
+										hit.blockZ == sz + z )
+								) {
+									
+									ArrayList<ISensorTarget> arr = new ArrayList<ISensorTarget>();
+									arr.add(new SonicTarget(block, x, y, z));
+									ret.put(x + "," + y + "," + z, arr);
+								}
 							}
+						}catch(Exception e) {
 						}
-						
 					}
 					
 				}
