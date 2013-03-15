@@ -9,7 +9,7 @@ import openccsensors.common.api.ISensorTarget;
 public class SonicTarget implements ISensorTarget {
 
 	private static enum Type {
-		LIQUID, SOLID, UNKNOWN,
+		AIR, LIQUID, SOLID, UNKNOWN,
 	};
 
 	private Type type = Type.UNKNOWN;
@@ -19,7 +19,9 @@ public class SonicTarget implements ISensorTarget {
 
 	public SonicTarget(Block block, int x, int y, int z) {
 		try {
-			if (block.blockMaterial.isLiquid()) {
+			if(block==null){
+				type = Type.AIR;
+			}else if (block.blockMaterial.isLiquid()) {
 				type = Type.LIQUID;
 			} else if (block.blockMaterial.isSolid()) {
 				type = Type.SOLID;
