@@ -81,6 +81,7 @@ public class EntityHelper {
 		map.put("IsSneaking", living.isSneaking());
 		map.put("IsSprinting", living.isSprinting());
 		map.put("IsWet", living.isWet());
+		map.put("IsChild", living.isChild());
 		map.put("IsHome", living.isWithinHomeDistanceCurrentPosition());
 	
 		map.put("Yaw", living.rotationYaw);

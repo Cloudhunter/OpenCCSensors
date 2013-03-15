@@ -30,7 +30,6 @@ public class OpenCCSensors
 	{
 		public static int sensorBlockID;
 		public static int gaugeBlockID;
-		public static int sensorBlockRenderID;
 		public static int sensorCardID;
 		public static int genericItemID;
 		public static boolean turtlePeripheralEnabled;
@@ -40,6 +39,12 @@ public class OpenCCSensors
 	{
 		public static ItemGeneric genericItem;
 		public static ItemSensorCard sensorCard;
+	}
+	
+	public static class RenderIds
+	{
+		public static int sensorRenderId;
+		public static int gaugeRenderId;
 	}
 	
 	@Instance( value = "OCS" )
@@ -72,10 +77,6 @@ public class OpenCCSensors
 		prop = configFile.getBlock("gaugeBlockID", 187);
 		prop.comment = "The block ID for the gauge block";
 		Config.gaugeBlockID = prop.getInt();
-		
-		prop = configFile.getBlock("sensorBlockRenderID", 84);
-		prop.comment = "The render ID for the sensor block";
-		Config.sensorBlockRenderID = prop.getInt();
 		
 		prop = configFile.get("general", "turtlePeripheralEnabled", true);
 		prop.comment = "Turtle Peripheral Enabled";

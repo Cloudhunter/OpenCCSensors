@@ -102,7 +102,7 @@ public class BlockSensor extends BlockContainer {
 	 */
 	@Override
 	public int getRenderType() {
-		return OpenCCSensors.Config.sensorBlockRenderID;
+		return OpenCCSensors.RenderIds.sensorRenderId;
 	}
 
 	@Override
