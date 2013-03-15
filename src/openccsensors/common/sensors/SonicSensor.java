@@ -48,40 +48,38 @@ public class SonicSensor implements ISensor {
 							int id = world.getBlockId(sx + x, sy + y, sz + z);
 	
 							Block block = Block.blocksList[id];
+								
+							MovingObjectPosition hit = null;
 							
-							if (!(id == 0 || block == null)) {
-								
-								MovingObjectPosition hit = null;
-								
-								try {
-									hit = world.rayTraceBlocks(
-											
-											Vec3.createVectorHelper(
-													sx + (x == 0 ? 0.5 : (x > 0 ? 1.5 : -0.5)),
-													sy + (y == 0 ? 0.5 : (y > 0 ? 1.5 : -0.5)),
-													sz + (z == 0 ? 0.5 : (z > 0 ? 1.5 : -0.5))
-											),
-											Vec3.createVectorHelper(
-													sx + x + 0.5,
-													sy + y + 0.5,
-													sz + z + 0.5
-											)
-									);
-								
-								}catch(Exception e) {
-								}
-								
-								if (	hit == null ||
-									  ( hit.blockX == sx + x &&
-										hit.blockY == sy + y &&
-										hit.blockZ == sz + z )
-								) {
-									
-									ArrayList<ISensorTarget> arr = new ArrayList<ISensorTarget>();
-									arr.add(new SonicTarget(block, x, y, z));
-									ret.put(x + "," + y + "," + z, arr);
-								}
+							try {
+								hit = world.rayTraceBlocks(
+										
+										Vec3.createVectorHelper(
+												sx + (x == 0 ? 0.5 : (x > 0 ? 1.5 : -0.5)),
+												sy + (y == 0 ? 0.5 : (y > 0 ? 1.5 : -0.5)),
+												sz + (z == 0 ? 0.5 : (z > 0 ? 1.5 : -0.5))
+										),
+										Vec3.createVectorHelper(
+												sx + x + 0.5,
+												sy + y + 0.5,
+												sz + z + 0.5
+										)
+								);
+							
+							}catch(Exception e) {
 							}
+							
+							if (	hit == null ||
+								  ( hit.blockX == sx + x &&
+									hit.blockY == sy + y &&
+									hit.blockZ == sz + z )
+							) {
+								
+								ArrayList<ISensorTarget> arr = new ArrayList<ISensorTarget>();
+								arr.add(new SonicTarget(block, x, y, z));
+								ret.put(x + "," + y + "," + z, arr);
+							}
+							
 						}catch(Exception e) {
 						}
 					}
