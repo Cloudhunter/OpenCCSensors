@@ -17,7 +17,7 @@ public class BlockSensorRenderingHandler implements
 
 	@Override
 	public int getRenderId() {
-		return OpenCCSensors.Config.sensorBlockRenderID;
+		return OpenCCSensors.RenderIds.sensorRenderId;
 	}
 
 	@Override
