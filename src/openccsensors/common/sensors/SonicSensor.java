@@ -69,7 +69,6 @@ public class SonicSensor implements ISensor {
 									);
 								
 								}catch(Exception e) {
-									OCSLog.info("Error!" + e.getMessage());
 								}
 								
 								if (	hit == null ||

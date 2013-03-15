@@ -16,8 +16,7 @@ public class BlockGaugeRenderingHandler implements ISimpleBlockRenderingHandler 
 
 	@Override
 	public int getRenderId() {
-		// TODO Auto-generated method stub
-		return 2700;
+		return OpenCCSensors.RenderIds.gaugeRenderId;
 	}
 
 	@Override

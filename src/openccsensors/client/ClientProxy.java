@@ -5,6 +5,7 @@ import java.io.File;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.client.MinecraftForgeClient;
+import openccsensors.OpenCCSensors;
 import openccsensors.client.gaugeperipheral.BlockGaugeRenderingHandler;
 import openccsensors.client.gaugeperipheral.TileEntityGaugeRenderer;
 import openccsensors.client.sensorperipheral.BlockSensorRenderingHandler;
@@ -31,6 +32,11 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void registerRenderInformation() {
+
+		OpenCCSensors.RenderIds.sensorRenderId = RenderingRegistry.getNextAvailableRenderId();
+		OpenCCSensors.RenderIds.gaugeRenderId = RenderingRegistry.getNextAvailableRenderId();
+
+		
 		MinecraftForgeClient
 				.preloadTexture("/openccsensors/resources/images/terrain.png");
 		RenderingRegistry
@@ -42,6 +48,6 @@ public class ClientProxy extends CommonProxy {
 				.registerBlockHandler(new BlockGaugeRenderingHandler());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityGauge.class,
 				new TileEntityGaugeRenderer());
-
+		
 	}
 }
