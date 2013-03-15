@@ -91,4 +91,9 @@ public class SonicSensor implements ISensor {
 		}
 		return ret;
 	}
+
+	@Override
+	public String getIconName() {
+		return "openccsensors:sonic";
+	}
 }

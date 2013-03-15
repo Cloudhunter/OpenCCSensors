@@ -33,4 +33,9 @@ public class WorldSensor implements ISensor {
 		return retMap;
 	}
 
+	@Override
+	public String getIconName() {
+		return "openccsensors:world";
+	}
+
 }

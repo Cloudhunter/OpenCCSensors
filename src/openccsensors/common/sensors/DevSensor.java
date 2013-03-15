@@ -1,6 +1,8 @@
 package openccsensors.common.sensors;
 
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import openccsensors.common.api.ISensor;
 import openccsensors.common.api.ISensorAccess;
@@ -10,7 +12,7 @@ import openccsensors.common.api.SensorUpgradeTier;
 import openccsensors.common.sensors.targets.DevTileTarget;
 
 public class DevSensor extends BaseTileEntitySensor implements ISensor {
-
+	
 	public DevSensor() {
 		registerCallback(new ITileEntityValidatorCallback() {
 
@@ -34,6 +36,11 @@ public class DevSensor extends BaseTileEntitySensor implements ISensor {
 	public Object callCustomMethod(ISensorAccess sensor, World world, int x, int y, int z, int methodID, Object[] args, SensorUpgradeTier upgrade) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public String getIconName() {
+		return "openccsensors:dev";
 	}
 
 }

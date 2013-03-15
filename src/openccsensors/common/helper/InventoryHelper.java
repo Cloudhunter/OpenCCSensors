@@ -63,10 +63,10 @@ public class InventoryHelper {
 				}catch(Exception e){}
 			}
 		}
-		/*
-		 * temporarily disabled if (itemstack.hasTagCompound()) { map.put("nbt",
-		 * NetworkHelper.NBTToMap(itemstack.getTagCompound())); }
-		 */
+		
+		if (itemstack.getItem().getClass().getName() == "com.xcompwiz.mystcraft.item.ItemAgebook") {
+			map.put("Details", NetworkHelper.NBTToMap(itemstack.getTagCompound()));
+		}
 
 		return map;
 	}
@@ -104,6 +104,6 @@ public class InventoryHelper {
 			
 		}
 		
-		return rawName;
+		return rawName.trim();
 	}
 }

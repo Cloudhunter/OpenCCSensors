@@ -1,7 +1,9 @@
 package openccsensors.common.sensors;
 
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import openccsensors.common.api.IEntityValidatorCallback;
 import openccsensors.common.api.ISensor;
@@ -11,7 +13,7 @@ import openccsensors.common.api.SensorUpgradeTier;
 import openccsensors.common.sensors.targets.DroppedItemTarget;
 
 public class DroppedItemSensor extends BaseEntitySensor implements ISensor {
-
+	
 	public DroppedItemSensor() {
 		registerCallback(new IEntityValidatorCallback() {
 			@Override
@@ -36,5 +38,9 @@ public class DroppedItemSensor extends BaseEntitySensor implements ISensor {
 	public Object callCustomMethod(ISensorAccess sensor, World world, int x, int y, int z, int methodID, Object[] args, SensorUpgradeTier upgrade) {
 		return null;
 	}
-
+	
+	public String getIconName() {
+		return "openccsensors:droppedItem";
+	}
+	
 }

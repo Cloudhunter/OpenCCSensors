@@ -17,6 +17,7 @@ public class TileEntitySensorRenderer extends TileEntitySpecialRenderer {
 			float partialTick) {
 		boolean renderIcon = false;
 		String iconTexture = "";
+		/*
 		int iconIndex = 0;
 		ItemStack itemStack = tile.getStackInSlot(0);
 		if ((itemStack != null)
@@ -25,10 +26,10 @@ public class TileEntitySensorRenderer extends TileEntitySpecialRenderer {
 			iconIndex = itemStack.getIconIndex();
 			iconTexture = tile.getStackInSlot(0).getItem().getTextureFile();
 		}
-
+*/
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.5F);
-		this.bindTextureByName("/openccsensors/resources/images/sensorblock.png");
+		this.bindTextureByName("/mods/openccsensors/textures/models/sensor.png");
 		GL11.glPushMatrix();
 
 		int placing = tile.getFacing() * 90;
@@ -37,6 +38,7 @@ public class TileEntitySensorRenderer extends TileEntitySpecialRenderer {
 
 		GL11.glPopMatrix();
 		GL11.glRotatef(placing, 0, 1, 0);
+		/*
 		if (renderIcon) {
 			this.bindTextureByName(iconTexture);
 			GL11.glScalef(0.3F, 1.05F, 0.3F);
@@ -44,6 +46,7 @@ public class TileEntitySensorRenderer extends TileEntitySpecialRenderer {
 			this.modelSensor.renderIcon(iconIndex);
 			GL11.glDepthMask(true);
 		}
+		*/
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glPopMatrix();
 	}

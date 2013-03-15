@@ -1,6 +1,8 @@
 package openccsensors.common.sensors;
 
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 
 import openccsensors.common.api.ISensor;
@@ -41,6 +43,11 @@ public class AppliedEnergisticsSensor extends BaseTileEntitySensor implements IS
 			int y, int z, int methodID, Object[] args, SensorUpgradeTier upgrade)
 			throws Exception {
 		return null;
+	}
+
+	@Override
+	public String getIconName() {
+		return "openccsensors:appliedEnergistics";
 	}
 
 }

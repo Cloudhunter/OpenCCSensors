@@ -1,6 +1,8 @@
 package openccsensors.common.sensors;
 
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import openccsensors.common.api.ISensor;
 import openccsensors.common.api.ISensorAccess;
@@ -11,7 +13,7 @@ import openccsensors.common.sensors.targets.buildcraft.PowerReceptorTarget;
 import buildcraft.api.power.IPowerReceptor;
 
 public class BuildCraftSensor extends BaseTileEntitySensor implements ISensor {
-
+	
 	public BuildCraftSensor() {
 		
 		registerCallback(new ITileEntityValidatorCallback(){
@@ -37,6 +39,11 @@ public class BuildCraftSensor extends BaseTileEntitySensor implements ISensor {
 	@Override
 	public Object callCustomMethod(ISensorAccess sensor, World world, int x, int y, int z, int methodID, Object[] args, SensorUpgradeTier upgrade) {
 		return null;
+	}
+
+	@Override
+	public String getIconName() {
+		return "openccsensors:buildcraft";
 	}
 
 }

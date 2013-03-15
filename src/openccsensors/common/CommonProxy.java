@@ -41,6 +41,7 @@ import openccsensors.common.items.ItemSensorCard;
 import openccsensors.common.peripherals.ContainerSensor;
 import openccsensors.common.sensors.AppliedEnergisticsSensor;
 import openccsensors.common.sensors.BuildCraftSensor;
+import openccsensors.common.sensors.DevSensor;
 import openccsensors.common.sensors.DroppedItemSensor;
 import openccsensors.common.sensors.IndustrialCraftSensor;
 import openccsensors.common.sensors.InventorySensor;
@@ -305,7 +306,7 @@ public class CommonProxy {
 		// relevant mod installed
 		SensorManager.registerSensor(new ProximitySensor());
 		SensorManager.registerSensor(new DroppedItemSensor());
-		//SensorManager.registerSensor(new DevSensor());
+		SensorManager.registerSensor(new DevSensor());
 		SensorManager.registerSensor(new InventorySensor());
 		SensorManager.registerSensor(new SignSensor());
 		SensorManager.registerSensor(new TankSensor());

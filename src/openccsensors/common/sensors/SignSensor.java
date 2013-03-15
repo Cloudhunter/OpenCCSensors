@@ -38,4 +38,9 @@ public class SignSensor extends BaseTileEntitySensor implements ISensor {
 		return null;
 	}
 
+	@Override
+	public String getIconName() {
+		return "openccsensors:sign";
+	}
+
 }

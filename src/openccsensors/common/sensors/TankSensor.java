@@ -66,4 +66,9 @@ public class TankSensor extends BaseTileEntitySensor implements ISensor {
 		return null;
 	}
 
+	@Override
+	public String getIconName() {
+		return "openccsensors:tank";
+	}
+
 }

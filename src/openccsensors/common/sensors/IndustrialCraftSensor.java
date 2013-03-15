@@ -89,4 +89,9 @@ public class IndustrialCraftSensor extends BaseTileEntitySensor implements ISens
 		return null;
 	}
 
+	@Override
+	public String getIconName() {
+		return "openccsensors:industrialCraft";
+	}
+
 }

@@ -33,7 +33,7 @@ public class TileEntityGaugeRenderer extends TileEntitySpecialRenderer {
 
 		GL11.glTranslatef((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.5F);
 		GL11.glRotatef(-var12, 0.0F, 1.0F, 0.0F);
-		this.bindTextureByName("/openccsensors/resources/images/gauge.png");
+		this.bindTextureByName("/mods/openccsensors/textures/models/gauge.png");
 		GL11.glPushMatrix();
 		this.modelGauge.renderGauge();
 		GL11.glPopMatrix();

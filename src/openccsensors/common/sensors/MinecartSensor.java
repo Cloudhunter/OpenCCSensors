@@ -35,4 +35,9 @@ public class MinecartSensor extends BaseEntitySensor implements ISensor {
 		return null;
 	}
 
+	@Override
+	public String getIconName() {
+		return "openccsensors:minecart";
+	}
+
 }

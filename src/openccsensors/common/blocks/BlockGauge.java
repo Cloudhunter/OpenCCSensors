@@ -6,23 +6,26 @@ import static net.minecraftforge.common.ForgeDirection.SOUTH;
 import static net.minecraftforge.common.ForgeDirection.WEST;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import openccsensors.OpenCCSensors;
+import openccsensors.common.blocks.BlockSensor.Icons;
 import openccsensors.common.blocks.tileentity.TileEntityGauge;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dan200.computer.api.ComputerCraftAPI;
 
 public class BlockGauge extends BlockContainer {
+	
 
 	public BlockGauge(int par1, Material par2Material) {
 		super(par1, par2Material);
-		blockIndexInTexture = 0;
 		setHardness(0.5F);
 		setCreativeTab(ComputerCraftAPI.getCreativeTab());
+		this.setUnlocalizedName("openccsensors.gaugeblock");
 	}
 
 	/**
@@ -40,11 +43,6 @@ public class BlockGauge extends BlockContainer {
 	@Override
 	public TileEntity createNewTileEntity(World var1) {
 		return new TileEntityGauge();
-	}
-
-	@Override
-	public String getBlockName() {
-		return "openccsensors.tile.gaugeblock";
 	}
 
 	/**
@@ -119,38 +117,41 @@ public class BlockGauge extends BlockContainer {
 	 * neighbor blockID
 	 */
 	@Override
-	public void onNeighborBlockChange(World par1World, int par2, int par3,
-			int par4, int par5) {
-		int var6 = par1World.getBlockMetadata(par2, par3, par4);
-		boolean var7 = false;
+	public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5)
+    {
+        boolean flag = false;
 
-		if (var6 == 2
-				&& par1World.isBlockSolidOnSide(par2, par3, par4 + 1, NORTH)) {
-			var7 = true;
-		}
+        int i1 = par1World.getBlockMetadata(par2, par3, par4);
+        flag = true;
 
-		if (var6 == 3
-				&& par1World.isBlockSolidOnSide(par2, par3, par4 - 1, SOUTH)) {
-			var7 = true;
-		}
+        if (i1 == 2 && par1World.getBlockMaterial(par2, par3, par4 + 1).isSolid())
+        {
+            flag = false;
+        }
 
-		if (var6 == 4
-				&& par1World.isBlockSolidOnSide(par2 + 1, par3, par4, WEST)) {
-			var7 = true;
-		}
+        if (i1 == 3 && par1World.getBlockMaterial(par2, par3, par4 - 1).isSolid())
+        {
+            flag = false;
+        }
 
-		if (var6 == 5
-				&& par1World.isBlockSolidOnSide(par2 - 1, par3, par4, EAST)) {
-			var7 = true;
-		}
+        if (i1 == 4 && par1World.getBlockMaterial(par2 + 1, par3, par4).isSolid())
+        {
+            flag = false;
+        }
 
-		if (!var7) {
-			this.dropBlockAsItem(par1World, par2, par3, par4, var6, 0);
-			par1World.setBlockWithNotify(par2, par3, par4, 0);
-		}
+        if (i1 == 5 && par1World.getBlockMaterial(par2 - 1, par3, par4).isSolid())
+        {
+            flag = false;
+        }
 
-		super.onNeighborBlockChange(par1World, par2, par3, par4, par5);
-	}
+        if (flag)
+        {
+            this.dropBlockAsItem(par1World, par2, par3, par4, par1World.getBlockMetadata(par2, par3, par4), 0);
+            par1World.func_94571_i(par2, par3, par4);
+        }
+
+        super.onNeighborBlockChange(par1World, par2, par3, par4, par5);
+    }
 
 	@Override
 	public boolean renderAsNormalBlock() {
@@ -186,5 +187,11 @@ public class BlockGauge extends BlockContainer {
 		if (par1 == 5) {
 			this.setBlockBounds(0.0F, 0.0F, 0.0F, var3, 1.0F, 1.0F);
 		}
+	}
+	
+
+	
+	public void func_94332_a(IconRegister iconRegister)
+	{
 	}
 }

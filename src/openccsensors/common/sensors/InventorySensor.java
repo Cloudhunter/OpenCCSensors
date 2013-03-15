@@ -144,4 +144,9 @@ public class InventorySensor extends BaseTileEntitySensor implements ISensor {
 
 	}
 
+	@Override
+	public String getIconName() {
+		return "openccsensors:inventory";
+	}
+
 }

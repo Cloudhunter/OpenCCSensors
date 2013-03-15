@@ -4,12 +4,14 @@ import java.util.Random;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -20,11 +22,14 @@ import dan200.computer.api.ComputerCraftAPI;
 
 public class BlockSensor extends BlockContainer {
 
+	public static class Icons {
+		public static Icon turtleIcon;
+	}
+	
 	private Random random = new Random();
 
 	public BlockSensor(int par1, Material par2Material) {
 		super(par1, par2Material);
-		blockIndexInTexture = 1;
 		setHardness(0.5F);
 		setCreativeTab(ComputerCraftAPI.getCreativeTab());
 
@@ -87,11 +92,6 @@ public class BlockSensor extends BlockContainer {
 	}
 
 	@Override
-	public String getBlockName() {
-		return "openccsensors.tile.sensorblock";
-	}
-
-	@Override
 	public int getFlammability(IBlockAccess world, int x, int y, int z,
 			int metadata, ForgeDirection face) {
 		return 0;
@@ -130,14 +130,9 @@ public class BlockSensor extends BlockContainer {
 	}
 
 	@Override
-	public void onBlockPlacedBy(World par1World, int par2, int par3, int par4,
-			EntityLiving par5EntityPlayer) {
+	public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLiving entity, ItemStack par6ItemStack) {
 		int p = MathHelper
-				.floor_double((par5EntityPlayer.rotationYaw * 4F) / 360F + 0.5D) & 3; // this
-																									// is
-																									// a
-																									// smart
-																									// equation
+				.floor_double((entity.rotationYaw * 4F) / 360F + 0.5D) & 3; 
 		byte byte0 = 3;
 
 		switch (p) {
@@ -157,7 +152,7 @@ public class BlockSensor extends BlockContainer {
 			break;
 		}
 
-		par1World.setBlockMetadataWithNotify(par2, par3, par4, byte0);
+		par1World.setBlockMetadataWithNotify(par2, par3, par4, byte0, 3);
 	}
 
 	/**
@@ -167,6 +162,11 @@ public class BlockSensor extends BlockContainer {
 	@Override
 	public boolean renderAsNormalBlock() {
 		return false;
+	}
+	
+	public void func_94332_a(IconRegister iconRegister)
+	{
+		Icons.turtleIcon = iconRegister.func_94245_a("OCS:turtleIcon");
 	}
 
 }

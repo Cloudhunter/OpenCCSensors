@@ -3,6 +3,8 @@ package openccsensors.common.api;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 
 public interface ISensor {
@@ -12,4 +14,6 @@ public interface ISensor {
 
 	public HashMap<String, ArrayList<ISensorTarget>> getSurroundingTargets(
 			World world, int sx, int sy, int sz, SensorUpgradeTier upgrade);
+
+	public String getIconName();
 }

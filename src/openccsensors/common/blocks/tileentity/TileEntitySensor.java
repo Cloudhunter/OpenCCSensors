@@ -27,7 +27,7 @@ public class TileEntitySensor extends TileEntity implements ISensorEnvironment,
 
 	public TileEntitySensor() {
 		peripheral = new PeripheralSensor(this, false);
-		inventory = new InventoryBasic("Sensor", 1);
+		inventory = new InventoryBasic("Sensor", true, 1);
 		rotation = 0;
 	}
 
@@ -194,5 +194,16 @@ public class TileEntitySensor extends TileEntity implements ISensorEnvironment,
 		nbttagcompound.setTag("item", item);
 
 	}
+
+	@Override
+	public boolean func_94042_c() {
+		return true;
+	}
+
+	@Override
+	public boolean func_94041_b(int i, ItemStack itemstack) {
+		return true;
+	}
+
 
 }

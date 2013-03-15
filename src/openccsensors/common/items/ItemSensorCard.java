@@ -4,15 +4,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Icon;
 import openccsensors.common.api.SensorCardInterface;
+import openccsensors.common.api.SensorManager;
 import openccsensors.common.api.SensorUpgradeTier;
 import openccsensors.common.sensors.AppliedEnergisticsSensor;
 import openccsensors.common.sensors.BuildCraftSensor;
+import openccsensors.common.sensors.DevSensor;
 import openccsensors.common.sensors.DroppedItemSensor;
 import openccsensors.common.sensors.IndustrialCraftSensor;
 import openccsensors.common.sensors.InventorySensor;
@@ -29,7 +33,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import dan200.computer.api.ComputerCraftAPI;
 
 public class ItemSensorCard extends Item {
-
+	
 	private static HashMap<Integer, SensorCardInterface> interfaces = new HashMap<Integer, SensorCardInterface>();
 
 	public static SensorCardInterface PROXIMITY_TIER_1 = null;
@@ -93,22 +97,10 @@ public class ItemSensorCard extends Item {
 	
 	public ItemSensorCard(int par1) {
 		super(par1);
-		setTextureFile("/openccsensors/resources/images/terrain.png");
 		setHasSubtypes(true);
 		this.setMaxDamage(0);
 		setCreativeTab(ComputerCraftAPI.getCreativeTab());
 		
-	}
-
-	@Override
-	public int getIconFromDamage(int par1) {
-		return par1;
-	}
-
-	
-	@Override
-	public String getItemNameIS(ItemStack itemstack) {
-		return getInterfaceForStack(itemstack).getName();
 	}
 
 	public static void registerInterface(SensorCardInterface sensorInterface) {
@@ -133,7 +125,7 @@ public class ItemSensorCard extends Item {
 		DROPPED_TIER_3 = 	new SensorCardInterface(54, "openccsensors.item.droppeditemsensor", SensorUpgradeTier.TIER3, DroppedItemSensor.class);
 		DROPPED_TIER_4 = 	new SensorCardInterface(70, "openccsensors.item.droppeditemsensor", SensorUpgradeTier.TIER4, DroppedItemSensor.class);
 		
-		//DEV_SENSOR = 		new SensorCardInterface(99, "openccsensors.item.devsensor", SensorUpgradeTier.TIER4, DevSensor.class);
+		DEV_SENSOR = 		new SensorCardInterface(99, "openccsensors.item.devsensor", SensorUpgradeTier.TIER4, DevSensor.class);
 		
 		INVENTORY_TIER_1 = 	new SensorCardInterface(16, "openccsensors.item.inventorysensor", SensorUpgradeTier.TIER1, InventorySensor.class);
 		INVENTORY_TIER_2 = 	new SensorCardInterface(32, "openccsensors.item.inventorysensor", SensorUpgradeTier.TIER2, InventorySensor.class);
@@ -196,6 +188,7 @@ public class ItemSensorCard extends Item {
 				TANK_TIER_1, TANK_TIER_2, TANK_TIER_3, TANK_TIER_4, 
 				MINECART_TIER_1, MINECART_TIER_2, MINECART_TIER_3, MINECART_TIER_4, 
 				WORLD_TIER_1,
+				DEV_SENSOR,
 				SONIC_TIER_1,SONIC_TIER_2,SONIC_TIER_3,SONIC_TIER_4,
 				BUILDCRAFT_TIER_1, BUILDCRAFT_TIER_2, BUILDCRAFT_TIER_3, BUILDCRAFT_TIER_4,
 				INDUSTRIALCRAFT_TIER_1, INDUSTRIALCRAFT_TIER_2, INDUSTRIALCRAFT_TIER_3, INDUSTRIALCRAFT_TIER_4,
@@ -260,4 +253,27 @@ public class ItemSensorCard extends Item {
 			subItems.add(new ItemStack(par1, 1, entry.getValue().getId()));
 		}
 	}
+	
+    @SideOnly(Side.CLIENT)
+    public Icon getIconFromDamageForRenderPass(int dmgValue, int renderPass)
+    {
+    	return getInterfaceForDamageValue(dmgValue).getIconForRenderPass(renderPass);
+    }
+    
+	public void func_94581_a(IconRegister iconRegister)
+	{
+		SensorUpgradeTier.TIER1.registerIcon(iconRegister);
+		SensorUpgradeTier.TIER2.registerIcon(iconRegister);
+		SensorUpgradeTier.TIER3.registerIcon(iconRegister);
+		SensorUpgradeTier.TIER4.registerIcon(iconRegister);
+		SensorManager.registerIcons(iconRegister);
+	}
+	
+
+    @SideOnly(Side.CLIENT)
+    public boolean requiresMultipleRenderPasses()
+    {
+        return true;
+    }
+
 }

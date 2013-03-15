@@ -1,7 +1,11 @@
 package openccsensors.common.turtles;
 
+import com.jcraft.jorbis.Block;
+
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Icon;
 import openccsensors.OpenCCSensors;
+import openccsensors.common.blocks.BlockSensor;
 import openccsensors.common.core.TurtleSensorEnvironment;
 import openccsensors.common.peripherals.PeripheralSensor;
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -35,16 +39,6 @@ public class TurtleUpgradeSensor implements ITurtleUpgrade {
 	}
 
 	@Override
-	public int getIconIndex(ITurtleAccess turtle, TurtleSide side) {
-		return 0;
-	}
-
-	@Override
-	public String getIconTexture(ITurtleAccess turtle, TurtleSide side) {
-		return "/openccsensors/resources/images/terrain.png";
-	}
-
-	@Override
 	public TurtleUpgradeType getType() {
 		return TurtleUpgradeType.Peripheral;
 	}
@@ -63,6 +57,11 @@ public class TurtleUpgradeSensor implements ITurtleUpgrade {
 	public boolean useTool(ITurtleAccess turtle, TurtleSide side,
 			TurtleVerb verb, int direction) {
 		return false;
+	}
+
+	@Override
+	public Icon getIcon(ITurtleAccess turtle, TurtleSide side) {
+		return BlockSensor.Icons.turtleIcon;
 	}
 
 }

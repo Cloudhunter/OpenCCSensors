@@ -36,7 +36,6 @@ public class ClientProxy extends CommonProxy {
 		OpenCCSensors.RenderIds.sensorRenderId = RenderingRegistry.getNextAvailableRenderId();
 		OpenCCSensors.RenderIds.gaugeRenderId = RenderingRegistry.getNextAvailableRenderId();
 
-		
 		MinecraftForgeClient
 				.preloadTexture("/openccsensors/resources/images/terrain.png");
 		RenderingRegistry
