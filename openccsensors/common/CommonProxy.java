@@ -15,10 +15,12 @@ import openccsensors.api.SensorCard;
 import openccsensors.common.block.BlockSensor;
 import openccsensors.common.item.ItemSensorCard;
 import openccsensors.common.sensor.DroppedItemSensor;
+import openccsensors.common.sensor.InventorySensor;
 import openccsensors.common.sensor.MinecartSensor;
 import openccsensors.common.sensor.ProximitySensor;
 import openccsensors.common.sensor.SignSensor;
 import openccsensors.common.sensor.SonicSensor;
+import openccsensors.common.sensor.TankSensor;
 import openccsensors.common.tileentity.TileEntitySensor;
 import openccsensors.common.turtle.TurtleUpgradeSensor;
 
@@ -79,7 +81,20 @@ public class CommonProxy {
 		sensorCard.addSensorCard(19, new SensorCard(sonicSensor, tier3));
 		sensorCard.addSensorCard(20, new SensorCard(sonicSensor, tier4));
 		sensorCard.addIconsForLoading(sonicSensor);
+
+		TankSensor tankSensor = new TankSensor();
+		sensorCard.addSensorCard(18, new SensorCard(tankSensor, tier1));
+		sensorCard.addSensorCard(19, new SensorCard(tankSensor, tier2));
+		sensorCard.addSensorCard(20, new SensorCard(tankSensor, tier3));
+		sensorCard.addSensorCard(21, new SensorCard(tankSensor, tier4));
+		sensorCard.addIconsForLoading(tankSensor);
 		
+		InventorySensor inventorySensor = new InventorySensor();
+		sensorCard.addSensorCard(22, new SensorCard(inventorySensor, tier1));
+		sensorCard.addSensorCard(23, new SensorCard(inventorySensor, tier2));
+		sensorCard.addSensorCard(24, new SensorCard(inventorySensor, tier3));
+		sensorCard.addSensorCard(25, new SensorCard(inventorySensor, tier4));
+		sensorCard.addIconsForLoading(inventorySensor);
 		
 		// gauge.registerSensor(sensor);
 	}
