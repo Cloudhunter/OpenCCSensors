@@ -14,7 +14,11 @@ import openccsensors.api.ISensor;
 import openccsensors.api.SensorCard;
 import openccsensors.common.block.BlockSensor;
 import openccsensors.common.item.ItemSensorCard;
+import openccsensors.common.sensor.DroppedItemSensor;
+import openccsensors.common.sensor.MinecartSensor;
 import openccsensors.common.sensor.ProximitySensor;
+import openccsensors.common.sensor.SignSensor;
+import openccsensors.common.sensor.SonicSensor;
 import openccsensors.common.tileentity.TileEntitySensor;
 import openccsensors.common.turtle.TurtleUpgradeSensor;
 
@@ -41,12 +45,41 @@ public class CommonProxy {
 		
 		sensorCard.addIconsForLoading(tier1, tier2, tier3, tier4);
 		
-		ProximitySensor sensor = new ProximitySensor();
-		sensorCard.addSensorCard(1, new SensorCard(sensor, tier1));
-		sensorCard.addSensorCard(2, new SensorCard(sensor, tier2));
-		sensorCard.addSensorCard(3, new SensorCard(sensor, tier3));
-		sensorCard.addSensorCard(4, new SensorCard(sensor, tier4));
-		sensorCard.addIconsForLoading(sensor);
+		ProximitySensor proximitySensor = new ProximitySensor();
+		sensorCard.addSensorCard(1, new SensorCard(proximitySensor, tier1));
+		sensorCard.addSensorCard(2, new SensorCard(proximitySensor, tier2));
+		sensorCard.addSensorCard(3, new SensorCard(proximitySensor, tier3));
+		sensorCard.addSensorCard(4, new SensorCard(proximitySensor, tier4));
+		sensorCard.addIconsForLoading(proximitySensor);
+		
+		DroppedItemSensor droppedItemSensor = new DroppedItemSensor();
+		sensorCard.addSensorCard(5, new SensorCard(droppedItemSensor, tier1));
+		sensorCard.addSensorCard(6, new SensorCard(droppedItemSensor, tier2));
+		sensorCard.addSensorCard(7, new SensorCard(droppedItemSensor, tier3));
+		sensorCard.addSensorCard(8, new SensorCard(droppedItemSensor, tier4));
+		sensorCard.addIconsForLoading(droppedItemSensor);
+		
+		SignSensor signSensor = new SignSensor();
+		sensorCard.addSensorCard(9, new SensorCard(signSensor, tier1));
+		sensorCard.addSensorCard(10, new SensorCard(signSensor, tier2));
+		sensorCard.addSensorCard(11, new SensorCard(signSensor, tier3));
+		sensorCard.addSensorCard(12, new SensorCard(signSensor, tier4));
+		sensorCard.addIconsForLoading(signSensor);
+		
+		MinecartSensor minecartSensor = new MinecartSensor();
+		sensorCard.addSensorCard(13, new SensorCard(minecartSensor, tier1));
+		sensorCard.addSensorCard(14, new SensorCard(minecartSensor, tier2));
+		sensorCard.addSensorCard(15, new SensorCard(minecartSensor, tier3));
+		sensorCard.addSensorCard(16, new SensorCard(minecartSensor, tier4));
+		sensorCard.addIconsForLoading(minecartSensor);
+		
+		SonicSensor sonicSensor = new SonicSensor();
+		sensorCard.addSensorCard(17, new SensorCard(sonicSensor, tier1));
+		sensorCard.addSensorCard(18, new SensorCard(sonicSensor, tier2));
+		sensorCard.addSensorCard(19, new SensorCard(sonicSensor, tier3));
+		sensorCard.addSensorCard(20, new SensorCard(sonicSensor, tier4));
+		sensorCard.addIconsForLoading(sonicSensor);
+		
 		
 		// gauge.registerSensor(sensor);
 	}

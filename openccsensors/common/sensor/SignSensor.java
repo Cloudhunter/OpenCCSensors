@@ -1,35 +1,45 @@
 package openccsensors.common.sensor;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map.Entry;
 
 import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.Icon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import openccsensors.api.IRequiresIconLoading;
 import openccsensors.api.ISensor;
-import openccsensors.api.ISensorCardRegistry;
 import openccsensors.api.ISensorTier;
-import openccsensors.common.util.EntityUtils;
 
-public class ProximitySensor implements ISensor, IRequiresIconLoading {
+public class SignSensor extends TileSensor implements ISensor, IRequiresIconLoading {
 	
 	private Icon icon;
 
 	@Override
 	public HashMap getDetails(World world, Object obj, boolean additional) {
-		return EntityUtils.livingToMap((EntityLiving)obj, additional);
-	}
+		
+		TileEntitySign sign = (TileEntitySign) obj;
+		HashMap response = super.getDetails(sign);
+		if (additional) {
 
+			String signText = "";
+			for (int i = 0; i < sign.signText.length; i++) {
+				signText = signText + sign.signText[i];
+				if (i < 3 && sign.signText[i] != "") {
+					signText = signText + " ";
+				}
+			}
+			response.put("Text", signText.trim());
+		}
+		
+		return response;
+	}
+	
 	@Override
-	public HashMap getTargets(World world, Vec3 location,
-			ISensorTier tier) {
-		double radius = tier.getMultiplier() * 4;
-		return (HashMap) EntityUtils.getEntities(world, location, radius, EntityLiving.class);
+	public boolean isValidTarget(TileEntity target) {
+		
+		return target instanceof TileEntitySign;
 	}
 
 	@Override
@@ -45,9 +55,9 @@ public class ProximitySensor implements ISensor, IRequiresIconLoading {
 
 	@Override
 	public String getName() {
-		return "OpenCCSensors.proximitycard";
+		return "OpenCCSensors.signcard";
 	}
-	
+
 	@Override
 	public Icon getIcon() {
 		return icon;
@@ -55,8 +65,7 @@ public class ProximitySensor implements ISensor, IRequiresIconLoading {
 
 	@Override
 	public void loadIcon(IconRegister iconRegistry) {
-		icon = iconRegistry.func_94245_a("OpenCCSensors:proximity");
+		icon = iconRegistry.func_94245_a("OpenCCSensors:sign");		
 	}
-
 
 }
