@@ -2,9 +2,11 @@ package openccsensors.common.sensors.targets.buildcraft;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
+
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import openccsensors.common.api.ISensorTarget;
+import openccsensors.common.helper.BCHelper;
 import openccsensors.common.sensors.targets.TileSensorTarget;
 import buildcraft.api.power.IPowerProvider;
 import buildcraft.api.power.IPowerReceptor;
@@ -35,6 +37,8 @@ public class PowerReceptorTarget extends TileSensorTarget implements
 		retMap.put("Latency", provider.getLatency());
 		retMap.put("MaxEnergyStored", provider.getMaxEnergyStored());
 		retMap.put("MinEnergyReceived", provider.getMinEnergyReceived());
+		retMap.putAll(BCHelper.getEngineData((TileEntity)tileEngine));
+		
 
 		Class tileEngineClass = null;
 		Class engineClass = null;

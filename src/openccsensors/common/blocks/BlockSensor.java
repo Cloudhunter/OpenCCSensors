@@ -69,7 +69,7 @@ public class BlockSensor extends BlockContainer {
 								.nextGaussian() * var15;
 
 						if (var9.hasTagCompound()) {
-							var14.func_92014_d().setTagCompound(
+							var14.getEntityItem().setTagCompound(
 									(NBTTagCompound) var9.getTagCompound()
 											.copy());
 						}
@@ -102,7 +102,7 @@ public class BlockSensor extends BlockContainer {
 	 */
 	@Override
 	public int getRenderType() {
-		return OpenCCSensors.Config.sensorBlockRenderID;
+		return OpenCCSensors.RenderIds.sensorRenderId;
 	}
 
 	@Override

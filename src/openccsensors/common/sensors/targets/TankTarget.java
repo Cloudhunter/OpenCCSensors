@@ -5,16 +5,11 @@ import java.util.Map;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.liquids.ILiquidTank;
-import net.minecraftforge.liquids.ITankContainer;
 import net.minecraftforge.liquids.LiquidStack;
 import openccsensors.common.api.ISensorTarget;
-import openccsensors.common.core.OCSLog;
 import openccsensors.common.helper.InventoryHelper;
-import openccsensors.common.helper.SensorHelper;
 
 public class TankTarget implements ISensorTarget {
 
@@ -44,31 +39,33 @@ public class TankTarget implements ISensorTarget {
 		Map tankProperties;
 		Map tankMap = new HashMap();
 		int i = 1;
-		if (tanks != null) {
-			for (ILiquidTank tank : tanks) {
-				tankProperties = new HashMap();
-				tankProperties.put("Capacity", tank.getCapacity());
-	
-				stack = tank.getLiquid();
-	
-				if (stack != null) {
-					istack = stack.asItemStack();
-					if (istack != null) {
-						if (istack.getItem() != null) {
-							tankProperties.put("Name", InventoryHelper.getNameForItemStack(istack));
-							tankProperties.put("RawName", istack.getItemName());
-							tankProperties.put("Amount", stack.amount);
+		try {
+			if (tanks != null) {
+				for (ILiquidTank tank : tanks) {
+					tankProperties = new HashMap();
+					tankProperties.put("Capacity", tank.getCapacity());
+		
+					stack = tank.getLiquid();
+		
+					if (stack != null) {
+						istack = stack.asItemStack();
+						if (istack != null) {
+							if (istack.getItem() != null) {
+								tankProperties.put("Name", InventoryHelper.getNameForItemStack(istack));
+								tankProperties.put("RawName", InventoryHelper.getRawNameForStack(istack));
+								tankProperties.put("Amount", stack.amount);
+							}
 						}
 					}
+					if (!tankProperties.containsKey("Amount")) {
+						tankProperties.put("Amount", 0);
+					}
+		
+					tankMap.put(i, tankProperties);
+					i++;
 				}
-				if (!tankProperties.containsKey("Amount")) {
-					tankProperties.put("Amount", 0);
-				}
-	
-				tankMap.put(i, tankProperties);
-				i++;
 			}
-		}
+		}catch(Exception e) {}
 		retMap.put("Tanks", tankMap);
 		return retMap;
 	}

@@ -4,18 +4,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
 import openccsensors.common.api.IMethodCallback;
+import openccsensors.common.api.ISensor;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.SensorManager;
 import openccsensors.common.core.CallbackEventManager;
 import openccsensors.common.helper.TargetHelper;
 import openccsensors.common.sensors.BaseTileEntitySensor;
-import openccsensors.common.api.ISensor;
 import dan200.computer.api.IComputerAccess;
 import dan200.computer.api.IPeripheral;
 
@@ -23,6 +24,7 @@ public class TileEntityGauge extends TileEntity implements IPeripheral {
 
 	private int percentage = 0;
 	private String updatePropertyName = "";
+	private boolean sentClientUpdate = false;
 
 	private CallbackEventManager eventManager = new CallbackEventManager();
 
@@ -133,15 +135,25 @@ public class TileEntityGauge extends TileEntity implements IPeripheral {
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
+		
 		if (this.worldObj != null) {
+			
 			if (!this.worldObj.isRemote) {
+				int oldPercentage = this.percentage;
 				updatePercentage();
+				if (oldPercentage != percentage) {
+					worldObj.markBlockForUpdate(this.xCoord, this.yCoord,
+							this.zCoord);
+				}
 			}
 	
 			eventManager.process();
-	
-			worldObj.markBlockForUpdate(this.xCoord, this.yCoord,
-					this.zCoord);
+			
+		}else {
+			if (!sentClientUpdate) {
+				worldObj.markBlockForUpdate(this.xCoord, this.yCoord,
+						this.zCoord);			
+			}
 		}
 	}
 

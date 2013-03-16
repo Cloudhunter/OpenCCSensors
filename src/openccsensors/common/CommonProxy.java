@@ -31,21 +31,23 @@ import openccsensors.common.blocks.BlockSensor;
 import openccsensors.common.blocks.tileentity.TileEntityGauge;
 import openccsensors.common.blocks.tileentity.TileEntitySensor;
 import openccsensors.common.core.OCSLog;
+import openccsensors.common.helper.AppliedEnergisticsHelper;
 import openccsensors.common.helper.BCHelper;
 import openccsensors.common.helper.IC2Helper;
 import openccsensors.common.helper.RecipeHelper;
 import openccsensors.common.helper.ThaumcraftHelper;
-import openccsensors.common.items.ItemSensorCard;
 import openccsensors.common.items.ItemGeneric;
+import openccsensors.common.items.ItemSensorCard;
 import openccsensors.common.peripherals.ContainerSensor;
+import openccsensors.common.sensors.AppliedEnergisticsSensor;
 import openccsensors.common.sensors.BuildCraftSensor;
-import openccsensors.common.sensors.DevSensor;
 import openccsensors.common.sensors.DroppedItemSensor;
 import openccsensors.common.sensors.IndustrialCraftSensor;
 import openccsensors.common.sensors.InventorySensor;
 import openccsensors.common.sensors.MinecartSensor;
 import openccsensors.common.sensors.ProximitySensor;
 import openccsensors.common.sensors.SignSensor;
+import openccsensors.common.sensors.SonicSensor;
 import openccsensors.common.sensors.TankSensor;
 import openccsensors.common.sensors.ThaumCraftSensor;
 import openccsensors.common.sensors.WorldSensor;
@@ -59,7 +61,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import dan200.turtle.api.TurtleAPI;
 
 public class CommonProxy {
-
+	
 	/**
 	 * The GuiHandler currently only deals with the Sensor Peripherals GUI
 	 *
@@ -272,6 +274,7 @@ public class CommonProxy {
 		RecipeHelper.addTier1CardRecipe(ItemSensorCard.INVENTORY_TIER_1, "plankWood");
 		RecipeHelper.addTier1CardRecipe(ItemSensorCard.DROPPED_TIER_1, new ItemStack(Item.slimeBall));
 		RecipeHelper.addTier1CardRecipe(ItemSensorCard.PROXIMITY_TIER_1, new ItemStack(Block.pressurePlateStone));
+		RecipeHelper.addTier1CardRecipe(ItemSensorCard.SONIC_TIER_1, new ItemStack(Block.music));
 		// add the mod specific ones
 		if (Loader.isModLoaded("Thaumcraft"))
 			ThaumcraftHelper.addTier1CardRecipe();
@@ -279,6 +282,8 @@ public class CommonProxy {
 			IC2Helper.addTier1CardRecipe();
 		if (Loader.isModLoaded("BuildCraft|Core"))
 			BCHelper.addTier1CardRecipe();
+		if (Loader.isModLoaded("AppliedEnergistics"))
+			AppliedEnergisticsHelper.addTier1CardRecipe();
 		
 		// add the tier upgrade recipes
 		RecipeHelper.addTierUpgradeRecipes();
@@ -306,6 +311,7 @@ public class CommonProxy {
 		SensorManager.registerSensor(new TankSensor());
 		SensorManager.registerSensor(new MinecartSensor());
 		SensorManager.registerSensor(new WorldSensor());
+		SensorManager.registerSensor(new SonicSensor());
 		if (Loader.isModLoaded("BuildCraft|Core"))
 			SensorManager.registerSensor(new BuildCraftSensor());
 		
@@ -315,6 +321,8 @@ public class CommonProxy {
 		if (Loader.isModLoaded("Thaumcraft"))
 			SensorManager.registerSensor(new ThaumCraftSensor());
 		
+		if (Loader.isModLoaded("AppliedEnergistics"))
+			SensorManager.registerSensor(new AppliedEnergisticsSensor());		
 	}
 
 	public void registerRenderInformation() {

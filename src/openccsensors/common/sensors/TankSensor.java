@@ -1,6 +1,5 @@
 package openccsensors.common.sensors;
 
-import net.minecraft.block.Block;
 import net.minecraft.src.ModLoader;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -12,7 +11,6 @@ import openccsensors.common.api.ISensorAccess;
 import openccsensors.common.api.ISensorTarget;
 import openccsensors.common.api.ITileEntityValidatorCallback;
 import openccsensors.common.api.SensorUpgradeTier;
-import openccsensors.common.core.OCSLog;
 import openccsensors.common.helper.RCHelper;
 import openccsensors.common.helper.SensorHelper;
 import openccsensors.common.sensors.targets.TankTarget;
@@ -29,22 +27,26 @@ public class TankSensor extends BaseTileEntitySensor implements ISensor {
 			public ISensorTarget getTargetIfValid(TileEntity entity,
 					int relativeX, int relativeY, int relativeZ) {
 
-				String rawName = SensorHelper.getRawType(entity);
-				String displayName = SensorHelper.getDisplayType(entity);
-				
-				if (entity instanceof ITankContainer) {
-					ILiquidTank[] tanks = ((ITankContainer)entity).getTanks(ForgeDirection.UNKNOWN);
-					if (tanks.length > 0) {
-						return new TankTarget(tanks, rawName, displayName, relativeX, relativeY, relativeZ);
-					}
+				try {
+					String rawName = SensorHelper.getRawType(entity);
+					String displayName = SensorHelper.getDisplayType(entity);
 					
-				} else if (ModLoader.isModLoaded("Railcraft")) {
-					ILiquidTank tankTile = RCHelper.getTankIfTankTile(entity);
-					if (tankTile != null) {
-						ILiquidTank[] tanks = new ILiquidTank[] {  (ILiquidTank)tankTile };
-						return new TankTarget(tanks, rawName, displayName, relativeX, relativeY,
-								relativeZ);
+					if (entity instanceof ITankContainer) {
+						ILiquidTank[] tanks = ((ITankContainer)entity).getTanks(ForgeDirection.UNKNOWN);
+						if (tanks.length > 0) {
+							return new TankTarget(tanks, rawName, displayName, relativeX, relativeY, relativeZ);
+						}
+						
+					} else if (ModLoader.isModLoaded("Railcraft")) {
+						ILiquidTank tankTile = RCHelper.getTankIfTankTile(entity);
+						if (tankTile != null) {
+							ILiquidTank[] tanks = new ILiquidTank[] {  (ILiquidTank)tankTile };
+							return new TankTarget(tanks, rawName, displayName, relativeX, relativeY,
+									relativeZ);
+						}
+						
 					}
+				}catch(Exception e) {
 					
 				}
 				
