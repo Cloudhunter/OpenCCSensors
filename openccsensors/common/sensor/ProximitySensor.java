@@ -22,7 +22,7 @@ public class ProximitySensor implements ISensor, IRequiresIconLoading {
 
 	@Override
 	public HashMap getDetails(Object obj, boolean additional) {
-		return new HashMap();
+		return EntityUtils.livingToMap((EntityLiving)obj, additional);
 	}
 
 	@Override
