@@ -21,6 +21,7 @@ import openccsensors.common.sensor.ProximitySensor;
 import openccsensors.common.sensor.SignSensor;
 import openccsensors.common.sensor.SonicSensor;
 import openccsensors.common.sensor.TankSensor;
+import openccsensors.common.sensor.WorldSensor;
 import openccsensors.common.tileentity.TileEntitySensor;
 import openccsensors.common.turtle.TurtleUpgradeSensor;
 
@@ -95,6 +96,10 @@ public class CommonProxy {
 		sensorCard.addSensorCard(24, new SensorCard(inventorySensor, tier3));
 		sensorCard.addSensorCard(25, new SensorCard(inventorySensor, tier4));
 		sensorCard.addIconsForLoading(inventorySensor);
+
+		WorldSensor worldSensor = new WorldSensor();
+		sensorCard.addSensorCard(26, new SensorCard(worldSensor, tier1));
+		sensorCard.addIconsForLoading(worldSensor);
 		
 		// gauge.registerSensor(sensor);
 	}
