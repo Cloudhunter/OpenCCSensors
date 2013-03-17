@@ -34,6 +34,8 @@ public class WorldTarget implements ISensorTarget {
 		retMap.put("Raining", world.isRaining());
 		retMap.put("Thundering", world.isThundering());
 		retMap.put("Daytime", world.isDaytime());
+		retMap.put("CelestialAngle", world.getCelestialAngle(1.0F));
+		retMap.put("MoonPhase", world.getMoonPhase(1.0F));
 		return retMap;
 	}
 

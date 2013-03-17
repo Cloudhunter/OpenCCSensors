@@ -47,7 +47,6 @@ public class BCHelper {
 	
 	public static Map getEngineData(TileEntity tile) {
 		Class tileClass = tile.getClass();
-		System.out.println("tileClass = "+tileClass.getName());
 		Map engineDetails = new HashMap();
 		try {
 			Class engineTileClass = Class.forName("buildcraft.energy.TileEngine");
