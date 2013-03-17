@@ -9,6 +9,18 @@ import openccsensors.common.block.BlockGauge;
 import openccsensors.common.block.BlockSensor;
 import openccsensors.common.item.ItemGeneric;
 import openccsensors.common.item.ItemSensorCard;
+import openccsensors.common.sensor.AppliedEnergisticsSensor;
+import openccsensors.common.sensor.BuildcraftSensor;
+import openccsensors.common.sensor.DroppedItemSensor;
+import openccsensors.common.sensor.IndustrialcraftSensor;
+import openccsensors.common.sensor.InventorySensor;
+import openccsensors.common.sensor.MinecartSensor;
+import openccsensors.common.sensor.ProximitySensor;
+import openccsensors.common.sensor.SignSensor;
+import openccsensors.common.sensor.SonicSensor;
+import openccsensors.common.sensor.TankSensor;
+import openccsensors.common.sensor.ThaumcraftSensor;
+import openccsensors.common.sensor.WorldSensor;
 import openccsensors.common.util.OCSLog;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -47,6 +59,25 @@ public class OpenCCSensors {
 
 	public static int renderId;
 	
+	public static class Sensors {
+		
+		/* vanilla/forge */
+		public static ProximitySensor proximitySensor;
+		public static MinecartSensor minecartSensor;
+		public static DroppedItemSensor droppedItemSensor;
+		public static InventorySensor inventorySensor;
+		public static SignSensor signSensor;
+		public static SonicSensor sonicSensor;
+		public static TankSensor tankSensor;
+		public static WorldSensor worldSensor;
+		
+		/* mod specific */
+		public static ThaumcraftSensor thaumcraftSensor;
+		public static IndustrialcraftSensor industrialcraftSensor;
+		public static AppliedEnergisticsSensor appliedEnergisticsSensor;
+		public static BuildcraftSensor buildcraftSensor;
+		
+	}
 
 	@Instance( value = "OCS" )
 	public static OpenCCSensors instance;

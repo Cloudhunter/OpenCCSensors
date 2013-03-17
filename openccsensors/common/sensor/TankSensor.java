@@ -2,7 +2,9 @@ package openccsensors.common.sensor;
 
 import java.util.HashMap;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.src.ModLoader;
 import net.minecraft.tileentity.TileEntity;
@@ -110,6 +112,11 @@ public class TankSensor extends TileSensor implements ISensor, IRequiresIconLoad
 	@Override
 	public void loadIcon(IconRegister iconRegistry) {
 		icon = iconRegistry.func_94245_a("OpenCCSensors:tank");
+	}
+
+	@Override
+	public ItemStack getUniqueRecipeItem() {
+		return new ItemStack(Item.bucketEmpty);
 	}
 
 }

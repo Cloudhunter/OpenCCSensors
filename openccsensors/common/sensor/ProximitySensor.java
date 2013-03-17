@@ -4,9 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -56,6 +59,11 @@ public class ProximitySensor implements ISensor, IRequiresIconLoading {
 	@Override
 	public void loadIcon(IconRegister iconRegistry) {
 		icon = iconRegistry.func_94245_a("OpenCCSensors:proximity");
+	}
+
+	@Override
+	public ItemStack getUniqueRecipeItem() {
+		return new ItemStack(Block.pressurePlateStone);
 	}
 
 

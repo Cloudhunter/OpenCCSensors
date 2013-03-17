@@ -2,6 +2,7 @@ package openccsensors.common.sensor;
 
 import java.util.HashMap;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
@@ -12,6 +13,7 @@ import openccsensors.api.ISensor;
 import openccsensors.api.ISensorTier;
 import openccsensors.common.util.InventoryUtils;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 
 public class InventorySensor extends TileSensor implements ISensor, IRequiresIconLoading {
 
@@ -60,6 +62,11 @@ public class InventorySensor extends TileSensor implements ISensor, IRequiresIco
 	@Override
 	public void loadIcon(IconRegister iconRegistry) {
 		icon = iconRegistry.func_94245_a("OpenCCSensors:inventory");
+	}
+
+	@Override
+	public ItemStack getUniqueRecipeItem() {
+		return new ItemStack(Block.chest);
 	}
 
 }

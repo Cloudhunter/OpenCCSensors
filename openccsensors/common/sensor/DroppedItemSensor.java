@@ -5,6 +5,7 @@ import java.util.HashMap;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.util.Vec3;
@@ -78,6 +79,11 @@ public class DroppedItemSensor implements ISensor, IRequiresIconLoading {
 	@Override
 	public void loadIcon(IconRegister iconRegistry) {
 		icon = iconRegistry.func_94245_a("OpenCCSensors:droppedItem");
+	}
+
+	@Override
+	public ItemStack getUniqueRecipeItem() {
+		return new ItemStack(Item.slimeBall);
 	}
 
 }

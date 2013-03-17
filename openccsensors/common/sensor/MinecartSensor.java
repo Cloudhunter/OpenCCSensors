@@ -8,6 +8,8 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.item.EntityMinecartContainer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -78,6 +80,11 @@ public class MinecartSensor implements ISensor, IRequiresIconLoading {
 	public void loadIcon(IconRegister iconRegistry) {
 		icon = iconRegistry.func_94245_a("OpenCCSensors:minecart");
 		
+	}
+
+	@Override
+	public ItemStack getUniqueRecipeItem() {
+		return new ItemStack(Item.minecartEmpty);
 	}
 
 }

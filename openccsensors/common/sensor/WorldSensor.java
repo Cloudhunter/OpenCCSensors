@@ -3,6 +3,8 @@ package openccsensors.common.sensor;
 import java.util.HashMap;
 
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -31,6 +33,8 @@ public class WorldSensor implements ISensor, IRequiresIconLoading {
 		response.put("Raining", world.isRaining());
 		response.put("Thundering", world.isThundering());
 		response.put("Daytime", world.isDaytime());
+		response.put("MoonPhase", world.getMoonPhase());
+		response.put("CelestialAngle", world.getCelestialAngle(1.0F));
 		
 		return response;
 	}
@@ -66,6 +70,11 @@ public class WorldSensor implements ISensor, IRequiresIconLoading {
 	@Override
 	public void loadIcon(IconRegister iconRegistry) {
 		icon = iconRegistry.func_94245_a("OpenCCSensors:world");
+	}
+
+	@Override
+	public ItemStack getUniqueRecipeItem() {
+		return new ItemStack(Item.enderPearl);
 	}
 
 }
