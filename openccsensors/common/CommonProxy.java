@@ -1,5 +1,7 @@
 package openccsensors.common;
 
+import java.util.Map.Entry;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -13,18 +15,21 @@ import openccsensors.api.EnumItemRarity;
 import openccsensors.api.ISensor;
 import openccsensors.api.SensorCard;
 import openccsensors.common.block.BlockSensor;
+import openccsensors.common.item.ItemGeneric;
 import openccsensors.common.item.ItemSensorCard;
-import openccsensors.common.sensor.AppliedEnergisticsSensor;
-import openccsensors.common.sensor.BuildcraftSensor;
+import openccsensors.common.item.meta.ItemMetaAdvancedAmplifier;
+import openccsensors.common.item.meta.ItemMetaRangeExtensionAntenna;
+import openccsensors.common.item.meta.ItemMetaSignalAmplifier;
+import openccsensors.common.sensor.PowerSensor;
 import openccsensors.common.sensor.DroppedItemSensor;
-import openccsensors.common.sensor.IndustrialcraftSensor;
+import openccsensors.common.sensor.MachineSensor;
 import openccsensors.common.sensor.InventorySensor;
 import openccsensors.common.sensor.MinecartSensor;
 import openccsensors.common.sensor.ProximitySensor;
 import openccsensors.common.sensor.SignSensor;
 import openccsensors.common.sensor.SonicSensor;
 import openccsensors.common.sensor.TankSensor;
-import openccsensors.common.sensor.ThaumcraftSensor;
+import openccsensors.common.sensor.MagicSensor;
 import openccsensors.common.sensor.WorldSensor;
 import openccsensors.common.tileentity.TileEntitySensor;
 import openccsensors.common.turtle.TurtleUpgradeSensor;
@@ -33,6 +38,22 @@ public class CommonProxy {
 	
 	public void init() {
 
+		initSensors();
+		initBlocks();
+		initItems();
+			
+		if (OpenCCSensors.Config.turtlePeripheralEnabled) {
+			TurtleUpgradeSensor turtleSensor = new TurtleUpgradeSensor();
+			OpenCCSensors.Items.sensorCard.addIconsForLoading(turtleSensor);
+			TurtleAPI.registerUpgrade(turtleSensor);
+		}
+		
+		NetworkRegistry.instance().registerGuiHandler(OpenCCSensors.instance, new GuiHandler());
+		
+		// gauge.registerSensor(sensor);
+	}
+	
+	private void initSensors() {
 		OpenCCSensors.Sensors.proximitySensor = new ProximitySensor();
 		OpenCCSensors.Sensors.droppedItemSensor = new DroppedItemSensor();
 		OpenCCSensors.Sensors.signSensor = new SignSensor();
@@ -41,26 +62,26 @@ public class CommonProxy {
 		OpenCCSensors.Sensors.tankSensor = new TankSensor();
 		OpenCCSensors.Sensors.inventorySensor = new InventorySensor();
 		OpenCCSensors.Sensors.worldSensor = new WorldSensor();
-		
-		OpenCCSensors.Sensors.appliedEnergisticsSensor = new AppliedEnergisticsSensor();
-		OpenCCSensors.Sensors.buildcraftSensor = new BuildcraftSensor();
-		OpenCCSensors.Sensors.industrialcraftSensor = new IndustrialcraftSensor();
-		OpenCCSensors.Sensors.thaumcraftSensor = new ThaumcraftSensor();
-		
-		NetworkRegistry.instance().registerGuiHandler(OpenCCSensors.instance, new GuiHandler());
-		
+		OpenCCSensors.Sensors.powerSensor = new PowerSensor();
+		OpenCCSensors.Sensors.machineSensor = new MachineSensor();
+		OpenCCSensors.Sensors.magicSensor = new MagicSensor();
+	}
+	
+	private void initBlocks() {
 		OpenCCSensors.Blocks.sensorBlock = new BlockSensor();
+	}
+	
+	private void initItems() {
 		
-		ItemSensorCard sensorCard = new ItemSensorCard();
-
-		if (OpenCCSensors.Config.turtlePeripheralEnabled) {
-			TurtleUpgradeSensor turtleSensor = new TurtleUpgradeSensor();
-			sensorCard.addIconsForLoading(turtleSensor);
-			TurtleAPI.registerUpgrade(turtleSensor);
-		}
-
+		// metas
+		OpenCCSensors.Items.genericItem = new ItemGeneric();
+		OpenCCSensors.Items.rangeExtensionAntenna = new ItemMetaRangeExtensionAntenna(1);
+		OpenCCSensors.Items.signalAmplifier = new ItemMetaSignalAmplifier(2);
+		OpenCCSensors.Items.advancedAmplifier = new ItemMetaAdvancedAmplifier(3);
 		
-		// gauge.registerSensor(sensor);
+		OpenCCSensors.Items.sensorCard = new ItemSensorCard();
+		OpenCCSensors.Items.sensorCard.registerSensors();
+		
 	}
 	
 	

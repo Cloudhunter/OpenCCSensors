@@ -4,6 +4,7 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.util.Icon;
 import openccsensors.api.EnumItemRarity;
 import openccsensors.api.IRequiresIconLoading;
+import openccsensors.api.ISensor;
 import openccsensors.api.ISensorTier;
 
 public class SensorTier implements ISensorTier, IRequiresIconLoading {
@@ -45,5 +46,6 @@ public class SensorTier implements ISensorTier, IRequiresIconLoading {
 	public void loadIcon(IconRegister iconRegistry) {
 		icon = iconRegistry.func_94245_a(iconName);
 	}
+
 
 }

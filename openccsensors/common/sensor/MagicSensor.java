@@ -1,5 +1,5 @@
 package openccsensors.common.sensor;
 
-public class ThaumcraftSensor {
+public class MagicSensor {
 
 }

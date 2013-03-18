@@ -3,23 +3,23 @@ package openccsensors;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.Property;
 import openccsensors.api.EnumItemRarity;
+import openccsensors.api.IItemMeta;
 import openccsensors.common.CommonProxy;
 import openccsensors.common.SensorTier;
 import openccsensors.common.block.BlockGauge;
 import openccsensors.common.block.BlockSensor;
 import openccsensors.common.item.ItemGeneric;
 import openccsensors.common.item.ItemSensorCard;
-import openccsensors.common.sensor.AppliedEnergisticsSensor;
-import openccsensors.common.sensor.BuildcraftSensor;
+import openccsensors.common.sensor.PowerSensor;
 import openccsensors.common.sensor.DroppedItemSensor;
-import openccsensors.common.sensor.IndustrialcraftSensor;
+import openccsensors.common.sensor.MachineSensor;
 import openccsensors.common.sensor.InventorySensor;
 import openccsensors.common.sensor.MinecartSensor;
 import openccsensors.common.sensor.ProximitySensor;
 import openccsensors.common.sensor.SignSensor;
 import openccsensors.common.sensor.SonicSensor;
 import openccsensors.common.sensor.TankSensor;
-import openccsensors.common.sensor.ThaumcraftSensor;
+import openccsensors.common.sensor.MagicSensor;
 import openccsensors.common.sensor.WorldSensor;
 import openccsensors.common.util.OCSLog;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -50,18 +50,28 @@ public class OpenCCSensors {
 		public static boolean turtlePeripheralEnabled;
 	}
 	
+	public static class Tiers {
+		public static SensorTier tier1;
+		public static SensorTier tier2;
+		public static SensorTier tier3;
+		public static SensorTier tier4;
+	}
+	
 
 	public static class Items
 	{
 		public static ItemGeneric genericItem;
 		public static ItemSensorCard sensorCard;
+		
+		public static IItemMeta rangeExtensionAntenna;
+		public static IItemMeta signalAmplifier;
+		public static IItemMeta advancedAmplifier;
 	}
 
 	public static int renderId;
 	
 	public static class Sensors {
 		
-		/* vanilla/forge */
 		public static ProximitySensor proximitySensor;
 		public static MinecartSensor minecartSensor;
 		public static DroppedItemSensor droppedItemSensor;
@@ -70,12 +80,9 @@ public class OpenCCSensors {
 		public static SonicSensor sonicSensor;
 		public static TankSensor tankSensor;
 		public static WorldSensor worldSensor;
-		
-		/* mod specific */
-		public static ThaumcraftSensor thaumcraftSensor;
-		public static IndustrialcraftSensor industrialcraftSensor;
-		public static AppliedEnergisticsSensor appliedEnergisticsSensor;
-		public static BuildcraftSensor buildcraftSensor;
+		public static MagicSensor magicSensor;
+		public static MachineSensor machineSensor;
+		public static PowerSensor powerSensor;
 		
 	}
 
