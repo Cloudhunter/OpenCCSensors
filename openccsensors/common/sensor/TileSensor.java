@@ -11,14 +11,17 @@ import openccsensors.common.util.InventoryUtils;
 
 public abstract class TileSensor {
 
+	protected HashMap response = new HashMap();
+	protected HashMap position = new HashMap();
+	
 	public boolean isValidTarget(TileEntity target) {
 		return false;
 	}
 	
 	public HashMap getDetails(TileEntity tile) {
-		
-		HashMap response = new HashMap();
-		HashMap position = new HashMap();
+
+		position.clear();
+		response.clear();
 		
 		position.put("X", tile.xCoord);
 		position.put("Y", tile.yCoord);

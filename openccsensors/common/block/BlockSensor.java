@@ -3,6 +3,7 @@ package openccsensors.common.block;
 import java.util.Random;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import dan200.computer.api.ComputerCraftAPI;
 import openccsensors.OpenCCSensors;
 import openccsensors.common.tileentity.TileEntitySensor;
 import openccsensors.common.util.MiscUtils;
@@ -24,12 +25,9 @@ public class BlockSensor extends BlockContainer {
 	public BlockSensor() {
 		
 		super(OpenCCSensors.Config.sensorBlockID, Material.ground);
-		
 		setHardness(0.5F);
-		setCreativeTab(CreativeTabs.tabMisc);
-		//setCreativeTab(ComputerCraftAPI.getCreativeTab());
-		
-		GameRegistry.registerBlock(this, "OCS");
+		setCreativeTab(ComputerCraftAPI.getCreativeTab());
+		GameRegistry.registerBlock(this, "sensor");
 		GameRegistry.registerTileEntity(TileEntitySensor.class, "sensor");
 		
 	}

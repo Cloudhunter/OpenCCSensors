@@ -40,12 +40,42 @@ public class InventorySensor extends TileSensor implements ISensor, IRequiresIco
 
 	@Override
 	public String[] getCustomMethods(ISensorTier tier) {
-		return null;
+		return new String[] {
+				"getMapData",
+				"getBeeInfo",
+				"getMystcraftBookInfo"
+		};
 	}
 
 	@Override
 	public Object callCustomMethod(World world, Vec3 location, int methodID,
-			Object[] args, ISensorTier tier) {
+			Object[] args, ISensorTier tier) throws Exception {
+		
+		if (args.length != 2) {
+			throw new Exception("This method expects two parameters");
+		}
+
+		if (args[1] instanceof Double) {
+			args[1] = ((Double)args[1]).intValue();
+		}
+
+		if (!(args[0] instanceof String) || !(args[1] instanceof Integer)) {
+			throw new Exception("Incorrect parameters. It should be target name, then slot number");
+		}
+		
+		String targetName = (String)args[0];
+		int slot = ((Integer)args[1])-1;
+		
+		HashMap targets = getTargets(world, location, tier);
+		
+		switch (methodID) {
+			case 0:				
+				return InventoryUtils.getMapData(world, targets, targetName, slot);
+			case 1:				
+				return null;
+			case 2:				
+				return null;
+		}
 		return null;
 	}
 

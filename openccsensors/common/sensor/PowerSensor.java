@@ -10,14 +10,19 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import openccsensors.api.IGaugeSensor;
 import openccsensors.api.IRequiresIconLoading;
 import openccsensors.api.ISensor;
 import openccsensors.api.ISensorTier;
 import openccsensors.common.util.UniversalElectricityUtils;
 
-public class PowerSensor extends TileSensor implements ISensor, IRequiresIconLoading {
+public class PowerSensor extends TileSensor implements ISensor, IRequiresIconLoading, IGaugeSensor {
 
 	private Icon icon;
+	private String[] gaugeProperties = new String[] {
+		"PercentFull"	
+	};
+	
 	Class UEApi = null;
 	
 	public PowerSensor() {
@@ -70,5 +75,10 @@ public class PowerSensor extends TileSensor implements ISensor, IRequiresIconLoa
 	@Override
 	public void loadIcon(IconRegister iconRegistry) {
 		icon = iconRegistry.func_94245_a("OpenCCSensors:power");
+	}
+
+	@Override
+	public String[] getGaugeProperties() {
+		return gaugeProperties;
 	}
 }

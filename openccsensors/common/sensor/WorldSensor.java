@@ -15,13 +15,14 @@ import openccsensors.api.ISensorTier;
 public class WorldSensor implements ISensor, IRequiresIconLoading {
 	
 	private Icon icon;
-
+	private HashMap response = new HashMap();
+	
 	@Override
 	public HashMap getDetails(World world, Object obj, boolean additional) {
 		
 		Vec3 location = (Vec3) obj;
 		
-		HashMap response = new HashMap();
+		response.clear();
 		
 		int x = (int) location.xCoord;
 		int y = (int) location.yCoord;

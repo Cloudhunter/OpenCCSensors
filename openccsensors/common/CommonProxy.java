@@ -14,6 +14,7 @@ import openccsensors.OpenCCSensors;
 import openccsensors.api.EnumItemRarity;
 import openccsensors.api.ISensor;
 import openccsensors.api.SensorCard;
+import openccsensors.common.block.BlockGauge;
 import openccsensors.common.block.BlockSensor;
 import openccsensors.common.item.ItemGeneric;
 import openccsensors.common.item.ItemSensorCard;
@@ -31,6 +32,7 @@ import openccsensors.common.sensor.SonicSensor;
 import openccsensors.common.sensor.TankSensor;
 import openccsensors.common.sensor.MagicSensor;
 import openccsensors.common.sensor.WorldSensor;
+import openccsensors.common.tileentity.TileEntityGauge;
 import openccsensors.common.tileentity.TileEntitySensor;
 import openccsensors.common.turtle.TurtleUpgradeSensor;
 
@@ -49,6 +51,8 @@ public class CommonProxy {
 		}
 		
 		NetworkRegistry.instance().registerGuiHandler(OpenCCSensors.instance, new GuiHandler());
+		
+		TileEntityGauge.addGaugeSensor(OpenCCSensors.Sensors.powerSensor);
 		
 		// gauge.registerSensor(sensor);
 	}
@@ -69,6 +73,7 @@ public class CommonProxy {
 	
 	private void initBlocks() {
 		OpenCCSensors.Blocks.sensorBlock = new BlockSensor();
+		OpenCCSensors.Blocks.gaugeBlock = new BlockGauge();
 	}
 	
 	private void initItems() {

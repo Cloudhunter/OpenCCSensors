@@ -20,18 +20,29 @@ public class UniversalElectricityUtils {
 
 	public static Map getDetails(World world, Object obj, boolean additional) {
 		HashMap response = new HashMap();
+		
 		if (additional) {
 			if (obj instanceof IVoltage) {
 				response.put("Voltage", ((IVoltage)obj).getVoltage());
 			}
+			
 			if (obj instanceof IElectricityStorage) {
-				response.put("Stored", ((IElectricityStorage)obj).getJoules());
-				response.put("MaxStorage", ((IElectricityStorage)obj).getMaxJoules());
+				double joules = ((IElectricityStorage)obj).getJoules();
+				double maxJoules = ((IElectricityStorage)obj).getMaxJoules();
+				response.put("Stored", joules);
+				response.put("MaxStorage", maxJoules);
+				if (maxJoules > 0) {
+					double percent = 100 / maxJoules * joules;
+					percent = Math.max(Math.min(percent, 100), 0);
+					response.put("PercentFull", (int)percent);
+				}
 			}
+			
 			if (obj instanceof IConductor) {
 				response.put("ConductorCapacity", ((IConductor)obj).getCurrentCapcity());
 				response.put("Resistance", ((IConductor)obj).getResistance());
 			}
+			
 		}
 		return response;
 	}

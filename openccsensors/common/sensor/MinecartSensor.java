@@ -23,14 +23,17 @@ public class MinecartSensor implements ISensor, IRequiresIconLoading {
 
 	private Icon icon;
 
+	private HashMap response = new HashMap();
+	private HashMap position = new HashMap();
+
 	@Override
 	public HashMap getDetails(World world, Object obj, boolean additional) {
 
 		EntityMinecart minecart = (EntityMinecart) obj;
-		
-		HashMap response = new HashMap();
 
-		HashMap position = new HashMap();
+		position.clear();
+		response.clear();
+		
 		position.put("X", minecart.posX);
 		position.put("Y", minecart.posY);
 		position.put("Z", minecart.posZ);

@@ -17,7 +17,8 @@ public class SonicSensor implements ISensor, IRequiresIconLoading {
 	
 	private Icon icon;
 	private static final int BASE_RANGE = 3;
-
+	private HashMap targets = new HashMap();
+	
 	@Override
 	public HashMap getDetails(World world, Object obj, boolean additional) {
 		Vec3 target = (Vec3) obj;
@@ -52,7 +53,7 @@ public class SonicSensor implements ISensor, IRequiresIconLoading {
 	@Override
 	public HashMap getTargets(World world, Vec3 location, ISensorTier tier) {
 		
-		HashMap targets = new HashMap();
+		targets.clear();
 
 		int range = (new Double(tier.getMultiplier())).intValue()
 				* BASE_RANGE;
