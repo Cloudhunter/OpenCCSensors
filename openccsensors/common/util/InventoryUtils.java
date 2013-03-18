@@ -60,7 +60,7 @@ public class InventoryUtils {
 
 		return map;
 	}
-
+	
 	public static HashMap invToMap(IInventory inventory) {
 		HashMap map = new HashMap();
 		if (inventory.getClass().getName() == FACTORIZATION_BARREL_CLASS) {
@@ -82,6 +82,32 @@ public class InventoryUtils {
 			}
 		}
 		return map;
+	}
+	
+	public static HashMap getInventorySizeCalculations(IInventory inventory) {
+		ItemStack stack;
+		int totalSpace = 0;
+		int itemCount = 0;
+		for (int i = 0; i < inventory.getSizeInventory(); i++) {
+			stack = inventory.getStackInSlot(i);
+			if (stack == null) {
+				totalSpace += 64;
+			}else {
+				totalSpace += stack.getMaxStackSize();
+				itemCount += stack.stackSize;
+			}
+		}
+		
+		HashMap response = new HashMap();
+		response.put("TotalSpace", totalSpace);
+		response.put("ItemCount", itemCount);
+		if (totalSpace > 0) {
+			double percent = (double)100 / totalSpace * itemCount;
+			percent = Math.max(Math.min(percent, 100), 0);
+			response.put("InventoryPercentFull", percent);			
+		}
+		
+		return response;
 	}
 
 	public static String getNameForItemStack(ItemStack is) {

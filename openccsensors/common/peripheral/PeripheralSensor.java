@@ -15,6 +15,7 @@ import openccsensors.api.ISensorEnvironment;
 import openccsensors.api.SensorCard;
 import openccsensors.common.item.ItemSensorCard;
 import openccsensors.common.util.CallbackEventManager;
+import openccsensors.common.util.OCSLog;
 import dan200.computer.api.IComputerAccess;
 import dan200.computer.api.IHostedPeripheral;
 

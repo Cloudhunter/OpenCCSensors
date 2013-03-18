@@ -50,6 +50,22 @@ public class TileEntityGauge extends TileEntity implements IPeripheral {
 			}
 
 		});
+
+		eventManager.registerCallback(new IMethodCallback() {
+
+			@Override
+			public String getMethodName() {
+				return "setTrackedProperty";
+			}
+			
+			@Override
+			public Object execute(IComputerAccess computer, Object[] arguments)
+					throws Exception {
+				updatePropertyName = (String)arguments[0];
+				return null;
+			}
+
+		});
 	}
 
 	@Override
@@ -132,19 +148,25 @@ public class TileEntityGauge extends TileEntity implements IPeripheral {
 			ForgeDirection behind = infront.getOpposite();
 			TileEntity behindTile = worldObj.getBlockTileEntity(xCoord + behind.offsetX, yCoord, zCoord + behind.offsetZ);
 			if (behindTile != null) {
-				for (IGaugeSensor gaugeSensor : gaugeSensors) {
-					HashMap details = gaugeSensor.getDetails(worldObj, behindTile, true);
-					for (String property : gaugeSensor.getGaugeProperties()) {
-						if (details.containsKey(property)) {
-							tileProperties.put(property, details.get(property));
+				for (IGaugeSensor gaugeSensor : gaugeSensors)  {
+					if (gaugeSensor.isValidTarget(behindTile)) {
+						HashMap details = gaugeSensor.getDetails(worldObj, behindTile, true);
+						for (String property : gaugeSensor.getGaugeProperties()) {
+							if (details.containsKey(property)) {
+								tileProperties.put(property, details.get(property));
+							}
 						}
 					}
 				}
 			}
 			percentage = 0;
 			if (tileProperties.size() > 0) {
-				Entry<String, Object> entry = (Entry<String, Object>) tileProperties.entrySet().iterator().next();
-				percentage = (Integer) entry.getValue();
+				if (updatePropertyName == "" || !tileProperties.containsKey(updatePropertyName)) {
+					Entry<String, Object> entry = (Entry<String, Object>) tileProperties.entrySet().iterator().next();
+					percentage = ((Double) (entry.getValue())).intValue();
+				}else {
+					percentage = ((Double) (tileProperties.get(updatePropertyName))).intValue();
+				}
 			}
 			if (lastBroadcast++ % 10 == 0) {
 				lastBroadcast = 1;

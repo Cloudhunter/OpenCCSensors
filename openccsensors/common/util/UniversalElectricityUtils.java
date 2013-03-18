@@ -32,9 +32,9 @@ public class UniversalElectricityUtils {
 				response.put("Stored", joules);
 				response.put("MaxStorage", maxJoules);
 				if (maxJoules > 0) {
-					double percent = 100 / maxJoules * joules;
+					double percent = (double)100 / maxJoules * joules;
 					percent = Math.max(Math.min(percent, 100), 0);
-					response.put("PercentFull", (int)percent);
+					response.put("PowerPercentFull", percent);
 				}
 			}
 			

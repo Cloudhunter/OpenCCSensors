@@ -8,6 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import openccsensors.api.IGaugeSensor;
 import openccsensors.api.IRequiresIconLoading;
 import openccsensors.api.ISensor;
 import openccsensors.api.ISensorTier;
@@ -15,12 +16,15 @@ import openccsensors.common.util.InventoryUtils;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
-public class InventorySensor extends TileSensor implements ISensor, IRequiresIconLoading {
+public class InventorySensor extends TileSensor implements ISensor, IRequiresIconLoading, IGaugeSensor {
 
 	private Icon icon;
-
+	private String[] gaugeProperties = new String[] {
+		"InventoryPercentFull"	
+	};
+	
 	@Override
-	public boolean isValidTarget(TileEntity target) {
+	public boolean isValidTarget(Object target) {
 		return target instanceof IInventory;
 	}
 	
@@ -30,6 +34,7 @@ public class InventorySensor extends TileSensor implements ISensor, IRequiresIco
 		TileEntity tile = (TileEntity) obj;
 		
 		HashMap response = super.getDetails(tile);
+		response.putAll(InventoryUtils.getInventorySizeCalculations((IInventory) tile));
 		
 		if (additional) {
 			response.put("Slots", InventoryUtils.invToMap((IInventory) tile));
@@ -97,6 +102,11 @@ public class InventorySensor extends TileSensor implements ISensor, IRequiresIco
 	@Override
 	public ItemStack getUniqueRecipeItem() {
 		return new ItemStack(Block.chest);
+	}
+
+	@Override
+	public String[] getGaugeProperties() {
+		return gaugeProperties;
 	}
 
 }

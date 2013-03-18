@@ -53,6 +53,7 @@ public class CommonProxy {
 		NetworkRegistry.instance().registerGuiHandler(OpenCCSensors.instance, new GuiHandler());
 		
 		TileEntityGauge.addGaugeSensor(OpenCCSensors.Sensors.powerSensor);
+		TileEntityGauge.addGaugeSensor(OpenCCSensors.Sensors.inventorySensor);
 		
 		// gauge.registerSensor(sensor);
 	}

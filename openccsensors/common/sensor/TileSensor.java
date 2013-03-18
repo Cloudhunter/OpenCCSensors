@@ -11,25 +11,26 @@ import openccsensors.common.util.InventoryUtils;
 
 public abstract class TileSensor {
 
-	protected HashMap response = new HashMap();
-	protected HashMap position = new HashMap();
 	
-	public boolean isValidTarget(TileEntity target) {
+	public boolean isValidTarget(Object target) {
 		return false;
 	}
 	
 	public HashMap getDetails(TileEntity tile) {
 
-		position.clear();
-		response.clear();
-		
+		HashMap response = new HashMap();
+		HashMap position = new HashMap();
+
 		position.put("X", tile.xCoord);
 		position.put("Y", tile.yCoord);
 		position.put("Z", tile.zCoord);
 		response.put("Position", position);
 		
 		ItemStack stack = new ItemStack(tile.getBlockType(), 1, tile.getBlockMetadata());
-		response.putAll(InventoryUtils.itemstackToMap(stack));
+		
+		response.put("Name", InventoryUtils.getNameForItemStack(stack));
+		response.put("RawName", InventoryUtils.getRawNameForStack(stack));
+		response.put("DamageValue", stack.getItemDamage());
 		
 		return response;
 	}

@@ -39,8 +39,7 @@ public class SignSensor extends TileSensor implements ISensor, IRequiresIconLoad
 	}
 	
 	@Override
-	public boolean isValidTarget(TileEntity target) {
-		
+	public boolean isValidTarget(Object target) {
 		return target instanceof TileEntitySign;
 	}
 

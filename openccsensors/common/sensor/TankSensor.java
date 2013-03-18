@@ -26,12 +26,12 @@ public class TankSensor extends TileSensor implements ISensor, IRequiresIconLoad
 	private Icon icon;
 
 	@Override
-	public boolean isValidTarget(TileEntity tile) {
+	public boolean isValidTarget(Object tile) {
 		if (tile instanceof ITankContainer) {
 			ILiquidTank[] tanks = ((ITankContainer)tile).getTanks(ForgeDirection.UNKNOWN);
 			return tanks.length > 0;
-		} else if (ModLoader.isModLoaded("Railcraft")) {
-			return RailcraftUtils.isTankTile(tile);
+		} else if (ModLoader.isModLoaded("Railcraft") && tile instanceof TileEntity) {
+			return RailcraftUtils.isTankTile((TileEntity)tile);
 		}
 		return false;
 	}

@@ -19,17 +19,14 @@ import openccsensors.common.util.InventoryUtils;
 public class DroppedItemSensor implements ISensor, IRequiresIconLoading {
 
 	private Icon icon;
-
-	private HashMap response = new HashMap();
-	private HashMap position = new HashMap();
 	
 	@Override
 	public HashMap getDetails(World world, Object obj, boolean additional) {
 		
 		EntityItem item = (EntityItem) obj;
-		
-		position.clear();
-		response.clear();
+
+		HashMap response = new HashMap();
+		HashMap position = new HashMap();
 		
 		position.put("X", item.posX);
 		position.put("Y", item.posY);

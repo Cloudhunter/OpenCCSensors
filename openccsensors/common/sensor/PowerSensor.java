@@ -20,7 +20,7 @@ public class PowerSensor extends TileSensor implements ISensor, IRequiresIconLoa
 
 	private Icon icon;
 	private String[] gaugeProperties = new String[] {
-		"PercentFull"	
+		"PowerPercentFull"	
 	};
 	
 	Class UEApi = null;
@@ -33,8 +33,11 @@ public class PowerSensor extends TileSensor implements ISensor, IRequiresIconLoa
 	}
 	
 	@Override
-	public boolean isValidTarget(TileEntity target) {
-		return UEApi != null && UniversalElectricityUtils.isValidTarget(target);
+	public boolean isValidTarget(Object target) {
+		if (!(target instanceof TileEntity)) {
+			return false;
+		}
+		return UEApi != null && UniversalElectricityUtils.isValidTarget((TileEntity)target);
 	}
 
 	@Override
