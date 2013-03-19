@@ -112,10 +112,13 @@
 		</copy>
 
 		<!-- Copy resources -->
-		<copy todir="${classes.dir}">
+		<copy todir="${classes.dir}/mods">
 			<fileset dir="mods" />
+		</copy>
+		<copy todir="${classes.dir}/resource">
 			<fileset dir="resources" />
 		</copy>
+			
 		
 		<!-- Copy resources -->
 		<copy todir="${classes.dir}">
