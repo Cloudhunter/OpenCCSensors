@@ -1,0 +1,132 @@
+local Graph = {
+	getColor = function(self, value, trace)
+		local colorIndex = math.ceil((value - self.min[trace]) / ((self.max[trace] - self.min[trace]) / #self.gradient[trace]))
+		if colorIndex == 0 then colorIndex = 1 end
+		if self.target.isColor() then
+			return self.gradient[trace][colorIndex]
+		else
+			return colors.white
+		end
+	end,
+	draw = function(self)
+		--get the updates first.
+		for i=1, #self.update do
+			self.history[i][#self.history[i] + 1] = self.update[i]()
+		end
+		if self.target.setTextScale then self.target.setTextScale(0.5) end
+		self.target.setBackgroundColor(colors.black)
+		self.target.setTextColor(colors.white)
+		self.target.clear()
+		local newMax, newMin = self.max[1], self.min[1]
+		--draw traces
+		for trace=1,#self.update do
+			if self.history[trace][#self.history[trace]] > self.max[trace] then
+				if self.sharedBounds and self.history[trace][#self.history[trace]] > newMax then
+					newMax = self.history[trace][#self.history[trace]]
+				else
+					self.max[trace] = self.history[trace][#self.history[trace]]
+				end
+			elseif self.history[trace][#self.history[trace]] < self.min[trace] then
+				if self.sharedBounds and self.history[trace][#self.history[trace]] < newMin then
+					newMin = self.history[trace][#self.history[trace]]
+				else
+					self.min[trace] = self.history[trace][#self.history[trace]]
+				end
+			end
+			local xLim, yLim = self.target.getSize()
+			if #self.history[trace] > xLim then table.remove(self.history[trace], 1) end
+			--we set up our value string for numeric value readout here, but draw it later so it doesn't interfere with the full-screen trace.
+			for i=1, #self.history[trace] do
+				self.target.setCursorPos(i, yLim - math.ceil((yLim - 1) * (self.history[trace][i] - self.min[trace]) / (self.max[trace] - self.min[trace])))
+				self.target.setBackgroundColor(self:getColor(self.history[trace][i], trace))
+				self.target.write(" ")
+				self.target.setBackgroundColor(colors.black)
+			end
+		end
+		--adjust min-max for next round.
+		if self.sharedBounds then
+			for i=1, #self.update do
+				self.max[i] = newMax
+				self.min[i] = newMin
+			end
+		end
+		--draw trace labels.
+		for trace = 1, #self.update do
+			local valueString, cStart, cEnd = ""
+			if self.valueText[trace] then
+				valueString = self.valueText[trace]..": "
+				cStart = #valueString + 1
+				valueString = valueString..tostring(self.history[trace][#self.history[trace]])
+				cEnd = #valueString
+				valueString = valueString.." / "..self.max[trace]
+			end
+			local xLim, yLim = self.target.getSize()
+			if trace + 1 <= yLim then
+				self.target.setCursorPos(2, trace + 1)
+				for i=1, #valueString do
+					if i >= cStart and i <= cEnd then
+						self.target.setTextColor(self:getColor(self.history[trace][#self.history[trace]], trace))
+					end
+					self.target.write(string.sub(valueString, i, i))
+					self.target.setTextColor(colors.white)
+				end
+			end
+		end
+	end,
+	tostring = function(self)
+		local valueString = ""
+		if self.valueText[1] then
+			valueString = self.valueText[1]..": "
+		end
+		valueString = valueString..tostring(self.history[1][#self.history[1]]).." / "..self.max[1]
+		return valueString
+	end,
+}
+
+local gmetatable = {
+	__index = Graph,
+	__tostring = function(g) return g:tostring() end,
+}
+
+function new(target, updateFunction, valueText, gradientTable, min, max, sharedBounds)
+	if not target then return nil, "Must specify output target!" end
+	if not updateFunction then return nil, "Must specify update function!" end
+	local g = {
+		min = type(min) == "table" and min or {},
+		max = type(max) == "table" and max or {},
+		target = target,
+		update = type(updateFunction) == "table" and updateFunction or {updateFunction},
+		history = {},
+		gradient = {},
+		valueText = type(valueText) == "table" and valueText or {valueText},
+		sharedBounds = shareBounds or false
+	}
+	for i=1, #g.update do
+		g.history[i] = {}
+	end
+	if type(min) ~= "table" then
+		local setMin = min or 0
+		for i=1, #g.update do
+			g.min[i] = setMin
+		end
+	end
+	if type(max) ~= "table" then
+		local setMax = max or 1
+		for i=1, #g.update do
+			g.max[i] = setMax
+		end
+	end
+	if gradientTable and type(gradientTable) == "table" and type(gradientTable[1]) == "table" then
+		g.gradient = gradientTable
+	elseif gradientTable and type(gradientTable) == "table" then
+		for i=1, #g.update do
+			g.gradient[i] = gradientTable
+		end
+	else
+		for i=1, #g.update do
+			g.gradient[i] = {colors.red, colors.orange, colors.yellow, colors.lime, colors.green}
+		end
+	end
+	setmetatable(g, gmetatable)
+	return g
+end

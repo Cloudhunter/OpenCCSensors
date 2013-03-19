@@ -1,0 +1,285 @@
+local sideNames = rs.getSides()
+local sensorSides = {}
+local sideSelection, targetSelection, targetOffset, detailOffset = 1, 1, 1, 1
+local detailLines, targetNameMenuTable
+local graphing, graphSide, graphTarget, graphMatch, graphInstance = false
+
+os.loadAPI("ocs/apis/graph")
+os.loadAPI("ocs/apis/sensor")
+
+local function checkSensors()
+	for _,side in ipairs(sideNames) do
+		if peripheral.getType(side) == "sensor" then
+			sensorSides[side] = true
+		else
+			sensorSides[side] = false
+		end
+	end
+end
+
+local function writeEntry(menuTable, index, cursorPos)
+	if cursorPos == index then
+		term.setBackgroundColor(term.isColor() and colors.blue or colors.white)
+		term.setTextColor(term.isColor() and colors.white or colors.black)
+		term.write(string.sub(menuTable[index], 1, 16))
+		term.setBackgroundColor(colors.black)
+		term.setTextColor(colors.white)
+	else
+		term.write(string.sub(menuTable[index], 1, 16))
+	end
+end
+
+local function toLines(currTable, linesTable, trackingTable, depth)
+	for k,v in pairs(currTable) do
+		if type(v) == "table" then
+			table.insert(linesTable, string.rep(" ", depth)..tostring(k)..":")
+			if trackingTable[v] then
+				table.insert(linesTable, string.rep(" ", depth + 1).."<Cyclic Reference: "..trackingTable[v]..">")
+			else
+				trackingTable[v] = #linesTable
+				toLines(v, linesTable, trackingTable, depth + 1)
+			end
+		else
+			table.insert(linesTable, string.rep(" ", depth)..tostring(k).."> "..tostring(v))
+		end
+	end
+end
+
+local function drawDividerDown(startY)
+	local w, h = term.getSize()
+	for i=startY, h do
+		term.setCursorPos(17, i)
+		term.write("|")
+	end
+end
+
+local function redraw()
+	w, h = term.getSize()
+	--pre-fetch sensor targets and detailed target information.
+	local targetNames = nil
+	detailLines = {}
+	checkSensors()
+	if sensorSides[sideNames[sideSelection]] then
+		targetNames = sensor.call(sideNames[sideSelection], "getSensorName") and sensor.call(sideNames[sideSelection], "getTargets")
+		targetNameMenuTable = {}
+		if targetNames then
+			for k,v in pairs(targetNames) do
+				table.insert(targetNameMenuTable, k)
+			end
+			table.sort(targetNameMenuTable)
+			if #targetNameMenuTable > 0 then
+				toLines(sensor.call(sideNames[sideSelection], "getTargetDetails", targetNameMenuTable[targetSelection]), detailLines, {}, 0)
+			end
+		end
+	end
+	--now draw the screen.
+	term.clear()
+	term.setCursorPos(1, 1)
+	term.write("=Sensor Info Viewer="..string.rep("=", w - 20))
+	term.setCursorPos(1, 2)
+	for n,side in ipairs(sideNames) do
+		if n == sideSelection then
+			term.setBackgroundColor(term.isColor() and colors.blue or colors.white)
+			term.setTextColor(term.isColor() and colors.white or colors.black)
+			term.write(side)
+			term.setBackgroundColor(colors.black)
+			term.setTextColor(colors.white)
+			term.write(" ")
+		else
+			term.write(side.." ")
+		end
+	end
+	term.setCursorPos(1, 3)
+	term.write("-Targets--------+-Info-"..string.rep("-", w - 23))
+
+	if targetNames then
+		--make sure we have valid targets, even if we have a valid sensor.
+		if #targetNameMenuTable > 0 then
+			term.setCursorPos(1, 4)
+			if targetOffset > 1 then
+				term.write("/\\")
+			else
+				writeEntry(targetNameMenuTable, 1, targetSelection)	
+			end
+			--h-5 to leave room for top and bottom entries.
+			for i=1, math.min(h - 5, #targetNameMenuTable - 1) do
+				term.setCursorPos(1, i + 4)
+				writeEntry(targetNameMenuTable, targetOffset + i, targetSelection)
+			end
+			if #targetNameMenuTable >= h then
+				term.setCursorPos(1, h)
+				if #targetNameMenuTable > targetOffset + h - 4 then
+					term.write("\\/")
+				else
+					writeEntry(targetNameMenuTable, #targetNameMenuTable, targetSelection)
+				end
+			end
+
+			--detailed info.
+			for i=1, math.min(h - 3, #detailLines - ((detailOffset - 1) * (h - 3))) do
+				term.setCursorPos(17, i + 3)
+				term.write("|"..string.sub(detailLines[(detailOffset - 1) * (h - 3) + i], 1, w - 17))
+			end
+			local currX, currY = term.getCursorPos()
+			drawDividerDown(currY + 1)
+		else
+			term.setCursorPos(1, 4)
+			term.write("No targets found|")
+			drawDividerDown(5)
+		end
+	else
+		if peripheral.getType(sideNames[sideSelection]) == "sensor" then
+			term.setCursorPos(1, 4)
+			term.write("No sensor card  |")
+			drawDividerDown(5)
+		else
+			term.setCursorPos(1, 4)
+			term.write("No sensor found |")
+			drawDividerDown(5)
+		end
+	end
+	term.setCursorPos(1, h)
+end
+
+local function findGraphMatch(currTable, target, matchCount, trackingTable)
+	for k, v in pairs(currTable) do
+		if type(v) == "table" then
+			if trackingTable[v] then return false end
+			trackingTable[v] = true
+			ret, path, count = findGraphMatch(v, target, matchCount, trackingTable)
+			if ret and path then
+				return ret, tostring(k).."-"..path
+			elseif count then
+				matchCount = count
+			end
+		elseif type(v) == "number" then
+			matchCount = matchCount + 1
+			if matchCount == target then return v, tostring(k) end
+		end
+	end
+	return false, nil, matchCount
+end
+
+local function createGraph(targetNum)
+	local monSide = ""
+	for k, side in ipairs(rs.getSides()) do
+		if peripheral.getType(side) == "monitor" then
+			monSide = side
+			break
+		end
+	end
+	if monSide and targetNum >= 1 and findGraphMatch(sensor.call(graphSide, "getTargetDetails", graphTarget), targetNum, 0, {}) then
+		graphMatch = targetNum
+		local val, name = findGraphMatch(sensor.call(graphSide, "getTargetDetails", graphTarget), targetNum, 0, {})
+		local updateFunc = function() return (findGraphMatch(sensor.call(graphSide, "getTargetDetails", graphTarget), graphMatch, 0, {})) end
+		graphInst = graph.new(peripheral.wrap(monSide), updateFunc, name)
+		return graphInst
+	end
+end
+
+while true do
+	redraw()
+	local e, p1 = os.pullEvent()
+	if e == "key" then
+		local w, h = term.getSize()
+		if p1 == 203 then
+			--left, selects previous side
+			if sideSelection > 1 then
+				sideSelection = sideSelection - 1
+				targetSelection = 1
+				targetOffset = 1
+				detailOffset = 1
+				detailLines = nil
+			end
+		elseif p1 == 205 then
+			--right, selects next side
+			if sideSelection < 6 then
+				sideSelection = sideSelection + 1
+				targetSelection = 1
+				targetOffset = 1
+				detailOffset = 1
+				detailLines = nil
+			end
+		elseif p1 == 200 then
+			--up, selects previous target, adjusting offset if necessary.
+			if targetSelection > 1 then
+				if targetSelection - targetOffset + 1 == 2 and targetOffset > 1 then
+					targetOffset = targetOffset - 1
+				end
+				targetSelection = targetSelection - 1
+				detailOffset = 1
+				detailLines = nil
+			end
+		elseif p1 == 208 then
+			--down, selects next target, adjusting offset if necessary.
+			if targetNameMenuTable and targetSelection < #targetNameMenuTable then
+				if targetSelection - targetOffset + 1 == h - 4 and targetSelection ~= #targetNameMenuTable - 1 then
+					targetOffset = targetOffset + 1
+				end
+				targetSelection = targetSelection + 1
+				detailOffset = 1
+				detailLines = nil
+			end
+		elseif p1 == 201 then
+			--pgup, moves detail
+			if detailOffset > 1 then
+				detailOffset = detailOffset - 1
+			end
+		elseif p1 == 209 then
+			--pgdown, moves detail
+			local w, h = term.getSize()
+			if detailLines and detailOffset < math.ceil(#detailLines / (h - 3)) then
+				detailOffset = detailOffset + 1
+			end
+		--and now, since redraw() will eat char events with the change to sensor.call:
+		elseif p1 == 31 then --s
+			if detailLines then
+				local fileHandle = io.open("sensorDetailed-"..sideNames[sideSelection].."-"..targetNameMenuTable[targetSelection], "w")
+				if fileHandle then
+					for k, v in ipairs(detailLines) do
+						fileHandle:write(v.."\n")
+					end
+					fileHandle:close()
+				end
+			end
+		elseif p1 == 16 then --q
+			sleep(0)
+			return
+		elseif p1 == 34 then --g
+			if graph then
+				graphing = not graphing
+				if not graphing then
+					graphSide = nil
+					graphTarget = nil
+					graphUpdate = nil
+				else
+					graphSide = sideNames[sideSelection]
+					graphTarget = targetNameMenuTable[targetSelection]
+					graphInstance = createGraph(1)
+					graphUpdate = os.startTimer(0.5)
+				end
+			end
+		elseif p1 == 49 then --n
+			if graphing then
+				local newGraph = createGraph(graphMatch + 1)
+				if newGraph then
+					graphInstance = newGraph
+					graphUpdate = os.startTimer(0.5)
+				end
+			end
+		elseif p1 == 25 then --p
+			if graphing then
+				local newGraph = createGraph(graphMatch - 1)
+				if newGraph then
+					graphInstance = newGraph
+					graphUpdate = os.startTimer(0.5)
+				end
+			end
+		end
+	elseif e == "timer" then
+		if p1 == graphUpdate then
+			graphInstance:draw()
+			graphUpdate = os.startTimer(0.5)
+		end
+	end
+end
