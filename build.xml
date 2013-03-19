@@ -106,8 +106,8 @@
 		</exec>
 
 		<!-- Copy classes -->
-		<copy todir="${classes.dir}">
-			<fileset dir="${mcp.dir}/reobf/minecraft"/>
+		<copy todir="${classes.dir}/openccsensors">
+			<fileset dir="${mcp.dir}/reobf/minecraft/openccsensors" />
 		</copy>
 
 		<!-- Copy resources -->
@@ -117,12 +117,19 @@
 				<exclude name="build.number"/>
 			</fileset>
 		</copy>
+		
+		<!-- Copy resources -->
+		<copy todir="${classes.dir}">
+			<fileset dir="." includes="mcmod.info" />
+		</copy>
 
 		<!-- Reset src dir to post-forge-install state -->
-		<delete dir="${mcpsrc.dir}/openccsensors"/>
-		<delete dir="${mcpsrc.dir}/ic2"/>
-		<delete dir="${mcpsrc.dir}/dan200"/>
+		<delete dir="${mcpsrc.dir}/appeng"/>
 		<delete dir="${mcpsrc.dir}/buildcraft"/>
+		<delete dir="${mcpsrc.dir}/dan200"/>
+		<delete dir="${mcpsrc.dir}/forestry"/>
+		<delete dir="${mcpsrc.dir}/ic2"/>
+		<delete dir="${mcpsrc.dir}/openccsensors"/>
 		<delete dir="${mcpsrc.dir}/thaumcraft"/>
 
 	</target>
