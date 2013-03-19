@@ -1,14 +1,15 @@
+/**
+ * This file is part of the public ComputerCraft API - http://www.computercraft.info
+ * Copyright Daniel Ratcliffe, 2011-2013. This API may be redistributed unmodified and in full only.
+ * For help using the API, and posting your mods, visit the forums at computercraft.info.
+ */
+
 package dan200.computer.api;
 
-import net.minecraft.tileentity.TileEntity;
-
-
-public abstract interface IPeripheralHandler
-{
-  public abstract IHostedPeripheral getPeripheral(TileEntity paramTileEntity);
-}
-
-/* Location:           C:\Users\mikeef\Documents\CC148.jar
- * Qualified Name:     dan200.computer.api.IPeripheralHandler
- * JD-Core Version:    0.6.2
+/**
+ * TODO: Document me
  */
+public interface IPeripheralHandler 
+{
+	public IHostedPeripheral getPeripheral( net.minecraft.tileentity.TileEntity tile );
+}
