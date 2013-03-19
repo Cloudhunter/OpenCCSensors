@@ -115,7 +115,7 @@
 		<copy todir="${classes.dir}/mods">
 			<fileset dir="mods" />
 		</copy>
-		<copy todir="${classes.dir}/resource">
+		<copy todir="${classes.dir}/resources">
 			<fileset dir="resources" />
 		</copy>
 			
