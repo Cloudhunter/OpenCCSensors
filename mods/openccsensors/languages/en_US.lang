@@ -1,0 +1,19 @@
+tile.openccsensors.sensor.name=Sensor
+tile.openccsensors.gauge.name=Gauge
+
+item.openccsensors.inventoryCard.name=Inventory Sensor Card
+item.openccsensors.proximityCard.name=Proximity Sensor Card
+item.openccsensors.tankCard.name=Tank Sensor Card
+item.openccsensors.worldCard.name=World Sensor Card
+item.openccsensors.droppedItemCard.name=Dropped Item Sensor Card
+item.openccsensors.signCard.name=Sign Sensor Card
+item.openccsensors.minecartCard.name=Minecart Sensor Card
+item.openccsensors.sonicCard.name=Sonic Sensor Card
+item.openccsensors.powerCard.name=Power Sensor Card
+
+item.openccsensors.rangeExtensionAntenna.name=Range Extension Antenna
+item.openccsensors.signalAmplifier.name=Signal Amplifier
+item.openccsensors.advancedAmplifier.name=Advanced Amplifier
+
+gui.openccsensors.sensor=Sensor
+upgrade.openccsensors.adjective=Sensor

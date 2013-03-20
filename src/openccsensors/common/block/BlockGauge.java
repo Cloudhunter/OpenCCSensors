@@ -37,6 +37,7 @@ public class BlockGauge extends BlockContainer {
 		setCreativeTab(ComputerCraftAPI.getCreativeTab());
 		GameRegistry.registerBlock(this, "gauge");
 		GameRegistry.registerTileEntity(TileEntityGauge.class, "gauge");
+		setUnlocalizedName("openccsensors.gauge");
 	}
 
 	@Override

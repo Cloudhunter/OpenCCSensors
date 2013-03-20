@@ -58,4 +58,9 @@ public class ItemMetaAdvancedAmplifier implements IItemMeta, IRequiresIconLoadin
 	public ItemStack newItemStack(int size) {
 		return new ItemStack(OpenCCSensors.Items.genericItem, size, getId());
 	}
+
+	@Override
+	public String getName() {
+		return "advancedAmplifier";
+	}
 }

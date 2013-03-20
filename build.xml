@@ -116,7 +116,7 @@
 			<fileset dir="mods/openccsensors" />
 		</copy>
 		<copy todir="${classes.dir}/openccsensors/resources">
-			<fileset dir="resources/openccsensors" />
+			<fileset dir="resources/openccsensors/resources" />
 		</copy>
 			
 		
