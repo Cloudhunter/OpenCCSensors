@@ -4,10 +4,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.ModContainer;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Vec3;
+import openccsensors.OpenCCSensors;
 import openccsensors.api.IMethodCallback;
 import openccsensors.api.ISensor;
 import openccsensors.api.ISensorAccess;
@@ -226,7 +230,8 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 
 	@Override
 	public void attach(IComputerAccess computer) {
-		computer.mountFixedDir("ocs", "mods/OCSLua/lua", true, 0);
+		ModContainer container = FMLCommonHandler.instance().findContainerFor(OpenCCSensors.instance);
+		computer.mountFixedDir("ocs", String.format("mods/OCSLua/%s/lua", container.getVersion()), true, 0);
 	}
 
 	@Override

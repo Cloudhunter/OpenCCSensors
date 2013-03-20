@@ -1,5 +1,9 @@
 package openccsensors.client;
 
+import java.io.File;
+
+import net.minecraft.client.Minecraft;
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import openccsensors.OpenCCSensors;
@@ -11,6 +15,12 @@ import openccsensors.common.tileentity.TileEntitySensor;
 
 public class ClientProxy extends CommonProxy {
 
+	@Override
+	public File getBase() {
+		FMLClientHandler.instance().getClient();
+		return Minecraft.getMinecraftDir();
+	}
+	
 	@Override
 	public void registerRenderInformation() {
 		

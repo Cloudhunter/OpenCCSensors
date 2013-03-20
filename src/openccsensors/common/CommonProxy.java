@@ -1,11 +1,18 @@
 package openccsensors.common;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Map.Entry;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -35,6 +42,8 @@ import openccsensors.common.sensor.WorldSensor;
 import openccsensors.common.tileentity.TileEntityGauge;
 import openccsensors.common.tileentity.TileEntitySensor;
 import openccsensors.common.turtle.TurtleUpgradeSensor;
+import openccsensors.common.util.OCSLog;
+import openccsensors.common.util.ResourceExtractingUtils;
 
 public class CommonProxy {
 	
@@ -55,6 +64,7 @@ public class CommonProxy {
 		TileEntityGauge.addGaugeSensor(OpenCCSensors.Sensors.powerSensor);
 		TileEntityGauge.addGaugeSensor(OpenCCSensors.Sensors.inventorySensor);
 		
+		setupLuaFiles();
 		// gauge.registerSensor(sensor);
 	}
 	
@@ -92,6 +102,31 @@ public class CommonProxy {
 	
 	
 	public void registerRenderInformation() {
+
+	}
+
+	public File getBase() {
+		return FMLCommonHandler.instance().getMinecraftServerInstance().getFile(".");
+	}
+
+	private void setupLuaFiles() {
+		ModContainer container = FMLCommonHandler.instance().findContainerFor(OpenCCSensors.instance);
+		File modFile = container.getSource();
+		File baseFile = getBase();
+		String beginStr = "openccsensors/resources/lua/";
+		
+		String destFolder = String.format("mods\\OCSLua\\%s\\lua", container.getVersion());
+		OCSLog.info("Extracting files to " + destFolder);
+		if (modFile.isDirectory()) {
+			File srcFile = new File(modFile, beginStr);
+			File destFile = new File(baseFile, destFolder);
+			try {
+				ResourceExtractingUtils.copy(srcFile, destFile);
+			} catch (IOException e) {
+			}
+		} else {
+			ResourceExtractingUtils.extractZipToLocation(modFile, beginStr, destFolder);
+		}
 
 	}
 }
