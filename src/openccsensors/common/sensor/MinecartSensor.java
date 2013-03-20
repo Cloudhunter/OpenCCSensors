@@ -69,7 +69,7 @@ public class MinecartSensor implements ISensor, IRequiresIconLoading {
 
 	@Override
 	public String getName() {
-		return "OpenCCSensors.minecartcard";
+		return "openccsensors.minecartcard";
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class MinecartSensor implements ISensor, IRequiresIconLoading {
 
 	@Override
 	public void loadIcon(IconRegister iconRegistry) {
-		icon = iconRegistry.func_94245_a("OpenCCSensors:minecart");
+		icon = iconRegistry.func_94245_a("openccsensors:minecart");
 		
 	}
 

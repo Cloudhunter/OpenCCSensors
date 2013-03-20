@@ -134,7 +134,7 @@ public class SonicSensor implements ISensor, IRequiresIconLoading {
 
 	@Override
 	public String getName() {
-		return "OpenCCSensors.soniccard";
+		return "openccsensors.soniccard";
 	}
 
 	@Override
@@ -144,7 +144,7 @@ public class SonicSensor implements ISensor, IRequiresIconLoading {
 
 	@Override
 	public void loadIcon(IconRegister iconRegistry) {
-		icon = iconRegistry.func_94245_a("OpenCCSensors:sonic");
+		icon = iconRegistry.func_94245_a("openccsensors:sonic");
 	}
 
 	@Override

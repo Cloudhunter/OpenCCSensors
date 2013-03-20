@@ -48,7 +48,7 @@ public class ProximitySensor implements ISensor, IRequiresIconLoading {
 
 	@Override
 	public String getName() {
-		return "OpenCCSensors.proximitycard";
+		return "openccsensors.proximitycard";
 	}
 	
 	@Override
@@ -58,7 +58,7 @@ public class ProximitySensor implements ISensor, IRequiresIconLoading {
 
 	@Override
 	public void loadIcon(IconRegister iconRegistry) {
-		icon = iconRegistry.func_94245_a("OpenCCSensors:proximity");
+		icon = iconRegistry.func_94245_a("openccsensors:proximity");
 	}
 
 	@Override

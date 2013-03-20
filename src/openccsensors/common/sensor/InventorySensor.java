@@ -86,7 +86,7 @@ public class InventorySensor extends TileSensor implements ISensor, IRequiresIco
 
 	@Override
 	public String getName() {
-		return "OpenCCSensors.inventorycard";
+		return "openccsensors.inventorycard";
 	}
 
 	@Override
@@ -96,7 +96,7 @@ public class InventorySensor extends TileSensor implements ISensor, IRequiresIco
 
 	@Override
 	public void loadIcon(IconRegister iconRegistry) {
-		icon = iconRegistry.func_94245_a("OpenCCSensors:inventory");
+		icon = iconRegistry.func_94245_a("openccsensors:inventory");
 	}
 
 	@Override
