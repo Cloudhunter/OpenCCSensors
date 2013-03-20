@@ -60,10 +60,10 @@ public class ItemSensorCard extends Item implements ISensorCardRegistry {
 	
 	public void registerSensors() {
 
-		SensorTier tier1 = new SensorTier("Mk. I", EnumItemRarity.COMMON, 2, "OpenCCSensors:tier1");
-		SensorTier tier2 = new SensorTier("Mk. II", EnumItemRarity.UNCOMMON, 4, "OpenCCSensors:tier2");
-		SensorTier tier3 = new SensorTier("Mk. III", EnumItemRarity.RARE, 6, "OpenCCSensors:tier3");
-		SensorTier tier4 = new SensorTier("Mk. IV", EnumItemRarity.EPIC, 8, "OpenCCSensors:tier4");
+		SensorTier tier1 = new SensorTier("Mk. I", EnumItemRarity.COMMON, 2, "openccsensors:tier1");
+		SensorTier tier2 = new SensorTier("Mk. II", EnumItemRarity.UNCOMMON, 4, "openccsensors:tier2");
+		SensorTier tier3 = new SensorTier("Mk. III", EnumItemRarity.RARE, 6, "openccsensors:tier3");
+		SensorTier tier4 = new SensorTier("Mk. IV", EnumItemRarity.EPIC, 8, "openccsensors:tier4");
 		
 		addIconsForLoading(tier1, tier2, tier3, tier4);
 		
