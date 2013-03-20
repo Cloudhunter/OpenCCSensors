@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import dan200.computer.api.ComputerCraftAPI;
 
 import openccsensors.OpenCCSensors;
 import openccsensors.api.EnumItemRarity;
@@ -47,7 +48,7 @@ public class ItemSensorCard extends Item implements ISensorCardRegistry {
 		super(OpenCCSensors.Config.sensorCardID);
 		setMaxDamage(0);
 		setHasSubtypes(true);
-		setCreativeTab(CreativeTabs.tabMisc);
+		setCreativeTab(ComputerCraftAPI.getCreativeTab());
 	}
 	
 	public void registerSensors() {
