@@ -12,14 +12,14 @@ import dan200.turtle.api.TurtleUpgradeType;
 import dan200.turtle.api.TurtleVerb;
 import openccsensors.OpenCCSensors;
 import openccsensors.api.IRequiresIconLoading;
+import openccsensors.api.ISensorEnvironment;
 import openccsensors.common.block.BlockSensor;
 import openccsensors.common.peripheral.PeripheralSensor;
+import openccsensors.common.util.OCSLog;
 
 
-public class TurtleUpgradeSensor implements ITurtleUpgrade, IRequiresIconLoading {
+public class TurtleUpgradeSensor implements ITurtleUpgrade {
 
-	private Icon icon;
-	
 	@Override
 	public IHostedPeripheral createPeripheral(ITurtleAccess turtle,
 			TurtleSide side) {
@@ -29,9 +29,9 @@ public class TurtleUpgradeSensor implements ITurtleUpgrade, IRequiresIconLoading
 	@Override
 	public String getAdjective() {
 		String translation = LanguageRegistry.instance().getStringLocalization(
-				"openccsensors.upgrade.adjective");
+				"turtle.openccsensors.sensor.adjective");
 		return translation == "" ? LanguageRegistry.instance()
-				.getStringLocalization("openccsensors.upgrade.adjective",
+				.getStringLocalization("turtle.openccsensors.sensor.adjective",
 						"en_US") : translation;
 	}
 
@@ -63,12 +63,7 @@ public class TurtleUpgradeSensor implements ITurtleUpgrade, IRequiresIconLoading
 
 	@Override
 	public Icon getIcon(ITurtleAccess turtle, TurtleSide side) {
-		return icon;
-	}
-
-	@Override
-	public void loadIcon(IconRegister iconRegistry) {
-		icon = iconRegistry.func_94245_a("OpenCCSensors:turtleSensor");
+		return OpenCCSensors.Blocks.sensorBlock.turtleIcon;
 	}
 
 }
