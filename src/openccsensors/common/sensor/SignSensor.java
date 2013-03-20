@@ -56,7 +56,7 @@ public class SignSensor extends TileSensor implements ISensor, IRequiresIconLoad
 
 	@Override
 	public String getName() {
-		return "OpenCCSensors.signcard";
+		return "openccsensors.signcard";
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class SignSensor extends TileSensor implements ISensor, IRequiresIconLoad
 
 	@Override
 	public void loadIcon(IconRegister iconRegistry) {
-		icon = iconRegistry.func_94245_a("OpenCCSensors:sign");		
+		icon = iconRegistry.func_94245_a("openccsensors:sign");		
 	}
 
 	@Override
