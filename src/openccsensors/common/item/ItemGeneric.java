@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import dan200.computer.api.ComputerCraftAPI;
 import openccsensors.OpenCCSensors;
 import openccsensors.api.IItemMeta;
 import openccsensors.api.IRequiresIconLoading;
@@ -25,7 +26,7 @@ public class ItemGeneric extends Item {
 		setHasSubtypes(true);
 		setMaxDamage(0);
 		setMaxStackSize(64);
-		setCreativeTab(CreativeTabs.tabMisc);
+		setCreativeTab(ComputerCraftAPI.getCreativeTab());
 	}
 	
 	@Override
