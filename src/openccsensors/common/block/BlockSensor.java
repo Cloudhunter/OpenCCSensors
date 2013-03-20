@@ -1,10 +1,15 @@
 package openccsensors.common.block;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import dan200.computer.api.ComputerCraftAPI;
 import openccsensors.OpenCCSensors;
+import openccsensors.api.IRequiresIconLoading;
 import openccsensors.common.tileentity.TileEntitySensor;
 import openccsensors.common.util.MiscUtils;
 import net.minecraft.block.BlockContainer;
@@ -15,6 +20,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Icon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -22,6 +28,8 @@ import net.minecraftforge.common.ForgeDirection;
 
 public class BlockSensor extends BlockContainer {
 
+	public Icon turtleIcon;
+	
 	public BlockSensor() {
 		
 		super(OpenCCSensors.Config.sensorBlockID, Material.ground);
@@ -31,7 +39,7 @@ public class BlockSensor extends BlockContainer {
 		GameRegistry.registerTileEntity(TileEntitySensor.class, "sensor");
 		setUnlocalizedName("openccsensors.sensor");
 	}
-
+	
 	@Override
 	public TileEntity createNewTileEntity(World world) {
 		return new TileEntitySensor();
@@ -40,7 +48,7 @@ public class BlockSensor extends BlockContainer {
 	@Override
 	public void func_94332_a(IconRegister iconRegister)
 	{
-		
+		turtleIcon = iconRegister.func_94245_a("openccsensors:turtleSensor");
 	}
 
 	@Override

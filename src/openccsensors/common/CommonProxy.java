@@ -55,9 +55,7 @@ public class CommonProxy {
 		initItems();
 			
 		if (OpenCCSensors.Config.turtlePeripheralEnabled) {
-			TurtleUpgradeSensor turtleSensor = new TurtleUpgradeSensor();
-			OpenCCSensors.Items.sensorCard.addIconsForLoading(turtleSensor);
-			TurtleAPI.registerUpgrade(turtleSensor);
+			TurtleAPI.registerUpgrade(new TurtleUpgradeSensor());
 		}
 		
 		NetworkRegistry.instance().registerGuiHandler(OpenCCSensors.instance, new GuiHandler());

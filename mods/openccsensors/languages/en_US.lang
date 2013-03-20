@@ -16,4 +16,4 @@ item.openccsensors.signalAmplifier.name=Signal Amplifier
 item.openccsensors.advancedAmplifier.name=Advanced Amplifier
 
 gui.openccsensors.sensor=Sensor
-upgrade.openccsensors.adjective=Sensor
+turtle.openccsensors.sensor.adjective=Sensor
