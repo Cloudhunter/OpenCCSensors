@@ -24,6 +24,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.Icon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -31,6 +32,8 @@ import net.minecraftforge.common.ForgeDirection;
 
 public class BlockGauge extends BlockContainer {
 
+	private Icon icon;
+	
 	public BlockGauge() {
 		super(OpenCCSensors.Config.gaugeBlockID, Material.ground);
 		setHardness(0.5F);
@@ -41,6 +44,18 @@ public class BlockGauge extends BlockContainer {
 	}
 
 	@Override
+	public Icon getBlockTexture(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    {
+		return icon;
+    }
+
+	@Override
+	public Icon getBlockTextureFromSideAndMetadata(int i, int damage)
+	{
+		return icon;
+	}
+	
+	@Override
 	public TileEntity createNewTileEntity(World world) {
 		return new TileEntityGauge();
 	}
@@ -48,7 +63,7 @@ public class BlockGauge extends BlockContainer {
 	@Override
 	public void func_94332_a(IconRegister iconRegister)
 	{
-		
+		icon = iconRegister.func_94245_a("openccsensors:gauge");
 	}
 	
 	@Override
@@ -163,5 +178,17 @@ public class BlockGauge extends BlockContainer {
 			world.setBlockAndMetadataWithNotify(x, y, z, 0, 0, 3);
 		}
 		super.onNeighborBlockChange(world, x, y, z, par5);
+	}
+	
+	@Override
+	public boolean canBeReplacedByLeaves(World world, int x, int y, int z)
+	{
+	    return false;
+	}
+
+	@Override
+    public boolean isFlammable(IBlockAccess world, int x, int y, int z, int metadata, ForgeDirection face)
+	{
+		return false;
 	}
 }

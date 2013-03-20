@@ -29,6 +29,7 @@ import net.minecraftforge.common.ForgeDirection;
 public class BlockSensor extends BlockContainer {
 
 	public Icon turtleIcon;
+	private Icon icon;
 	
 	public BlockSensor() {
 		
@@ -46,9 +47,22 @@ public class BlockSensor extends BlockContainer {
 	}
 
 	@Override
+	public Icon getBlockTexture(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    {
+		return icon;
+    }
+
+	@Override
+	public Icon getBlockTextureFromSideAndMetadata(int i, int damage)
+	{
+		return icon;
+	}
+
+	@Override
 	public void func_94332_a(IconRegister iconRegister)
 	{
 		turtleIcon = iconRegister.func_94245_a("openccsensors:turtleSensor");
+		icon = iconRegister.func_94245_a("openccsensors:sensor");
 	}
 
 	@Override
@@ -101,5 +115,17 @@ public class BlockSensor extends BlockContainer {
 			return true;
 		}
 		return true;
+	}
+
+	@Override
+	public boolean canBeReplacedByLeaves(World world, int x, int y, int z)
+	{
+	    return false;
+	}
+	
+	@Override
+    public boolean isFlammable(IBlockAccess world, int x, int y, int z, int metadata, ForgeDirection face)
+	{
+		return false;
 	}
 }
