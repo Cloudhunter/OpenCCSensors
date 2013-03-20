@@ -52,7 +52,7 @@ public class ItemMetaRangeExtensionAntenna implements IItemMeta, IRequiresIconLo
 
 	@Override
 	public void loadIcon(IconRegister iconRegistry) {
-		icon = iconRegistry.func_94245_a("OpenCCSensors:rangeExtensionAntenna");
+		icon = iconRegistry.func_94245_a("openccsensors:rangeExtensionAntenna");
 	}
 	
 	@Override
