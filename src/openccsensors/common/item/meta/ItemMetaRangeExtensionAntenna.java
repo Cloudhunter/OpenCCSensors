@@ -60,4 +60,8 @@ public class ItemMetaRangeExtensionAntenna implements IItemMeta, IRequiresIconLo
 		return new ItemStack(OpenCCSensors.Items.genericItem, size, getId());
 	}
 
+	@Override
+	public String getName() {
+		return "rangeExtensionAntenna";
+	}
 }

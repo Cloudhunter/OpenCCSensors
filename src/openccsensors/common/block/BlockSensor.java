@@ -29,7 +29,7 @@ public class BlockSensor extends BlockContainer {
 		setCreativeTab(ComputerCraftAPI.getCreativeTab());
 		GameRegistry.registerBlock(this, "sensor");
 		GameRegistry.registerTileEntity(TileEntitySensor.class, "sensor");
-		
+		setUnlocalizedName("openccsensors.sensor");
 	}
 
 	@Override

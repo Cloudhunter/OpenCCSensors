@@ -62,7 +62,7 @@ public class PowerSensor extends TileSensor implements ISensor, IRequiresIconLoa
 
 	@Override
 	public String getName() {
-		return "openccsensors:powerCard";
+		return "powerCard";
 	}
 
 	@Override

@@ -85,6 +85,11 @@ public class OpenCCSensors {
 		public static PowerSensor powerSensor;
 		
 	}
+	
+	public static String RESOURCE_PATH;
+	public static String LANGUAGE_PATH;
+	public static String LUA_PATH;
+	public static String TEXTURE_PATH;
 
 	@Instance( value = "OCS" )
 	public static OpenCCSensors instance;
@@ -107,6 +112,12 @@ public class OpenCCSensors {
 	@Mod.PreInit
 	public void preInit( FMLPreInitializationEvent evt )
 	{
+
+		RESOURCE_PATH = "/mods/openccsensors";
+		LUA_PATH = String.format("%s/lua", RESOURCE_PATH);
+		LANGUAGE_PATH = String.format("%s/languages", RESOURCE_PATH);
+		TEXTURE_PATH = String.format("%s/textures", RESOURCE_PATH);
+		
 		Configuration configFile = new Configuration(evt.getSuggestedConfigurationFile());
 
 		Property prop = configFile.getBlock("sensorBlockID", 341);
@@ -130,5 +141,6 @@ public class OpenCCSensors {
 		Config.genericItemID = prop.getInt();
 
 		configFile.save();
+		
 	}
 }

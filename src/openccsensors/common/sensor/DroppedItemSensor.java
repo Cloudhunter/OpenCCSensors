@@ -68,7 +68,7 @@ public class DroppedItemSensor implements ISensor, IRequiresIconLoading {
 
 	@Override
 	public String getName() {
-		return "openccsensors.proximitycard";
+		return "proximityCard";
 	}
 
 	@Override
