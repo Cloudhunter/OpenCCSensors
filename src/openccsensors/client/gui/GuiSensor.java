@@ -29,7 +29,7 @@ public class GuiSensor extends GuiContainer {
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
 
-		String sensorGuiName = StatCollector.translateToLocal("openccsensors.gui.sensor");
+		String sensorGuiName = StatCollector.translateToLocal("gui.openccsensors.sensor");
 
 		fontRenderer.drawString(
 				sensorGuiName,
