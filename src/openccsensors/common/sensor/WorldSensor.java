@@ -59,7 +59,7 @@ public class WorldSensor implements ISensor, IRequiresIconLoading {
 
 	@Override
 	public String getName() {
-		return "openccsensors.worldcard";
+		return "worldCard";
 	}
 
 	@Override

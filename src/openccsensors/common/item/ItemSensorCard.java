@@ -36,6 +36,7 @@ import openccsensors.common.sensor.SignSensor;
 import openccsensors.common.sensor.SonicSensor;
 import openccsensors.common.sensor.TankSensor;
 import openccsensors.common.sensor.WorldSensor;
+import openccsensors.common.util.OCSLog;
 import openccsensors.common.util.RecipeUtils;
 
 public class ItemSensorCard extends Item implements ISensorCardRegistry {
@@ -50,6 +51,12 @@ public class ItemSensorCard extends Item implements ISensorCardRegistry {
 		setHasSubtypes(true);
 		setCreativeTab(ComputerCraftAPI.getCreativeTab());
 	}
+	
+	@Override
+    public String getUnlocalizedName(ItemStack itemStack)
+    {
+        return String.format("item.openccsensors.%s", getSensorCard(itemStack).getSensor().getName());
+    }
 	
 	public void registerSensors() {
 

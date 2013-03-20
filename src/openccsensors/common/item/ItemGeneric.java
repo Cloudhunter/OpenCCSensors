@@ -43,6 +43,10 @@ public class ItemGeneric extends Item {
 		metaitems.put(meta.getId(), meta);
 	}
 
+	public IItemMeta getMeta(ItemStack stack) {
+		return getMeta(stack.getItemDamage());
+	}
+	
 	public IItemMeta getMeta(int id) {
 		return metaitems.get(id);
 	}
@@ -60,6 +64,12 @@ public class ItemGeneric extends Item {
     public Icon getIconFromDamage(int id)
     {
         return metaitems.get(id).getIcon();
+    }
+
+	@Override
+    public String getUnlocalizedName(ItemStack itemStack)
+    {
+        return String.format("item.openccsensors.%s", getMeta(itemStack).getName());
     }
 
 }

@@ -134,7 +134,7 @@ public class SonicSensor implements ISensor, IRequiresIconLoading {
 
 	@Override
 	public String getName() {
-		return "openccsensors.soniccard";
+		return "sonicCard";
 	}
 
 	@Override

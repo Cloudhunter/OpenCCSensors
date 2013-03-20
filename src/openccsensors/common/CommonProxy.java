@@ -42,6 +42,7 @@ import openccsensors.common.sensor.WorldSensor;
 import openccsensors.common.tileentity.TileEntityGauge;
 import openccsensors.common.tileentity.TileEntitySensor;
 import openccsensors.common.turtle.TurtleUpgradeSensor;
+import openccsensors.common.util.LanguageUtils;
 import openccsensors.common.util.OCSLog;
 import openccsensors.common.util.ResourceExtractingUtils;
 
@@ -65,7 +66,7 @@ public class CommonProxy {
 		TileEntityGauge.addGaugeSensor(OpenCCSensors.Sensors.inventorySensor);
 		
 		setupLuaFiles();
-		// gauge.registerSensor(sensor);
+		setupLanguages();
 	}
 	
 	private void initSensors() {
@@ -113,20 +114,22 @@ public class CommonProxy {
 		ModContainer container = FMLCommonHandler.instance().findContainerFor(OpenCCSensors.instance);
 		File modFile = container.getSource();
 		File baseFile = getBase();
-		String beginStr = "openccsensors/resources/lua/";
-		
 		String destFolder = String.format("mods\\OCSLua\\%s\\lua", container.getVersion());
 		OCSLog.info("Extracting files to " + destFolder);
 		if (modFile.isDirectory()) {
-			File srcFile = new File(modFile, beginStr);
+			File srcFile = new File(modFile, OpenCCSensors.LUA_PATH);
 			File destFile = new File(baseFile, destFolder);
 			try {
 				ResourceExtractingUtils.copy(srcFile, destFile);
 			} catch (IOException e) {
 			}
 		} else {
-			ResourceExtractingUtils.extractZipToLocation(modFile, beginStr, destFolder);
+			ResourceExtractingUtils.extractZipToLocation(modFile, OpenCCSensors.LUA_PATH, destFolder);
 		}
 
+	}
+	
+	private void setupLanguages() {
+		LanguageUtils.setupLanguages();
 	}
 }

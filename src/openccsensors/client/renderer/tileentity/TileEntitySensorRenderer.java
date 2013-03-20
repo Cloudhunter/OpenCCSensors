@@ -1,5 +1,6 @@
 package openccsensors.client.renderer.tileentity;
 
+import openccsensors.OpenCCSensors;
 import openccsensors.client.model.ModelSensor;
 import openccsensors.common.item.ItemSensorCard;
 import openccsensors.common.tileentity.TileEntitySensor;
@@ -35,7 +36,7 @@ public class TileEntitySensorRenderer extends TileEntitySpecialRenderer {
 		TileEntitySensor sensor = (TileEntitySensor) tileEntity;
 		GL11.glPushMatrix();
 			GL11.glTranslatef((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.5F);
-			this.bindTextureByName("/mods/OpenCCSensors/textures/models/sensor.png");
+			this.bindTextureByName(String.format("%s/models/sensor.png", OpenCCSensors.TEXTURE_PATH));
 			int rotation = (int) sensor.getRotation();
 			GL11.glPushMatrix();
 			this.modelSensor.renderSensor(rotation);

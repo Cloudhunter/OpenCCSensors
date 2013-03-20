@@ -101,7 +101,7 @@ public class TankSensor extends TileSensor implements ISensor, IRequiresIconLoad
 
 	@Override
 	public String getName() {
-		return "openccsensors.tankCard";
+		return "tankCard";
 	}
 
 	@Override
