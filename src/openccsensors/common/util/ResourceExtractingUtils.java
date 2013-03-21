@@ -71,29 +71,29 @@ public class ResourceExtractingUtils {
 	public static void extractZipToLocation(File zipFile, String sourceFolder,
 			String destFolder) {
 		try {
-
+			sourceFolder = sourceFolder.substring(1) + "/";
 			File destFile = new File(OpenCCSensors.proxy.getBase(), destFolder);
 			String destinationName = destFile.getAbsolutePath();
 			byte[] buf = new byte[1024];
 			ZipInputStream zipinputstream = null;
 			ZipEntry zipentry;
 			zipinputstream = new ZipInputStream(new FileInputStream(zipFile));
-
 			zipentry = zipinputstream.getNextEntry();
 			while (zipentry != null) {
 				// for each entry to be extracted
 				String zipentryName = zipentry.getName();
+				
 				if (!zipentryName.startsWith(sourceFolder)) {
 					zipentry = zipinputstream.getNextEntry();
 					continue;
 				}
+				
 				String entryName = destinationName
 						+ zipentryName.substring(Math.min(
 								zipentryName.length(),
 								sourceFolder.length() - 1));
 				entryName = entryName.replace('/', File.separatorChar);
 				entryName = entryName.replace('\\', File.separatorChar);
-				OCSLog.info("Extracting " + entryName);
 				int n;
 				FileOutputStream fileoutputstream;
 				File newFile = new File(entryName);

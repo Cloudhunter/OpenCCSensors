@@ -115,10 +115,6 @@
 		<copy todir="${classes.dir}/mods/openccsensors">
 			<fileset dir="mods/openccsensors" />
 		</copy>
-		<copy todir="${classes.dir}/openccsensors/resources">
-			<fileset dir="resources/openccsensors/resources" />
-		</copy>
-			
 		
 		<!-- Copy resources -->
 		<copy todir="${classes.dir}">
