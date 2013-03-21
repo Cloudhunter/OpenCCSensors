@@ -74,8 +74,6 @@ public class ResourceExtractingUtils {
 			sourceFolder = sourceFolder.substring(1) + "/";
 			File destFile = new File(OpenCCSensors.proxy.getBase(), destFolder);
 			String destinationName = destFile.getAbsolutePath();
-			OCSLog.info("sourceFolder = " + sourceFolder);
-			OCSLog.info("Destination = " + destinationName);
 			byte[] buf = new byte[1024];
 			ZipInputStream zipinputstream = null;
 			ZipEntry zipentry;
@@ -83,7 +81,6 @@ public class ResourceExtractingUtils {
 			zipentry = zipinputstream.getNextEntry();
 			while (zipentry != null) {
 				// for each entry to be extracted
-				OCSLog.info("zip entry = "+zipentry.getName());
 				String zipentryName = zipentry.getName();
 				
 				if (!zipentryName.startsWith(sourceFolder)) {
@@ -97,7 +94,6 @@ public class ResourceExtractingUtils {
 								sourceFolder.length() - 1));
 				entryName = entryName.replace('/', File.separatorChar);
 				entryName = entryName.replace('\\', File.separatorChar);
-				OCSLog.info("Extracting " + entryName);
 				int n;
 				FileOutputStream fileoutputstream;
 				File newFile = new File(entryName);

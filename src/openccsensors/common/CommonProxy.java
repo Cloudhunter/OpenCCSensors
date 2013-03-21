@@ -113,7 +113,6 @@ public class CommonProxy {
 		File modFile = container.getSource();
 		File baseFile = getBase();
 		String destFolder = String.format("mods\\OCSLua\\%s\\lua", container.getVersion());
-		OCSLog.info("Extracting files to " + destFolder);
 		if (modFile.isDirectory()) {
 			File srcFile = new File(modFile, OpenCCSensors.LUA_PATH);
 			File destFile = new File(baseFile, destFolder);
