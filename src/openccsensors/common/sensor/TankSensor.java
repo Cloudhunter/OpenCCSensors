@@ -111,7 +111,7 @@ public class TankSensor extends TileSensor implements ISensor, IRequiresIconLoad
 
 	@Override
 	public void loadIcon(IconRegister iconRegistry) {
-		icon = iconRegistry.func_94245_a("openccsensors:tank");
+		icon = iconRegistry.registerIcon("openccsensors:tank");
 	}
 
 	@Override

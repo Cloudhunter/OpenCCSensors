@@ -52,7 +52,7 @@ public class ItemGeneric extends Item {
 	}
 	
 	@Override
-	public void func_94581_a(IconRegister iconRegister) {
+	public void updateIcons(IconRegister iconRegister) {
 		for (Entry<Integer, IItemMeta> entry : metaitems.entrySet()) {
 			if (entry.getValue() instanceof IRequiresIconLoading) {
 				((IRequiresIconLoading)entry.getValue()).loadIcon(iconRegister);

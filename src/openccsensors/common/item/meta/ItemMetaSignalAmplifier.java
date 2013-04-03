@@ -46,7 +46,7 @@ public class ItemMetaSignalAmplifier implements IItemMeta, IRequiresIconLoading 
 
 	@Override
 	public void loadIcon(IconRegister iconRegistry) {
-		icon = iconRegistry.func_94245_a("openccsensors:signalAmplifier");
+		icon = iconRegistry.registerIcon("openccsensors:signalAmplifier");
 	}
 
 	@Override
