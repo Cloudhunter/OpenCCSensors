@@ -46,16 +46,16 @@ public class BlockBasicMachine extends BlockAdvanced
 	}
 
 	@Override
-	public void func_94332_a(IconRegister par1IconRegister)
+	public void registerIcons(IconRegister par1IconRegister)
 	{
-		this.field_94336_cN = par1IconRegister.func_94245_a(BasicComponents.TEXTURE_NAME_PREFIX + "machine");
-		this.iconInput = par1IconRegister.func_94245_a(BasicComponents.TEXTURE_NAME_PREFIX + "machine_input");
-		this.iconOutput = par1IconRegister.func_94245_a(BasicComponents.TEXTURE_NAME_PREFIX + "machine_output");
+		this.blockIcon = par1IconRegister.registerIcon(BasicComponents.TEXTURE_NAME_PREFIX + "machine");
+		this.iconInput = par1IconRegister.registerIcon(BasicComponents.TEXTURE_NAME_PREFIX + "machine_input");
+		this.iconOutput = par1IconRegister.registerIcon(BasicComponents.TEXTURE_NAME_PREFIX + "machine_output");
 
-		this.iconMachineSide = par1IconRegister.func_94245_a(BasicComponents.TEXTURE_NAME_PREFIX + "machine_side");
-		this.iconCoalGenerator = par1IconRegister.func_94245_a(BasicComponents.TEXTURE_NAME_PREFIX + "coalGenerator");
-		this.iconBatteryBox = par1IconRegister.func_94245_a(BasicComponents.TEXTURE_NAME_PREFIX + "batteryBox");
-		this.iconElectricFurnace = par1IconRegister.func_94245_a(BasicComponents.TEXTURE_NAME_PREFIX + "electricFurnace");
+		this.iconMachineSide = par1IconRegister.registerIcon(BasicComponents.TEXTURE_NAME_PREFIX + "machine_side");
+		this.iconCoalGenerator = par1IconRegister.registerIcon(BasicComponents.TEXTURE_NAME_PREFIX + "coalGenerator");
+		this.iconBatteryBox = par1IconRegister.registerIcon(BasicComponents.TEXTURE_NAME_PREFIX + "batteryBox");
+		this.iconElectricFurnace = par1IconRegister.registerIcon(BasicComponents.TEXTURE_NAME_PREFIX + "electricFurnace");
 	}
 
 	@Override
@@ -105,7 +105,7 @@ public class BlockBasicMachine extends BlockAdvanced
 
 		if (side == 0 || side == 1)
 		{
-			return this.field_94336_cN;
+			return this.blockIcon;
 		}
 
 		if (metadata >= ELECTRIC_FURNACE_METADATA)

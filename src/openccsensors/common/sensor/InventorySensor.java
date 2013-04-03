@@ -96,7 +96,7 @@ public class InventorySensor extends TileSensor implements ISensor, IRequiresIco
 
 	@Override
 	public void loadIcon(IconRegister iconRegistry) {
-		icon = iconRegistry.func_94245_a("openccsensors:inventory");
+		icon = iconRegistry.registerIcon("openccsensors:inventory");
 	}
 
 	@Override

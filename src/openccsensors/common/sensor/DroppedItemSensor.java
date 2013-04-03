@@ -78,7 +78,7 @@ public class DroppedItemSensor implements ISensor, IRequiresIconLoading {
 
 	@Override
 	public void loadIcon(IconRegister iconRegistry) {
-		icon = iconRegistry.func_94245_a("openccsensors:droppedItem");
+		icon = iconRegistry.registerIcon("openccsensors:droppedItem");
 	}
 
 	@Override

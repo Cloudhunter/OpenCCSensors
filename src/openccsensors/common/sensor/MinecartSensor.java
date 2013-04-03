@@ -79,7 +79,7 @@ public class MinecartSensor implements ISensor, IRequiresIconLoading {
 
 	@Override
 	public void loadIcon(IconRegister iconRegistry) {
-		icon = iconRegistry.func_94245_a("openccsensors:minecart");
+		icon = iconRegistry.registerIcon("openccsensors:minecart");
 		
 	}
 

@@ -19,7 +19,7 @@ public class ItemBattery extends ItemElectric
 	@SideOnly(Side.CLIENT)
 	public void func_94581_a(IconRegister iconRegister)
 	{
-		this.iconIndex = iconRegister.func_94245_a(this.getUnlocalizedName().replace("item.", BasicComponents.TEXTURE_NAME_PREFIX));
+		this.iconIndex = iconRegister.registerIcon(this.getUnlocalizedName().replace("item.", BasicComponents.TEXTURE_NAME_PREFIX));
 	}
 
 	@Override

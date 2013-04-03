@@ -133,15 +133,6 @@ IPeripheral, IInventory {
 	public void closeChest() {
 	}
 
-	@Override
-	public boolean func_94041_b(int i, ItemStack itemstack) {
-		return true;
-	}
-
-	@Override
-	public boolean func_94042_c() {
-		return true;
-	}
 
 	/* Peripheral proxy methods */
 	
@@ -194,5 +185,17 @@ IPeripheral, IInventory {
 	@Override
 	public World getWorld() {
 		return worldObj;
+	}
+
+	@Override
+	public boolean isInvNameLocalized() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isStackValidForSlot(int i, ItemStack itemstack) {
+		// TODO Auto-generated method stub
+		return true;
 	}
 }
