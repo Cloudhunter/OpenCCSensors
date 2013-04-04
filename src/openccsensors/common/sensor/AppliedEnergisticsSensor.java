@@ -81,6 +81,8 @@ public class AppliedEnergisticsSensor extends TileSensor implements ISensor, IRe
 				
 				response.put("CanHoldNewItems", imivh.canHoldNewItem());
 				response.put("Priority", imivh.getPriority());
+				response.put("SystemPower", gi.getPowerUsageAvg());
+				gi.triggerPowerUpdate();
 			}
 			
 		}
