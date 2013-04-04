@@ -123,6 +123,12 @@ public class ItemSensorCard extends Item implements ISensorCardRegistry {
 		addSensorCard(33, new SensorCard(OpenCCSensors.Sensors.powerSensor, tier4));
 		addIconsForLoading(OpenCCSensors.Sensors.powerSensor);
 		
+		addSensorCard(34, new SensorCard(OpenCCSensors.Sensors.appliedEnergisticsSensor, tier1));
+		addSensorCard(35, new SensorCard(OpenCCSensors.Sensors.appliedEnergisticsSensor, tier2));
+		addSensorCard(36, new SensorCard(OpenCCSensors.Sensors.appliedEnergisticsSensor, tier3));
+		addSensorCard(37, new SensorCard(OpenCCSensors.Sensors.appliedEnergisticsSensor, tier4));
+		addIconsForLoading(OpenCCSensors.Sensors.appliedEnergisticsSensor);
+		
 	}
 
 	public void addIconsForLoading (IRequiresIconLoading... list){
@@ -130,7 +136,7 @@ public class ItemSensorCard extends Item implements ISensorCardRegistry {
 	}
 
 	@Override
-	public void func_94581_a(IconRegister iconRegister) {
+	public void updateIcons(IconRegister iconRegister) {
 		for (IRequiresIconLoading item : iconLoadList) {
 			item.loadIcon(iconRegister);
 		}

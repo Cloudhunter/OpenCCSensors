@@ -8,7 +8,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Vec3;
+import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 
@@ -47,8 +49,8 @@ public class EntityUtils {
 
 		return map;
 	}
-	
 
+	
 	public static HashMap livingToMap(EntityLiving living, boolean additional) {
 		HashMap map = new HashMap();
 		

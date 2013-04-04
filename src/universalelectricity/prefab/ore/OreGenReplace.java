@@ -116,7 +116,7 @@ public class OreGenReplace extends OreGenBase
 								int block = par1World.getBlockId(var38, var41, var44);
 								if (var39 * var39 + var42 * var42 + var45 * var45 < 1.0D && (this.replaceID == 0 || block == this.replaceID))
 								{
-									par1World.setBlockAndMetadataWithNotify(var38, var41, var44, this.oreID, this.oreMeta, 2);
+									par1World.setBlock(var38, var41, var44, this.oreID, this.oreMeta, 2);
 								}
 							}
 						}

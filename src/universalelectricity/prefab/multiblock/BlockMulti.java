@@ -23,7 +23,7 @@ public class BlockMulti extends BlockContainer
 
 	public void makeFakeBlock(World worldObj, Vector3 position, Vector3 mainBlock)
 	{
-		worldObj.setBlockAndMetadataWithNotify(position.intX(), position.intY(), position.intZ(), this.blockID, 0, 2);
+		worldObj.setBlock(position.intX(), position.intY(), position.intZ(), this.blockID, 0, 2);
 		((TileEntityMulti) worldObj.getBlockTileEntity(position.intX(), position.intY(), position.intZ())).setMainBlock(mainBlock);
 	}
 

@@ -61,9 +61,9 @@ public class BlockGauge extends BlockContainer {
 	}
 	
 	@Override
-	public void func_94332_a(IconRegister iconRegister)
+	public void registerIcons(IconRegister iconRegister)
 	{
-		icon = iconRegister.func_94245_a("openccsensors:gauge");
+		icon = iconRegister.registerIcon("openccsensors:gauge");
 	}
 	
 	@Override
@@ -175,7 +175,7 @@ public class BlockGauge extends BlockContainer {
 		ForgeDirection behind = infront.getOpposite();
 		if (world.getBlockId(x + behind.offsetX, y, z + behind.offsetZ) == 0) {
 			this.dropBlockAsItem(world, x, y, z, metadata, 0);
-			world.setBlockAndMetadataWithNotify(x, y, z, 0, 0, 3);
+			world.setBlock(x, y, z, 0, 0, 3);
 		}
 		super.onNeighborBlockChange(world, x, y, z, par5);
 	}

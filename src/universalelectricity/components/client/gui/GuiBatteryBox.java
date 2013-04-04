@@ -55,7 +55,7 @@ public class GuiBatteryBox extends GuiContainer
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3)
 	{
-		this.mc.renderEngine.func_98187_b(BasicComponents.GUI_DIRECTORY + "battery_box.png");
+		this.mc.renderEngine.bindTexture(BasicComponents.GUI_DIRECTORY + "battery_box.png");
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
 		this.containerWidth = (this.width - this.xSize) / 2;

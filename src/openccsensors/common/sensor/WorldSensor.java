@@ -69,7 +69,7 @@ public class WorldSensor implements ISensor, IRequiresIconLoading {
 	
 	@Override
 	public void loadIcon(IconRegister iconRegistry) {
-		icon = iconRegistry.func_94245_a("openccsensors:world");
+		icon = iconRegistry.registerIcon("openccsensors:world");
 	}
 
 	@Override
