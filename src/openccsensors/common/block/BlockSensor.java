@@ -59,10 +59,10 @@ public class BlockSensor extends BlockContainer {
 	}
 
 	@Override
-	public void func_94332_a(IconRegister iconRegister)
+	public void registerIcons(IconRegister iconRegister)
 	{
-		turtleIcon = iconRegister.func_94245_a("openccsensors:turtleSensor");
-		icon = iconRegister.func_94245_a("openccsensors:sensor");
+		turtleIcon = iconRegister.registerIcon("openccsensors:turtleSensor");
+		icon = iconRegister.registerIcon("openccsensors:sensor");
 	}
 
 	@Override

@@ -66,7 +66,7 @@ public class SignSensor extends TileSensor implements ISensor, IRequiresIconLoad
 
 	@Override
 	public void loadIcon(IconRegister iconRegistry) {
-		icon = iconRegistry.func_94245_a("openccsensors:sign");		
+		icon = iconRegistry.registerIcon("openccsensors:sign");		
 	}
 
 	@Override

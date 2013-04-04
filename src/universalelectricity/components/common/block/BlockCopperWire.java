@@ -23,9 +23,9 @@ public class BlockCopperWire extends BlockConductor
 	}
 
 	@Override
-	public void func_94332_a(IconRegister par1IconRegister)
+	public void registerIcons(IconRegister par1IconRegister)
 	{
-		this.field_94336_cN = par1IconRegister.func_94245_a(BasicComponents.TEXTURE_NAME_PREFIX + this.func_94330_A());
+		this.blockIcon = par1IconRegister.registerIcon(BasicComponents.TEXTURE_NAME_PREFIX + this.getUnlocalizedName2());
 	}
 
 	/**

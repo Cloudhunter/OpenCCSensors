@@ -58,7 +58,7 @@ public class ProximitySensor implements ISensor, IRequiresIconLoading {
 
 	@Override
 	public void loadIcon(IconRegister iconRegistry) {
-		icon = iconRegistry.func_94245_a("openccsensors:proximity");
+		icon = iconRegistry.registerIcon("openccsensors:proximity");
 	}
 
 	@Override
