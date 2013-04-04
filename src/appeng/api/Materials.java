@@ -48,5 +48,5 @@ public class Materials
     
     
     // TEST ITEMS!
-	public static ItemStack testWalrus;
+	public static ItemStack testItem;
 }

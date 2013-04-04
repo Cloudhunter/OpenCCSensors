@@ -1,5 +1,6 @@
 package appeng.api;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import net.minecraft.item.ItemStack;
@@ -19,15 +20,16 @@ public class Util
 	static private Method isAssemblerPattern = null;
     static private Method getAssemblerPattern = null;
 
+    static private ICellRegistry cellReg;
+    static private ILocateableRegistry locReg;
+    static private IExternalStorageRegistry externalStorageReg;
+    static private IGrinderRecipeManager grinderRecipeManager;
+    
     static private Method isCell = null;
     static private Method GetCell = null;
     static private Method addBasicBlackList = null;
-    static private Method getCellRegistry = null;
     static private Method getLocateableBySerial = null;
-    static private Method getExternalStorageRegistry = null;
-    static private Method getGrinderRecipeManage = null;
     static private Method getIMEInventoryUtil = null;
-    
     static private Method createItemList = null;
     static private Method createItemStack = null;
     static private Method addItems = null;
@@ -54,12 +56,6 @@ public class Util
     	if ( GetCell == null ) throw new AppEngException("api.GetCell");
     	addBasicBlackList = ReflectionHelper.getClass(Util.class.getClassLoader(), "appeng.me.CellInventory").getMethod("addBasicBlackList", int.class, int.class );
     	if ( addBasicBlackList == null ) throw new AppEngException("api.addBasicBlackList");
-    	getExternalStorageRegistry = ReflectionHelper.getClass(Util.class.getClassLoader(), "appeng.common.AppEngApi").getMethod("getExternalStorageRegistry" );
-    	if ( getExternalStorageRegistry == null ) throw new AppEngException("api.getExternalStorageRegistry");
-    	getCellRegistry = ReflectionHelper.getClass(Util.class.getClassLoader(), "appeng.common.AppEngApi").getMethod("getCellRegistry" );
-    	if ( getCellRegistry == null ) throw new AppEngException("api.getCellRegistry");
-    	getGrinderRecipeManage = ReflectionHelper.getClass(Util.class.getClassLoader(), "appeng.common.AppEngApi").getMethod("getGrinderRecipeManage" );
-    	if ( getGrinderRecipeManage == null ) throw new AppEngException("api.getGrinderRecipeManage");
     	isBlankPattern = ReflectionHelper.getClass(Util.class.getClassLoader(), "appeng.me.AssemblerPatternInventory").getMethod("isBlankPattern", ItemStack.class);
     	if ( isBlankPattern == null ) throw new AppEngException("api.isBlankPattern");
     	getAssemblerPattern = ReflectionHelper.getClass(Util.class.getClassLoader(), "appeng.me.AssemblerPatternInventory").getMethod("getAssemblerPattern", ItemStack.class);
@@ -68,6 +64,21 @@ public class Util
         if ( isCell == null ) throw new AppEngException("api.isCell");
         getLocateableBySerial = ReflectionHelper.getClass(Util.class.getClassLoader(), "appeng.common.AppEngApi").getMethod("getLocateableBySerial", Long.class);
         if ( getLocateableBySerial == null ) throw new AppEngException("api.getLocateableBySerial");    	
+        
+        Method getExternalStorageRegistry = ReflectionHelper.getClass(Util.class.getClassLoader(), "appeng.common.AppEngApi").getMethod("getExternalStorageRegistry" );
+    	if ( getExternalStorageRegistry == null ) throw new AppEngException("api.getExternalStorageRegistry");
+    	Method  getCellRegistry = ReflectionHelper.getClass(Util.class.getClassLoader(), "appeng.common.AppEngApi").getMethod("getCellRegistry" );
+    	if ( getCellRegistry == null ) throw new AppEngException("api.getCellRegistry");
+    	Method getGrinderRecipeManage = ReflectionHelper.getClass(Util.class.getClassLoader(), "appeng.common.AppEngApi").getMethod("getGrinderRecipeManage" );
+    	if ( getGrinderRecipeManage == null ) throw new AppEngException("api.getGrinderRecipeManage");
+    	
+    	try {
+			externalStorageReg = (IExternalStorageRegistry)getExternalStorageRegistry.invoke(null);
+	    	cellReg = (ICellRegistry)getCellRegistry.invoke(null);
+	        grinderRecipeManager = (IGrinderRecipeManager)getGrinderRecipeManage.invoke(null);
+		} catch (Exception e) {
+			 throw new AppEngException("api.establish.registiries");
+		}
     }
     
     public static Object getLocateableBySerial( long ser )
@@ -144,38 +155,17 @@ public class Util
     
     public static IExternalStorageRegistry getExternalStorageRegistry()
     {
-        try
-        {
-            return (IExternalStorageRegistry)getExternalStorageRegistry.invoke(null);
-        }
-        catch (Exception e)
-        {
-            return null;
-        }
+    	return externalStorageReg;
     }
-
+    
     public static ICellRegistry getCellRegistry()
     {
-        try
-        {
-            return (ICellRegistry)getCellRegistry.invoke(null);
-        }
-        catch (Exception e)
-        {
-            return null;
-        }
+    	return cellReg;
     }
     
     public static IGrinderRecipeManager getGrinderRecipeManage()
     {
-        try
-        {
-            return (IGrinderRecipeManager)getGrinderRecipeManage.invoke(null);
-        }
-        catch (Exception e)
-        {
-            return null;
-        }
+    	return grinderRecipeManager;
     }
 
     /** Is it a Blank Pattern? */

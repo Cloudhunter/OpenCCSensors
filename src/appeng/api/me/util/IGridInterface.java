@@ -33,6 +33,9 @@ public interface IGridInterface
      */
 	boolean useMEEnergy(float use, String for_what);
 	
+	// Reports previous 20 ticks avg of energy usage.
+	public float getPowerUsageAvg();
+	
     // this is used for standard items, anything else just use useMEEnergy.
 	int usePowerForAddition(int items, int multipler);
     
