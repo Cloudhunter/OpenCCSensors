@@ -10,6 +10,7 @@ import openccsensors.common.block.BlockGauge;
 import openccsensors.common.block.BlockSensor;
 import openccsensors.common.item.ItemGeneric;
 import openccsensors.common.item.ItemSensorCard;
+import openccsensors.common.sensor.AppliedEnergisticsSensor;
 import openccsensors.common.sensor.PowerSensor;
 import openccsensors.common.sensor.DroppedItemSensor;
 import openccsensors.common.sensor.MachineSensor;
@@ -83,6 +84,7 @@ public class OpenCCSensors {
 		public static MagicSensor magicSensor;
 		public static MachineSensor machineSensor;
 		public static PowerSensor powerSensor;
+		public static AppliedEnergisticsSensor appliedEnergisticsSensor;
 		
 	}
 	
