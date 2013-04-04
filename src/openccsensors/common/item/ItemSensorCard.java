@@ -123,6 +123,12 @@ public class ItemSensorCard extends Item implements ISensorCardRegistry {
 		addSensorCard(33, new SensorCard(OpenCCSensors.Sensors.powerSensor, tier4));
 		addIconsForLoading(OpenCCSensors.Sensors.powerSensor);
 		
+		addSensorCard(34, new SensorCard(OpenCCSensors.Sensors.appliedEnergisticsSensor, tier1));
+		addSensorCard(35, new SensorCard(OpenCCSensors.Sensors.appliedEnergisticsSensor, tier2));
+		addSensorCard(36, new SensorCard(OpenCCSensors.Sensors.appliedEnergisticsSensor, tier3));
+		addSensorCard(37, new SensorCard(OpenCCSensors.Sensors.appliedEnergisticsSensor, tier4));
+		addIconsForLoading(OpenCCSensors.Sensors.appliedEnergisticsSensor);
+		
 	}
 
 	public void addIconsForLoading (IRequiresIconLoading... list){
