@@ -8,7 +8,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Vec3;
+import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 
@@ -47,6 +49,35 @@ public class EntityUtils {
 
 		return map;
 	}
+	
+	public static HashMap<String, TileEntity> getTileEntities(World world, Vec3 sensorPos, double radius, Class filter) {
+		HashMap<String, TileEntity> map = new HashMap<String, TileEntity>();
+		
+		int dChunk = (int) Math.ceil(radius / 16.0F);
+		
+		int x = (int)sensorPos.xCoord;
+		int y = (int)sensorPos.yCoord;
+		int z = (int)sensorPos.zCoord;
+
+		for (int dx = -dChunk; dx <= dChunk; dx++) {
+			for (int dz = -dChunk; dz <= dChunk; dz++) {
+				Chunk chunk = world.getChunkFromBlockCoords(x+16*dx, z+16*dz);
+				TileEntity te = (TileEntity)chunk.chunkTileEntityMap.get(new ChunkPosition(x+16*dx, 0, z+16*dz));
+				Vec3 livingPos = Vec3.createVectorHelper(
+						te.xCoord + 0.5,
+						te.yCoord + 0.5,
+						te.zCoord + 0.5
+				);
+				if (sensorPos.distanceTo(livingPos) <= radius && filter.isAssignableFrom(te.getClass())) {
+					String targetName = te.getClass().getName();
+					targetName = targetName.replaceAll("\\s", "");
+					map.put(targetName, te);
+				}
+			}
+		}
+
+		return map;
+	}	
 	
 
 	public static HashMap livingToMap(EntityLiving living, boolean additional) {
