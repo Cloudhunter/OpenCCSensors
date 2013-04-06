@@ -37,10 +37,12 @@ public class InventoryUtils {
 	public static HashMap itemstackToMap(ItemStack itemstack) {
 
 		HashMap map = new HashMap();
-
+		HashMap tooltips = new HashMap();
+		
 		if (itemstack == null) {
 
 			map.put("Name", "empty");
+			map.put("Tooltip", tooltips);
 			map.put("Size", 0);
 			map.put("Damagevalue", 0);
 			map.put("MaxStack", 64);
@@ -49,8 +51,13 @@ public class InventoryUtils {
 		} else {
 
 			Item item = itemstack.getItem();
-
-			map.put("Name", getNameForItemStack(itemstack));
+			
+			for (int i = 0; i < itemstack.getTooltip(null, true).size(); i++) {
+				tooltips.put(i+1, itemstack.getTooltip(null, true).get(i));
+			}
+			
+			map.put("Name", getNameForItemStack(itemstack));				
+			map.put("Tooltip", tooltips);			
 			map.put("RawName", getRawNameForStack(itemstack));
 			map.put("Size", itemstack.stackSize);
 			map.put("DamageValue", itemstack.getItemDamage());
