@@ -1,21 +1,16 @@
 package openccsensors.common.sensor;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map.Entry;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import openccsensors.api.IRequiresIconLoading;
 import openccsensors.api.ISensor;
-import openccsensors.api.ISensorCardRegistry;
 import openccsensors.api.ISensorTier;
 import openccsensors.common.util.EntityUtils;
 

@@ -10,8 +10,6 @@ import java.util.zip.ZipInputStream;
 
 import openccsensors.OpenCCSensors;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-
 public class ResourceExtractingUtils {
 
 	/**

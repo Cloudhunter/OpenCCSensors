@@ -8,10 +8,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import cpw.mods.fml.common.registry.LanguageRegistry;
-
 import openccsensors.OpenCCSensors;
 import openccsensors.common.CommonProxy;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class LanguageUtils {
 	public static void setupLanguages() {

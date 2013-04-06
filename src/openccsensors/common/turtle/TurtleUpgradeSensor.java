@@ -1,8 +1,9 @@
 package openccsensors.common.turtle;
 
-import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
+import openccsensors.OpenCCSensors;
+import openccsensors.common.peripheral.PeripheralSensor;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import dan200.computer.api.IHostedPeripheral;
 import dan200.turtle.api.ITurtleAccess;
@@ -10,12 +11,6 @@ import dan200.turtle.api.ITurtleUpgrade;
 import dan200.turtle.api.TurtleSide;
 import dan200.turtle.api.TurtleUpgradeType;
 import dan200.turtle.api.TurtleVerb;
-import openccsensors.OpenCCSensors;
-import openccsensors.api.IRequiresIconLoading;
-import openccsensors.api.ISensorEnvironment;
-import openccsensors.common.block.BlockSensor;
-import openccsensors.common.peripheral.PeripheralSensor;
-import openccsensors.common.util.OCSLog;
 
 
 public class TurtleUpgradeSensor implements ITurtleUpgrade {
