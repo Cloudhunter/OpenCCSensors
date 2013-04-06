@@ -4,6 +4,9 @@ import java.util.HashMap;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.src.ModLoader;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.util.Vec3;
@@ -12,9 +15,8 @@ import openccsensors.api.IGaugeSensor;
 import openccsensors.api.IRequiresIconLoading;
 import openccsensors.api.ISensor;
 import openccsensors.api.ISensorTier;
+import openccsensors.common.util.AppliedEnergisticsUtils;
 import openccsensors.common.util.InventoryUtils;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
 
 public class InventorySensor extends TileSensor implements ISensor, IRequiresIconLoading, IGaugeSensor {
 
@@ -25,7 +27,7 @@ public class InventorySensor extends TileSensor implements ISensor, IRequiresIco
 	
 	@Override
 	public boolean isValidTarget(Object target) {
-		return target instanceof IInventory;
+		return target instanceof IInventory || (ModLoader.isModLoaded("AppliedEnergistics") && AppliedEnergisticsUtils.isValidTarget(target));
 	}
 	
 	@Override
@@ -34,10 +36,14 @@ public class InventorySensor extends TileSensor implements ISensor, IRequiresIco
 		TileEntity tile = (TileEntity) obj;
 		
 		HashMap response = super.getDetails(tile);
-		response.putAll(InventoryUtils.getInventorySizeCalculations((IInventory) tile));
 		
-		if (additional) {
-			response.put("Slots", InventoryUtils.invToMap((IInventory) tile));
+		if (ModLoader.isModLoaded("AppliedEnergistics") && AppliedEnergisticsUtils.isValidTarget(obj)) {
+			response.putAll(AppliedEnergisticsUtils.getTileDetails(obj, additional));
+		}else {
+			response.putAll(InventoryUtils.getInventorySizeCalculations((IInventory) tile));
+			if (additional) {
+				response.put("Slots", InventoryUtils.invToMap((IInventory) tile));
+			}
 		}
 		
 		return response;
@@ -46,9 +52,11 @@ public class InventorySensor extends TileSensor implements ISensor, IRequiresIco
 	@Override
 	public String[] getCustomMethods(ISensorTier tier) {
 		return new String[] {
-				"getMapData",
+				"getMapData"
+			/*
 				"getBeeInfo",
 				"getMystcraftBookInfo"
+			 */
 		};
 	}
 

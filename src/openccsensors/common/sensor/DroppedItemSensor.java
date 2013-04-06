@@ -3,7 +3,6 @@ package openccsensors.common.sensor;
 import java.util.HashMap;
 
 import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

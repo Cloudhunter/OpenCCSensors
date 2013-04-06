@@ -2,25 +2,8 @@ package openccsensors.common;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Map.Entry;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.ModContainer;
-import cpw.mods.fml.common.network.IGuiHandler;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
-import dan200.turtle.api.TurtleAPI;
 import openccsensors.OpenCCSensors;
-import openccsensors.api.EnumItemRarity;
-import openccsensors.api.ISensor;
-import openccsensors.api.SensorCard;
 import openccsensors.common.block.BlockGauge;
 import openccsensors.common.block.BlockSensor;
 import openccsensors.common.item.ItemGeneric;
@@ -28,24 +11,25 @@ import openccsensors.common.item.ItemSensorCard;
 import openccsensors.common.item.meta.ItemMetaAdvancedAmplifier;
 import openccsensors.common.item.meta.ItemMetaRangeExtensionAntenna;
 import openccsensors.common.item.meta.ItemMetaSignalAmplifier;
-import openccsensors.common.sensor.AppliedEnergisticsSensor;
-import openccsensors.common.sensor.PowerSensor;
 import openccsensors.common.sensor.DroppedItemSensor;
-import openccsensors.common.sensor.MachineSensor;
 import openccsensors.common.sensor.InventorySensor;
+import openccsensors.common.sensor.MachineSensor;
+import openccsensors.common.sensor.MagicSensor;
 import openccsensors.common.sensor.MinecartSensor;
+import openccsensors.common.sensor.PowerSensor;
 import openccsensors.common.sensor.ProximitySensor;
 import openccsensors.common.sensor.SignSensor;
 import openccsensors.common.sensor.SonicSensor;
 import openccsensors.common.sensor.TankSensor;
-import openccsensors.common.sensor.MagicSensor;
 import openccsensors.common.sensor.WorldSensor;
 import openccsensors.common.tileentity.TileEntityGauge;
-import openccsensors.common.tileentity.TileEntitySensor;
 import openccsensors.common.turtle.TurtleUpgradeSensor;
 import openccsensors.common.util.LanguageUtils;
-import openccsensors.common.util.OCSLog;
 import openccsensors.common.util.ResourceExtractingUtils;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.ModContainer;
+import cpw.mods.fml.common.network.NetworkRegistry;
+import dan200.turtle.api.TurtleAPI;
 
 public class CommonProxy {
 	
@@ -80,7 +64,6 @@ public class CommonProxy {
 		OpenCCSensors.Sensors.powerSensor = new PowerSensor();
 		OpenCCSensors.Sensors.machineSensor = new MachineSensor();
 		OpenCCSensors.Sensors.magicSensor = new MagicSensor();
-		OpenCCSensors.Sensors.appliedEnergisticsSensor = new AppliedEnergisticsSensor();
 	}
 	
 	private void initBlocks() {

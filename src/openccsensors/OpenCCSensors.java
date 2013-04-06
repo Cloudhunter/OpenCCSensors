@@ -2,7 +2,6 @@ package openccsensors;
 
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.Property;
-import openccsensors.api.EnumItemRarity;
 import openccsensors.api.IItemMeta;
 import openccsensors.common.CommonProxy;
 import openccsensors.common.SensorTier;
@@ -10,17 +9,16 @@ import openccsensors.common.block.BlockGauge;
 import openccsensors.common.block.BlockSensor;
 import openccsensors.common.item.ItemGeneric;
 import openccsensors.common.item.ItemSensorCard;
-import openccsensors.common.sensor.AppliedEnergisticsSensor;
-import openccsensors.common.sensor.PowerSensor;
 import openccsensors.common.sensor.DroppedItemSensor;
-import openccsensors.common.sensor.MachineSensor;
 import openccsensors.common.sensor.InventorySensor;
+import openccsensors.common.sensor.MachineSensor;
+import openccsensors.common.sensor.MagicSensor;
 import openccsensors.common.sensor.MinecartSensor;
+import openccsensors.common.sensor.PowerSensor;
 import openccsensors.common.sensor.ProximitySensor;
 import openccsensors.common.sensor.SignSensor;
 import openccsensors.common.sensor.SonicSensor;
 import openccsensors.common.sensor.TankSensor;
-import openccsensors.common.sensor.MagicSensor;
 import openccsensors.common.sensor.WorldSensor;
 import openccsensors.common.util.OCSLog;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -84,7 +82,6 @@ public class OpenCCSensors {
 		public static MagicSensor magicSensor;
 		public static MachineSensor machineSensor;
 		public static PowerSensor powerSensor;
-		public static AppliedEnergisticsSensor appliedEnergisticsSensor;
 		
 	}
 	

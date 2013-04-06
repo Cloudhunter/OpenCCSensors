@@ -1,11 +1,11 @@
 package openccsensors.common.util;
 
-import openccsensors.OpenCCSensors;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+import openccsensors.OpenCCSensors;
 
 public class RecipeUtils {
 

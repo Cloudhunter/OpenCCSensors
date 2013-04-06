@@ -3,15 +3,15 @@ package openccsensors.client;
 import java.io.File;
 
 import net.minecraft.client.Minecraft;
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.client.registry.RenderingRegistry;
 import openccsensors.OpenCCSensors;
 import openccsensors.client.renderer.tileentity.TileEntityGaugeRenderer;
 import openccsensors.client.renderer.tileentity.TileEntitySensorRenderer;
 import openccsensors.common.CommonProxy;
 import openccsensors.common.tileentity.TileEntityGauge;
 import openccsensors.common.tileentity.TileEntitySensor;
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy {
 
