@@ -3,12 +3,11 @@ package openccsensors.common.util;
 import java.util.HashMap;
 import java.util.Map;
 
-import universalelectricity.core.block.IConductor;
-import universalelectricity.core.block.IConnector;
-import universalelectricity.core.block.IElectricityStorage;
-import universalelectricity.core.block.IVoltage;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import universalelectricity.core.block.IConductor;
+import universalelectricity.core.block.IElectricityStorage;
+import universalelectricity.core.block.IVoltage;
 
 public class UniversalElectricityUtils {
 

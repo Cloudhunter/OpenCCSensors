@@ -4,18 +4,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import dan200.computer.api.IComputerAccess;
-import dan200.computer.api.IPeripheral;
-import openccsensors.api.IGaugeSensor;
-import openccsensors.api.IMethodCallback;
-import openccsensors.common.util.CallbackEventManager;
-import openccsensors.common.util.OCSLog;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
+import openccsensors.api.IGaugeSensor;
+import openccsensors.api.IMethodCallback;
+import openccsensors.common.util.CallbackEventManager;
+import dan200.computer.api.IComputerAccess;
+import dan200.computer.api.IPeripheral;
 
 public class TileEntityGauge extends TileEntity implements IPeripheral {
 	

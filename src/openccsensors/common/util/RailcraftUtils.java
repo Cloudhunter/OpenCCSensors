@@ -1,6 +1,5 @@
 package openccsensors.common.util;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import net.minecraft.tileentity.TileEntity;

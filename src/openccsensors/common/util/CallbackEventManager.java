@@ -3,9 +3,8 @@ package openccsensors.common.util;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import dan200.computer.api.IComputerAccess;
-
 import openccsensors.api.IMethodCallback;
+import dan200.computer.api.IComputerAccess;
 
 public class CallbackEventManager {
 

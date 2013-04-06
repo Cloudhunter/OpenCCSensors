@@ -1,9 +1,5 @@
 package openccsensors.common.tileentity;
 
-import openccsensors.api.ISensorEnvironment;
-import openccsensors.common.peripheral.PeripheralSensor;
-import dan200.computer.api.IComputerAccess;
-import dan200.computer.api.IPeripheral;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryBasic;
@@ -15,6 +11,10 @@ import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import openccsensors.api.ISensorEnvironment;
+import openccsensors.common.peripheral.PeripheralSensor;
+import dan200.computer.api.IComputerAccess;
+import dan200.computer.api.IPeripheral;
 
 public class TileEntitySensor extends TileEntity implements ISensorEnvironment,
 IPeripheral, IInventory {
