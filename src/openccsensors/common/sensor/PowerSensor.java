@@ -5,6 +5,7 @@ import java.util.HashMap;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.src.ModLoader;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.util.Vec3;
@@ -13,6 +14,7 @@ import openccsensors.api.IGaugeSensor;
 import openccsensors.api.IRequiresIconLoading;
 import openccsensors.api.ISensor;
 import openccsensors.api.ISensorTier;
+import openccsensors.common.util.Ic2Utils;
 import openccsensors.common.util.UniversalElectricityUtils;
 
 public class PowerSensor extends TileSensor implements ISensor, IRequiresIconLoading, IGaugeSensor {
@@ -36,7 +38,8 @@ public class PowerSensor extends TileSensor implements ISensor, IRequiresIconLoa
 		if (!(target instanceof TileEntity)) {
 			return false;
 		}
-		return UEApi != null && UniversalElectricityUtils.isValidTarget((TileEntity)target);
+		return (UEApi != null && UniversalElectricityUtils.isValidTarget((TileEntity)target)) ||
+			   (ModLoader.isModLoaded("IC2") && Ic2Utils.isValidPowerTarget(target));
 	}
 
 	@Override
@@ -44,6 +47,9 @@ public class PowerSensor extends TileSensor implements ISensor, IRequiresIconLoa
 		HashMap response = super.getDetails((TileEntity)obj);
 		if (UEApi != null) {
 			response.putAll(UniversalElectricityUtils.getDetails(world, obj, additional));
+		}
+		if (ModLoader.isModLoaded("IC2")) {
+			response.putAll(Ic2Utils.getPowerDetails(world, obj, additional));
 		}
 		return response;
 	}
