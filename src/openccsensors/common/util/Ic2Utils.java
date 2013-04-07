@@ -1,6 +1,9 @@
 package openccsensors.common.util;
 
+import ic2.api.IC2Reactor;
 import ic2.api.IEnergyStorage;
+import ic2.api.IReactor;
+import ic2.api.IReactorChamber;
 import ic2.api.energy.EnergyNet;
 import ic2.api.energy.tile.IEnergyConductor;
 import ic2.api.energy.tile.IEnergySink;
@@ -29,7 +32,12 @@ public class Ic2Utils {
 	}
 
 	public static boolean isValidMachineTarget(Object target) {
-		return target != null && target.getClass().getName() == MASS_FAB_CLASS;
+		return target != null &&
+				 (
+					target.getClass().getName() == MASS_FAB_CLASS ||
+					target instanceof IReactor ||
+					target instanceof IReactorChamber
+				 );
 	}
 	
 	public static HashMap getMachineDetails(World world, Object obj, boolean additional) {
@@ -42,6 +50,26 @@ public class Ic2Utils {
 
 		TileEntity tile = (TileEntity) obj;
 		
+		IReactor reactor = null;
+		if (tile instanceof IReactor) {
+			reactor = (IReactor) tile;
+		}else if (tile instanceof IReactorChamber) {
+			reactor = ((IReactorChamber) tile).getReactor();
+		}
+		
+		if (reactor != null) {
+			int maxHeat = reactor.getMaxHeat();
+			int heat = reactor.getHeat();
+			response.put("Heat", heat);
+			response.put("MaxHeat", maxHeat);
+			response.put("Output", reactor.getOutput() * IC2Reactor.getEUOutput());
+			response.put("Active", reactor.produceEnergy());
+			response.put("HeatPercentage", 0);
+			if (maxHeat > 0) {
+				int heatPercentage = (int)((100.0 / maxHeat) * heat);
+				response.put("HeatPercentage", Math.max(Math.min(heatPercentage, 100), 0));
+			}
+		}
 
 		if (tile.getClass().getName() == MASS_FAB_CLASS) {
 			NBTTagCompound tagCompound = getTagCompound(tile);
