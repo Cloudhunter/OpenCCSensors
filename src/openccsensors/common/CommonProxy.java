@@ -25,6 +25,7 @@ import openccsensors.common.sensor.WorldSensor;
 import openccsensors.common.tileentity.TileEntityGauge;
 import openccsensors.common.turtle.TurtleUpgradeSensor;
 import openccsensors.common.util.LanguageUtils;
+import openccsensors.common.util.RecipeUtils;
 import openccsensors.common.util.ResourceExtractingUtils;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.ModContainer;
@@ -47,6 +48,9 @@ public class CommonProxy {
 		
 		TileEntityGauge.addGaugeSensor(OpenCCSensors.Sensors.powerSensor);
 		TileEntityGauge.addGaugeSensor(OpenCCSensors.Sensors.inventorySensor);
+		
+		RecipeUtils.addGaugeRecipe();
+		RecipeUtils.addSensorRecipe();
 		
 		setupLuaFiles();
 		setupLanguages();
