@@ -3,14 +3,17 @@ package openccsensors.common.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.MapData;
+import net.minecraft.item.ItemEnchantedBook;
 
 public class InventoryUtils {
 
@@ -35,12 +38,10 @@ public class InventoryUtils {
 	public static HashMap itemstackToMap(ItemStack itemstack) {
 
 		HashMap map = new HashMap();
-		HashMap tooltips = new HashMap();
 		
 		if (itemstack == null) {
 
 			map.put("Name", "empty");
-			map.put("Tooltip", tooltips);
 			map.put("Size", 0);
 			map.put("Damagevalue", 0);
 			map.put("MaxStack", 64);
@@ -48,22 +49,45 @@ public class InventoryUtils {
 
 		} else {
 
-			Item item = itemstack.getItem();
-			
-			for (int i = 0; i < itemstack.getTooltip(null, true).size(); i++) {
-				tooltips.put(i+1, itemstack.getTooltip(null, true).get(i));
-			}
-			
-			map.put("Name", getNameForItemStack(itemstack));				
-			map.put("Tooltip", tooltips);			
+			map.put("Name", getNameForItemStack(itemstack));			
 			map.put("RawName", getRawNameForStack(itemstack));
 			map.put("Size", itemstack.stackSize);
 			map.put("DamageValue", itemstack.getItemDamage());
 			map.put("MaxStack", itemstack.getMaxStackSize());
+			Item item = itemstack.getItem();
+			if (item != null) {
+				if (item instanceof ItemEnchantedBook) {
+					map.put("Enchantments", getBookEnchantments(itemstack));
+				}
+			}
 
 		}
 
 		return map;
+	}
+	
+	protected static HashMap getBookEnchantments(ItemStack stack) {
+		
+		HashMap response = new HashMap();
+		
+		ItemEnchantedBook book = (ItemEnchantedBook) stack.getItem();
+        NBTTagList nbttaglist = book.func_92110_g(stack);
+        int offset = 1;
+        if (nbttaglist != null)
+        {
+            for (int i = 0; i < nbttaglist.tagCount(); ++i)
+            {
+                short short1 = ((NBTTagCompound)nbttaglist.tagAt(i)).getShort("id");
+                short short2 = ((NBTTagCompound)nbttaglist.tagAt(i)).getShort("lvl");
+
+                if (Enchantment.enchantmentsList[short1] != null)
+                {
+                    response.put(offset, Enchantment.enchantmentsList[short1].getTranslatedName(short2));
+                    offset++;
+                }
+            }
+        }
+        return response;
 	}
 	
 	public static HashMap invToMap(IInventory inventory) {
