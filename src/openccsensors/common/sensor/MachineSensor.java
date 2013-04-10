@@ -62,7 +62,7 @@ public class MachineSensor extends TileSensor implements ISensor, IRequiresIconL
 
 	@Override
 	public String getName() {
-		return "machine";
+		return "machineCard";
 	}
 
 	@Override
