@@ -2,7 +2,7 @@
 {
   "modid" : "OCS",
   "name" : "OpenCCSensors",
-  "version" : "0.1.4c",
+  "version" : "0.1.5d",
   "url" : "http://www.computercraft.info",
   "credits" : "",
   "authors": [
@@ -12,7 +12,8 @@
     "Nietsnie",
     "Lyqyd",
     "CoolisTheName007",
-    "thraaawn"
+    "thraaawn",
+    "foone"
   ],
   "description": "",
   "logoFile" : "",
