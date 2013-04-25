@@ -40,7 +40,7 @@ public class BlockGauge extends BlockContainer {
     }
 
 	@Override
-	public Icon getBlockTextureFromSideAndMetadata(int i, int damage)
+	public Icon getIcon(int i, int damage)
 	{
 		return icon;
 	}

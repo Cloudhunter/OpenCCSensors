@@ -37,7 +37,7 @@ public class ItemBasic extends Item
 		}
 		else
 		{
-			this.iconIndex = iconRegister.registerIcon(this.getUnlocalizedName().replace("item.", BasicComponents.TEXTURE_NAME_PREFIX));
+			this.itemIcon = iconRegister.registerIcon(this.getUnlocalizedName().replace("item.", BasicComponents.TEXTURE_NAME_PREFIX));
 		}
 	}
 

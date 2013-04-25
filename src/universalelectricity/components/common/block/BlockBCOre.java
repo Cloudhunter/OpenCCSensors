@@ -24,7 +24,7 @@ public class BlockBCOre extends Block
 	}
 
 	@Override
-	public Icon getBlockTextureFromSideAndMetadata(int side, int metadata)
+	public Icon getIcon(int side, int metadata)
 	{
 		if (metadata == 1)
 		{
