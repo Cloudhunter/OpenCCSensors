@@ -124,7 +124,7 @@ public class ItemSensorCard extends Item implements ISensorCardRegistry {
 	}
 
 	@Override
-	public void updateIcons(IconRegister iconRegister) {
+	public void registerIcons(IconRegister iconRegister) {
 		for (IRequiresIconLoading item : iconLoadList) {
 			item.loadIcon(iconRegister);
 		}
