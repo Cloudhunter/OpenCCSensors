@@ -14,6 +14,7 @@ import openccsensors.api.IGaugeSensor;
 import openccsensors.api.IRequiresIconLoading;
 import openccsensors.api.ISensor;
 import openccsensors.api.ISensorTier;
+import openccsensors.common.util.BuildcraftUtils;
 import openccsensors.common.util.Ic2Utils;
 import openccsensors.common.util.UniversalElectricityUtils;
 
@@ -39,7 +40,8 @@ public class PowerSensor extends TileSensor implements ISensor, IRequiresIconLoa
 			return false;
 		}
 		return (UEApi != null && UniversalElectricityUtils.isValidTarget((TileEntity)target)) ||
-			   (ModLoader.isModLoaded("IC2") && Ic2Utils.isValidPowerTarget(target));
+			   (ModLoader.isModLoaded("IC2") && Ic2Utils.isValidPowerTarget(target)) ||
+			   (ModLoader.isModLoaded("BuildCraft|Core") && BuildcraftUtils.isValidPowerTarget(target));
 	}
 
 	@Override
@@ -50,6 +52,9 @@ public class PowerSensor extends TileSensor implements ISensor, IRequiresIconLoa
 		}
 		if (ModLoader.isModLoaded("IC2")) {
 			response.putAll(Ic2Utils.getPowerDetails(world, obj, additional));
+		}
+		if (ModLoader.isModLoaded("BuildCraft|Core")) {
+			response.putAll(BuildcraftUtils.getPowerDetails(world, obj, additional));
 		}
 		return response;
 	}

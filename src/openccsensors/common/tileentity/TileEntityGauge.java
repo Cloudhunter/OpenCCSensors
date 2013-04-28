@@ -13,6 +13,7 @@ import net.minecraftforge.common.ForgeDirection;
 import openccsensors.api.IGaugeSensor;
 import openccsensors.api.IMethodCallback;
 import openccsensors.common.util.CallbackEventManager;
+import openccsensors.common.util.OCSLog;
 import dan200.computer.api.IComputerAccess;
 import dan200.computer.api.IPeripheral;
 
@@ -161,8 +162,21 @@ public class TileEntityGauge extends TileEntity implements IPeripheral {
 			percentage = 0;
 			if (tileProperties.size() > 0) {
 				if (updatePropertyName == "" || !tileProperties.containsKey(updatePropertyName)) {
-					Entry<String, Object> entry = (Entry<String, Object>) tileProperties.entrySet().iterator().next();
-					updatePropertyName = entry.getKey();
+					updatePropertyName = "";
+					for (String property : new String[] {
+							"HeatPercentage",
+							"Progress",
+							"PowerPercentFull",
+							"InventoryPercentFull"
+					}) {
+						if (updatePropertyName == "" && tileProperties.containsKey(property)) {
+							updatePropertyName = property;
+						}
+					}
+					if (updatePropertyName == "") {
+						Entry<String, Object> entry = (Entry<String, Object>) tileProperties.entrySet().iterator().next();
+						updatePropertyName = entry.getKey();
+					}
 				}
 				percentage = ((Double) (tileProperties.get(updatePropertyName))).intValue();
 			}
