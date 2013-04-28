@@ -1,9 +1,9 @@
 package openccsensors.common.util;
 
-import ic2.api.IC2Reactor;
-import ic2.api.IEnergyStorage;
-import ic2.api.IReactor;
-import ic2.api.IReactorChamber;
+import ic2.api.reactor.IC2Reactor;
+import ic2.api.reactor.IReactor;
+import ic2.api.reactor.IReactorChamber;
+import ic2.api.tile.IEnergyStorage;
 import ic2.api.energy.EnergyNet;
 import ic2.api.energy.tile.IEnergyConductor;
 import ic2.api.energy.tile.IEnergySink;
@@ -66,7 +66,7 @@ public class Ic2Utils {
 			response.put("Active", reactor.produceEnergy());
 			response.put("HeatPercentage", 0);
 			if (maxHeat > 0) {
-				int heatPercentage = (int)((100.0 / maxHeat) * heat);
+				double heatPercentage = ((100.0 / maxHeat) * heat);
 				response.put("HeatPercentage", Math.max(Math.min(heatPercentage, 100), 0));
 			}
 		}
@@ -76,7 +76,7 @@ public class Ic2Utils {
 			response.put("Energy", tagCompound.getInteger("energy"));
 			response.put("MaxEnergy", MASSFAB_MAX_ENERGY);
 			response.put("Progress", 0);
-			int progress = (int)((100.0 / MASSFAB_MAX_ENERGY) * tagCompound.getInteger("energy"));
+			double progress = ((100.0 / MASSFAB_MAX_ENERGY) * tagCompound.getInteger("energy"));
 			response.put("Progress",  Math.min(Math.max(0, progress), 100));
 		}
 		
@@ -105,7 +105,7 @@ public class Ic2Utils {
 			response.put("StoredPercentage", 0);
 
 			if (capacity > 0) {
-				response.put("StoredPercentage", Math.max(Math.min(100,(int)((100.0 / capacity) * stored)), 0));
+				response.put("StoredPercentage", Math.max(Math.min(100,((100.0 / capacity) * stored)), 0));
 			}
 		}
 		

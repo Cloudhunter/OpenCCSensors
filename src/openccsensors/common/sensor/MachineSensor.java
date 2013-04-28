@@ -21,7 +21,8 @@ public class MachineSensor extends TileSensor implements ISensor, IRequiresIconL
 	private Icon icon;
 	
 	private String[] gaugeProperties = new String[] {
-		"HeatPercentage"
+		"HeatPercentage",
+		"Progress"
 	};
 	
 	@Override
