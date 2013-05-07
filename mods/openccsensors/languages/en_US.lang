@@ -19,3 +19,5 @@ item.openccsensors.advancedAmplifier.name=Advanced Amplifier
 
 gui.openccsensors.sensor=Sensor
 turtle.openccsensors.sensor.adjective=Sensor
+
+itemGroup.tabOpenCCSensors=OpenCCSensors 

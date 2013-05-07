@@ -25,7 +25,7 @@ public class ItemGeneric extends Item {
 		setHasSubtypes(true);
 		setMaxDamage(0);
 		setMaxStackSize(64);
-		setCreativeTab(ComputerCraftAPI.getCreativeTab());
+		setCreativeTab(OpenCCSensors.tabOpenCCSensors);
 	}
 	
 	@Override

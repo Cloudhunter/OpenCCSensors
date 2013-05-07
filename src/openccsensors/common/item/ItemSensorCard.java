@@ -36,7 +36,7 @@ public class ItemSensorCard extends Item implements ISensorCardRegistry {
 		super(OpenCCSensors.Config.sensorCardID);
 		setMaxDamage(0);
 		setHasSubtypes(true);
-		setCreativeTab(ComputerCraftAPI.getCreativeTab());
+		setCreativeTab(OpenCCSensors.tabOpenCCSensors);
 	}
 	
 	@Override
