@@ -27,7 +27,7 @@ public class BlockGauge extends BlockContainer {
 	public BlockGauge() {
 		super(OpenCCSensors.Config.gaugeBlockID, Material.ground);
 		setHardness(0.5F);
-		setCreativeTab(ComputerCraftAPI.getCreativeTab());
+		setCreativeTab(OpenCCSensors.tabOpenCCSensors);
 		GameRegistry.registerBlock(this, "gauge");
 		GameRegistry.registerTileEntity(TileEntityGauge.class, "gauge");
 		setUnlocalizedName("openccsensors.gauge");
