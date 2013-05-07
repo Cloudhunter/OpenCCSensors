@@ -28,7 +28,8 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
-
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemStack;
 
 @Mod( modid = "OCS", name = "OpenCCSensors", version = "0.1.5", dependencies = "required-after:ComputerCraft;after:CCTurtle;after:BuildCraft|Core;after:IC2;after:Thaumcraft;after:AppliedEnergistics")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
@@ -89,6 +90,12 @@ public class OpenCCSensors {
 	public static String LANGUAGE_PATH;
 	public static String LUA_PATH;
 	public static String TEXTURE_PATH;
+
+	public static CreativeTabs tabOpenCCSensors = new CreativeTabs("tabOpenCCSensors") {
+                public ItemStack getIconItemStack() {
+                        return new ItemStack(Blocks.sensorBlock, 1, 0);
+                }
+  };
 
 	@Instance( value = "OCS" )
 	public static OpenCCSensors instance;
