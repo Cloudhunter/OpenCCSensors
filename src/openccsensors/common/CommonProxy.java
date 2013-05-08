@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import openccsensors.OpenCCSensors;
+import openccsensors.common.block.BlockBasicSensor;
 import openccsensors.common.block.BlockGauge;
 import openccsensors.common.block.BlockSensor;
 import openccsensors.common.item.ItemGeneric;
@@ -74,6 +75,7 @@ public class CommonProxy {
 	private void initBlocks() {
 		OpenCCSensors.Blocks.sensorBlock = new BlockSensor();
 		OpenCCSensors.Blocks.gaugeBlock = new BlockGauge();
+		OpenCCSensors.Blocks.basicSensorBlock = new BlockBasicSensor();
 	}
 	
 	private void initItems() {
