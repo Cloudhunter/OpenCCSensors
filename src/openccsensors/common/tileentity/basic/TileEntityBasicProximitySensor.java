@@ -67,13 +67,17 @@ public class TileEntityBasicProximitySensor extends TileEntity implements IBasic
 		}
 	}
 	
+	public int getEntityMode()
+	{
+		return entityMode;
+	}
+	
 	public void onBlockClicked(EntityPlayer player) {
 		if (player.getEntityName().equals(owner)) {
 			entityMode++;
 			if (entityMode > 2) {
 				entityMode = 0;
 			}
-			OCSLog.info("Mode = "+entityMode);
 			String modeMsg = "";
 			switch(entityMode) {
 			case ProximitySensor.MODE_ALL:
@@ -86,6 +90,7 @@ public class TileEntityBasicProximitySensor extends TileEntity implements IBasic
 				modeMsg = "Owner Only";
 				break;
 			}
+			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 			player.sendChatToPlayer(String.format("Changing sensor mode to \"%s\"", modeMsg));
 		}
 	}
@@ -116,6 +121,7 @@ public class TileEntityBasicProximitySensor extends TileEntity implements IBasic
 	@Override
 	public void readFromNBT(NBTTagCompound nbttagcompound) {
 		this.entityMode = nbttagcompound.getInteger("entityMode");
+		worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
 		this.owner = nbttagcompound.getString("owner");
 		super.readFromNBT(nbttagcompound);
 	}

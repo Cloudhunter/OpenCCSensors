@@ -8,6 +8,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import dan200.computer.api.ComputerCraftAPI;
 import openccsensors.OpenCCSensors;
 import openccsensors.api.IBasicSensor;
+import openccsensors.common.sensor.ProximitySensor;
 import openccsensors.common.tileentity.TileEntityGauge;
 import openccsensors.common.tileentity.basic.TileEntityBasicProximitySensor;
 import openccsensors.common.util.OCSLog;
@@ -28,15 +29,20 @@ public class BlockBasicSensor extends BlockContainer {
 
 	public static final int PROXIMITY_SENSOR_ID = 0;
 
-	private Icon icon;
+	public static class Icons {
+		public static Icon top;
+		public static Icon bottom;
+		public static Icon sideAll;
+		public static Icon sideOwner;
+		public static Icon sidePlayers;
+	};
 
 	public BlockBasicSensor() {
 		super(OpenCCSensors.Config.basicSensorBlockID, Material.ground);
 		setHardness(0.5F);
 		setCreativeTab(OpenCCSensors.tabOpenCCSensors);
 		GameRegistry.registerBlock(this, "basicSensor");
-		GameRegistry.registerTileEntity(TileEntityBasicProximitySensor.class,
-				"basicProximitySensor");
+		GameRegistry.registerTileEntity(TileEntityBasicProximitySensor.class, "basicProximitySensor");
 		setUnlocalizedName("openccsensors.gauge");
 	}
 
@@ -47,12 +53,48 @@ public class BlockBasicSensor extends BlockContainer {
 
 	@Override
 	public void registerIcons(IconRegister iconRegister) {
-		icon = iconRegister.registerIcon("openccsensors:gauge");
+		Icons.top = iconRegister.registerIcon("openccsensors:proxTop");
+		Icons.bottom = iconRegister.registerIcon("openccsensors:proxBottom");
+		Icons.sideAll = iconRegister.registerIcon("openccsensors:proxSideAll");
+		Icons.sidePlayers = iconRegister.registerIcon("openccsensors:proxSidePlayers");
+		Icons.sideOwner = iconRegister.registerIcon("openccsensors:proxSideOwner");
 	}
-
+	
+    @Override
+	public Icon getIcon(int side, int par2)
+    {
+		switch(side) {
+		case 0:
+			return Icons.bottom;
+		case 1:
+			return Icons.top;
+		default:
+			return Icons.sideAll;
+		}
+    }
+    
 	@Override
-	public Icon getIcon(int i, int damage) {
-		return icon;
+    public Icon getBlockTexture(IBlockAccess blockAccess, int x, int y, int z, int side)
+    {
+		switch(side) {
+		case 0:
+			return Icons.bottom;
+		case 1:
+			return Icons.top;
+		default:
+			TileEntity tile = blockAccess.getBlockTileEntity(x, y, z);
+			if ((tile != null) && ((tile instanceof TileEntityBasicProximitySensor))) {
+				switch(((TileEntityBasicProximitySensor) tile).getEntityMode()) {
+					case ProximitySensor.MODE_ALL:
+						return Icons.sideAll;
+					case ProximitySensor.MODE_OWNER:
+						return Icons.sideOwner;
+					case ProximitySensor.MODE_PLAYERS:
+						return Icons.sidePlayers;
+				}
+			}
+			return Icons.sideAll;
+		}
 	}
 
 	@Override
