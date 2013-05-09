@@ -13,6 +13,7 @@ import openccsensors.OpenCCSensors;
 import openccsensors.client.model.ModelSensor;
 import openccsensors.common.item.ItemSensorCard;
 import openccsensors.common.tileentity.TileEntitySensor;
+import openccsensors.common.util.OCSLog;
 
 import org.lwjgl.opengl.GL11;
 
@@ -33,7 +34,7 @@ public class TileEntitySensorRenderer extends TileEntitySpecialRenderer {
 			GL11.glPushMatrix();
 			this.modelSensor.renderSensor(rotation);
 			ItemStack sensorCardStack = sensor.getSensorCardStack();
-			int placing = sensor.getFacing() * 90;
+			int placing = (sensor.getFacing()+1) * 90;
 			GL11.glPopMatrix();
 			GL11.glRotatef(placing, 0, 1, 0);
 			if (sensorCardStack != null && sensorCardStack.getItem() instanceof ItemSensorCard) {
