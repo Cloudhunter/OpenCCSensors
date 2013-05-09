@@ -10,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -17,6 +18,7 @@ import net.minecraftforge.common.ForgeDirection;
 import openccsensors.OpenCCSensors;
 import openccsensors.common.tileentity.TileEntitySensor;
 import openccsensors.common.util.MiscUtils;
+import openccsensors.common.util.OCSLog;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dan200.computer.api.ComputerCraftAPI;
 
@@ -79,8 +81,8 @@ public class BlockSensor extends BlockContainer {
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving entity, ItemStack itemStack) {
 		super.onBlockPlacedBy(world, x, y, z, entity, itemStack);
-		ForgeDirection orientation = MiscUtils.get2dOrientation(Vec3.createVectorHelper(entity.posX, entity.posY, entity.posZ), Vec3.createVectorHelper(x, y, z));
-		world.setBlockMetadataWithNotify(x, y, z, orientation.getOpposite().ordinal(),1);
+		int l = MathHelper.floor_double((double)(entity.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+		world.setBlockMetadataWithNotify(x, y, z, ForgeDirection.getOrientation(l).getOpposite().ordinal(),1);
 	}
 	
 	@Override

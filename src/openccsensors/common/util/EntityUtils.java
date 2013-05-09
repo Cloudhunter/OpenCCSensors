@@ -14,6 +14,7 @@ import net.minecraft.world.chunk.Chunk;
 
 public class EntityUtils {
 
+	
 	public static HashMap<String, Entity> getEntities(World world, Vec3 sensorPos, double radius, Class filter) {
 		HashMap<String, Entity> map = new HashMap<String, Entity>();
 		

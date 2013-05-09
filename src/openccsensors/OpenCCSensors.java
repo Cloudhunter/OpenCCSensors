@@ -5,6 +5,7 @@ import net.minecraftforge.common.Property;
 import openccsensors.api.IItemMeta;
 import openccsensors.common.CommonProxy;
 import openccsensors.common.SensorTier;
+import openccsensors.common.block.BlockBasicSensor;
 import openccsensors.common.block.BlockGauge;
 import openccsensors.common.block.BlockSensor;
 import openccsensors.common.item.ItemGeneric;
@@ -39,11 +40,13 @@ public class OpenCCSensors {
 	{
 		public static BlockSensor sensorBlock;
 		public static BlockGauge gaugeBlock;
+		public static BlockBasicSensor basicSensorBlock;
 	}
 	
 	public static class Config
 	{
 		public static int sensorBlockID;
+		public static int basicSensorBlockID;
 		public static int gaugeBlockID;
 		public static int sensorCardID;
 		public static int genericItemID;
@@ -133,6 +136,10 @@ public class OpenCCSensors {
 		prop = configFile.getBlock("gaugeBlockID", 342);
 		prop.comment = "The block ID for the gauge block";
 		Config.gaugeBlockID = prop.getInt();
+		
+		prop = configFile.getBlock("basicSensorBlockID", 343);
+		prop.comment = "The block ID for the basic sensor block";
+		Config.basicSensorBlockID = prop.getInt();
 
 		prop = configFile.get("general", "turtlePeripheralEnabled", true);
 		prop.comment = "Turtle Peripheral Enabled";
