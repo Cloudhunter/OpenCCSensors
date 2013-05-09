@@ -16,10 +16,10 @@
 
 	<property name="mcpsrc.dir"          value="${mcp.dir}/src/minecraft"/>
 
-	<property name="mc.version"          value="1.4.6"/>
-	<property name="forge.version"       value="6.5.0.489"/>
-	<property name="mod.version"          value="0.1.2"/>
-	<property name="mod.name"		value="OpenCCSensors"/>
+	<property name="mc.version"          value="1.5.1"/>
+	<property name="forge.version"       value="7.7.1.676"/>
+	<property name="mod.version"         value="0.1.5e"/>
+	<property name="mod.name"	     value="OpenCCSensors"/>
 	
 	<property name="forge.name"          value="minecraftforge-src-${mc.version}-${forge.version}.zip"/>
 
@@ -60,6 +60,7 @@
 	<target name="setup" depends="download-files" if="out-of-date">
 	
 		<delete dir="${mcp.dir}"/>
+		<delete dir="${forge.dir}"/>
 
 		<!-- Unzip them -->
 		<unzip dest="${build.dir}" src="${download.dir}/${forge.name}"/>
@@ -106,23 +107,27 @@
 		</exec>
 
 		<!-- Copy classes -->
-		<copy todir="${classes.dir}">
-			<fileset dir="${mcp.dir}/reobf/minecraft"/>
+		<copy todir="${classes.dir}/openccsensors">
+			<fileset dir="${mcp.dir}/reobf/minecraft/openccsensors" />
 		</copy>
 
 		<!-- Copy resources -->
+		<copy todir="${classes.dir}/mods/openccsensors">
+			<fileset dir="mods/openccsensors" />
+		</copy>
+		
+		<!-- Copy resources -->
 		<copy todir="${classes.dir}">
-			<fileset dir="resources">
-				<exclude name="build.xml"/>
-				<exclude name="build.number"/>
-			</fileset>
+			<fileset dir="." includes="mcmod.info" />
 		</copy>
 
 		<!-- Reset src dir to post-forge-install state -->
-		<delete dir="${mcpsrc.dir}/openccsensors"/>
-		<delete dir="${mcpsrc.dir}/ic2"/>
-		<delete dir="${mcpsrc.dir}/dan200"/>
+		<delete dir="${mcpsrc.dir}/appeng"/>
 		<delete dir="${mcpsrc.dir}/buildcraft"/>
+		<delete dir="${mcpsrc.dir}/dan200"/>
+		<delete dir="${mcpsrc.dir}/forestry"/>
+		<delete dir="${mcpsrc.dir}/ic2"/>
+		<delete dir="${mcpsrc.dir}/openccsensors"/>
 		<delete dir="${mcpsrc.dir}/thaumcraft"/>
 
 	</target>
