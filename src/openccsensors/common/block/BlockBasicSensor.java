@@ -43,7 +43,7 @@ public class BlockBasicSensor extends BlockContainer {
 		setCreativeTab(OpenCCSensors.tabOpenCCSensors);
 		GameRegistry.registerBlock(this, "basicSensor");
 		GameRegistry.registerTileEntity(TileEntityBasicProximitySensor.class, "basicProximitySensor");
-		setUnlocalizedName("openccsensors.gauge");
+		setUnlocalizedName("openccsensors.proximitysensor");
 	}
 
 	@SideOnly(Side.CLIENT)
