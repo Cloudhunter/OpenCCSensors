@@ -16,14 +16,14 @@ public abstract class TileSensor {
 		return false;
 	}
 	
-	public HashMap getDetails(TileEntity tile) {
+	public HashMap getDetails(TileEntity tile, Vec3 sensorPos) {
 
 		HashMap response = new HashMap();
 		HashMap position = new HashMap();
 
-		position.put("X", tile.xCoord);
-		position.put("Y", tile.yCoord);
-		position.put("Z", tile.zCoord);
+		position.put("X", tile.xCoord - sensorPos.xCoord);
+		position.put("Y", tile.yCoord - sensorPos.yCoord);
+		position.put("Z", tile.zCoord - sensorPos.zCoord);
 		response.put("Position", position);
 		
 		ItemStack stack = new ItemStack(tile.getBlockType(), 1, tile.getBlockMetadata());

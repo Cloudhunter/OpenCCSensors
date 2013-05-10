@@ -29,8 +29,8 @@ public class ProximitySensor implements ISensor, IRequiresIconLoading {
 	private Icon icon;
 
 	@Override
-	public HashMap getDetails(World world, Object obj, boolean additional) {
-		return EntityUtils.livingToMap((EntityLiving)obj, additional);
+	public HashMap getDetails(World world, Object obj, Vec3 sensorPos, boolean additional) {
+		return EntityUtils.livingToMap((EntityLiving)obj, sensorPos, additional);
 	}
 
 	@Override

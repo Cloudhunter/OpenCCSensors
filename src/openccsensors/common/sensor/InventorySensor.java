@@ -31,11 +31,11 @@ public class InventorySensor extends TileSensor implements ISensor, IRequiresIco
 	}
 	
 	@Override
-	public HashMap getDetails(World world, Object obj, boolean additional) {
+	public HashMap getDetails(World world, Object obj, Vec3 sensorPos, boolean additional) {
 		
 		TileEntity tile = (TileEntity) obj;
 		
-		HashMap response = super.getDetails(tile);
+		HashMap response = super.getDetails(tile, sensorPos);
 		
 		if (ModLoader.isModLoaded("AppliedEnergistics") && AppliedEnergisticsUtils.isValidTarget(obj)) {
 			response.putAll(AppliedEnergisticsUtils.getTileDetails(obj, additional));

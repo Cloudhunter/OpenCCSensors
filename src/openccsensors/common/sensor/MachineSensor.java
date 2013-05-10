@@ -41,9 +41,9 @@ public class MachineSensor extends TileSensor implements ISensor, IRequiresIconL
 	}
 
 	@Override
-	public HashMap getDetails(World world, Object obj, boolean additional) {
+	public HashMap getDetails(World world, Object obj, Vec3 sensorPos, boolean additional) {
 		TileEntity tile = (TileEntity) obj;
-		HashMap response = super.getDetails(tile);
+		HashMap response = super.getDetails(tile, sensorPos);
 		if (ModLoader.isModLoaded("IC2")) {
 			response.putAll(Ic2Utils.getMachineDetails(world, obj, additional));
 		}
