@@ -1,5 +1,6 @@
 tile.openccsensors.sensor.name=Sensor
 tile.openccsensors.gauge.name=Gauge
+tile.openccsensors.proximitysensor.name=Proximity Sensor
 
 item.openccsensors.inventoryCard.name=Inventory Sensor Card
 item.openccsensors.proximityCard.name=Proximity Sensor Card
