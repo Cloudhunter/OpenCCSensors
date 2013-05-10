@@ -19,7 +19,7 @@ public class SonicSensor implements ISensor, IRequiresIconLoading {
 	private static final int BASE_RANGE = 3;
 	
 	@Override
-	public HashMap getDetails(World world, Object obj, boolean additional) {
+	public HashMap getDetails(World world, Object obj, Vec3 sensorPos, boolean additional) {
 		Vec3 target = (Vec3) obj;
 		
 		int x = (int) target.xCoord;
@@ -41,9 +41,9 @@ public class SonicSensor implements ISensor, IRequiresIconLoading {
 		
 		response.put("Type", type);
 		HashMap position = new HashMap();
-		position.put("X", x);
-		position.put("Y", y);
-		position.put("Z", z);
+		position.put("X", x - sensorPos.xCoord);
+		position.put("Y", y - sensorPos.yCoord);
+		position.put("Z", z - sensorPos.zCoord);
 		response.put("Position", position);
 		
 		return response;

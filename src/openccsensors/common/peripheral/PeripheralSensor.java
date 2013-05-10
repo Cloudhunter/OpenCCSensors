@@ -64,7 +64,7 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 						HashMap<String, Object> targets = sensor.getTargets(env.getWorld(), location, card.getTier());
 						
 						for(Entry entry : targets.entrySet()) {
-							entry.setValue(sensor.getDetails(env.getWorld(), entry.getValue(), false));
+							entry.setValue(sensor.getDetails(env.getWorld(), entry.getValue(), location, false));
 						}
 						
 						return targets;
@@ -113,7 +113,7 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 					return null;
 				}
 				
-				return sensor.getDetails(env.getWorld(), targets.get(targetName), true);
+				return sensor.getDetails(env.getWorld(), targets.get(targetName), location, true);
 			}
 		});
 

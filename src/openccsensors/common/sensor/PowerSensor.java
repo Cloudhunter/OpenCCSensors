@@ -45,8 +45,8 @@ public class PowerSensor extends TileSensor implements ISensor, IRequiresIconLoa
 	}
 
 	@Override
-	public HashMap getDetails(World world, Object obj, boolean additional) {
-		HashMap response = super.getDetails((TileEntity)obj);
+	public HashMap getDetails(World world, Object obj, Vec3 sensorPos, boolean additional) {
+		HashMap response = super.getDetails((TileEntity)obj, sensorPos);
 		if (UEApi != null) {
 			response.putAll(UniversalElectricityUtils.getDetails(world, obj, additional));
 		}

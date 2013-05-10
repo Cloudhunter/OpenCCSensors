@@ -4,6 +4,9 @@ import ic2.api.reactor.IC2Reactor;
 import ic2.api.reactor.IReactor;
 import ic2.api.reactor.IReactorChamber;
 import ic2.api.tile.IEnergyStorage;
+import ic2.api.crops.CropCard;
+import ic2.api.crops.Crops;
+import ic2.api.crops.ICropTile;
 import ic2.api.energy.EnergyNet;
 import ic2.api.energy.tile.IEnergyConductor;
 import ic2.api.energy.tile.IEnergySink;
@@ -12,8 +15,12 @@ import ic2.api.energy.tile.IEnergySource;
 import java.util.HashMap;
 import java.util.Map;
 
+import openccsensors.common.sensor.CropSensor;
+
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 public class Ic2Utils {
@@ -127,5 +134,64 @@ public class Ic2Utils {
 		NBTTagCompound tagCompound = new NBTTagCompound();
 		tile.writeToNBT(tagCompound);
 		return tagCompound;
+	}
+
+	public static boolean isValidCropTarget(TileEntity tile) {
+		return tile instanceof ICropTile;
+	}
+
+	public static Map getCropDetails(Object obj, Vec3 sensorPos, boolean additional) {
+		HashMap response = new HashMap();
+		if (obj == null) return response;
+
+		TileEntity tile = (TileEntity) obj;
+		HashMap position = new HashMap();
+		position.put("X", tile.xCoord - sensorPos.xCoord);
+		position.put("Y", tile.yCoord - sensorPos.yCoord);
+		position.put("Z", tile.zCoord - sensorPos.zCoord);
+		response.put("Position", position);
+
+		ItemStack stack = new ItemStack(tile.getBlockType(), 1, tile.getBlockMetadata());
+		
+		response.put("Name", InventoryUtils.getNameForItemStack(stack));
+		response.put("RawName", InventoryUtils.getRawNameForStack(stack));
+		response.put("DamageValue", stack.getItemDamage());
+		
+		if (obj instanceof ICropTile && additional) {
+			ICropTile crop = (ICropTile) obj;
+			response.put("AirQuality", crop.getAirQuality());
+			response.put("Growth", crop.getGrowth());
+			response.put("Gain", crop.getGain());
+			response.put("Humidity", crop.getHumidity());
+			response.put("HydrationStorage", crop.getHydrationStorage());
+			response.put("LightLevel", crop.getLightLevel());
+			response.put("Nutrients", crop.getNutrients());
+			response.put("NutrientStorage", crop.getNutrientStorage());
+			response.put("Resistance", crop.getResistance());
+			response.put("ScanLevel", crop.getScanLevel());
+			response.put("Size", crop.getSize());
+			response.put("WeedExStorage", crop.getWeedExStorage());
+			response.put("Status", "Empty");
+			CropCard[] cards = Crops.instance.getCropList();
+			if (crop.getID() >= 0 && crop.getID() < cards.length) {
+				CropCard cropCard = Crops.instance.getCropList()[crop.getID()];
+				response.put("IsWeed", cropCard.isWeed(crop));
+				response.put("CanBeHarvested", cropCard.canBeHarvested(crop));
+				if (cropCard.canBeHarvested(crop)) {
+					response.put("Status", CropSensor.STATUS_GROWN);
+				}else if (crop.getSize() == 0) {
+					response.put("Status", CropSensor.STATUS_NEW);
+				}else {
+					response.put("Status", CropSensor.STATUS_GROWING);
+				}
+				response.put("DiscoveredBy", cropCard.discoveredBy());
+				response.put("EmittedLight", cropCard.getEmittedLight(crop));
+				response.put("SizeAfterHarvest", cropCard.getSizeAfterHarvest(crop));
+				response.put("CanCross", cropCard.canCross(crop));
+				response.put("CanGrow", cropCard.canGrow(crop));
+				response.put("Name", cropCard.getClass().getSimpleName());
+			}
+		}
+		return response;
 	}
 }

@@ -12,6 +12,7 @@ import openccsensors.common.item.ItemSensorCard;
 import openccsensors.common.item.meta.ItemMetaAdvancedAmplifier;
 import openccsensors.common.item.meta.ItemMetaRangeExtensionAntenna;
 import openccsensors.common.item.meta.ItemMetaSignalAmplifier;
+import openccsensors.common.sensor.CropSensor;
 import openccsensors.common.sensor.DroppedItemSensor;
 import openccsensors.common.sensor.InventorySensor;
 import openccsensors.common.sensor.MachineSensor;
@@ -70,6 +71,7 @@ public class CommonProxy {
 		OpenCCSensors.Sensors.powerSensor = new PowerSensor();
 		OpenCCSensors.Sensors.machineSensor = new MachineSensor();
 		OpenCCSensors.Sensors.magicSensor = new MagicSensor();
+		OpenCCSensors.Sensors.cropSensor = new CropSensor();
 	}
 	
 	private void initBlocks() {
