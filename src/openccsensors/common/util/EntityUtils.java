@@ -50,13 +50,13 @@ public class EntityUtils {
 	}
 
 	
-	public static HashMap livingToMap(EntityLiving living, boolean additional) {
+	public static HashMap livingToMap(EntityLiving living, Vec3 sensorPos, boolean additional) {
 		HashMap map = new HashMap();
 		
 		HashMap position = new HashMap();
-		position.put("X", living.posX);
-		position.put("Y", living.posY);
-		position.put("Z", living.posZ);
+		position.put("X", living.posX - sensorPos.xCoord);
+		position.put("Y", living.posY - sensorPos.yCoord);
+		position.put("Z", living.posZ - sensorPos.zCoord);
 		map.put("Position", position);
 
 		map.put("Name", (living instanceof EntityPlayer) ? "Player" : living.getEntityName());

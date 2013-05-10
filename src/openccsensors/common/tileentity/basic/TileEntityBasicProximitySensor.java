@@ -22,7 +22,7 @@ public class TileEntityBasicProximitySensor extends TileEntity implements IBasic
 	private int previousOutput = Integer.MIN_VALUE;
 	private int output = 0;
 
-	private String owner;
+	private String owner = "NO OWNER";
 
 	private int entityMode = ProximitySensor.MODE_ALL;
 
@@ -67,8 +67,7 @@ public class TileEntityBasicProximitySensor extends TileEntity implements IBasic
 		}
 	}
 	
-	public int getEntityMode()
-	{
+	public int getEntityMode() {
 		return entityMode;
 	}
 	

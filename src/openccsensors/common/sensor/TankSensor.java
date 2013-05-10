@@ -36,11 +36,11 @@ public class TankSensor extends TileSensor implements ISensor, IRequiresIconLoad
 	}
 
 	@Override
-	public HashMap getDetails(World world, Object obj, boolean additional) {
+	public HashMap getDetails(World world, Object obj, Vec3 sensorPos, boolean additional) {
 		
 		TileEntity tile = (TileEntity) obj;
 
-		HashMap response = super.getDetails(tile);
+		HashMap response = super.getDetails(tile, sensorPos);
 		ILiquidTank[] tanks = null;
 		
 		if (tile instanceof ITankContainer) {
