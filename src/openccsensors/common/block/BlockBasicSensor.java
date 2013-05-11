@@ -28,6 +28,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class BlockBasicSensor extends BlockContainer {
@@ -46,7 +47,7 @@ public class BlockBasicSensor extends BlockContainer {
 		super(OpenCCSensors.Config.basicSensorBlockID, Material.ground);
 		setHardness(0.5F);
 		setCreativeTab(OpenCCSensors.tabOpenCCSensors);
-		GameRegistry.registerBlock(this, "basicSensor");
+		GameRegistry.registerBlock(this, "basicProximitySensor");
 		GameRegistry.registerTileEntity(TileEntityBasicProximitySensor.class, "basicProximitySensor");
 		setUnlocalizedName("openccsensors.proximitysensor");
 		
@@ -104,12 +105,8 @@ public class BlockBasicSensor extends BlockContainer {
 	}
 
 	@Override
-	public TileEntity createTileEntity(World world, int metadata) {
-		switch (metadata) {
-		case PROXIMITY_SENSOR_ID:
-			return new TileEntityBasicProximitySensor();
-		}
-		return null;
+	public TileEntity createNewTileEntity(World world) {
+		return new TileEntityBasicProximitySensor();
 	}
 
 	@Override
@@ -131,11 +128,6 @@ public class BlockBasicSensor extends BlockContainer {
 	public int isProvidingStrongPower(IBlockAccess iblockaccess, int x, int y,
 			int z, int m) {
 		return isProvidingWeakPower(iblockaccess, x, y, z, m);
-	}
-
-	@Override
-	public TileEntity createNewTileEntity(World world) {
-		return createTileEntity(world, PROXIMITY_SENSOR_ID);
 	}
 
 	@Override
@@ -173,6 +165,18 @@ public class BlockBasicSensor extends BlockContainer {
 			}
 		}
 		return true;
+	}
+
+	@Override
+	public boolean canBeReplacedByLeaves(World world, int x, int y, int z)
+	{
+	    return false;
+	}
+
+	@Override
+    public boolean isFlammable(IBlockAccess world, int x, int y, int z, int metadata, ForgeDirection face)
+	{
+		return false;
 	}
 
 }

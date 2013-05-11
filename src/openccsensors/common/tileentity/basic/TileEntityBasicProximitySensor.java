@@ -24,13 +24,17 @@ public class TileEntityBasicProximitySensor extends TileEntity implements IBasic
 
 	private String owner = "NO OWNER";
 
+	private boolean sentFirstChange = false;
+
 	private int entityMode = ProximitySensor.MODE_ALL;
 
 	@Override
 	public void updateEntity() {
 
+		super.updateEntity();
+
 		if (!worldObj.isRemote) {
-			
+
 			boolean flag = false;
 
 			if (blockPos == null) {
@@ -42,11 +46,12 @@ public class TileEntityBasicProximitySensor extends TileEntity implements IBasic
 					blockPos,
 					entityMode,
 					owner
-			);
+					);
 
 			output = MathHelper.clamp_int(15 - ((Double) distance).intValue(), 0, 15);
 
-			if (output != previousOutput) {
+			if (output != previousOutput || !sentFirstChange) {
+				sentFirstChange = true;
 				flag = true;
 			}
 
@@ -66,11 +71,11 @@ public class TileEntityBasicProximitySensor extends TileEntity implements IBasic
 			}
 		}
 	}
-	
+
 	public int getEntityMode() {
 		return entityMode;
 	}
-	
+
 	public void onBlockClicked(EntityPlayer player) {
 		if (player.getEntityName().equals(owner)) {
 			entityMode++;
@@ -115,12 +120,12 @@ public class TileEntityBasicProximitySensor extends TileEntity implements IBasic
 	@Override
 	public void onDataPacket(INetworkManager net, Packet132TileEntityData pkt) {
 		readFromNBT(pkt.customParam1);
+		worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
 	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbttagcompound) {
 		this.entityMode = nbttagcompound.getInteger("entityMode");
-		worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
 		this.owner = nbttagcompound.getString("owner");
 		super.readFromNBT(nbttagcompound);
 	}

@@ -145,6 +145,7 @@ public class TileEntityGauge extends TileEntity implements IPeripheral {
 		super.updateEntity();
 		tileProperties.clear();
 		if (this.worldObj != null && !worldObj.isRemote) {
+
 			ForgeDirection infront = ForgeDirection.getOrientation(this.getFacing());
 			ForgeDirection behind = infront.getOpposite();
 			TileEntity behindTile = worldObj.getBlockTileEntity(xCoord + behind.offsetX, yCoord, zCoord + behind.offsetZ);
