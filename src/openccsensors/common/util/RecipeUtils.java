@@ -1,6 +1,7 @@
 package openccsensors.common.util;
 
 import java.lang.reflect.Field;
+import java.util.Map.Entry;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -9,6 +10,7 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import openccsensors.OpenCCSensors;
+import openccsensors.api.SensorCard;
 
 public class RecipeUtils {
 
@@ -102,5 +104,27 @@ public class RecipeUtils {
 			e.printStackTrace();
 		}
 		return monitor;
+	}
+	
+	public static void addProxSensorBlockRecipe() {
+
+		Entry<Integer, SensorCard> entry = OpenCCSensors.Items.sensorCard.getEntryForSensorAndTier(
+												OpenCCSensors.Sensors.proximitySensor,
+												OpenCCSensors.Tiers.tier4
+											);
+		ItemStack proxCard = new ItemStack(OpenCCSensors.Items.sensorCard, 1, entry.getKey());
+		
+		CraftingManager.getInstance().getRecipeList().add(new ShapedOreRecipe(
+			new ItemStack(OpenCCSensors.Blocks.basicSensorBlock),
+			new Object[] {
+				"   ",
+				"cpc",
+				"rir",
+				Character.valueOf('c'), new ItemStack(Item.comparator),
+				Character.valueOf('p'), proxCard,
+				Character.valueOf('r'), new ItemStack(Item.redstone),
+				Character.valueOf('i'), new ItemStack(Block.blockIron),				
+			}
+		));
 	}
 }

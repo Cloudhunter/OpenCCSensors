@@ -33,7 +33,7 @@ import cpw.mods.fml.common.network.NetworkMod;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
-@Mod( modid = "OCS", name = "OpenCCSensors", version = "0.1.5", dependencies = "required-after:ComputerCraft;after:CCTurtle;after:BuildCraft|Core;after:IC2;after:Thaumcraft;after:AppliedEnergistics")
+@Mod( modid = "OCS", name = "OpenCCSensors", version = "0.1.5f", dependencies = "required-after:ComputerCraft;after:CCTurtle;after:BuildCraft|Core;after:IC2;after:Thaumcraft;after:AppliedEnergistics")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class OpenCCSensors {
 
@@ -52,6 +52,7 @@ public class OpenCCSensors {
 		public static int sensorCardID;
 		public static int genericItemID;
 		public static boolean turtlePeripheralEnabled;
+		public static boolean enableAnalytics;
 	}
 	
 	public static class Tiers {
@@ -142,10 +143,6 @@ public class OpenCCSensors {
 		prop.comment = "The block ID for the basic sensor block";
 		Config.basicSensorBlockID = prop.getInt();
 
-		prop = configFile.get("general", "turtlePeripheralEnabled", true);
-		prop.comment = "Turtle Peripheral Enabled";
-		Config.turtlePeripheralEnabled = prop.getBoolean(true);
-
 		prop = configFile.getItem("sensorCardID", 7486);
 		prop.comment = "The block ID for the sensor card";
 		Config.sensorCardID = prop.getInt();
@@ -153,6 +150,15 @@ public class OpenCCSensors {
 		prop = configFile.getItem("sensorUpgradeID", 7487);
 		prop.comment = "The block ID for the generic item";
 		Config.genericItemID = prop.getInt();
+
+		prop = configFile.get("general", "turtlePeripheralEnabled", true);
+		prop.comment = "Turtle Peripheral Enabled";
+		Config.turtlePeripheralEnabled = prop.getBoolean(true);
+		
+		prop = configFile.get("general", "enableAnalytics", true);
+		prop.comment = "Enable mod analytics";
+		Config.enableAnalytics = prop.getBoolean(true);
+
 
 		configFile.save();
 		
