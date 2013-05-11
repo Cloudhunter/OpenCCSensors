@@ -117,7 +117,7 @@ public class CropSensor implements ISensor, IRequiresIconLoading {
 
 	@Override
 	public ItemStack getUniqueRecipeItem() {
-		return new ItemStack(Block.plantYellow);
+		return new ItemStack(Item.wheat);
 	}
 
 	@Override
