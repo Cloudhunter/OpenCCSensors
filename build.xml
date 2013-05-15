@@ -18,7 +18,7 @@
 
 	<property name="mc.version"          value="1.5.1"/>
 	<property name="forge.version"       value="7.7.2.682"/>
-	<property name="mod.version"         value="0.1.5f"/>
+	<property name="mod.version"         value="0.1.5g"/>
 	<property name="mod.name"	     value="OpenCCSensors"/>
 	
 	<property name="forge.name"          value="minecraftforge-src-${mc.version}-${forge.version}.zip"/>
