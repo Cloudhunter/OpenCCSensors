@@ -21,8 +21,9 @@ public class SonicSensor implements ISensor, IRequiresIconLoading {
 	
 	@Override
 	public HashMap getDetails(World world, Object obj, Vec3 sensorPos, boolean additional) {
+
 		Vec3 target = (Vec3) obj;
-		
+
 		int x = (int) target.xCoord;
 		int y = (int) target.yCoord;
 		int z = (int) target.zCoord;
@@ -58,8 +59,7 @@ public class SonicSensor implements ISensor, IRequiresIconLoading {
 		
 		HashMap targets = new HashMap();
 
-		int range = (new Double(tier.getMultiplier())).intValue()
-				* BASE_RANGE;
+		int range = (new Double(tier.getMultiplier())).intValue() + BASE_RANGE;
 
 		int sx = (int) location.xCoord;
 		int sy = (int) location.yCoord;
@@ -70,55 +70,27 @@ public class SonicSensor implements ISensor, IRequiresIconLoading {
 				for (int z = -range; z <= range; z++) {
 
 					if (!(x == 0 && y == 0 && z == 0) && world.blockExists(sx + x, sy + y, sz + z)) {
- 
-						try {
-							
-							int bX = sx + x;
-							int bY = sy + y;
-							int bZ = sz + z;
-							
-							int id = world.getBlockId(bX, bY, bZ);
 
-							Block block = Block.blocksList[id];
+						int bX = sx + x;
+						int bY = sy + y;
+						int bZ = sz + z;
 
-							if (!(id == 0 || block == null)) {
+						int id = world.getBlockId(bX, bY, bZ);
 
-								MovingObjectPosition hit = null;
+						Block block = Block.blocksList[id];
 
-								Vec3 potentialTarget = Vec3.createVectorHelper(
-										bX + 0.5,
-										bY + 0.5,
-										bZ + 0.5
-								);
-								
-								try {
-									
-									hit = world.rayTraceBlocks(
-
-											Vec3.createVectorHelper(
-													sx + (x == 0 ? 0.5 : (x > 0 ? 1.5 : -0.5)),
-													sy + (y == 0 ? 0.5 : (y > 0 ? 1.5 : -0.5)),
-													sz + (z == 0 ? 0.5 : (z > 0 ? 1.5 : -0.5))
-											),
-											potentialTarget
-									);
-
-								}catch(Exception e) {
-								}
-
-								if (	hit == null ||
-									  ( hit.blockX == sx + x &&
-										hit.blockY == sy + y &&
-										hit.blockZ == sz + z )
-								) {
-
-									targets.put(String.format("%s,%s,%s", x, y, z), potentialTarget);
-								}
+						if (!(id == 0 || block == null)) {
+							Vec3 targetPos = Vec3.createVectorHelper(
+									bX,
+									bY,
+									bZ
+							);
+							if (location.distanceTo(targetPos) <= range) {
+								targets.put(String.format("%s,%s,%s", x, y, z), targetPos);
 							}
-						}catch(Exception e) {
+							
 						}
 					}
-
 				}
 			}
 		}

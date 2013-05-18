@@ -37,6 +37,11 @@ public class BlockSensor extends BlockContainer {
 		setUnlocalizedName("openccsensors.sensor");
 	}
 	
+	public boolean canCollideCheck(int par1, boolean par2)
+    {
+        return true;
+    }
+	
 	@Override
 	public TileEntity createNewTileEntity(World world) {
 		return new TileEntitySensor();

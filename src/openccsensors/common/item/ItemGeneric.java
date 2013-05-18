@@ -62,13 +62,21 @@ public class ItemGeneric extends Item {
 	@Override
     public Icon getIconFromDamage(int id)
     {
-        return metaitems.get(id).getIcon();
+		IItemMeta meta = metaitems.get(id);
+		if (meta == null) {
+			return null;
+		}
+        return meta.getIcon();
     }
 
 	@Override
     public String getUnlocalizedName(ItemStack itemStack)
     {
-        return String.format("item.openccsensors.%s", getMeta(itemStack).getName());
+		IItemMeta meta = getMeta(itemStack);
+		if  (meta == null) {
+			return "";
+		}
+        return String.format("item.openccsensors.%s", meta.getName());
     }
 
 }
