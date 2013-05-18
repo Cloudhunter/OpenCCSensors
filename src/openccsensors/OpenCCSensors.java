@@ -33,7 +33,7 @@ import cpw.mods.fml.common.network.NetworkMod;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
-@Mod( modid = "OCS", name = "OpenCCSensors", version = "0.1.5f", dependencies = "required-after:ComputerCraft;after:CCTurtle;after:BuildCraft|Core;after:IC2;after:Thaumcraft;after:AppliedEnergistics")
+@Mod( modid = "OCS", name = "OpenCCSensors", version = "0.1.5i", dependencies = "required-after:ComputerCraft;after:CCTurtle;after:BuildCraft|Core;after:IC2;after:Thaumcraft;after:AppliedEnergistics")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class OpenCCSensors {
 
