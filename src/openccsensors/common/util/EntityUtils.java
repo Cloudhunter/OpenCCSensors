@@ -106,6 +106,9 @@ public class EntityUtils {
 			EntityPlayer player = (EntityPlayer) living;
 			map.put("FoodLevel", player.getFoodStats().getFoodLevel());
 			map.put("Gamemode", player.capabilities.isCreativeMode);
+			map.put("ExperienceTotal", player.experienceTotal);
+			map.put("ExperienceLevel", player.experienceLevel);
+			map.put("Experience", player.experience);
 			if (additional) {
 				map.put("Username", player.username);
 			}
