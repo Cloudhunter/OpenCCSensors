@@ -5,10 +5,12 @@ import net.minecraftforge.common.Property;
 import openccsensors.api.IItemMeta;
 import openccsensors.common.CommonProxy;
 import openccsensors.common.SensorTier;
+import openccsensors.common.block.BlockBasicSensor;
 import openccsensors.common.block.BlockGauge;
 import openccsensors.common.block.BlockSensor;
 import openccsensors.common.item.ItemGeneric;
 import openccsensors.common.item.ItemSensorCard;
+import openccsensors.common.sensor.CropSensor;
 import openccsensors.common.sensor.DroppedItemSensor;
 import openccsensors.common.sensor.InventorySensor;
 import openccsensors.common.sensor.MachineSensor;
@@ -31,7 +33,7 @@ import cpw.mods.fml.common.network.NetworkMod;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
-@Mod( modid = "OCS", name = "OpenCCSensors", version = "0.1.5", dependencies = "required-after:ComputerCraft;after:CCTurtle;after:BuildCraft|Core;after:IC2;after:Thaumcraft;after:AppliedEnergistics")
+@Mod( modid = "OCS", name = "OpenCCSensors", version = "0.1.5i", dependencies = "required-after:ComputerCraft;after:CCTurtle;after:BuildCraft|Core;after:IC2;after:Thaumcraft;after:AppliedEnergistics")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class OpenCCSensors {
 
@@ -39,15 +41,18 @@ public class OpenCCSensors {
 	{
 		public static BlockSensor sensorBlock;
 		public static BlockGauge gaugeBlock;
+		public static BlockBasicSensor basicSensorBlock;
 	}
 	
 	public static class Config
 	{
 		public static int sensorBlockID;
+		public static int basicSensorBlockID;
 		public static int gaugeBlockID;
 		public static int sensorCardID;
 		public static int genericItemID;
 		public static boolean turtlePeripheralEnabled;
+		public static boolean enableAnalytics;
 	}
 	
 	public static class Tiers {
@@ -83,7 +88,7 @@ public class OpenCCSensors {
 		public static MagicSensor magicSensor;
 		public static MachineSensor machineSensor;
 		public static PowerSensor powerSensor;
-		
+		public static CropSensor cropSensor;
 	}
 	
 	public static String RESOURCE_PATH;
@@ -133,10 +138,10 @@ public class OpenCCSensors {
 		prop = configFile.getBlock("gaugeBlockID", 342);
 		prop.comment = "The block ID for the gauge block";
 		Config.gaugeBlockID = prop.getInt();
-
-		prop = configFile.get("general", "turtlePeripheralEnabled", true);
-		prop.comment = "Turtle Peripheral Enabled";
-		Config.turtlePeripheralEnabled = prop.getBoolean(true);
+		
+		prop = configFile.getBlock("basicSensorBlockID", 343);
+		prop.comment = "The block ID for the basic sensor block";
+		Config.basicSensorBlockID = prop.getInt();
 
 		prop = configFile.getItem("sensorCardID", 7486);
 		prop.comment = "The block ID for the sensor card";
@@ -145,6 +150,15 @@ public class OpenCCSensors {
 		prop = configFile.getItem("sensorUpgradeID", 7487);
 		prop.comment = "The block ID for the generic item";
 		Config.genericItemID = prop.getInt();
+
+		prop = configFile.get("general", "turtlePeripheralEnabled", true);
+		prop.comment = "Turtle Peripheral Enabled";
+		Config.turtlePeripheralEnabled = prop.getBoolean(true);
+		
+		prop = configFile.get("general", "enableAnalytics", true);
+		prop.comment = "Enable mod analytics";
+		Config.enableAnalytics = prop.getBoolean(true);
+
 
 		configFile.save();
 		

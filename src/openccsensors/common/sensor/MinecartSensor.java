@@ -24,16 +24,16 @@ public class MinecartSensor implements ISensor, IRequiresIconLoading {
 
 
 	@Override
-	public HashMap getDetails(World world, Object obj, boolean additional) {
+	public HashMap getDetails(World world, Object obj, Vec3 sensorPos, boolean additional) {
 
 		EntityMinecart minecart = (EntityMinecart) obj;
 
 		HashMap response = new HashMap();
 		HashMap position = new HashMap();
 		
-		position.put("X", minecart.posX);
-		position.put("Y", minecart.posY);
-		position.put("Z", minecart.posZ);
+		position.put("X", minecart.posX - sensorPos.xCoord);
+		position.put("Y", minecart.posY - sensorPos.yCoord);
+		position.put("Z", minecart.posZ - sensorPos.zCoord);
 		response.put("Position", position);
 		
 		response.put("Name", minecart.getEntityName());
@@ -44,7 +44,7 @@ public class MinecartSensor implements ISensor, IRequiresIconLoading {
 		}
 		
 		if (minecart.riddenByEntity != null && minecart.riddenByEntity instanceof EntityLiving) {
-			response.put("Riding", EntityUtils.livingToMap((EntityLiving)minecart.riddenByEntity, true));
+			response.put("Riding", EntityUtils.livingToMap((EntityLiving)minecart.riddenByEntity, sensorPos, true));
 		}
 		return response;
 	}

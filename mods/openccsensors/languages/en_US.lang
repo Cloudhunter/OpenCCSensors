@@ -1,5 +1,6 @@
 tile.openccsensors.sensor.name=Sensor
 tile.openccsensors.gauge.name=Gauge
+tile.openccsensors.proximitysensor.name=Proximity Sensor
 
 item.openccsensors.inventoryCard.name=Inventory Sensor Card
 item.openccsensors.proximityCard.name=Proximity Sensor Card
@@ -12,6 +13,7 @@ item.openccsensors.sonicCard.name=Sonic Sensor Card
 item.openccsensors.powerCard.name=Power Sensor Card
 item.openccsensors.machineCard.name=Machine Sensor Card
 item.openccsensors.appliedEnergisticsCard.name=Applied Energistics Sensor Card
+item.openccsensors.cropCard.name=Crop Sensor Card
 
 item.openccsensors.rangeExtensionAntenna.name=Range Extension Antenna
 item.openccsensors.signalAmplifier.name=Signal Amplifier

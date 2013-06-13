@@ -2,8 +2,17 @@ package openccsensors.common;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.common.ForgeVersion;
+import net.minecraftforge.common.MinecraftForge;
 
 import openccsensors.OpenCCSensors;
+import openccsensors.common.block.BlockBasicSensor;
 import openccsensors.common.block.BlockGauge;
 import openccsensors.common.block.BlockSensor;
 import openccsensors.common.item.ItemGeneric;
@@ -11,6 +20,7 @@ import openccsensors.common.item.ItemSensorCard;
 import openccsensors.common.item.meta.ItemMetaAdvancedAmplifier;
 import openccsensors.common.item.meta.ItemMetaRangeExtensionAntenna;
 import openccsensors.common.item.meta.ItemMetaSignalAmplifier;
+import openccsensors.common.sensor.CropSensor;
 import openccsensors.common.sensor.DroppedItemSensor;
 import openccsensors.common.sensor.InventorySensor;
 import openccsensors.common.sensor.MachineSensor;
@@ -25,11 +35,13 @@ import openccsensors.common.sensor.WorldSensor;
 import openccsensors.common.tileentity.TileEntityGauge;
 import openccsensors.common.turtle.TurtleUpgradeSensor;
 import openccsensors.common.util.LanguageUtils;
+import openccsensors.common.util.OCSLog;
 import openccsensors.common.util.RecipeUtils;
 import openccsensors.common.util.ResourceExtractingUtils;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.relauncher.FMLRelauncher;
 import dan200.turtle.api.TurtleAPI;
 
 public class CommonProxy {
@@ -52,8 +64,11 @@ public class CommonProxy {
 		
 		RecipeUtils.addGaugeRecipe();
 		RecipeUtils.addSensorRecipe();
+		RecipeUtils.addProxSensorBlockRecipe();
 		
-		setupLuaFiles();
+		if (setupLuaFiles()) {
+			analytics();
+		}
 		setupLanguages();
 	}
 	
@@ -69,11 +84,13 @@ public class CommonProxy {
 		OpenCCSensors.Sensors.powerSensor = new PowerSensor();
 		OpenCCSensors.Sensors.machineSensor = new MachineSensor();
 		OpenCCSensors.Sensors.magicSensor = new MagicSensor();
+		OpenCCSensors.Sensors.cropSensor = new CropSensor();
 	}
 	
 	private void initBlocks() {
 		OpenCCSensors.Blocks.sensorBlock = new BlockSensor();
 		OpenCCSensors.Blocks.gaugeBlock = new BlockGauge();
+		OpenCCSensors.Blocks.basicSensorBlock = new BlockBasicSensor();
 	}
 	
 	private void initItems() {
@@ -98,7 +115,7 @@ public class CommonProxy {
 		return FMLCommonHandler.instance().getMinecraftServerInstance().getFile(".");
 	}
 
-	private void setupLuaFiles() {
+	private boolean setupLuaFiles() {
 		ModContainer container = FMLCommonHandler.instance().findContainerFor(OpenCCSensors.instance);
 		File modFile = container.getSource();
 		File baseFile = getBase();
@@ -106,17 +123,45 @@ public class CommonProxy {
 		if (modFile.isDirectory()) {
 			File srcFile = new File(modFile, OpenCCSensors.LUA_PATH);
 			File destFile = new File(baseFile, destFolder);
+			if (destFile.exists()) {
+				return false;
+			}
 			try {
 				ResourceExtractingUtils.copy(srcFile, destFile);
 			} catch (IOException e) {
 			}
 		} else {
+			File destFile = new File(OpenCCSensors.proxy.getBase(), destFolder);
+			if (destFile.exists()) {
+				return false;
+			}
 			ResourceExtractingUtils.extractZipToLocation(modFile, OpenCCSensors.LUA_PATH, destFolder);
 		}
-
+		return true;
 	}
 	
 	private void setupLanguages() {
 		LanguageUtils.setupLanguages();
+	}
+	
+	private void analytics() {
+		if (OpenCCSensors.Config.enableAnalytics) {
+			try {
+				ModContainer container = FMLCommonHandler.instance().findContainerFor(OpenCCSensors.instance);
+				String charset = "UTF-8";
+				String url = String.format(
+						"http://www.openccsensors.info/analytics?version=%s&side=%s&forge=%s",
+						URLEncoder.encode(container.getVersion(), charset),
+						URLEncoder.encode(FMLRelauncher.side(), charset),
+						URLEncoder.encode(ForgeVersion.getVersion(), charset)
+				);
+				URLConnection connection = new URL(url).openConnection();
+				connection.setConnectTimeout(4000);
+				connection.setRequestProperty("Accept-Charset", charset);
+				InputStream response = connection.getInputStream();
+			}catch(Exception e) {
+				OCSLog.info(e.getMessage());
+			}
+		}
 	}
 }

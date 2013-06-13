@@ -42,7 +42,11 @@ public class ItemSensorCard extends Item implements ISensorCardRegistry {
 	@Override
     public String getUnlocalizedName(ItemStack itemStack)
     {
-        return String.format("item.openccsensors.%s", getSensorCard(itemStack).getSensor().getName());
+		SensorCard card = getSensorCard(itemStack);
+		if (card == null) {
+			return "";
+		}
+        return String.format("item.openccsensors.%s", card.getSensor().getName());
     }
 	
 	public void registerSensors() {
@@ -117,6 +121,13 @@ public class ItemSensorCard extends Item implements ISensorCardRegistry {
 		addSensorCard(37, new SensorCard(OpenCCSensors.Sensors.machineSensor, tier4));
 		addIconsForLoading(OpenCCSensors.Sensors.machineSensor);
 		
+
+		addSensorCard(38, new SensorCard(OpenCCSensors.Sensors.cropSensor, tier1));
+		addSensorCard(39, new SensorCard(OpenCCSensors.Sensors.cropSensor, tier2));
+		addSensorCard(40, new SensorCard(OpenCCSensors.Sensors.cropSensor, tier3));
+		addSensorCard(41, new SensorCard(OpenCCSensors.Sensors.cropSensor, tier4));
+		addIconsForLoading(OpenCCSensors.Sensors.cropSensor);
+		
 	}
 
 	public void addIconsForLoading (IRequiresIconLoading... list){
@@ -134,23 +145,29 @@ public class ItemSensorCard extends Item implements ISensorCardRegistry {
 	@Override
 	public void addInformation(ItemStack itemStack, EntityPlayer player,
 			List list, boolean par4) {
-		ISensorTier tier = getSensorCard(itemStack).getTier();
-		list.add(tier.getName());
+		SensorCard card = getSensorCard(itemStack);
+		if (card != null) {
+			ISensorTier tier = card.getTier();
+			list.add(tier.getName());
+		}
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public EnumRarity getRarity(ItemStack itemStack) {
-		ISensorTier tier = getSensorCard(itemStack).getTier();
-		switch (tier.getRarity()) {
-		case COMMON:
-			return EnumRarity.common;
-		case UNCOMMON:
-			return EnumRarity.uncommon;
-		case RARE:
-			return EnumRarity.rare;
-		case EPIC:
-			return EnumRarity.epic;
+		SensorCard card = getSensorCard(itemStack);
+		if (card != null) {
+			ISensorTier tier = card.getTier();
+			switch (tier.getRarity()) {
+			case COMMON:
+				return EnumRarity.common;
+			case UNCOMMON:
+				return EnumRarity.uncommon;
+			case RARE:
+				return EnumRarity.rare;
+			case EPIC:
+				return EnumRarity.epic;
+			}
 		}
 		return EnumRarity.common;
 	}
@@ -172,7 +189,11 @@ public class ItemSensorCard extends Item implements ISensorCardRegistry {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public Icon getIconFromDamageForRenderPass(int dmgValue, int renderPass) {
-		return getSensorCard(dmgValue).getIconForRenderPass(renderPass);
+		SensorCard card = getSensorCard(dmgValue);
+		if (card == null) { 
+			card = getSensorCard(0);
+		}
+		return card.getIconForRenderPass(renderPass);
 	}
 
 	public SensorCard getSensorCard(ItemStack stack) {

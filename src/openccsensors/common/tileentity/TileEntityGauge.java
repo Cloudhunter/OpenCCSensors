@@ -9,6 +9,7 @@ import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Vec3;
 import net.minecraftforge.common.ForgeDirection;
 import openccsensors.api.IGaugeSensor;
 import openccsensors.api.IMethodCallback;
@@ -144,13 +145,14 @@ public class TileEntityGauge extends TileEntity implements IPeripheral {
 		super.updateEntity();
 		tileProperties.clear();
 		if (this.worldObj != null && !worldObj.isRemote) {
+
 			ForgeDirection infront = ForgeDirection.getOrientation(this.getFacing());
 			ForgeDirection behind = infront.getOpposite();
 			TileEntity behindTile = worldObj.getBlockTileEntity(xCoord + behind.offsetX, yCoord, zCoord + behind.offsetZ);
 			if (behindTile != null) {
 				for (IGaugeSensor gaugeSensor : gaugeSensors)  {
 					if (gaugeSensor.isValidTarget(behindTile)) {
-						HashMap details = gaugeSensor.getDetails(worldObj, behindTile, true);
+						HashMap details = gaugeSensor.getDetails(worldObj, behindTile, Vec3.createVectorHelper(behindTile.xCoord, behindTile.yCoord, behindTile.zCoord), true);
 						for (String property : gaugeSensor.getGaugeProperties()) {
 							if (details.containsKey(property)) {
 								tileProperties.put(property, details.get(property));

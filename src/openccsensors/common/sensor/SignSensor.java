@@ -18,10 +18,10 @@ public class SignSensor extends TileSensor implements ISensor, IRequiresIconLoad
 	private Icon icon;
 
 	@Override
-	public HashMap getDetails(World world, Object obj, boolean additional) {
+	public HashMap getDetails(World world, Object obj, Vec3 sensorPos, boolean additional) {
 		
 		TileEntitySign sign = (TileEntitySign) obj;
-		HashMap response = super.getDetails(sign);
+		HashMap response = super.getDetails(sign, sensorPos);
 		if (additional) {
 
 			String signText = "";

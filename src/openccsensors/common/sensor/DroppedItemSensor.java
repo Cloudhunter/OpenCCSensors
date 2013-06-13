@@ -20,16 +20,16 @@ public class DroppedItemSensor implements ISensor, IRequiresIconLoading {
 	private Icon icon;
 	
 	@Override
-	public HashMap getDetails(World world, Object obj, boolean additional) {
+	public HashMap getDetails(World world, Object obj, Vec3 sensorLocation, boolean additional) {
 		
 		EntityItem item = (EntityItem) obj;
 
 		HashMap response = new HashMap();
 		HashMap position = new HashMap();
 		
-		position.put("X", item.posX);
-		position.put("Y", item.posY);
-		position.put("Z", item.posZ);
+		position.put("X", item.posX - sensorLocation.xCoord);
+		position.put("Y", item.posY - sensorLocation.xCoord);
+		position.put("Z", item.posZ - sensorLocation.xCoord);
 		
 		response.put("Position", position);
 

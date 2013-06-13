@@ -17,7 +17,7 @@ public class WorldSensor implements ISensor, IRequiresIconLoading {
 	private Icon icon;
 	
 	@Override
-	public HashMap getDetails(World world, Object obj, boolean additional) {
+	public HashMap getDetails(World world, Object obj, Vec3 sensorLocation, boolean additional) {
 		
 		Vec3 location = (Vec3) obj;
 		

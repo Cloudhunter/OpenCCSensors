@@ -14,6 +14,7 @@ import net.minecraft.world.chunk.Chunk;
 
 public class EntityUtils {
 
+	
 	public static HashMap<String, Entity> getEntities(World world, Vec3 sensorPos, double radius, Class filter) {
 		HashMap<String, Entity> map = new HashMap<String, Entity>();
 		
@@ -49,13 +50,13 @@ public class EntityUtils {
 	}
 
 	
-	public static HashMap livingToMap(EntityLiving living, boolean additional) {
+	public static HashMap livingToMap(EntityLiving living, Vec3 sensorPos, boolean additional) {
 		HashMap map = new HashMap();
 		
 		HashMap position = new HashMap();
-		position.put("X", living.posX);
-		position.put("Y", living.posY);
-		position.put("Z", living.posZ);
+		position.put("X", living.posX - sensorPos.xCoord);
+		position.put("Y", living.posY - sensorPos.yCoord);
+		position.put("Z", living.posZ - sensorPos.zCoord);
 		map.put("Position", position);
 
 		map.put("Name", (living instanceof EntityPlayer) ? "Player" : living.getEntityName());
@@ -105,6 +106,9 @@ public class EntityUtils {
 			EntityPlayer player = (EntityPlayer) living;
 			map.put("FoodLevel", player.getFoodStats().getFoodLevel());
 			map.put("Gamemode", player.capabilities.isCreativeMode);
+			map.put("ExperienceTotal", player.experienceTotal);
+			map.put("ExperienceLevel", player.experienceLevel);
+			map.put("Experience", player.experience);
 			if (additional) {
 				map.put("Username", player.username);
 			}
