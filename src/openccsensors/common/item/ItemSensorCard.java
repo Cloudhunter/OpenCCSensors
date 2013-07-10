@@ -75,12 +75,12 @@ public class ItemSensorCard extends Item implements ISensorCardRegistry {
 		addSensorCard(8, new SensorCard(OpenCCSensors.Sensors.droppedItemSensor, tier4));
 		addIconsForLoading(OpenCCSensors.Sensors.droppedItemSensor);
 		
-		addSensorCard(9, new SensorCard(OpenCCSensors.Sensors.signSensor, tier1));
+		/*addSensorCard(9, new SensorCard(OpenCCSensors.Sensors.signSensor, tier1));
 		addSensorCard(10, new SensorCard(OpenCCSensors.Sensors.signSensor, tier2));
 		addSensorCard(11, new SensorCard(OpenCCSensors.Sensors.signSensor, tier3));
 		addSensorCard(12, new SensorCard(OpenCCSensors.Sensors.signSensor, tier4));
 		addIconsForLoading(OpenCCSensors.Sensors.signSensor);
-		
+		*/
 		addSensorCard(13, new SensorCard(OpenCCSensors.Sensors.minecartSensor, tier1));
 		addSensorCard(14, new SensorCard(OpenCCSensors.Sensors.minecartSensor, tier2));
 		addSensorCard(15, new SensorCard(OpenCCSensors.Sensors.minecartSensor, tier3));
@@ -190,17 +190,22 @@ public class ItemSensorCard extends Item implements ISensorCardRegistry {
 	@Override
 	public Icon getIconFromDamageForRenderPass(int dmgValue, int renderPass) {
 		SensorCard card = getSensorCard(dmgValue);
-		if (card == null) { 
-			card = getSensorCard(0);
-		}
 		return card.getIconForRenderPass(renderPass);
 	}
 
 	public SensorCard getSensorCard(ItemStack stack) {
-		return getSensorCard(stack.getItemDamage());
+		if (!cards.containsKey(stack.getItemDamage())) {
+			stack.setItemDamage(cards.keySet().iterator().next());
+		}
+		SensorCard card = getSensorCard(stack.getItemDamage());
+		
+		return card;
 	}
 
 	public SensorCard getSensorCard(int id) {
+		if (!cards.containsKey(id)) {
+			return cards.values().iterator().next();
+		}
 		return cards.get(id);
 	}
 	
