@@ -4,10 +4,13 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.EnumMovingObjectType;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
@@ -61,6 +64,7 @@ public class EntityUtils {
 
 		map.put("Name", (living instanceof EntityPlayer) ? "Player" : living.getEntityName());
 		map.put("RawName", living.getClass().getName());
+		map.put("IsPlayer", living instanceof EntityPlayer);
 		
 		if (additional) {
 
@@ -104,15 +108,30 @@ public class EntityUtils {
 	
 		if (living instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) living;
-			map.put("FoodLevel", player.getFoodStats().getFoodLevel());
-			map.put("Gamemode", player.capabilities.isCreativeMode);
+			map.put("Username", player.username);
 			map.put("ExperienceTotal", player.experienceTotal);
 			map.put("ExperienceLevel", player.experienceLevel);
 			map.put("Experience", player.experience);
 			if (additional) {
-				map.put("Username", player.username);
+				map.put("FoodLevel", player.getFoodStats().getFoodLevel());
+				map.put("Gamemode", player.capabilities.isCreativeMode);
+				map.put("Inventory", InventoryUtils.invToMap(player.inventory));
+
+		        Vec3 posVec = player.worldObj.getWorldVec3Pool().getVecFromPool(player.posX, player.posY + 1.62F, player.posZ);
+		        Vec3 lookVec = player.getLook(1.0f);
+		        Vec3 targetVec = posVec.addVector(lookVec.xCoord * 10f, lookVec.yCoord * 10f, lookVec.zCoord * 10f);
+		        MovingObjectPosition mop = player.worldObj.rayTraceBlocks(posVec, targetVec);
+		        map.put("IsLookingAtBlock", mop.typeOfHit == EnumMovingObjectType.TILE);
+		        if (mop.typeOfHit == EnumMovingObjectType.TILE) {
+		        	int blockId = player.worldObj.getBlockId(mop.blockX, mop.blockY, mop.blockZ);
+		        	HashMap lookingAt = new HashMap();
+		        	lookingAt.put("X", mop.blockX - sensorPos.xCoord);
+		        	lookingAt.put("Y", mop.blockY - sensorPos.yCoord);
+		        	lookingAt.put("Z", mop.blockZ - sensorPos.zCoord);
+		        	map.put("LookingAt", lookingAt);
+		        }
 			}
-			map.put("Inventory", InventoryUtils.invToMap(player.inventory));
+		
 			map.put("Experience", player.experience);
 		}
 

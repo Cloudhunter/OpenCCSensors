@@ -55,12 +55,12 @@ public abstract class GuiBase extends GuiScreen
 		int var5 = this.guiTop;
 		this.drawBackgroundLayer(par1, par2, par3);
 		GL11.glPushMatrix();
-		GL11.glTranslatef((float) var4, (float) var5, 0.0F);
+		GL11.glTranslatef(var4, var5, 0.0F);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		short var7 = 240;
 		short var8 = 240;
-		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) var7 / 1.0F, (float) var8 / 1.0F);
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, var7 / 1.0F, var8 / 1.0F);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
 		this.drawForegroundLayer(par1, par2, par3);
@@ -136,7 +136,7 @@ public abstract class GuiBase extends GuiScreen
 
 			for (var6 = 0; var6 < toolTips.length; ++var6)
 			{
-				var7 = this.fontRenderer.getStringWidth((String) toolTips[var6]);
+				var7 = this.fontRenderer.getStringWidth(toolTips[var6]);
 
 				if (var7 > var5)
 				{

@@ -151,7 +151,7 @@ public class ElectricityDisplay
 	public static double roundDecimals(double d, int decimalPlaces)
 	{
 		int j = (int) (d * Math.pow(10, decimalPlaces));
-		return j / (double) Math.pow(10, decimalPlaces);
+		return j / Math.pow(10, decimalPlaces);
 	}
 
 	public static double roundDecimals(double d)

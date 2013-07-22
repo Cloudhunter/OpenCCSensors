@@ -184,6 +184,7 @@ public abstract class TileEntityConductor extends TileEntityAdvanced implements 
 		return true;
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public AxisAlignedBB getRenderBoundingBox()
 	{

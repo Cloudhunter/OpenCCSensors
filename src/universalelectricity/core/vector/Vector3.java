@@ -73,6 +73,13 @@ public class Vector3 implements Cloneable
 		this.z = par1.posZ;
 	}
 
+	public Vector3(ForgeDirection direction)
+	{
+		this.x = direction.offsetX;
+		this.y = direction.offsetY;
+		this.z = direction.offsetZ;
+	}
+
 	/**
 	 * Returns the coordinates as integers, ideal for block placement.
 	 */
@@ -89,14 +96,6 @@ public class Vector3 implements Cloneable
 	public int intZ()
 	{
 		return (int) Math.floor(this.z);
-	}
-
-	/**
-	 * Compares two vectors and see if they are equal. True if so.
-	 */
-	public boolean isEqual(Vector3 vector3)
-	{
-		return (this.x == vector3.x && this.y == vector3.y && this.z == vector3.z);
 	}
 
 	/**
@@ -129,14 +128,19 @@ public class Vector3 implements Cloneable
 		return world.getBlockTileEntity(this.intX(), this.intY(), this.intZ());
 	}
 
+	public boolean setBlock(World world, int id, int metadata, int notify)
+	{
+		return world.setBlock(this.intX(), this.intY(), this.intZ(), id, metadata, notify);
+	}
+
 	public boolean setBlock(World world, int id, int metadata)
 	{
-		return world.setBlock(this.intX(), this.intY(), this.intZ(), id, metadata, 2);
+		return this.setBlock(world, id, metadata, 3);
 	}
 
 	public boolean setBlock(World world, int id)
 	{
-		return world.setBlock(this.intX(), this.intY(), this.intZ(), id, 0, 2);
+		return this.setBlock(world, id, 0);
 	}
 
 	/**
@@ -276,6 +280,11 @@ public class Vector3 implements Cloneable
 		return new Vector3(Math.round(this.x), Math.round(this.y), Math.round(this.z));
 	}
 
+	public Vector3 ceil()
+	{
+		return new Vector3(Math.ceil(this.x), Math.ceil(this.y), Math.ceil(this.z));
+	}
+
 	public Vector3 floor()
 	{
 		return new Vector3(Math.floor(this.x), Math.floor(this.y), Math.floor(this.z));
@@ -286,7 +295,7 @@ public class Vector3 implements Cloneable
 	 */
 	public List<Entity> getEntitiesWithin(World worldObj, Class<? extends Entity> par1Class)
 	{
-		return (List<Entity>) worldObj.getEntitiesWithinAABB(par1Class, AxisAlignedBB.getBoundingBox(this.intX(), this.intY(), this.intZ(), this.intX() + 1, this.intY() + 1, this.intZ() + 1));
+		return worldObj.getEntitiesWithinAABB(par1Class, AxisAlignedBB.getBoundingBox(this.intX(), this.intY(), this.intZ(), this.intX() + 1, this.intY() + 1, this.intZ() + 1));
 	}
 
 	/**
@@ -358,6 +367,18 @@ public class Vector3 implements Cloneable
 	public int hashCode()
 	{
 		return ("X:" + this.x + "Y:" + this.y + "Z:" + this.z).hashCode();
+	}
+
+	@Override
+	public boolean equals(Object o)
+	{
+		if (o instanceof Vector3)
+		{
+			Vector3 vector3 = (Vector3) o;
+			return this.x == vector3.x && this.y == vector3.y && this.z == vector3.z;
+		}
+
+		return false;
 	}
 
 	@Override
