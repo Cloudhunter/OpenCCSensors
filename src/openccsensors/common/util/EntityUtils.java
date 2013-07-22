@@ -113,6 +113,7 @@ public class EntityUtils {
 				map.put("Username", player.username);
 			}
 			map.put("Inventory", InventoryUtils.invToMap(player.inventory));
+			map.put("Experience", player.experience);
 		}
 
 		return map;
