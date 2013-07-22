@@ -1,107 +1,79 @@
 package universalelectricity.core.path;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.ForgeDirection;
-import universalelectricity.core.block.IConnectionProvider;
+import universalelectricity.core.vector.Vector3;
 
 /**
- * A class that allows flexible path finding in Minecraft Blocks.
+ * A class that allows flexible pathfinding for different positions. Compared to AStar pathfinding,
+ * this version is faster but does not calculated the most optimal path.
  * 
  * @author Calclavia
  * 
  */
 public class Pathfinder
 {
-	public interface IPathCallBack
-	{
-		/**
-		 * Is this a valid node to search for?
-		 * 
-		 * @return
-		 */
-		public boolean isValidNode(Pathfinder finder, ForgeDirection direction, IConnectionProvider provider, IConnectionProvider node);
-
-		/**
-		 * Called when looping through nodes.
-		 * 
-		 * @param finder
-		 * @param provider
-		 * @return True to stop the path finding operation.
-		 */
-		public boolean onSearch(Pathfinder finder, IConnectionProvider provider);
-	}
-
 	/**
 	 * A pathfinding call back interface used to call back on paths.
 	 */
 	public IPathCallBack callBackCheck;
 
 	/**
-	 * A list of nodes that the pathfinder went through.
+	 * A list of nodes that the pathfinder already went through.
 	 */
-	public List<IConnectionProvider> iteratedNodes;
+	public Set<Vector3> closedSet;
 
 	/**
-	 * The results and findings found by the pathfinder.
+	 * The resulted path found by the pathfinder. Could be null if no path was found.
 	 */
-	public List results;
+	public Set<Vector3> results;
 
 	public Pathfinder(IPathCallBack callBack)
 	{
 		this.callBackCheck = callBack;
-		this.clear();
+		this.reset();
 	}
 
-	public boolean findNodes(IConnectionProvider provider)
+	/**
+	 * @return True on success finding, false on failure.
+	 */
+	public boolean findNodes(Vector3 currentNode)
 	{
-		TileEntity[] connectedBlocks = provider.getAdjacentConnections();
+		this.closedSet.add(currentNode);
 
-		this.iteratedNodes.add(provider);
-
-		if (this.callBackCheck.onSearch(this, provider))
+		if (this.callBackCheck.onSearch(this, currentNode))
 		{
 			return false;
 		}
 
-		for (int i = 0; i < connectedBlocks.length; i++)
+		for (Vector3 node : this.callBackCheck.getConnectedNodes(this, currentNode))
 		{
-			TileEntity connectedBlock = connectedBlocks[i];
-
-			if (connectedBlock instanceof IConnectionProvider)
+			if (!this.closedSet.contains(node))
 			{
-				if (!iteratedNodes.contains(connectedBlock))
+				if (this.findNodes(node))
 				{
-					if (this.callBackCheck.isValidNode(this, ForgeDirection.getOrientation(i), provider, (IConnectionProvider) connectedBlock))
-					{
-						if (!this.findNodes((IConnectionProvider) connectedBlock))
-						{
-							return false;
-						}
-
-					}
+					return true;
 				}
 			}
 		}
 
-		return true;
+		return false;
 	}
 
 	/**
 	 * Called to execute the pathfinding operation.
 	 */
-	public Pathfinder init(IConnectionProvider provider)
+	public Pathfinder init(Vector3 startNode)
 	{
-		this.findNodes(provider);
+		this.findNodes(startNode);
 		return this;
 	}
 
-	public Pathfinder clear()
+	public Pathfinder reset()
 	{
-		this.iteratedNodes = new ArrayList<IConnectionProvider>();
-		this.results = new ArrayList();
+		this.closedSet = new HashSet<Vector3>();
+		this.results = new HashSet<Vector3>();
 		return this;
 	}
 }

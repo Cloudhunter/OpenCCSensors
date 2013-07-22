@@ -10,11 +10,14 @@ import java.util.Map;
 import java.util.Set;
 
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.ForgeDirection;
 import universalelectricity.core.block.IConductor;
 import universalelectricity.core.block.IConnectionProvider;
 import universalelectricity.core.block.INetworkProvider;
 import universalelectricity.core.path.Pathfinder;
 import universalelectricity.core.path.PathfinderChecker;
+import universalelectricity.core.vector.Vector3;
+import universalelectricity.core.vector.VectorHelper;
 import cpw.mods.fml.common.FMLLog;
 
 /**
@@ -414,6 +417,21 @@ public class ElectricityNetwork implements IElectricityNetwork
 		{
 			this.getConductors().remove(splitPoint);
 
+			for (ForgeDirection dir : ForgeDirection.values())
+			{
+				if (dir != ForgeDirection.UNKNOWN)
+				{
+					Vector3 splitVec = new Vector3((TileEntity) splitPoint);
+					TileEntity tileAroundSplit = VectorHelper.getTileEntityFromSide(((TileEntity) splitPoint).worldObj, splitVec, dir);
+
+					if (this.producers.containsKey(tileAroundSplit))
+					{
+						this.stopProducing(tileAroundSplit);
+						this.stopRequesting(tileAroundSplit);
+					}
+				}
+			}
+
 			/**
 			 * Loop through the connected blocks and attempt to see if there are connections between
 			 * the two points elsewhere.
@@ -432,8 +450,8 @@ public class ElectricityNetwork implements IElectricityNetwork
 
 						if (connectedBlockA != connectedBlockB && connectedBlockB instanceof IConnectionProvider)
 						{
-							Pathfinder finder = new PathfinderChecker((IConnectionProvider) connectedBlockB, splitPoint);
-							finder.init((IConnectionProvider) connectedBlockA);
+							Pathfinder finder = new PathfinderChecker(((TileEntity) splitPoint).worldObj, (IConnectionProvider) connectedBlockB, splitPoint);
+							finder.init(new Vector3(connectedBlockA));
 
 							if (finder.results.size() > 0)
 							{
@@ -442,13 +460,15 @@ public class ElectricityNetwork implements IElectricityNetwork
 								 * references of wire connection into one network.
 								 */
 
-								for (IConnectionProvider node : finder.iteratedNodes)
+								for (Vector3 node : finder.closedSet)
 								{
-									if (node instanceof INetworkProvider)
+									TileEntity nodeTile = node.getTileEntity(((TileEntity) splitPoint).worldObj);
+
+									if (nodeTile instanceof INetworkProvider)
 									{
-										if (node != splitPoint)
+										if (nodeTile != splitPoint)
 										{
-											((INetworkProvider) node).setNetwork(this);
+											((INetworkProvider) nodeTile).setNetwork(this);
 										}
 									}
 								}
@@ -461,13 +481,15 @@ public class ElectricityNetwork implements IElectricityNetwork
 								 */
 								IElectricityNetwork newNetwork = new ElectricityNetwork();
 
-								for (IConnectionProvider node : finder.iteratedNodes)
+								for (Vector3 node : finder.closedSet)
 								{
-									if (node instanceof IConductor)
+									TileEntity nodeTile = node.getTileEntity(((TileEntity) splitPoint).worldObj);
+
+									if (nodeTile instanceof INetworkProvider)
 									{
-										if (node != splitPoint)
+										if (nodeTile != splitPoint)
 										{
-											newNetwork.getConductors().add((IConductor) node);
+											newNetwork.getConductors().add((IConductor) nodeTile);
 										}
 									}
 								}
