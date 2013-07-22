@@ -1,5 +1,5 @@
 tile.openccsensors.sensor.name=Sensor
-tile.openccsensors.gauge.name=Messger\u00e4
+tile.openccsensors.gauge.name=Messger\u00e4t
 tile.openccsensors.proximitysensor.name=Umgebungssensor
 
 item.openccsensors.inventoryCard.name=Inventar-Sensorkarte
