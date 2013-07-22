@@ -109,6 +109,9 @@ public class EntityUtils {
 		if (living instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) living;
 			map.put("Username", player.username);
+			map.put("ExperienceTotal", player.experienceTotal);
+			map.put("ExperienceLevel", player.experienceLevel);
+			map.put("Experience", player.experience);
 			if (additional) {
 				map.put("FoodLevel", player.getFoodStats().getFoodLevel());
 				map.put("Gamemode", player.capabilities.isCreativeMode);
@@ -125,10 +128,11 @@ public class EntityUtils {
 		        	lookingAt.put("X", mop.blockX - sensorPos.xCoord);
 		        	lookingAt.put("Y", mop.blockY - sensorPos.yCoord);
 		        	lookingAt.put("Z", mop.blockZ - sensorPos.zCoord);
-		        	map.put("lookingAt", lookingAt);
+		        	map.put("LookingAt", lookingAt);
 		        }
 			}
 		
+			map.put("Experience", player.experience);
 		}
 
 		return map;
