@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -11,28 +12,64 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import universalelectricity.core.UniversalElectricity;
 import universalelectricity.core.vector.Vector3;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockMulti extends BlockContainer
 {
+	public String textureName = null;
+	public String channel = "";
+
 	public BlockMulti(int id)
 	{
 		super(id, UniversalElectricity.machine);
 		this.setHardness(0.8F);
-		this.setUnlocalizedName("MultiBlock");
+		this.setUnlocalizedName("multiBlock");
+	}
+
+	public BlockMulti setChannel(String channel)
+	{
+		this.channel = channel;
+		return this;
+	}
+
+	public BlockMulti setTextureName(String name)
+	{
+		this.textureName = name;
+		return this;
 	}
 
 	public void makeFakeBlock(World worldObj, Vector3 position, Vector3 mainBlock)
 	{
-		worldObj.setBlock(position.intX(), position.intY(), position.intZ(), this.blockID, 0, 2);
+		worldObj.setBlock(position.intX(), position.intY(), position.intZ(), this.blockID);
 		((TileEntityMulti) worldObj.getBlockTileEntity(position.intX(), position.intY(), position.intZ())).setMainBlock(mainBlock);
 	}
 
+	@SideOnly(Side.CLIENT)
 	@Override
-	public void breakBlock(World par1World, int x, int y, int z, int par5, int par6)
+	public void registerIcons(IconRegister iconRegister)
 	{
-		TileEntityMulti tileEntity = (TileEntityMulti) par1World.getBlockTileEntity(x, y, z);
-		tileEntity.onBlockRemoval();
-		super.breakBlock(par1World, x, y, z, par5, par6);
+		if (this.textureName != null)
+		{
+			this.blockIcon = iconRegister.registerIcon(this.textureName);
+		}
+		else
+		{
+			super.registerIcons(iconRegister);
+		}
+	}
+
+	@Override
+	public void breakBlock(World world, int x, int y, int z, int par5, int par6)
+	{
+		TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
+
+		if (tileEntity instanceof TileEntityMulti)
+		{
+			((TileEntityMulti) tileEntity).onBlockRemoval();
+		}
+
+		super.breakBlock(world, x, y, z, par5, par6);
 	}
 
 	/**
@@ -77,7 +114,7 @@ public class BlockMulti extends BlockContainer
 	@Override
 	public TileEntity createNewTileEntity(World var1)
 	{
-		return new TileEntityMulti();
+		return new TileEntityMulti(this.channel);
 	}
 
 	@Override

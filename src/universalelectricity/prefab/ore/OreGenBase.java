@@ -13,7 +13,7 @@ import cpw.mods.fml.common.FMLLog;
 
 /**
  * This class is used for storing ore generation data. If you are too lazy to generate your own
- * ores, you can do {@link #OreGenerator.ORES_TO_GENERATE.add()} to add your ore to the list of ores
+ * ores, you can do {@link #OreGenerator.addOre()} to add your ore to the list of ores
  * to generate.
  * 
  * @author Calclavia
@@ -88,7 +88,7 @@ public abstract class OreGenBase
 	private static boolean shouldGenerateOre(Configuration configuration, String oreName)
 	{
 		configuration.load();
-		boolean shouldGenerate = configuration.get("Ore Generation", "Generate " + oreName, true).getBoolean(true);
+		boolean shouldGenerate = configuration.get("Ore_Generation", "Generate " + oreName, true).getBoolean(true);
 		configuration.save();
 		return shouldGenerate;
 	}

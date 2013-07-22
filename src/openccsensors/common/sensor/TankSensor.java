@@ -41,16 +41,8 @@ public class TankSensor extends TileSensor implements ISensor, IRequiresIconLoad
 		TileEntity tile = (TileEntity) obj;
 
 		HashMap response = super.getDetails(tile, sensorPos);
-		ILiquidTank[] tanks = null;
 		
-		if (tile instanceof ITankContainer) {
-			tanks = ((ITankContainer)tile).getTanks(ForgeDirection.UNKNOWN);
-		}else {
-			ILiquidTank tank = RailcraftUtils.getTankIfTankTile(tile);
-			if (tank != null) {
-				tanks = new ILiquidTank[] { tank };
-			}
-		}
+		ILiquidTank[] tanks = ((ITankContainer)tile).getTanks(ForgeDirection.UNKNOWN);
 		
 		if (additional && tanks != null) {
 			HashMap allTanks = new HashMap();

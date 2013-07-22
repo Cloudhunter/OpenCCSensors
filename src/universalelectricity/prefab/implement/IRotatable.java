@@ -1,5 +1,6 @@
 package universalelectricity.prefab.implement;
 
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 
@@ -15,7 +16,7 @@ public interface IRotatable
 	/**
 	 * @return Gets the facing direction. Always returns the front side of the block.
 	 */
-	public ForgeDirection getDirection(World world, int x, int y, int z);
+	public ForgeDirection getDirection(IBlockAccess world, int x, int y, int z);
 
 	/**
 	 * @param Sets the facing direction.

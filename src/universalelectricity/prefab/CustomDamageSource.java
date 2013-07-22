@@ -21,16 +21,19 @@ public class CustomDamageSource extends DamageSource
 		return this;
 	}
 
+	@Override
 	public DamageSource setDamageBypassesArmor()
 	{
 		return super.setDamageBypassesArmor();
 	}
 
+	@Override
 	public DamageSource setDamageAllowedInCreativeMode()
 	{
 		return super.setDamageAllowedInCreativeMode();
 	}
 
+	@Override
 	public DamageSource setFireDamage()
 	{
 		return super.setFireDamage();
