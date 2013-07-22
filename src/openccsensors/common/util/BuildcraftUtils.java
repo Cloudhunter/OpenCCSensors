@@ -15,6 +15,15 @@ public class BuildcraftUtils {
 	public static HashMap getPowerDetails(World world, Object obj, boolean additional) {
 		HashMap response = new HashMap();
 		if (obj instanceof IPowerReceptor) {
+			IPowerReceptor receptor = (IPowerReceptor) obj;
+			IPowerProvider provider = receptor.getPowerProvider();
+			if (provider != null) {
+				response.put("ActivationEnergy", provider.getActivationEnergy());
+				response.put("EnergyStored", provider.getEnergyStored());
+				response.put("MaxEnergyReceived", provider.getMaxEnergyReceived());
+				response.put("MaxEnergyStored", provider.getMaxEnergyStored());
+				response.put("MinEnergyReceived", provider.getMinEnergyReceived());
+			}
 		}
 		return response;
 	}

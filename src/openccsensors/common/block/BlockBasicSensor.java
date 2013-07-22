@@ -134,6 +134,7 @@ public class BlockBasicSensor extends BlockContainer {
 	public void breakBlock(World worldObj, int xCoord, int yCoord, int zCoord,
 			int par5, int par6) {
 		int blockId = OpenCCSensors.Config.basicSensorBlockID;
+		worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, blockId);
 		worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord - 1, zCoord, blockId);
 		worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord + 1, zCoord, blockId);
 		worldObj.notifyBlocksOfNeighborChange(xCoord - 1, yCoord, zCoord, blockId);
