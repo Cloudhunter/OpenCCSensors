@@ -29,7 +29,7 @@ public class PowerSensor extends TileSensor implements ISensor, IRequiresIconLoa
 	
 	public PowerSensor() {
 		try {
-			UEApi = Class.forName("universalelectricity.core.block.IVoltage");
+			UEApi = Class.forName("universalelectricity.core.block.IElectrical");
 		} catch (ClassNotFoundException e) {
 		}
 	}
