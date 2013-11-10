@@ -69,7 +69,7 @@ public class Ic2Utils {
 			int heat = reactor.getHeat();
 			response.put("Heat", heat);
 			response.put("MaxHeat", maxHeat);
-			response.put("Output", reactor.getOutput() * IC2Reactor.getEUOutput());
+			response.put("Output", reactor.getReactorEngeryOutput() * IC2Reactor.getEUOutput());
 			response.put("Active", reactor.produceEnergy());
 			response.put("HeatPercentage", 0);
 			if (maxHeat > 0) {
@@ -120,8 +120,8 @@ public class Ic2Utils {
 			tile instanceof IEnergySource ||
 			tile instanceof IEnergyConductor) {
 			
-			long emitted = EnergyNet.getForWorld(world).getTotalEnergyEmitted(tile);
-			long sunken = EnergyNet.getForWorld(world).getTotalEnergySunken(tile);
+			long emitted = EnergyNet.instance.getTotalEnergyEmitted(tile);
+			long sunken = EnergyNet.instance.getTotalEnergySunken(tile);
 			response.put("EnergyEmitted", emitted);
 			response.put("EnergySunken", sunken);
 		
