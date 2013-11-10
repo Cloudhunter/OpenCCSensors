@@ -18,6 +18,7 @@ import openccsensors.api.IRequiresIconLoading;
 import openccsensors.api.ISensor;
 import openccsensors.api.ISensorTier;
 import openccsensors.common.util.InventoryUtils;
+import openccsensors.common.util.TankUtils;
 import openccsensors.common.util.RailcraftUtils;
 
 public class TankSensor extends TileSensor implements ISensor, IRequiresIconLoading {
@@ -37,45 +38,9 @@ public class TankSensor extends TileSensor implements ISensor, IRequiresIconLoad
 
 	@Override
 	public HashMap getDetails(World world, Object obj, Vec3 sensorPos, boolean additional) {
-		
 		TileEntity tile = (TileEntity) obj;
-
 		HashMap response = super.getDetails(tile, sensorPos);
-		
-		ILiquidTank[] tanks = ((ITankContainer)tile).getTanks(ForgeDirection.UNKNOWN);
-		
-		if (additional && tanks != null) {
-			HashMap allTanks = new HashMap();
-			int i = 0;
-			try {
-				if (tanks != null) {
-					for (ILiquidTank tank : tanks) {
-						
-						HashMap tankMap = new HashMap();
-						tankMap.put("Capacity", tank.getCapacity());
-						tankMap.put("Amount", 0);
-						
-						LiquidStack stack = tank.getLiquid();
-
-						if (stack != null) {
-							ItemStack istack = stack.asItemStack();
-							if (istack != null) {
-								if (istack.getItem() != null) {
-									tankMap.put("Name", InventoryUtils.getNameForItemStack(istack));
-									tankMap.put("RawName", InventoryUtils.getRawNameForStack(istack));
-									tankMap.put("Amount", stack.amount);
-								}
-							}
-						}
-
-						allTanks.put(++i, tankMap);
-					}
-				}
-			}catch(Exception e) {}
-			
-			response.put("Tanks", allTanks);
-		}
-		
+		response.put("Tanks", TankUtils.tankContainerToMap((ITankContainer)tile));
 		return response;
 	}
 	
