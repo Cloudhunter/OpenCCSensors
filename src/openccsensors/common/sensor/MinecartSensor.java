@@ -17,6 +17,7 @@ import openccsensors.api.ISensor;
 import openccsensors.api.ISensorTier;
 import openccsensors.common.util.EntityUtils;
 import openccsensors.common.util.InventoryUtils;
+import openccsensors.common.util.TankUtils;
 
 public class MinecartSensor implements ISensor, IRequiresIconLoading {
 
@@ -41,6 +42,10 @@ public class MinecartSensor implements ISensor, IRequiresIconLoading {
 		
 		if (minecart instanceof IInventory) {
 			response.put("Slots", InventoryUtils.invToMap((IInventory)minecart));
+		}
+
+		if (minecart instanceof ITankContainer) {
+			response.put("Tanks", TankUtils.tankContainerToMap(ITankContainer)minecart));
 		}
 		
 		if (minecart.riddenByEntity != null && minecart.riddenByEntity instanceof EntityLiving) {
