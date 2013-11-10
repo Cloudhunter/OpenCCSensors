@@ -11,7 +11,7 @@ import openccsensors.common.util.InventoryUtils;
 
 public class TankUtils {
 
-public HashMap tankContainerToMap(ITankContainer container) {
+	public static HashMap tankContainerToMap(ITankContainer container) {
 		
 		ILiquidTank[] tanks = container.getTanks(ForgeDirection.UNKNOWN);
 		
