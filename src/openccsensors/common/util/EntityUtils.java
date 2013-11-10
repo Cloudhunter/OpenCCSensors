@@ -134,6 +134,23 @@ public class EntityUtils {
 		
 			map.put("Experience", player.experience);
 		}
+		
+		if (living instanceof EntityTameable) {
+			EntityTameable tameable = (EntityTameable) living;
+			map.put("IsSitting", tameable.isSitting());
+			map.put("IsTamed", tameable.isTamed());
+			if (tameable.isTamed()) {
+				map.put("OwnerName", tameable.getOwnerName());
+			}
+		}
+		
+		if (living instanceof EntityWolf) {
+			EntityWolf wolf = (EntityTameable) living;
+			map.put("IsAngry", wolf.isAngry());
+			if (((EntityTameable)wolf).isTamed()) {
+				map.put("CollarColor", wolf.getCollarColor());
+			}
+		}
 
 		return map;
 	}
