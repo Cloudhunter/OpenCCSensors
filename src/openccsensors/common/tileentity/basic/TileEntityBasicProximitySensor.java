@@ -60,7 +60,9 @@ public class TileEntityBasicProximitySensor extends TileEntity implements IBasic
 			if (flag) {
 
 				int blockId = OpenCCSensors.Config.basicSensorBlockID;
-				worldObj.notifyBlockChange(xCoord, yCoord, zCoord, blockId);
+
+				worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, output, 3);
+				worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, blockId);
 				worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord - 1, zCoord, blockId);
 				worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord + 1, zCoord, blockId);
 				worldObj.notifyBlocksOfNeighborChange(xCoord - 1, yCoord, zCoord, blockId);

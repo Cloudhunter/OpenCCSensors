@@ -1,0 +1,25 @@
+tile.openccsensors.sensor.name=Sensor
+tile.openccsensors.gauge.name=Messger\u00e4t
+tile.openccsensors.proximitysensor.name=Umgebungssensor
+
+item.openccsensors.inventoryCard.name=Inventar-Sensorkarte
+item.openccsensors.proximityCard.name=Umgebungs-Sensorkarte
+item.openccsensors.tankCard.name=Tank-Sensorkarte
+item.openccsensors.worldCard.name=Welt-Sensorkarte
+item.openccsensors.droppedItemCard.name=Sensorkarte f\u00fcr fallengelassene Gegenst\u00e4nde
+item.openccsensors.signCard.name=Schild-Sensorkarte
+item.openccsensors.minecartCard.name=Loren-Sensorkarte
+item.openccsensors.sonicCard.name=Schall-Sensorkarte
+item.openccsensors.powerCard.name=Energie-Sensorkarte
+item.openccsensors.machineCard.name=Maschinen-Sensorkarte
+item.openccsensors.appliedEnergisticsCard.name=Applied Energistics-Sensorkarte
+item.openccsensors.cropCard.name=Getreide-Sensorkarte
+
+item.openccsensors.rangeExtensionAntenna.name=Reichweitenausdehnungsantenne
+item.openccsensors.signalAmplifier.name=Signalverst\u00e4rker
+item.openccsensors.advancedAmplifier.name=Fortgeschrittener Verst\u00e4rker
+
+gui.openccsensors.sensor=Sensor
+turtle.openccsensors.sensor.adjective=Sensor
+
+itemGroup.tabOpenCCSensors=OpenCCSensors 

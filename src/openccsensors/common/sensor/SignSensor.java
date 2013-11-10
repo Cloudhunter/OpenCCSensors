@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.Icon;
@@ -70,7 +71,7 @@ public class SignSensor extends TileSensor implements ISensor, IRequiresIconLoad
 
 	@Override
 	public ItemStack getUniqueRecipeItem() {
-		return new ItemStack(Block.signPost);
+		return new ItemStack(Item.sign);
 	}
 
 }

@@ -36,19 +36,13 @@ public class InventoryUtils {
 	};
 	
 	public static HashMap itemstackToMap(ItemStack itemstack) {
-
-		HashMap map = new HashMap();
 		
 		if (itemstack == null) {
 
-			map.put("Name", "empty");
-			map.put("Size", 0);
-			map.put("Damagevalue", 0);
-			map.put("MaxStack", 64);
-			return map;
+			return null;
 
 		} else {
-
+			HashMap map = new HashMap();
 			map.put("Name", getNameForItemStack(itemstack));			
 			map.put("RawName", getRawNameForStack(itemstack));
 			map.put("Size", itemstack.stackSize);
@@ -61,9 +55,9 @@ public class InventoryUtils {
 				}
 			}
 
+			return map;
 		}
 
-		return map;
 	}
 	
 	protected static HashMap getBookEnchantments(ItemStack stack) {

@@ -1,10 +1,15 @@
 package universalelectricity.core.path;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import universalelectricity.core.block.IConductor;
 import universalelectricity.core.block.IConnectionProvider;
+import universalelectricity.core.vector.Vector3;
 
 /**
  * Check if a conductor connects with another.
@@ -14,29 +19,39 @@ import universalelectricity.core.block.IConnectionProvider;
  */
 public class PathfinderChecker extends Pathfinder
 {
-	public PathfinderChecker(final IConnectionProvider targetConnector, final IConnectionProvider... ignoreConnector)
+	public PathfinderChecker(final World world, final IConnectionProvider targetConnector, final IConnectionProvider... ignoreConnector)
 	{
 		super(new IPathCallBack()
 		{
 			@Override
-			public boolean isValidNode(Pathfinder finder, ForgeDirection direction, IConnectionProvider provider, IConnectionProvider connectedBlock)
+			public Set<Vector3> getConnectedNodes(Pathfinder finder, Vector3 currentNode)
 			{
-				if (connectedBlock instanceof IConductor && !Arrays.asList(ignoreConnector).contains(connectedBlock))
+				Set<Vector3> neighbors = new HashSet<Vector3>();
+
+				for (int i = 0; i < 6; i++)
 				{
-					if (((IConductor) connectedBlock).canConnect(direction.getOpposite()))
+					ForgeDirection direction = ForgeDirection.getOrientation(i);
+					Vector3 position = currentNode.clone().modifyPositionFromSide(direction);
+					TileEntity connectedBlock = position.getTileEntity(world);
+
+					if (connectedBlock instanceof IConductor && !Arrays.asList(ignoreConnector).contains(connectedBlock))
 					{
-						return true;
+						if (((IConductor) connectedBlock).canConnect(direction.getOpposite()))
+						{
+							neighbors.add(position);
+						}
 					}
 				}
-				return false;
+
+				return neighbors;
 			}
 
 			@Override
-			public boolean onSearch(Pathfinder finder, IConnectionProvider provider)
+			public boolean onSearch(Pathfinder finder, Vector3 node)
 			{
-				if (provider == targetConnector)
+				if (node.getTileEntity(world) == targetConnector)
 				{
-					finder.results.add(provider);
+					finder.results.add(node);
 					return true;
 				}
 
