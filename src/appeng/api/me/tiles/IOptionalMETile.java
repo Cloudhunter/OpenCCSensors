@@ -5,6 +5,10 @@ package appeng.api.me.tiles;
  */
 public interface IOptionalMETile {
 	
+	/**
+	 * if false, the signal will not propigate via this tile, remember to use connectivity events.
+	 * @return
+	 */
 	public boolean isEnabled();
 	
 }

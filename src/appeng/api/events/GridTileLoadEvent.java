@@ -1,12 +1,14 @@
 package appeng.api.events;
 
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.WorldEvent;
 import appeng.api.WorldCoord;
 import appeng.api.me.tiles.IGridTileEntity;
 
-public class GridTileLoadEvent extends WorldEvent {
+/**
+ * A Tile has been added to the world, and should be evaluated for Network Connectivity.
+ */
+public class GridTileLoadEvent extends AEWorldEvent {
 	
 	public WorldCoord coord;
 	public IGridTileEntity te;

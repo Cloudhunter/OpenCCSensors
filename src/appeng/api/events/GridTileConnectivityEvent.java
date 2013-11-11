@@ -5,7 +5,10 @@ import net.minecraftforge.event.world.WorldEvent;
 import appeng.api.WorldCoord;
 import appeng.api.me.tiles.IGridTileEntity;
 
-public class GridTileConnectivityEvent extends WorldEvent {
+/**
+ * The network has changed, and must be updated.
+ */
+public class GridTileConnectivityEvent extends AEWorldEvent {
 	
 	public WorldCoord coord;
 	public IGridTileEntity te;

@@ -21,6 +21,7 @@ public class DimentionalCoord extends WorldCoord
 		dimId = _w.getWorldInfo().getDimension();
 	}
 	
+	@Override
 	public DimentionalCoord copy()
 	{
 		return new DimentionalCoord( this );
