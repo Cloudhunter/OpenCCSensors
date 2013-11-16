@@ -7,6 +7,9 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.passive.EntityTameable;
+import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumMovingObjectType;
@@ -53,7 +56,7 @@ public class EntityUtils {
 	}
 
 	
-	public static HashMap livingToMap(EntityLiving living, Vec3 sensorPos, boolean additional) {
+	public static HashMap livingToMap(EntityLivingBase living, Vec3 sensorPos, boolean additional) {
 		HashMap map = new HashMap();
 		
 		HashMap position = new HashMap();
@@ -79,8 +82,6 @@ public class EntityUtils {
 			map.put("Armour", armour);
 			map.put("Health", living.getHealth());
 			map.put("IsAirborne", living.isAirBorne);
-			map.put("IsJumping", living.isJumping);
-			map.put("IsBlocking", living.isBlocking());
 			map.put("IsBurning", living.isBurning());
 			map.put("IsAlive", living.isEntityAlive());
 			map.put("IsInWater", living.isInWater());
@@ -91,7 +92,6 @@ public class EntityUtils {
 			map.put("IsSprinting", living.isSprinting());
 			map.put("IsWet", living.isWet());
 			map.put("IsChild", living.isChild());
-			map.put("IsHome", living.isWithinHomeDistanceCurrentPosition());
 			map.put("Yaw", living.rotationYaw);
 			map.put("Pitch", living.rotationPitch);
 			map.put("YawHead", living.rotationYawHead);
@@ -109,6 +109,7 @@ public class EntityUtils {
 		if (living instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) living;
 			map.put("Username", player.username);
+			map.put("IsBlocking", player.isBlocking());
 			map.put("ExperienceTotal", player.experienceTotal);
 			map.put("ExperienceLevel", player.experienceLevel);
 			map.put("Experience", player.experience);
@@ -120,7 +121,7 @@ public class EntityUtils {
 		        Vec3 posVec = player.worldObj.getWorldVec3Pool().getVecFromPool(player.posX, player.posY + 1.62F, player.posZ);
 		        Vec3 lookVec = player.getLook(1.0f);
 		        Vec3 targetVec = posVec.addVector(lookVec.xCoord * 10f, lookVec.yCoord * 10f, lookVec.zCoord * 10f);
-		        MovingObjectPosition mop = player.worldObj.rayTraceBlocks(posVec, targetVec);
+		        MovingObjectPosition mop = player.worldObj.clip(posVec, targetVec);
 		        map.put("IsLookingAtBlock", mop.typeOfHit == EnumMovingObjectType.TILE);
 		        if (mop.typeOfHit == EnumMovingObjectType.TILE) {
 		        	int blockId = player.worldObj.getBlockId(mop.blockX, mop.blockY, mop.blockZ);
@@ -142,15 +143,16 @@ public class EntityUtils {
 			if (tameable.isTamed()) {
 				map.put("OwnerName", tameable.getOwnerName());
 			}
-		}
-		
-		if (living instanceof EntityWolf) {
-			EntityWolf wolf = (EntityTameable) living;
-			map.put("IsAngry", wolf.isAngry());
-			if (((EntityTameable)wolf).isTamed()) {
-				map.put("CollarColor", wolf.getCollarColor());
+			if (tameable instanceof EntityWolf) {
+				EntityWolf wolf = (EntityWolf) tameable;
+				map.put("IsAngry", wolf.isAngry());
+				if (((EntityTameable)wolf).isTamed()) {
+					map.put("CollarColor", wolf.getCollarColor());
+				}
 			}
 		}
+		
+		
 
 		return map;
 	}

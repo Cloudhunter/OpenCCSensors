@@ -3,6 +3,13 @@ package openccsensors.common.util;
 import java.util.HashMap;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTankInfo;
+import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.liquids.ILiquidTank;
 import net.minecraftforge.liquids.ITankContainer;
 import net.minecraftforge.liquids.LiquidStack;
@@ -11,31 +18,31 @@ import openccsensors.common.util.InventoryUtils;
 
 public class TankUtils {
 
-	public static HashMap tankContainerToMap(ITankContainer container) {
+	public static HashMap fluidHandlerToMap(IFluidHandler container) {
 		
-		ILiquidTank[] tanks = container.getTanks(ForgeDirection.UNKNOWN);
+		FluidTankInfo[] tanks = container.getTankInfo(ForgeDirection.UNKNOWN);
 		
 		HashMap allTanks = new HashMap();
 		int i = 0;
 		try {
 			if (tanks != null) {
-				for (ILiquidTank tank : tanks) {
+				for (FluidTankInfo tank : tanks) {
 					
 					HashMap tankMap = new HashMap();
-					tankMap.put("Capacity", tank.getCapacity());
+					tankMap.put("Capacity", tank.capacity);
 					tankMap.put("Amount", 0);
 					
-					LiquidStack stack = tank.getLiquid();
+					FluidStack stack = tank.fluid;
 
 					if (stack != null) {
-						ItemStack istack = stack.asItemStack();
-						if (istack != null) {
-							if (istack.getItem() != null) {
-								tankMap.put("Name", InventoryUtils.getNameForItemStack(istack));
-								tankMap.put("RawName", InventoryUtils.getRawNameForStack(istack));
-								tankMap.put("Amount", stack.amount);
-							}
-						}
+						Fluid fluid = stack.getFluid();
+						tankMap.put("Name", FluidRegistry.getFluidName(stack));
+						tankMap.put("RawName", fluid.getUnlocalizedName());
+						tankMap.put("Amount", stack.amount);
+						tankMap.put("Luminousity", fluid.getLuminosity());
+						tankMap.put("Temperature", fluid.getTemperature());
+						tankMap.put("Viscosity", fluid.getViscosity());
+						tankMap.put("IsGaseous", fluid.isGaseous());
 					}
 					allTanks.put(++i, tankMap);
 				}

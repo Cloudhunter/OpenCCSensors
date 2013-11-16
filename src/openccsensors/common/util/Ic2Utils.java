@@ -69,7 +69,7 @@ public class Ic2Utils {
 			int heat = reactor.getHeat();
 			response.put("Heat", heat);
 			response.put("MaxHeat", maxHeat);
-			response.put("Output", reactor.getReactorEngeryOutput() * IC2Reactor.getEUOutput());
+			response.put("Output", reactor.getReactorEnergyOutput() * IC2Reactor.getEUOutput());
 			response.put("Active", reactor.produceEnergy());
 			response.put("HeatPercentage", 0);
 			if (maxHeat > 0) {

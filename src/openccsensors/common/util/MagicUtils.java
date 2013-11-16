@@ -1,11 +1,12 @@
 package openccsensors.common.util;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-import mithion.arsmagica.api.power.IPowerIntegration;
+import am2.api.power.IPowerIntegration;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
@@ -29,10 +30,11 @@ public class MagicUtils {
 		}
 
 		if (obj instanceof IAspectContainer) {
-			IAspectContainer aspectContainer = (IAspectContainer) obj
-			AspectList aspectList = aspectContainer.getAspects()
-			for (Map.Entry<Aspect, Integer> entry : aspectList.aspects) {
-				response.put(entry.getKey().getName(), entry.getValue())
+			IAspectContainer aspectContainer = (IAspectContainer) obj;
+			AspectList aspectList = aspectContainer.getAspects();
+			Aspect[] aspects = aspectList.getAspects();
+			for (int i = 0; i < aspectList.size(); i++) {
+				response.put(aspects[i].getName(), aspectList.getAmount(aspects[i]));
 			}
 		}
 		return response;
@@ -46,7 +48,7 @@ public class MagicUtils {
 		}
 
 		if (obj instanceof IPowerIntegration) {
-			powerObj = (IPowerIntegration) obj;
+			IPowerIntegration powerObj = (IPowerIntegration) obj;
 			response.put("EssenceCharge", powerObj.getCharge());
 			response.put("EssenceCapacity", powerObj.getCapacity());
 			response.put("EssenceDeficit", powerObj.getDefecit());
