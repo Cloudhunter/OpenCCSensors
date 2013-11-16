@@ -13,7 +13,7 @@ public class AppEngTileMissingException extends Exception {
 	public void printStackTrace() {
 		try
 		{
-			FMLLog.info( "[AppEng] Missing Tile at "+dc.x+", "+dc.y+", "+dc.z+" in +"+dc.getWorld().getWorldInfo().getDimension() );
+			FMLLog.info( "[AppEng] Missing Tile at "+dc.x+", "+dc.y+", "+dc.z+" in +"+dc.getWorld().getWorldInfo().getVanillaDimension() );
 		}
 		catch( Throwable _ )
 		{
