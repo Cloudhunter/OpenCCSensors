@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 import openccsensors.api.ISensorEnvironment;
 import openccsensors.common.peripheral.PeripheralSensor;
 import dan200.computer.api.IComputerAccess;
+import dan200.computer.api.ILuaContext;
 import dan200.computer.api.IPeripheral;
 
 public class TileEntitySensor extends TileEntity implements ISensorEnvironment,
@@ -54,13 +55,13 @@ IPeripheral, IInventory {
 		packet.zPosition = zCoord;
 		NBTTagCompound nbt = new NBTTagCompound();
 		writeToNBT(nbt);
-		packet.customParam1 = nbt;
+		packet.data = nbt;
 		return packet;
 	}	
 	
 	@Override
 	public void onDataPacket(INetworkManager net, Packet132TileEntityData pkt) {
-		readFromNBT(pkt.customParam1);
+		readFromNBT(pkt.data);
 	}
 	
 	@Override
@@ -147,9 +148,8 @@ IPeripheral, IInventory {
 	}
 
 	@Override
-	public Object[] callMethod(IComputerAccess computer, int method,
-			Object[] arguments) throws Exception {
-		return peripheral.callMethod(computer, method, arguments);
+	public Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments) throws Exception {
+		return peripheral.callMethod(computer, context, method, arguments);
 	}
 
 	@Override
@@ -194,7 +194,7 @@ IPeripheral, IInventory {
 	}
 
 	@Override
-	public boolean isStackValidForSlot(int i, ItemStack itemstack) {
+	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
 		// TODO Auto-generated method stub
 		return true;
 	}

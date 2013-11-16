@@ -18,9 +18,10 @@ public class DimentionalCoord extends WorldCoord
 	{
 		super(_x, _y, _z);
 		w = _w;
-		dimId = _w.getWorldInfo().getDimension();
+		dimId = _w.getWorldInfo().getVanillaDimension();
 	}
 	
+	@Override
 	public DimentionalCoord copy()
 	{
 		return new DimentionalCoord( this );

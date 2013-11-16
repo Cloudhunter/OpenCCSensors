@@ -18,8 +18,11 @@ import openccsensors.common.item.ItemSensorCard;
 import openccsensors.common.util.CallbackEventManager;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.ModContainer;
+import dan200.computer.api.ComputerCraftAPI;
 import dan200.computer.api.IComputerAccess;
 import dan200.computer.api.IHostedPeripheral;
+import dan200.computer.api.ILuaContext;
+import dan200.computer.api.IMount;
 
 public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 
@@ -228,12 +231,17 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 
 	@Override
 	public void attach(IComputerAccess computer) {
-		ModContainer container = FMLCommonHandler.instance().findContainerFor(OpenCCSensors.instance);
-		computer.mountFixedDir("ocs", String.format("mods/OCSLua/%s/lua", container.getVersion()), true, 0);
+		//ModContainer container = FMLCommonHandler.instance().findContainerFor(OpenCCSensors.instance);
+		IMount mount = ComputerCraftAPI.createResourceMount(OpenCCSensors.class, "openccsensors", "lua/");
+		if (mount != null) { 
+			computer.mount("ocs", mount);
+		} else {
+			System.out.println("Could Not Mount Resources!");
+		}
 	}
 
 	@Override
-	public Object[] callMethod(IComputerAccess computer, int method,
+	public Object[] callMethod(IComputerAccess computer, ILuaContext context, int method,
 			Object[] arguments) throws Exception {
 
 		return new Object[] {

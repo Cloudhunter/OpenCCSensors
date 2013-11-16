@@ -6,14 +6,14 @@ import java.util.Map;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import universalelectricity.core.block.IConductor;
-import universalelectricity.core.block.IElectricityStorage;
-import universalelectricity.core.block.IVoltage;
+import universalelectricity.core.block.IElectrical;
+import universalelectricity.core.block.IElectricalStorage;
 
 public class UniversalElectricityUtils {
 
 	public static boolean isValidTarget(TileEntity target) {
-		return target instanceof IVoltage ||
-			   target instanceof IElectricityStorage ||
+		return target instanceof IElectrical ||
+			   target instanceof IElectricalStorage ||
 			   target instanceof IConductor;
 	}
 
@@ -21,13 +21,13 @@ public class UniversalElectricityUtils {
 		HashMap response = new HashMap();
 		
 		if (additional) {
-			if (obj instanceof IVoltage) {
-				response.put("Voltage", ((IVoltage)obj).getVoltage());
+			if (obj instanceof IElectrical) {
+				response.put("Voltage", ((IElectrical)obj).getVoltage());
 			}
 			
-			if (obj instanceof IElectricityStorage) {
-				double joules = ((IElectricityStorage)obj).getJoules();
-				double maxJoules = ((IElectricityStorage)obj).getMaxJoules();
+			if (obj instanceof IElectricalStorage) {
+				double joules = ((IElectricalStorage)obj).getEnergyStored();
+				double maxJoules = ((IElectricalStorage)obj).getMaxEnergyStored();
 				response.put("Stored", joules);
 				response.put("MaxStorage", maxJoules);
 				if (maxJoules > 0) {
@@ -38,7 +38,7 @@ public class UniversalElectricityUtils {
 			}
 			
 			if (obj instanceof IConductor) {
-				response.put("ConductorCapacity", ((IConductor)obj).getCurrentCapcity());
+				response.put("ConductorCapacity", ((IConductor)obj).getCurrentCapacity());
 				response.put("Resistance", ((IConductor)obj).getResistance());
 			}
 			

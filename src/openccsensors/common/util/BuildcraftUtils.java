@@ -3,8 +3,10 @@ package openccsensors.common.util;
 import java.util.HashMap;
 
 import net.minecraft.world.World;
-import buildcraft.api.power.IPowerProvider;
+import net.minecraftforge.common.ForgeDirection;
 import buildcraft.api.power.IPowerReceptor;
+import buildcraft.api.power.PowerHandler;
+import buildcraft.api.power.PowerHandler.PowerReceiver;
 
 public class BuildcraftUtils {
 	
@@ -16,13 +18,13 @@ public class BuildcraftUtils {
 		HashMap response = new HashMap();
 		if (obj instanceof IPowerReceptor) {
 			IPowerReceptor receptor = (IPowerReceptor) obj;
-			IPowerProvider provider = receptor.getPowerProvider();
-			if (provider != null) {
-				response.put("ActivationEnergy", provider.getActivationEnergy());
-				response.put("EnergyStored", provider.getEnergyStored());
-				response.put("MaxEnergyReceived", provider.getMaxEnergyReceived());
-				response.put("MaxEnergyStored", provider.getMaxEnergyStored());
-				response.put("MinEnergyReceived", provider.getMinEnergyReceived());
+			PowerReceiver receiver = receptor.getPowerReceiver(ForgeDirection.UNKNOWN);
+			if (receiver != null) {
+				response.put("ActivationEnergy", receiver.getActivationEnergy());
+				response.put("EnergyStored", receiver.getEnergyStored());
+				response.put("MaxEnergyReceived", receiver.getMaxEnergyReceived());
+				response.put("MaxEnergyStored", receiver.getMaxEnergyStored());
+				response.put("MinEnergyReceived", receiver.getMinEnergyReceived());
 			}
 		}
 		return response;

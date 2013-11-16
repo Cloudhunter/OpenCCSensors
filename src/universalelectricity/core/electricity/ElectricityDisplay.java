@@ -5,9 +5,12 @@ package universalelectricity.core.electricity;
  * 
  * @author Calclavia
  */
-
 public class ElectricityDisplay
 {
+	/**
+	 * Universal Electricity's units are in KILOJOULES, KILOWATTS and KILOVOLTS. Try to make your
+	 * energy ratio as close to real life as possible.
+	 */
 	public static enum ElectricUnit
 	{
 		AMPERE("Amp", "I"), AMP_HOUR("Amp Hour", "Ah"), VOLTAGE("Volt", "V"), WATT("Watt", "W"),
@@ -29,25 +32,32 @@ public class ElectricityDisplay
 		}
 	}
 
+	/** Metric system of measurement. */
 	public static enum MeasurementUnit
 	{
-		MICRO("Micro", "mi", 0.000001), MILLI("Milli", "m", 0.001), KILO("Kilo", "k", 1000),
-		MEGA("Mega", "M", 1000000);
+		MICRO("Micro", "u", 0.000001f), MILLI("Milli", "m", 0.001f), BASE("", "", 1),
+		KILO("Kilo", "k", 1000f), MEGA("Mega", "M", 1000000f), GIGA("Giga", "G", 1000000000f),
+		TERA("Tera", "T", 1000000000000f), PETA("Peta", "P", 1000000000000000f),
+		EXA("Exa", "E", 1000000000000000000f), ZETTA("Zetta", "Z", 1000000000000000000000f),
+		YOTTA("Yotta", "Y", 1000000000000000000000000f);
 
+		/** long name for the unit */
 		public String name;
+		/** short unit version of the unit */
 		public String symbol;
-		public double value;
+		/** Point by which a number is consider to be of this unit */
+		public float value;
 
-		private MeasurementUnit(String name, String symbol, double value)
+		private MeasurementUnit(String name, String symbol, float value)
 		{
 			this.name = name;
 			this.symbol = symbol;
 			this.value = value;
 		}
 
-		public String getName(boolean isSymbol)
+		public String getName(boolean getShort)
 		{
-			if (isSymbol)
+			if (getShort)
 			{
 				return symbol;
 			}
@@ -57,18 +67,46 @@ public class ElectricityDisplay
 			}
 		}
 
+		/** Divides the value by the unit value start */
 		public double process(double value)
 		{
 			return value / this.value;
 		}
+
+		/** Checks if a value is above the unit value start */
+		public boolean isAbove(float value)
+		{
+			return value > this.value;
+		}
+
+		/** Checks if a value is lower than the unit value start */
+		public boolean isBellow(float value)
+		{
+			return value < this.value;
+		}
+	}
+
+	/** By default, mods should store energy in Kilo-Joules, hence a multiplier of 1/1000. */
+	public static String getDisplay(float value, ElectricUnit unit, int decimalPlaces, boolean isShort)
+	{
+		return getDisplay(value, unit, decimalPlaces, isShort, 1000);
 	}
 
 	/**
-	 * Displays the unit as text. Works only for positive numbers.
+	 * Displays the unit as text. Does handle negative numbers, and will place a negative sign in
+	 * front of the output string showing this. Use string.replace to remove the negative sign if
+	 * unwanted
 	 */
-	public static String getDisplay(double value, ElectricUnit unit, int decimalPlaces, boolean isShort)
+	public static String getDisplay(float value, ElectricUnit unit, int decimalPlaces, boolean isShort, float multiplier)
 	{
 		String unitName = unit.name;
+		String prefix = "";
+		if (value < 0)
+		{
+			value = Math.abs(value);
+			prefix = "-";
+		}
+		value *= multiplier;
 
 		if (isShort)
 		{
@@ -83,46 +121,46 @@ public class ElectricityDisplay
 		{
 			return value + " " + unitName;
 		}
-
-		if (value <= MeasurementUnit.MILLI.value)
+		else
 		{
-			return roundDecimals(MeasurementUnit.MICRO.process(value), decimalPlaces) + " " + MeasurementUnit.MICRO.getName(isShort) + unitName;
+			for (int i = 0; i < MeasurementUnit.values().length; i++)
+			{
+				MeasurementUnit lowerMeasure = MeasurementUnit.values()[i];
+				if (lowerMeasure.isBellow(value) && lowerMeasure.ordinal() == 0)
+				{
+					return prefix + roundDecimals(lowerMeasure.process(value), decimalPlaces) + " " + lowerMeasure.getName(isShort) + unitName;
+				}
+				if (lowerMeasure.ordinal() + 1 >= MeasurementUnit.values().length)
+				{
+					return prefix + roundDecimals(lowerMeasure.process(value), decimalPlaces) + " " + lowerMeasure.getName(isShort) + unitName;
+				}
+				MeasurementUnit upperMeasure = MeasurementUnit.values()[i + 1];
+				if ((lowerMeasure.isAbove(value) && upperMeasure.isBellow(value)) || lowerMeasure.value == value)
+				{
+					return prefix + roundDecimals(lowerMeasure.process(value), decimalPlaces) + " " + lowerMeasure.getName(isShort) + unitName;
+				}
+			}
 		}
 
-		if (value < 1)
-		{
-			return roundDecimals(MeasurementUnit.MILLI.process(value), decimalPlaces) + " " + MeasurementUnit.MILLI.getName(isShort) + unitName;
-		}
-
-		if (value > MeasurementUnit.MEGA.value)
-		{
-			return roundDecimals(MeasurementUnit.MEGA.process(value), decimalPlaces) + " " + MeasurementUnit.MEGA.getName(isShort) + unitName;
-		}
-
-		if (value > MeasurementUnit.KILO.value)
-		{
-			return roundDecimals(MeasurementUnit.KILO.process(value), decimalPlaces) + " " + MeasurementUnit.KILO.getName(isShort) + unitName;
-		}
-
-		return roundDecimals(value, decimalPlaces) + " " + unitName;
+		return prefix + roundDecimals(value, decimalPlaces) + " " + unitName;
 	}
 
-	public static String getDisplay(double value, ElectricUnit unit)
+	public static String getDisplay(float value, ElectricUnit unit)
 	{
 		return getDisplay(value, unit, 2, false);
 	}
 
-	public static String getDisplayShort(double value, ElectricUnit unit)
+	public static String getDisplayShort(float value, ElectricUnit unit)
 	{
 		return getDisplay(value, unit, 2, true);
 	}
 
-	public static String getDisplayShort(double value, ElectricUnit unit, int decimalPlaces)
+	public static String getDisplayShort(float value, ElectricUnit unit, int decimalPlaces)
 	{
 		return getDisplay(value, unit, decimalPlaces, true);
 	}
 
-	public static String getDisplaySimple(double value, ElectricUnit unit, int decimalPlaces)
+	public static String getDisplaySimple(float value, ElectricUnit unit, int decimalPlaces)
 	{
 		if (value > 1)
 		{

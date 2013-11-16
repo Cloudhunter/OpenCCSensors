@@ -2,13 +2,14 @@ package openccsensors.client.renderer.tileentity;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.RenderEngine;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import openccsensors.OpenCCSensors;
 import openccsensors.client.model.ModelSensor;
 import openccsensors.common.item.ItemSensorCard;
@@ -29,7 +30,7 @@ public class TileEntitySensorRenderer extends TileEntitySpecialRenderer {
 		TileEntitySensor sensor = (TileEntitySensor) tileEntity;
 		GL11.glPushMatrix();
 			GL11.glTranslatef((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.5F);
-			this.bindTextureByName(String.format("%s/models/sensor.png", OpenCCSensors.TEXTURE_PATH));
+			this.bindTexture(new ResourceLocation("openccsensors", "textures/models/sensor.png"));
 			int rotation = (int) sensor.getRotation();
 			GL11.glPushMatrix();
 			this.modelSensor.renderSensor(rotation);
@@ -43,7 +44,7 @@ public class TileEntitySensorRenderer extends TileEntitySpecialRenderer {
 				GL11.glRotatef(90.0F, 1, 0, 0);
 				GL11.glTranslatef(-8.0f, 4.0f, 12.0f);
 				renderItem = ((RenderItem) RenderManager.instance.getEntityClassRenderObject(EntityItem.class));
-			    RenderEngine re = Minecraft.getMinecraft().renderEngine;
+			    TextureManager re = Minecraft.getMinecraft().renderEngine;
 			    FontRenderer fr = getFontRenderer();
 				renderItem.renderItemIntoGUI(fr, re, sensorCardStack, 0, 0);
 

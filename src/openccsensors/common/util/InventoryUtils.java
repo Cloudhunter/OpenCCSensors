@@ -138,10 +138,6 @@ public class InventoryUtils {
 		try {
 			name = is.getDisplayName();
 		} catch (Exception e) {
-			try {
-				name = is.getItemName();
-			} catch (Exception e2) {
-			}
 		}
 		return name;
 	}
@@ -151,7 +147,7 @@ public class InventoryUtils {
 		String rawName = "unknown";
 
 		try {
-			rawName = is.getItemName().toLowerCase();
+			rawName = is.getDisplayName().toLowerCase();
 		} catch (Exception e) {
 		}
 		try {

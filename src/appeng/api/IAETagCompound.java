@@ -9,9 +9,24 @@ import net.minecraft.nbt.NBTBase;
  */
 public interface IAETagCompound {
 	
+	/**
+	 * Create a copy ( the copy will not be a IAETagCompount, it will be a NBTTagCompound. )
+	 * @return
+	 */
 	NBTBase copy();
-
+	
+	/**
+	 * compare to other NBTTagCompounds or IAETagCompounds
+	 * @param a
+	 * @return true, if they are the same.
+	 */
 	@Override
-	boolean equals( Object a ); // compare to other TagCompounds or IAETagCompounds
+	boolean equals( Object a );
+	
+	/**
+	 * returns the special comparison for this tag.
+	 * @return
+	 */
+	IItemComparison getSpecialComparison();
 	
 }

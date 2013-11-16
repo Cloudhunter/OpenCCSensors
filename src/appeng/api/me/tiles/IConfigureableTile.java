@@ -8,6 +8,9 @@ import java.util.List;
 public interface IConfigureableTile {
 	
 	/** Switches configuration to next option... ( returns new configuration. ) */
+	String prevConfiguration(String name);
+	
+	/** Switches configuration to next option... ( returns new configuration. ) */
 	String nextConfiguration(String name); 
 	
 	/** Gets a list off all the configurations... */
@@ -21,6 +24,5 @@ public interface IConfigureableTile {
 	
 	/** The the current value for a configuration. */
 	String getConfiguration(String name);
-
-
+	
 }
