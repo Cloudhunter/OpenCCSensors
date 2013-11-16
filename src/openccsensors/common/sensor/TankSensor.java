@@ -11,6 +11,8 @@ import net.minecraft.util.Icon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.fluids.FluidTankInfo;
+import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.liquids.ILiquidTank;
 import net.minecraftforge.liquids.ITankContainer;
 import net.minecraftforge.liquids.LiquidStack;
@@ -27,8 +29,8 @@ public class TankSensor extends TileSensor implements ISensor, IRequiresIconLoad
 
 	@Override
 	public boolean isValidTarget(Object tile) {
-		if (tile instanceof ITankContainer) {
-			ILiquidTank[] tanks = ((ITankContainer)tile).getTanks(ForgeDirection.UNKNOWN);
+		if (tile instanceof IFluidHandler) {
+			FluidTankInfo[] tanks = ((IFluidHandler)tile).getTankInfo(ForgeDirection.UNKNOWN);
 			return tanks.length > 0;
 		} else if (ModLoader.isModLoaded("Railcraft") && tile instanceof TileEntity) {
 			return RailcraftUtils.isTankTile((TileEntity)tile);
@@ -40,7 +42,7 @@ public class TankSensor extends TileSensor implements ISensor, IRequiresIconLoad
 	public HashMap getDetails(World world, Object obj, Vec3 sensorPos, boolean additional) {
 		TileEntity tile = (TileEntity) obj;
 		HashMap response = super.getDetails(tile, sensorPos);
-		response.put("Tanks", TankUtils.tankContainerToMap((ITankContainer)tile));
+		response.put("Tanks", TankUtils.fluidHandlerToMap((IFluidHandler)tile));
 		return response;
 	}
 	

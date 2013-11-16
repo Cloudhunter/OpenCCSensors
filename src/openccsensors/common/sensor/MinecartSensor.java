@@ -12,6 +12,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.liquids.ITankContainer;
 import openccsensors.api.IRequiresIconLoading;
 import openccsensors.api.ISensor;
 import openccsensors.api.ISensorTier;
@@ -44,8 +46,8 @@ public class MinecartSensor implements ISensor, IRequiresIconLoading {
 			response.put("Slots", InventoryUtils.invToMap((IInventory)minecart));
 		}
 
-		if (minecart instanceof ITankContainer) {
-			response.put("Tanks", TankUtils.tankContainerToMap(ITankContainer)minecart));
+		if (minecart instanceof IFluidHandler) {
+			response.put("Tanks", TankUtils.fluidHandlerToMap((IFluidHandler)minecart));
 		}
 		
 		if (minecart.riddenByEntity != null && minecart.riddenByEntity instanceof EntityLiving) {

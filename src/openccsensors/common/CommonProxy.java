@@ -41,7 +41,6 @@ import openccsensors.common.util.ResourceExtractingUtils;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.relauncher.FMLRelauncher;
 import dan200.turtle.api.TurtleAPI;
 
 public class CommonProxy {
@@ -154,7 +153,7 @@ public class CommonProxy {
 				String url = String.format(
 						"http://www.openccsensors.info/analytics?version=%s&side=%s&forge=%s",
 						URLEncoder.encode(container.getVersion(), charset),
-						URLEncoder.encode(FMLRelauncher.side(), charset),
+						//URLEncoder.encode(FMLRelauncher.side(), charset),
 						URLEncoder.encode(ForgeVersion.getVersion(), charset)
 				);
 				URLConnection connection = new URL(url).openConnection();

@@ -11,11 +11,15 @@ import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.common.ForgeDirection;
+import openccsensors.OpenCCSensors;
 import openccsensors.api.IGaugeSensor;
 import openccsensors.api.IMethodCallback;
 import openccsensors.common.util.CallbackEventManager;
 import openccsensors.common.util.OCSLog;
+import dan200.computer.api.ComputerCraftAPI;
 import dan200.computer.api.IComputerAccess;
+import dan200.computer.api.ILuaContext;
+import dan200.computer.api.IMount;
 import dan200.computer.api.IPeripheral;
 
 public class TileEntityGauge extends TileEntity implements IPeripheral {
@@ -78,12 +82,12 @@ public class TileEntityGauge extends TileEntity implements IPeripheral {
 		packet.zPosition = zCoord;
 		NBTTagCompound nbt = new NBTTagCompound();
 		writeToNBT(nbt);
-		packet.customParam1 = nbt;
+		packet.data = nbt;
 		return packet;
 	}
 	@Override
 	public void onDataPacket(INetworkManager net, Packet132TileEntityData pkt) {
-		readFromNBT(pkt.customParam1);
+		readFromNBT(pkt.data);
 	}
 
 	@Override
@@ -119,7 +123,7 @@ public class TileEntityGauge extends TileEntity implements IPeripheral {
 	}
 
 	@Override
-	public Object[] callMethod(IComputerAccess computer, int method,
+	public Object[] callMethod(IComputerAccess computer, ILuaContext context, int method,
 			Object[] arguments) throws Exception {
 		return new Object[] {
 				eventManager.queueMethodCall(computer, method, arguments)
@@ -133,7 +137,8 @@ public class TileEntityGauge extends TileEntity implements IPeripheral {
 
 	@Override
 	public void attach(IComputerAccess computer) {
-		computer.mountFixedDir("ocs", "mods/OCSLua/lua", true, 0);
+		IMount mount = ComputerCraftAPI.createResourceMount(OpenCCSensors.class, "openccsensors", "openccsensors/mods/OCSLua/lua");
+		computer.mount("ocs", mount);
 	}
 
 	@Override

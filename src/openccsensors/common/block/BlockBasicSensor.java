@@ -20,6 +20,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -146,7 +147,7 @@ public class BlockBasicSensor extends BlockContainer {
 	}
 	
 	@Override
-	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving player, ItemStack itemStack) {
+	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack itemStack) {
 		TileEntity tile = world.getBlockTileEntity(x,  y,  z);
 		if (tile != null && tile instanceof TileEntityBasicProximitySensor) {
 			((TileEntityBasicProximitySensor) tile).setOwner(player.getEntityName());

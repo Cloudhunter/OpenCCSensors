@@ -8,6 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
@@ -72,7 +73,7 @@ public class ProximitySensor implements ISensor, IRequiresIconLoading {
 	}
 
 	public double getDistanceToNearestEntity(World world, Vec3 location, int mode, String owner) {
-		Class klazz = EntityLiving.class;
+		Class klazz = EntityLivingBase.class;
 		
 		if (mode == MODE_PLAYERS || mode == MODE_OWNER) {
 			klazz = EntityPlayer.class;
@@ -89,7 +90,7 @@ public class ProximitySensor implements ISensor, IRequiresIconLoading {
 		
 		double closestDistance = Double.MAX_VALUE;
 		Vec3 livingPos = Vec3.createVectorHelper(0, 0, 0);
-		for (EntityLiving current : (List<EntityLiving>) list) {
+		for (EntityLivingBase current : (List<EntityLivingBase>) list) {
 			if (mode == MODE_OWNER && !current.getEntityName().equals(owner)) {
 				continue;
 			}

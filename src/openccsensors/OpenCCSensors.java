@@ -34,7 +34,7 @@ import cpw.mods.fml.common.network.NetworkMod;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
-@Mod( modid = "OCS", name = "OpenCCSensors", version = "1.5.2.0", dependencies = "required-after:ComputerCraft;after:CCTurtle;after:BuildCraft|Core;after:IC2;after:Thaumcraft;after:AppliedEnergistics")
+@Mod( modid = "OCS", name = "OpenCCSensors", version = "1.6.4.0", dependencies = "required-after:ComputerCraft;after:CCTurtle;after:BuildCraft|Core;after:IC2;after:Thaumcraft;after:AppliedEnergistics")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class OpenCCSensors {
 
@@ -127,7 +127,7 @@ public class OpenCCSensors {
 	public void preInit( FMLPreInitializationEvent evt )
 	{
 
-		RESOURCE_PATH = "/mods/openccsensors";
+		RESOURCE_PATH = "/assets/openccsensors";
 		LUA_PATH = String.format("%s/lua", RESOURCE_PATH);
 		LANGUAGE_PATH = String.format("%s/languages", RESOURCE_PATH);
 		TEXTURE_PATH = String.format("%s/textures", RESOURCE_PATH);

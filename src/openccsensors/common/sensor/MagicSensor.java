@@ -15,7 +15,7 @@ import openccsensors.api.ISensor;
 import openccsensors.api.ISensorTier;
 import openccsensors.common.util.MagicUtils;
 
-public class MagicSensor extends TileSensor implements ISensor, IRequiresIconLoading, {
+public class MagicSensor extends TileSensor implements ISensor, IRequiresIconLoading {
 
 	private Icon icon;
 
