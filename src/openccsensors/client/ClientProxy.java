@@ -18,7 +18,7 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public File getBase() {
 		FMLClientHandler.instance().getClient();
-		return Minecraft.getMinecraftDir();
+		return Minecraft.getMinecraft().mcDataDir;
 	}
 	
 	@Override

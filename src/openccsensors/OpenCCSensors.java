@@ -10,6 +10,7 @@ import openccsensors.common.block.BlockGauge;
 import openccsensors.common.block.BlockSensor;
 import openccsensors.common.item.ItemGeneric;
 import openccsensors.common.item.ItemSensorCard;
+import openccsensors.common.peripheral.LuaMount;
 import openccsensors.common.sensor.CropSensor;
 import openccsensors.common.sensor.DroppedItemSensor;
 import openccsensors.common.sensor.InventorySensor;
@@ -26,6 +27,7 @@ import openccsensors.common.turtle.TurtleUpgradeSensor;
 import openccsensors.common.util.OCSLog;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -34,7 +36,7 @@ import cpw.mods.fml.common.network.NetworkMod;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
-@Mod( modid = "OCS", name = "OpenCCSensors", version = "1.5.2.0", dependencies = "required-after:ComputerCraft;after:CCTurtle;after:BuildCraft|Core;after:IC2;after:Thaumcraft;after:AppliedEnergistics")
+@Mod( modid = "OCS", name = "OpenCCSensors", version = "1.6.4.0", dependencies = "required-after:ComputerCraft;after:CCTurtle;after:BuildCraft|Core;after:IC2;after:Thaumcraft;after:AppliedEnergistics")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class OpenCCSensors {
 
@@ -97,7 +99,10 @@ public class OpenCCSensors {
 	public static String RESOURCE_PATH;
 	public static String LANGUAGE_PATH;
 	public static String LUA_PATH;
+	public static String EXTRACTED_LUA_PATH;
 	public static String TEXTURE_PATH;
+	
+	public static LuaMount mount = new LuaMount();
 
 	public static CreativeTabs tabOpenCCSensors = new CreativeTabs("tabOpenCCSensors") {
                 public ItemStack getIconItemStack() {
@@ -127,10 +132,11 @@ public class OpenCCSensors {
 	public void preInit( FMLPreInitializationEvent evt )
 	{
 
-		RESOURCE_PATH = "/mods/openccsensors";
+		RESOURCE_PATH = "/assets/openccsensors";
 		LUA_PATH = String.format("%s/lua", RESOURCE_PATH);
 		LANGUAGE_PATH = String.format("%s/languages", RESOURCE_PATH);
 		TEXTURE_PATH = String.format("%s/textures", RESOURCE_PATH);
+		EXTRACTED_LUA_PATH = String.format("mods\\OCSLua\\%s\\lua", FMLCommonHandler.instance().findContainerFor(OpenCCSensors.instance).getVersion());
 		
 		Configuration configFile = new Configuration(evt.getSuggestedConfigurationFile());
 

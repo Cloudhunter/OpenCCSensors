@@ -6,7 +6,9 @@ import java.util.List;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import appeng.api.me.tiles.IGridMachine;
+import appeng.api.me.tiles.IGridTileEntity;
 import appeng.api.me.util.IGridInterface;
+import appeng.api.me.util.IMEInventory;
 import appeng.api.me.util.IMEInventoryHandler;
 
 public class AppliedEnergisticsUtils {
@@ -27,20 +29,22 @@ public class AppliedEnergisticsUtils {
 		TileEntity aeWirelessAPtileEntity = (TileEntity) obj;
 		response.put("Powered", false);
 
-		IGridMachine aeMachine = (IGridMachine) aeWirelessAPtileEntity;
+		IGridTileEntity aeMachine = (IGridTileEntity) aeWirelessAPtileEntity;
 		IGridInterface gi = aeMachine.getGrid();
 		if (gi != null && gi.isValid() && aeMachine.isPowered()) {
 
 			IMEInventoryHandler imivh = gi.getFullCellArray();
+			IMEInventory imiv = (IMEInventory) imivh;
 			response.put("Powered",true);
 			
-		
-			response.put("FreeTypes", (int) imivh.remainingItemTypes());
-			response.put("FreeCount", (int) imivh.remainingItemCount());
+			//user IMEInventory for remaining item types and count.
+			response.put("FreeTypes", (int) imiv.remainingItemTypes());
+			response.put("FreeCount", (int) imiv.remainingItemCount());
 			response.put("FreeBytes", (int) imivh.freeBytes());
 			response.put("UsedBytes", (int) imivh.usedBytes());
+			response.put("TotalBytes", (int) imivh.totalBytes());
 			
-			long totalBytes = imivh.freeBytes() + imivh.usedBytes();
+			long totalBytes = imivh.totalBytes();
 			
 			double percent = (double)100 / totalBytes * imivh.usedBytes();
 			percent = Math.max(Math.min(percent, 100), 0);
@@ -48,7 +52,7 @@ public class AppliedEnergisticsUtils {
 			
 			if (additional) {
 			
-				List<ItemStack> list = imivh.getAvailableItems().getItems();
+				List<ItemStack> list = imiv.getAvailableItems().getItems();
 				int totalCount = 0;
 				HashMap stacks = new HashMap();
 				for (int i = 0; i < list.size(); i++) {

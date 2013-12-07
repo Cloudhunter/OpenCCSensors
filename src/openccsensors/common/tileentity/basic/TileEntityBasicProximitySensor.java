@@ -10,6 +10,7 @@ import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -97,7 +98,7 @@ public class TileEntityBasicProximitySensor extends TileEntity implements IBasic
 				break;
 			}
 			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-			player.sendChatToPlayer(String.format("Changing sensor mode to \"%s\"", modeMsg));
+			player.sendChatToPlayer(new ChatMessageComponent().addText(String.format("Changing sensor mode to \"%s\"", modeMsg)));
 		}
 	}
 
@@ -115,13 +116,13 @@ public class TileEntityBasicProximitySensor extends TileEntity implements IBasic
 		packet.zPosition = zCoord;
 		NBTTagCompound nbt = new NBTTagCompound();
 		writeToNBT(nbt);
-		packet.customParam1 = nbt;
+		packet.data = nbt;
 		return packet;
 	}
 
 	@Override
 	public void onDataPacket(INetworkManager net, Packet132TileEntityData pkt) {
-		readFromNBT(pkt.customParam1);
+		readFromNBT(pkt.data);
 		worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
 	}
 

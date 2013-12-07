@@ -27,7 +27,7 @@ public class WorldSensor implements ISensor, IRequiresIconLoading {
 		int y = (int) location.yCoord;
 		int z = (int) location.zCoord;
 		
-		response.put("Dimension", world.getWorldInfo().getDimension());
+		response.put("Dimension", world.getWorldInfo().getVanillaDimension());
 		response.put("Biome", world.getBiomeGenForCoords(x, z).biomeName);
 		response.put("LightLevel", world.getBlockLightValue(x, y, z));
 		response.put("Raining", world.isRaining());

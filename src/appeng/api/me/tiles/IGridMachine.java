@@ -5,7 +5,9 @@ package appeng.api.me.tiles;
  */
 public abstract interface IGridMachine extends IGridTileEntity
 {
-    // how much power this entity drains to run constantly.
+    /**
+     *  how much power this entity drains to run constantly.
+     */
     public abstract float getPowerDrainPerTick();
 	
 }

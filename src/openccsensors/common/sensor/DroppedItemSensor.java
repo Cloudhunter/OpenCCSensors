@@ -28,8 +28,8 @@ public class DroppedItemSensor implements ISensor, IRequiresIconLoading {
 		HashMap position = new HashMap();
 		
 		position.put("X", item.posX - sensorLocation.xCoord);
-		position.put("Y", item.posY - sensorLocation.xCoord);
-		position.put("Z", item.posZ - sensorLocation.xCoord);
+		position.put("Y", item.posY - sensorLocation.yCoord);
+		position.put("Z", item.posZ - sensorLocation.zCoord);
 		
 		response.put("Position", position);
 

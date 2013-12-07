@@ -3,6 +3,7 @@ package openccsensors.client.renderer.tileentity;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import openccsensors.OpenCCSensors;
 import openccsensors.client.model.ModelGauge;
 import openccsensors.common.tileentity.TileEntityGauge;
@@ -37,7 +38,7 @@ public class TileEntityGaugeRenderer extends TileEntitySpecialRenderer {
 
 		GL11.glTranslatef((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.5F);
 		GL11.glRotatef(-var12, 0.0F, 1.0F, 0.0F);
-		this.bindTextureByName(String.format("%s/models/gauge.png", OpenCCSensors.TEXTURE_PATH));
+		this.bindTexture(new ResourceLocation("openccsensors", "textures/models/gauge.png"));
 		GL11.glPushMatrix();
 		this.modelGauge.render();
 		GL11.glPopMatrix();
