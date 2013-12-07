@@ -231,13 +231,7 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 
 	@Override
 	public void attach(IComputerAccess computer) {
-		//ModContainer container = FMLCommonHandler.instance().findContainerFor(OpenCCSensors.instance);
-		IMount mount = ComputerCraftAPI.createResourceMount(OpenCCSensors.class, "openccsensors", "lua/");
-		if (mount != null) { 
-			computer.mount("ocs", mount);
-		} else {
-			System.out.println("Could Not Mount Resources!");
-		}
+		computer.mount("ocs", OpenCCSensors.mount);
 	}
 
 	@Override

@@ -41,6 +41,7 @@ import openccsensors.common.util.ResourceExtractingUtils;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.relauncher.FMLLaunchHandler;
 import dan200.turtle.api.TurtleAPI;
 
 public class CommonProxy {
@@ -113,17 +114,20 @@ public class CommonProxy {
 	}
 
 	public File getBase() {
-		return FMLCommonHandler.instance().getMinecraftServerInstance().getFile(".");
+		if (FMLLaunchHandler.side().isClient()) {
+            return Minecraft.getMinecraft().mcDataDir;
+		} else {
+			return new File(".");
+		}
 	}
 
 	private boolean setupLuaFiles() {
 		ModContainer container = FMLCommonHandler.instance().findContainerFor(OpenCCSensors.instance);
 		File modFile = container.getSource();
 		File baseFile = getBase();
-		String destFolder = String.format("mods\\OCSLua\\%s\\lua", container.getVersion());
 		if (modFile.isDirectory()) {
 			File srcFile = new File(modFile, OpenCCSensors.LUA_PATH);
-			File destFile = new File(baseFile, destFolder);
+			File destFile = new File(baseFile, OpenCCSensors.EXTRACTED_LUA_PATH);
 			if (destFile.exists()) {
 				return false;
 			}
@@ -132,11 +136,11 @@ public class CommonProxy {
 			} catch (IOException e) {
 			}
 		} else {
-			File destFile = new File(OpenCCSensors.proxy.getBase(), destFolder);
+			File destFile = new File(OpenCCSensors.proxy.getBase(), OpenCCSensors.EXTRACTED_LUA_PATH);
 			if (destFile.exists()) {
 				return false;
 			}
-			ResourceExtractingUtils.extractZipToLocation(modFile, OpenCCSensors.LUA_PATH, destFolder);
+			ResourceExtractingUtils.extractZipToLocation(modFile, OpenCCSensors.LUA_PATH, OpenCCSensors.EXTRACTED_LUA_PATH);
 		}
 		return true;
 	}
