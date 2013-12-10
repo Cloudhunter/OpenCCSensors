@@ -136,7 +136,7 @@ public class OpenCCSensors {
 		LUA_PATH = String.format("%s/lua", RESOURCE_PATH);
 		LANGUAGE_PATH = String.format("%s/languages", RESOURCE_PATH);
 		TEXTURE_PATH = String.format("%s/textures", RESOURCE_PATH);
-		EXTRACTED_LUA_PATH = String.format("mods\\OCSLua\\%s\\lua", FMLCommonHandler.instance().findContainerFor(OpenCCSensors.instance).getVersion());
+		EXTRACTED_LUA_PATH = String.format("mods/OCSLua/%s/lua", FMLCommonHandler.instance().findContainerFor(OpenCCSensors.instance).getVersion());
 		
 		Configuration configFile = new Configuration(evt.getSuggestedConfigurationFile());
 
