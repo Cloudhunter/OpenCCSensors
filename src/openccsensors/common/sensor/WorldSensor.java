@@ -33,7 +33,7 @@ public class WorldSensor implements ISensor, IRequiresIconLoading {
 		response.put("Raining", world.isRaining());
 		response.put("Thundering", world.isThundering());
 		response.put("Daytime", world.isDaytime());
-		response.put("MoonPhase", world.getMoonPhase());
+		response.put("MoonPhase", world.getCurrentMoonPhaseFactor());
 		response.put("CelestialAngle", world.getCelestialAngle(1.0F));
 		
 		return response;
