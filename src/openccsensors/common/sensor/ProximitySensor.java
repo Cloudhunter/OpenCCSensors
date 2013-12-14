@@ -31,14 +31,14 @@ public class ProximitySensor implements ISensor, IRequiresIconLoading {
 
 	@Override
 	public HashMap getDetails(World world, Object obj, Vec3 sensorPos, boolean additional) {
-		return EntityUtils.livingToMap((EntityLiving)obj, sensorPos, additional);
+		return EntityUtils.livingToMap((EntityLivingBase)obj, sensorPos, additional);
 	}
 
 	@Override
 	public HashMap getTargets(World world, Vec3 location,
 			ISensorTier tier) {
 		double radius = tier.getMultiplier() * 4;
-		return (HashMap) EntityUtils.getEntities(world, location, radius, EntityLiving.class);
+		return (HashMap) EntityUtils.getEntities(world, location, radius, EntityLivingBase.class);
 	}
 
 	@Override
