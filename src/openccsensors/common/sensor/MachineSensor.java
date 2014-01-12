@@ -16,6 +16,7 @@ import openccsensors.api.IRequiresIconLoading;
 import openccsensors.api.ISensor;
 import openccsensors.api.ISensorTier;
 import openccsensors.common.util.Ic2Utils;
+import openccsensors.common.util.RotaryCraftUtils;
 
 public class MachineSensor extends TileSensor implements ISensor, IRequiresIconLoading, IGaugeSensor {
 
@@ -34,6 +35,7 @@ public class MachineSensor extends TileSensor implements ISensor, IRequiresIconL
 	@Override
 	public boolean isValidTarget(Object target) {
 		return (Loader.isModLoaded("IC2") && Ic2Utils.isValidMachineTarget(target)) ||
+			   (Loader.isModLoaded("RotaryCraft") && RotaryCraftUtils.isValidMachineTarget(target));
 	}
 
 	@Override
@@ -47,6 +49,9 @@ public class MachineSensor extends TileSensor implements ISensor, IRequiresIconL
 		HashMap response = super.getDetails(tile, sensorPos);
 		if (Loader.isModLoaded("IC2")) {
 			response.putAll(Ic2Utils.getMachineDetails(world, obj, additional));
+		}
+		if (Loader.isModLoaded("RotaryCraft")) {
+			response.putAll(RotaryCraftUtils.getMachineDetails(world, obj, additional));
 		}
 		return response;
 	}

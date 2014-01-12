@@ -2,6 +2,8 @@ package openccsensors.common.sensor;
 
 import java.util.HashMap;
 
+import cpw.mods.fml.common.Loader;
+
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;

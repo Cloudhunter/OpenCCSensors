@@ -129,6 +129,7 @@
 		<delete dir="${mcpsrc.dir}/forestry"/>
 		<delete dir="${mcpsrc.dir}/ic2"/>
 		<delete dir="${mcpsrc.dir}/openccsensors"/>
+		<delete dir="${mcpsrc.dir}/Reika"/>
 		<delete dir="${mcpsrc.dir}/thaumcraft"/>
 		<delete dir="${mcpsrc.dir}/universalelectricity"/>
 
