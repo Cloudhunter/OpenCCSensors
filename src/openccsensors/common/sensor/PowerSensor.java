@@ -18,6 +18,7 @@ import openccsensors.api.ISensorTier;
 import openccsensors.common.util.BuildcraftUtils;
 import openccsensors.common.util.Ic2Utils;
 import openccsensors.common.util.RotaryCraftUtils;
+import openccsensors.common.util.ThermalExpansionUtils;
 import openccsensors.common.util.UniversalElectricityUtils;
 
 public class PowerSensor extends TileSensor implements ISensor, IRequiresIconLoading, IGaugeSensor {
@@ -44,6 +45,7 @@ public class PowerSensor extends TileSensor implements ISensor, IRequiresIconLoa
 		return (UEApi != null && UniversalElectricityUtils.isValidTarget((TileEntity)target)) ||
 			   (Loader.isModLoaded("IC2") && Ic2Utils.isValidPowerTarget(target)) ||
 			   (Loader.isModLoaded("BuildCraft|Core") && BuildcraftUtils.isValidPowerTarget(target)) ||
+			   (Loader.isModLoaded("ThermalExpansion") && ThermalExpansionUtils.isValidPowerTarget(target)) ||
 			   (Loader.isModLoaded("RotaryCraft") && RotaryCraftUtils.isValidPowerTarget(target));
 	}
 
@@ -58,6 +60,9 @@ public class PowerSensor extends TileSensor implements ISensor, IRequiresIconLoa
 		}
 		if (Loader.isModLoaded("BuildCraft|Core")) {
 			response.putAll(BuildcraftUtils.getPowerDetails(world, obj, additional));
+		}
+		if (Loader.isModLoaded("ThermalExpansion")) {
+			response.putAll(ThermalExpansionUtils.getPowerDetails(world, obj, additional));
 		}
 		if (Loader.isModLoaded("RotaryCraft")) {
 			response.putAll(RotaryCraftUtils.getPowerDetails(world, obj, additional));
