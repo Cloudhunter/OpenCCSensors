@@ -2,11 +2,12 @@ package openccsensors.common.sensor;
 
 import java.util.HashMap;
 
+import cpw.mods.fml.common.Loader;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.src.ModLoader;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.util.Vec3;
@@ -27,7 +28,7 @@ public class InventorySensor extends TileSensor implements ISensor, IRequiresIco
 	
 	@Override
 	public boolean isValidTarget(Object target) {
-		return target instanceof IInventory || (ModLoader.isModLoaded("AppliedEnergistics") && AppliedEnergisticsUtils.isValidTarget(target));
+		return target instanceof IInventory || (Loader.isModLoaded("AppliedEnergistics") && AppliedEnergisticsUtils.isValidTarget(target));
 	}
 	
 	@Override
@@ -37,7 +38,7 @@ public class InventorySensor extends TileSensor implements ISensor, IRequiresIco
 		
 		HashMap response = super.getDetails(tile, sensorPos);
 		
-		if (ModLoader.isModLoaded("AppliedEnergistics") && AppliedEnergisticsUtils.isValidTarget(obj)) {
+		if (Loader.isModLoaded("AppliedEnergistics") && AppliedEnergisticsUtils.isValidTarget(obj)) {
 			response.putAll(AppliedEnergisticsUtils.getTileDetails(obj, additional));
 		}else {
 			response.putAll(InventoryUtils.getInventorySizeCalculations((IInventory) tile));

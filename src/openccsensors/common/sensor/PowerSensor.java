@@ -2,10 +2,11 @@ package openccsensors.common.sensor;
 
 import java.util.HashMap;
 
+import cpw.mods.fml.common.Loader;
+
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.src.ModLoader;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.util.Vec3;
@@ -16,6 +17,8 @@ import openccsensors.api.ISensor;
 import openccsensors.api.ISensorTier;
 import openccsensors.common.util.BuildcraftUtils;
 import openccsensors.common.util.Ic2Utils;
+import openccsensors.common.util.RotaryCraftUtils;
+import openccsensors.common.util.ThermalExpansionUtils;
 import openccsensors.common.util.UniversalElectricityUtils;
 
 public class PowerSensor extends TileSensor implements ISensor, IRequiresIconLoading, IGaugeSensor {
@@ -40,8 +43,10 @@ public class PowerSensor extends TileSensor implements ISensor, IRequiresIconLoa
 			return false;
 		}
 		return (UEApi != null && UniversalElectricityUtils.isValidTarget((TileEntity)target)) ||
-			   (ModLoader.isModLoaded("IC2") && Ic2Utils.isValidPowerTarget(target)) ||
-			   (ModLoader.isModLoaded("BuildCraft|Core") && BuildcraftUtils.isValidPowerTarget(target));
+			   (Loader.isModLoaded("IC2") && Ic2Utils.isValidPowerTarget(target)) ||
+			   (Loader.isModLoaded("BuildCraft|Core") && BuildcraftUtils.isValidPowerTarget(target)) ||
+			   (Loader.isModLoaded("ThermalExpansion") && ThermalExpansionUtils.isValidPowerTarget(target)) ||
+			   (Loader.isModLoaded("RotaryCraft") && RotaryCraftUtils.isValidPowerTarget(target));
 	}
 
 	@Override
@@ -50,11 +55,17 @@ public class PowerSensor extends TileSensor implements ISensor, IRequiresIconLoa
 		if (UEApi != null) {
 			response.putAll(UniversalElectricityUtils.getDetails(world, obj, additional));
 		}
-		if (ModLoader.isModLoaded("IC2")) {
+		if (Loader.isModLoaded("IC2")) {
 			response.putAll(Ic2Utils.getPowerDetails(world, obj, additional));
 		}
-		if (ModLoader.isModLoaded("BuildCraft|Core")) {
+		if (Loader.isModLoaded("BuildCraft|Core")) {
 			response.putAll(BuildcraftUtils.getPowerDetails(world, obj, additional));
+		}
+		if (Loader.isModLoaded("ThermalExpansion")) {
+			response.putAll(ThermalExpansionUtils.getPowerDetails(world, obj, additional));
+		}
+		if (Loader.isModLoaded("RotaryCraft")) {
+			response.putAll(RotaryCraftUtils.getPowerDetails(world, obj, additional));
 		}
 		return response;
 	}

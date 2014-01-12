@@ -18,7 +18,7 @@
 
 	<property name="mc.version"          value="1.6.4"/>
 	<property name="forge.version"       value="9.11.1.953"/>
-	<property name="mod.version"         value="1.6.4.1"/>
+	<property name="mod.version"         value="1.6.4.2"/>
 	<property name="mod.name"	     value="OpenCCSensors"/>
 	
 	<property name="forge.name"          value="minecraftforge-src-${mc.version}-${forge.version}.zip"/>
@@ -125,10 +125,13 @@
 		<delete dir="${mcpsrc.dir}/am2"/>
 		<delete dir="${mcpsrc.dir}/appeng"/>
 		<delete dir="${mcpsrc.dir}/buildcraft"/>
+		<delete dir="${mcpsrc.dir}/cofh"/>
 		<delete dir="${mcpsrc.dir}/dan200"/>
 		<delete dir="${mcpsrc.dir}/forestry"/>
 		<delete dir="${mcpsrc.dir}/ic2"/>
+		<delete dir="${mcpsrc.dir}/mods"/>
 		<delete dir="${mcpsrc.dir}/openccsensors"/>
+		<delete dir="${mcpsrc.dir}/Reika"/>
 		<delete dir="${mcpsrc.dir}/thaumcraft"/>
 		<delete dir="${mcpsrc.dir}/universalelectricity"/>
 
