@@ -41,7 +41,7 @@ public class Ic2Utils {
 	public static boolean isValidMachineTarget(Object target) {
 		return target != null &&
 				 (
-					target.getClass().getName() == MASS_FAB_CLASS ||
+					//target.getClass().getName() == MASS_FAB_CLASS ||
 					target instanceof IReactor ||
 					target instanceof IReactorChamber
 				 );
@@ -120,11 +120,13 @@ public class Ic2Utils {
 			tile instanceof IEnergySource ||
 			tile instanceof IEnergyConductor) {
 			
-			long emitted = EnergyNet.instance.getTotalEnergyEmitted(tile);
-			long sunken = EnergyNet.instance.getTotalEnergySunken(tile);
-			response.put("EnergyEmitted", emitted);
-			response.put("EnergySunken", sunken);
-		
+			tile = EnergyNet.instance.getTileEntity(tile.worldObj, tile.xCoord, tile.yCoord, tile.zCoord);
+			if (tile != null) {
+				long emitted = EnergyNet.instance.getTotalEnergyEmitted(tile);
+				long sunken = EnergyNet.instance.getTotalEnergySunken(tile);
+				response.put("EnergyEmitted", emitted);
+				response.put("EnergySunken", sunken);
+			}
 		}
 		
 		return response;

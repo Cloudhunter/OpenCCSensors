@@ -2,10 +2,11 @@ package openccsensors.common.sensor;
 
 import java.util.HashMap;
 
+import cpw.mods.fml.common.Loader;
+
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.src.ModLoader;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.util.Vec3;
@@ -32,7 +33,7 @@ public class MachineSensor extends TileSensor implements ISensor, IRequiresIconL
 	
 	@Override
 	public boolean isValidTarget(Object target) {
-		return (ModLoader.isModLoaded("IC2") && Ic2Utils.isValidMachineTarget(target));
+		return (Loader.isModLoaded("IC2") && Ic2Utils.isValidMachineTarget(target)) ||
 	}
 
 	@Override
@@ -44,7 +45,7 @@ public class MachineSensor extends TileSensor implements ISensor, IRequiresIconL
 	public HashMap getDetails(World world, Object obj, Vec3 sensorPos, boolean additional) {
 		TileEntity tile = (TileEntity) obj;
 		HashMap response = super.getDetails(tile, sensorPos);
-		if (ModLoader.isModLoaded("IC2")) {
+		if (Loader.isModLoaded("IC2")) {
 			response.putAll(Ic2Utils.getMachineDetails(world, obj, additional));
 		}
 		return response;

@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -13,7 +13,6 @@ import net.minecraft.util.Icon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.IFluidHandler;
-import net.minecraftforge.liquids.ITankContainer;
 import openccsensors.api.IRequiresIconLoading;
 import openccsensors.api.ISensor;
 import openccsensors.api.ISensorTier;
@@ -50,8 +49,8 @@ public class MinecartSensor implements ISensor, IRequiresIconLoading {
 			response.put("Tanks", TankUtils.fluidHandlerToMap((IFluidHandler)minecart));
 		}
 		
-		if (minecart.riddenByEntity != null && minecart.riddenByEntity instanceof EntityLiving) {
-			response.put("Riding", EntityUtils.livingToMap((EntityLiving)minecart.riddenByEntity, sensorPos, true));
+		if (minecart.riddenByEntity != null && minecart.riddenByEntity instanceof EntityLivingBase) {
+			response.put("Riding", EntityUtils.livingToMap((EntityLivingBase)minecart.riddenByEntity, sensorPos, true));
 		}
 		return response;
 	}

@@ -32,8 +32,6 @@ public class TankSensor extends TileSensor implements ISensor, IRequiresIconLoad
 		if (tile instanceof IFluidHandler) {
 			FluidTankInfo[] tanks = ((IFluidHandler)tile).getTankInfo(ForgeDirection.UNKNOWN);
 			return tanks.length > 0;
-		} else if (ModLoader.isModLoaded("Railcraft") && tile instanceof TileEntity) {
-			return RailcraftUtils.isTankTile((TileEntity)tile);
 		}
 		return false;
 	}
