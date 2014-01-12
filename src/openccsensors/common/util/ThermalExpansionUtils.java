@@ -20,15 +20,19 @@ public class ThermalExpansionUtils {
 	
 	public static HashMap getPowerDetails(World world, Object obj, boolean additional) {
 		HashMap response = new HashMap();
-		
-		/*if (obj == null || !(obj instanceof IEnergyHandler) || !additional) {
+
+		if (obj == null || !(obj instanceof IEnergyHandler) || !additional) {
 			return response;
 		}
-		
+
 		if (obj instanceof IEnergyHandler) {
+			System.out.println("Is an IEnergyHandler");
 			IEnergyHandler energyHandler = (IEnergyHandler) obj;
+			System.out.println("Cast Successful");
 			int stored = energyHandler.getEnergyStored(ForgeDirection.UNKNOWN);
+			System.out.println(String.format("stored: %d", stored));
 			int capacity = energyHandler.getMaxEnergyStored(ForgeDirection.UNKNOWN);
+			System.out.println(String.format("capacity: %d", capacity));
 			response.put("Stored", stored);
 			response.put("Capacity", capacity);
 			response.put("StoredPercentage", 0);
@@ -36,10 +40,10 @@ public class ThermalExpansionUtils {
 			if (capacity > 0) {
 				response.put("StoredPercentage", Math.max(Math.min(100,((100.0 / capacity) * stored)), 0));
 			}
-		}*/
+		}
 		return response;
 	}
-	
+
 	public static HashMap getMachineDetails(World world, Object obj, boolean additional) {
 		HashMap response = new HashMap();
 		

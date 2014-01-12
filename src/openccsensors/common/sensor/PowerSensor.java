@@ -17,6 +17,7 @@ import openccsensors.api.ISensor;
 import openccsensors.api.ISensorTier;
 import openccsensors.common.util.BuildcraftUtils;
 import openccsensors.common.util.Ic2Utils;
+import openccsensors.common.util.InventoryUtils;
 import openccsensors.common.util.RotaryCraftUtils;
 import openccsensors.common.util.ThermalExpansionUtils;
 import openccsensors.common.util.UniversalElectricityUtils;
@@ -40,6 +41,9 @@ public class PowerSensor extends TileSensor implements ISensor, IRequiresIconLoa
 	@Override
 	public boolean isValidTarget(Object target) {
 		if (!(target instanceof TileEntity)) {
+			return false;
+		}
+		if ("unknown" == InventoryUtils.getRawNameForStack(new ItemStack(((TileEntity)target).getBlockType(), 1, ((TileEntity)target).getBlockMetadata()))) {
 			return false;
 		}
 		return (UEApi != null && UniversalElectricityUtils.isValidTarget((TileEntity)target)) ||
