@@ -4,6 +4,9 @@ import java.util.HashMap;
 
 import cpw.mods.fml.common.Loader;
 
+import mods.railcraft.api.carts.IEnergyTransfer;
+import mods.railcraft.api.carts.IExplosiveCart;
+import mods.railcraft.api.carts.IRoutableCart;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
@@ -20,6 +23,7 @@ import openccsensors.api.ISensor;
 import openccsensors.api.ISensorTier;
 import openccsensors.common.util.EntityUtils;
 import openccsensors.common.util.InventoryUtils;
+import openccsensors.common.util.RailcraftUtils;
 import openccsensors.common.util.TankUtils;
 
 public class MinecartSensor implements ISensor, IRequiresIconLoading {
@@ -53,6 +57,20 @@ public class MinecartSensor implements ISensor, IRequiresIconLoading {
 		
 		if (minecart.riddenByEntity != null && minecart.riddenByEntity instanceof EntityLivingBase) {
 			response.put("Riding", EntityUtils.livingToMap((EntityLivingBase)minecart.riddenByEntity, sensorPos, true));
+		}
+		
+		if (Loader.isModLoaded("Railcraft")) {
+			if (minecart instanceof IEnergyTransfer) {
+				response.putAll(RailcraftUtils.getEnergyDetails(minecart));
+			}
+			
+			if (minecart instanceof IExplosiveCart) {
+				response.putAll(RailcraftUtils.getExplosiveDetails(minecart));
+			}
+			
+			if (minecart instanceof IRoutableCart) {
+				response.put("RouteDestination", ((IRoutableCart)minecart).getDestination());
+			}
 		}
 		return response;
 	}
