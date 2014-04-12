@@ -93,7 +93,7 @@ public class RecipeUtils {
 	private static Block getMonitor() {
 		Block monitor = null;
 		try {
-			Class cc = Class.forName("dan200.ComputerCraft$Blocks");
+			Class cc = Class.forName("dan200.computercraft.ComputerCraft$Blocks");
 			if (cc != null) {
 				Field peripheralField = cc.getDeclaredField("peripheral");
 				if (peripheralField != null) {
