@@ -42,7 +42,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.FMLLaunchHandler;
-import dan200.turtle.api.TurtleAPI;
+import dan200.computercraft.api.ComputerCraftAPI;
 
 public class CommonProxy {
 	
@@ -55,7 +55,7 @@ public class CommonProxy {
 		OpenCCSensors.turtleUpgradeSensor = new TurtleUpgradeSensor();
 			
 		if (OpenCCSensors.Config.turtlePeripheralEnabled) {
-			TurtleAPI.registerUpgrade(OpenCCSensors.turtleUpgradeSensor);
+			ComputerCraftAPI.registerTurtleUpgrade(OpenCCSensors.turtleUpgradeSensor);
 		}
 		
 		NetworkRegistry.instance().registerGuiHandler(OpenCCSensors.instance, new GuiHandler());

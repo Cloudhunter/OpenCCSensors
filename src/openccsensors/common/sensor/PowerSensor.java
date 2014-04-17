@@ -3,11 +3,11 @@ package openccsensors.common.sensor;
 import java.util.HashMap;
 
 import cpw.mods.fml.common.Loader;
-
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Icon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -54,7 +54,7 @@ public class PowerSensor extends TileSensor implements ISensor, IRequiresIconLoa
 	}
 
 	@Override
-	public HashMap getDetails(World world, Object obj, Vec3 sensorPos, boolean additional) {
+	public HashMap getDetails(World world, Object obj, ChunkCoordinates sensorPos, boolean additional) {
 		HashMap response = super.getDetails((TileEntity)obj, sensorPos);
 		if (UEApi != null) {
 			response.putAll(UniversalElectricityUtils.getDetails(world, obj, additional));
@@ -80,7 +80,7 @@ public class PowerSensor extends TileSensor implements ISensor, IRequiresIconLoa
 	}
 
 	@Override
-	public Object callCustomMethod(World world, Vec3 location, int methodID,
+	public Object callCustomMethod(World world, ChunkCoordinates location, int methodID,
 			Object[] args, ISensorTier tier) {
 		return null;
 	}

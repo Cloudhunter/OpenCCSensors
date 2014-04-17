@@ -1,10 +1,12 @@
 package openccsensors.common.turtle;
 
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import openccsensors.api.ISensorEnvironment;
-import dan200.turtle.api.ITurtleAccess;
+import dan200.computercraft.api.turtle.ITurtleAccess;
 
 public class TurtleSensorEnvironment implements ISensorEnvironment {
 
@@ -16,17 +18,18 @@ public class TurtleSensorEnvironment implements ISensorEnvironment {
 
 	@Override
 	public int getFacing() {
-		return (turtle.getFacingDir() + 1) % 4;
+		return (turtle.getDirection() + 1) % 4;
 	}
 
 	@Override
-	public Vec3 getLocation() {
+	public ChunkCoordinates getLocation() {
 		return turtle.getPosition();
 	}
 
 	@Override
 	public ItemStack getSensorCardStack() {
-		return turtle.getSlotContents(15);
+		IInventory turtleInventory = turtle.getInventory();
+		return turtleInventory.getStackInSlot(15);
 	}
 
 	@Override

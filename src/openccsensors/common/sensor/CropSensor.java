@@ -13,6 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.src.ModLoader;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Icon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -51,7 +52,7 @@ public class CropSensor implements ISensor, IRequiresIconLoading {
 	}
 
 	@Override
-	public HashMap getDetails(World world, Object obj, Vec3 sensorPos, boolean additional) {
+	public HashMap getDetails(World world, Object obj, ChunkCoordinates sensorPos, boolean additional) {
 
 		HashMap response = new HashMap();
 		
@@ -61,9 +62,9 @@ public class CropSensor implements ISensor, IRequiresIconLoading {
 			
 			HashMap position = new HashMap();
 			
-			position.put("X", target.X - sensorPos.xCoord);
-			position.put("Y", target.Y - sensorPos.yCoord);
-			position.put("Z", target.Z - sensorPos.zCoord);
+			position.put("X", target.X - sensorPos.posX);
+			position.put("Y", target.Y - sensorPos.posY);
+			position.put("Z", target.Z - sensorPos.posZ);
 			response.put("Position", position);
 			
 			response.put("Name", target.block.getLocalizedName());
@@ -100,7 +101,7 @@ public class CropSensor implements ISensor, IRequiresIconLoading {
 	}
 
 	@Override
-	public Object callCustomMethod(World world, Vec3 location, int methodID,
+	public Object callCustomMethod(World world, ChunkCoordinates location, int methodID,
 			Object[] args, ISensorTier tier) throws Exception {
 		return null;
 	}
@@ -121,7 +122,7 @@ public class CropSensor implements ISensor, IRequiresIconLoading {
 	}
 
 	@Override
-	public HashMap getTargets(World world, Vec3 location, ISensorTier tier) {
+	public HashMap getTargets(World world, ChunkCoordinates location, ISensorTier tier) {
 
 		HashMap targets = new HashMap();
 		int distance = (int) tier.getMultiplier();
@@ -130,9 +131,9 @@ public class CropSensor implements ISensor, IRequiresIconLoading {
 			for (int y = -distance; y <= distance; y++) {
 				for (int z = -distance; z <= distance; z++) {
 
-					int tileX = x + (int)location.xCoord;
-					int tileY = y + (int)location.yCoord;
-					int tileZ = z + (int)location.zCoord;
+					int tileX = x + (int)location.posX;
+					int tileY = y + (int)location.posY;
+					int tileZ = z + (int)location.posZ;
 
 					String name = String.format("%s,%s,%s", x, y, z);
 

@@ -9,6 +9,7 @@ import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.common.ForgeDirection;
 import openccsensors.OpenCCSensors;
@@ -16,11 +17,11 @@ import openccsensors.api.IGaugeSensor;
 import openccsensors.api.IMethodCallback;
 import openccsensors.common.util.CallbackEventManager;
 import openccsensors.common.util.OCSLog;
-import dan200.computer.api.ComputerCraftAPI;
-import dan200.computer.api.IComputerAccess;
-import dan200.computer.api.ILuaContext;
-import dan200.computer.api.IMount;
-import dan200.computer.api.IPeripheral;
+import dan200.computercraft.api.ComputerCraftAPI;
+import dan200.computercraft.api.peripheral.IComputerAccess;
+import dan200.computercraft.api.lua.ILuaContext;
+import dan200.computercraft.api.filesystem.IMount;
+import dan200.computercraft.api.peripheral.IPeripheral;
 
 public class TileEntityGauge extends TileEntity implements IPeripheral {
 	
@@ -131,11 +132,6 @@ public class TileEntityGauge extends TileEntity implements IPeripheral {
 	}
 
 	@Override
-	public boolean canAttachToSide(int side) {
-		return true;
-	}
-
-	@Override
 	public void attach(IComputerAccess computer) {
 		IMount mount = ComputerCraftAPI.createResourceMount(OpenCCSensors.class, "openccsensors", "openccsensors/mods/OCSLua/lua");
 		computer.mount("ocs", mount);
@@ -157,7 +153,7 @@ public class TileEntityGauge extends TileEntity implements IPeripheral {
 			if (behindTile != null) {
 				for (IGaugeSensor gaugeSensor : gaugeSensors)  {
 					if (gaugeSensor.isValidTarget(behindTile)) {
-						HashMap details = gaugeSensor.getDetails(worldObj, behindTile, Vec3.createVectorHelper(behindTile.xCoord, behindTile.yCoord, behindTile.zCoord), true);
+						HashMap details = gaugeSensor.getDetails(worldObj, behindTile, new ChunkCoordinates(behindTile.xCoord, behindTile.yCoord, behindTile.zCoord), true);
 						for (String property : gaugeSensor.getGaugeProperties()) {
 							if (details.containsKey(property)) {
 								tileProperties.put(property, details.get(property));
@@ -193,5 +189,10 @@ public class TileEntityGauge extends TileEntity implements IPeripheral {
 			}
 			eventManager.process();
 		}
+	}
+	@Override
+	public boolean equals(IPeripheral other) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

@@ -3,12 +3,12 @@ package openccsensors.common.sensor;
 import java.util.HashMap;
 
 import cpw.mods.fml.common.Loader;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Icon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -32,7 +32,7 @@ public class InventorySensor extends TileSensor implements ISensor, IRequiresIco
 	}
 	
 	@Override
-	public HashMap getDetails(World world, Object obj, Vec3 sensorPos, boolean additional) {
+	public HashMap getDetails(World world, Object obj, ChunkCoordinates sensorPos, boolean additional) {
 		
 		TileEntity tile = (TileEntity) obj;
 		
@@ -62,7 +62,7 @@ public class InventorySensor extends TileSensor implements ISensor, IRequiresIco
 	}
 
 	@Override
-	public Object callCustomMethod(World world, Vec3 location, int methodID,
+	public Object callCustomMethod(World world, ChunkCoordinates location, int methodID,
 			Object[] args, ISensorTier tier) throws Exception {
 		
 		if (args.length != 2) {

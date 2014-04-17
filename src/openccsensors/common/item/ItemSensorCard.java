@@ -24,7 +24,7 @@ import openccsensors.common.SensorTier;
 import openccsensors.common.util.RecipeUtils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import dan200.computer.api.ComputerCraftAPI;
+import dan200.computercraft.api.ComputerCraftAPI;
 
 public class ItemSensorCard extends Item implements ISensorCardRegistry {
 

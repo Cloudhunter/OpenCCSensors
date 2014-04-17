@@ -5,6 +5,7 @@ import java.util.HashMap;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Icon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -17,7 +18,7 @@ public class WorldSensor implements ISensor, IRequiresIconLoading {
 	private Icon icon;
 	
 	@Override
-	public HashMap getDetails(World world, Object obj, Vec3 sensorLocation, boolean additional) {
+	public HashMap getDetails(World world, Object obj, ChunkCoordinates sensorLocation, boolean additional) {
 		
 		Vec3 location = (Vec3) obj;
 		
@@ -40,7 +41,7 @@ public class WorldSensor implements ISensor, IRequiresIconLoading {
 	}
 
 	@Override
-	public HashMap getTargets(World world, Vec3 location, ISensorTier tier) {
+	public HashMap getTargets(World world, ChunkCoordinates location, ISensorTier tier) {
 		HashMap targets = new HashMap();
 		targets.put("CURRENT", location);
 		return targets;
@@ -52,7 +53,7 @@ public class WorldSensor implements ISensor, IRequiresIconLoading {
 	}
 
 	@Override
-	public Object callCustomMethod(World world, Vec3 location, int methodID,
+	public Object callCustomMethod(World world, ChunkCoordinates location, int methodID,
 			Object[] args, ISensorTier tier) {
 		return null;
 	}

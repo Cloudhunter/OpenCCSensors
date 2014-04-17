@@ -5,6 +5,7 @@ import java.util.HashMap;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
@@ -20,7 +21,7 @@ public class SonicSensor implements ISensor, IRequiresIconLoading {
 	private static final int BASE_RANGE = 3;
 	
 	@Override
-	public HashMap getDetails(World world, Object obj, Vec3 sensorPos, boolean additional) {
+	public HashMap getDetails(World world, Object obj, ChunkCoordinates sensorPos, boolean additional) {
 
 		Vec3 target = (Vec3) obj;
 
@@ -46,24 +47,24 @@ public class SonicSensor implements ISensor, IRequiresIconLoading {
 		
 		response.put("Type", type);
 		HashMap position = new HashMap();
-		position.put("X", x - sensorPos.xCoord);
-		position.put("Y", y - sensorPos.yCoord);
-		position.put("Z", z - sensorPos.zCoord);
+		position.put("X", x - sensorPos.posX);
+		position.put("Y", y - sensorPos.posY);
+		position.put("Z", z - sensorPos.posZ);
 		response.put("Position", position);
 		
 		return response;
 	}
 
 	@Override
-	public HashMap getTargets(World world, Vec3 location, ISensorTier tier) {
+	public HashMap getTargets(World world, ChunkCoordinates location, ISensorTier tier) {
 		
 		HashMap targets = new HashMap();
 
 		int range = (new Double(tier.getMultiplier())).intValue() + BASE_RANGE;
 
-		int sx = (int) location.xCoord;
-		int sy = (int) location.yCoord;
-		int sz = (int) location.zCoord;
+		int sx = (int) location.posX;
+		int sy = (int) location.posY;
+		int sz = (int) location.posZ;
 		
 		for (int x = -range; x <= range; x++) {
 			for (int y = -range; y <= range; y++) {
@@ -85,7 +86,7 @@ public class SonicSensor implements ISensor, IRequiresIconLoading {
 									bY,
 									bZ
 							);
-							if (location.distanceTo(targetPos) <= range) {
+							if ((Vec3.createVectorHelper((double)location.posX, (double)location.posY, (double)location.posZ)).distanceTo(targetPos) <= range) {
 								targets.put(String.format("%s,%s,%s", x, y, z), targetPos);
 							}
 							
@@ -103,7 +104,7 @@ public class SonicSensor implements ISensor, IRequiresIconLoading {
 	}
 
 	@Override
-	public Object callCustomMethod(World world, Vec3 location, int methodID,
+	public Object callCustomMethod(World world, ChunkCoordinates location, int methodID,
 			Object[] args, ISensorTier tier) {
 		return null;
 	}

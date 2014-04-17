@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import dan200.computer.api.ComputerCraftAPI;
+import dan200.computercraft.api.ComputerCraftAPI;
 import openccsensors.OpenCCSensors;
 import openccsensors.api.IBasicSensor;
 import openccsensors.api.SensorCard;

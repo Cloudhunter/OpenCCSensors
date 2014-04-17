@@ -9,12 +9,13 @@ import openccsensors.OpenCCSensors;
 import openccsensors.common.peripheral.PeripheralSensor;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import dan200.computer.api.IHostedPeripheral;
-import dan200.turtle.api.ITurtleAccess;
-import dan200.turtle.api.ITurtleUpgrade;
-import dan200.turtle.api.TurtleSide;
-import dan200.turtle.api.TurtleUpgradeType;
-import dan200.turtle.api.TurtleVerb;
+import dan200.computercraft.api.peripheral.IPeripheral;
+import dan200.computercraft.api.turtle.ITurtleAccess;
+import dan200.computercraft.api.turtle.ITurtleUpgrade;
+import dan200.computercraft.api.turtle.TurtleCommandResult;
+import dan200.computercraft.api.turtle.TurtleSide;
+import dan200.computercraft.api.turtle.TurtleUpgradeType;
+import dan200.computercraft.api.turtle.TurtleVerb;
 
 
 public class TurtleUpgradeSensor implements ITurtleUpgrade {
@@ -23,7 +24,7 @@ public class TurtleUpgradeSensor implements ITurtleUpgrade {
 	}
 	
 	@Override
-	public IHostedPeripheral createPeripheral(ITurtleAccess turtle,
+	public IPeripheral createPeripheral(ITurtleAccess turtle,
 			TurtleSide side) {
 		return new PeripheralSensor(new TurtleSensorEnvironment(turtle), true);
 	}
@@ -53,14 +54,9 @@ public class TurtleUpgradeSensor implements ITurtleUpgrade {
 	}
 
 	@Override
-	public boolean isSecret() {
-		return false;
-	}
-
-	@Override
-	public boolean useTool(ITurtleAccess turtle, TurtleSide side,
+	public TurtleCommandResult useTool(ITurtleAccess turtle, TurtleSide side,
 			TurtleVerb verb, int direction) {
-		return false;
+		return TurtleCommandResult.failure();
 	}
 
 	@Override
@@ -85,6 +81,12 @@ public class TurtleUpgradeSensor implements ITurtleUpgrade {
 					subItems.add(turtle);
 				}
 		}
+	}
+
+	@Override
+	public void update(ITurtleAccess turtle, TurtleSide side) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
