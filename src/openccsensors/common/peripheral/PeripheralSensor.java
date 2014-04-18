@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Vec3;
 import openccsensors.OpenCCSensors;
 import openccsensors.api.IMethodCallback;
@@ -18,13 +19,13 @@ import openccsensors.common.item.ItemSensorCard;
 import openccsensors.common.util.CallbackEventManager;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.ModContainer;
-import dan200.computer.api.ComputerCraftAPI;
-import dan200.computer.api.IComputerAccess;
-import dan200.computer.api.IHostedPeripheral;
-import dan200.computer.api.ILuaContext;
-import dan200.computer.api.IMount;
+import dan200.computercraft.api.ComputerCraftAPI;
+import dan200.computercraft.api.peripheral.IComputerAccess;
+import dan200.computercraft.api.peripheral.IPeripheral;
+import dan200.computercraft.api.lua.ILuaContext;
+import dan200.computercraft.api.filesystem.IMount;
 
-public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
+public class PeripheralSensor implements IPeripheral, ISensorAccess {
 
 	private ISensorEnvironment env;
 
@@ -58,7 +59,7 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 				SensorCard card = getSensorCard();
 				if (card != null) {
 					
-					Vec3 location = env.getLocation();
+					ChunkCoordinates location = env.getLocation();
 
 					ISensor sensor = card.getSensor();
 
@@ -108,7 +109,7 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 					throw new Exception("Could not find a valid sensor card");
 				}
 				
-				Vec3 location = env.getLocation();
+				ChunkCoordinates location = env.getLocation();
 				ISensor sensor = card.getSensor();
 				HashMap<String, Object> targets = sensor.getTargets(env.getWorld(), location, card.getTier());
 				
@@ -215,7 +216,7 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 
 				Object[] arguments = new Object[args.length - 1];
 				System.arraycopy(args, 1, arguments, 0, args.length - 1);
-				Vec3 vec = env.getLocation();
+				ChunkCoordinates vec = env.getLocation();
 
 				return sensor.callCustomMethod(
 					env.getWorld(),
@@ -244,11 +245,6 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 	}
 
 	@Override
-	public boolean canAttachToSide(int side) {
-		return true;
-	}
-
-	@Override
 	public void detach(IComputerAccess computer) {
 
 	}
@@ -273,18 +269,9 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 		return isTurtle;
 	}
 
-	@Override
-	public void readFromNBT(NBTTagCompound paramNBTTagCompound) {
-	}
-
-	@Override
-	public void writeToNBT(NBTTagCompound paramNBTTagCompound) {
-	}
-
 	/*
 	 * On every game tick we process any waiting events
 	 */
-	@Override
 	public void update() {
 		eventManager.process();
 	}
@@ -307,5 +294,11 @@ public class PeripheralSensor implements IHostedPeripheral, ISensorAccess {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public boolean equals(IPeripheral other) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

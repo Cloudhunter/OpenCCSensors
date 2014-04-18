@@ -12,6 +12,7 @@ import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
@@ -21,14 +22,14 @@ import net.minecraft.world.chunk.Chunk;
 public class EntityUtils {
 
 	
-	public static HashMap<String, Entity> getEntities(World world, Vec3 sensorPos, double radius, Class filter) {
+	public static HashMap<String, Entity> getEntities(World world, ChunkCoordinates location, double radius, Class filter) {
 		HashMap<String, Entity> map = new HashMap<String, Entity>();
 		
 		int dChunk = (int) Math.ceil(radius / 16.0F);
 		
-		int x = (int)sensorPos.xCoord;
-		int y = (int)sensorPos.yCoord;
-		int z = (int)sensorPos.zCoord;
+		int x = (int)location.posX;
+		int y = (int)location.posY;
+		int z = (int)location.posZ;
 
 		for (int dx = -dChunk; dx <= dChunk; dx++) {
 			for (int dz = -dChunk; dz <= dChunk; dz++) {
@@ -40,7 +41,7 @@ public class EntityUtils {
 								entity.posY + 0.5,
 								entity.posZ + 0.5
 						);
-						if (sensorPos.distanceTo(livingPos) <= radius && filter.isAssignableFrom(entity.getClass())) {
+						if ((Vec3.createVectorHelper((double)location.posX, (double)location.posY, (double)location.posZ)).distanceTo(livingPos) <= radius && filter.isAssignableFrom(entity.getClass())) {
 							String targetName = (entity instanceof EntityPlayer) ? entity
 									.getEntityName() : entity
 									.getEntityName() + entity.entityId;
@@ -56,13 +57,13 @@ public class EntityUtils {
 	}
 
 	
-	public static HashMap livingToMap(EntityLivingBase living, Vec3 sensorPos, boolean additional) {
+	public static HashMap livingToMap(EntityLivingBase living, ChunkCoordinates sensorPos, boolean additional) {
 		HashMap map = new HashMap();
 		
 		HashMap position = new HashMap();
-		position.put("X", living.posX - sensorPos.xCoord);
-		position.put("Y", living.posY - sensorPos.yCoord);
-		position.put("Z", living.posZ - sensorPos.zCoord);
+		position.put("X", living.posX - sensorPos.posX);
+		position.put("Y", living.posY - sensorPos.posY);
+		position.put("Z", living.posZ - sensorPos.posZ);
 		map.put("Position", position);
 
 		map.put("Name", (living instanceof EntityPlayer) ? "Player" : living.getEntityName());
@@ -126,9 +127,9 @@ public class EntityUtils {
 		        if (mop.typeOfHit == EnumMovingObjectType.TILE) {
 		        	int blockId = player.worldObj.getBlockId(mop.blockX, mop.blockY, mop.blockZ);
 		        	HashMap lookingAt = new HashMap();
-		        	lookingAt.put("X", mop.blockX - sensorPos.xCoord);
-		        	lookingAt.put("Y", mop.blockY - sensorPos.yCoord);
-		        	lookingAt.put("Z", mop.blockZ - sensorPos.zCoord);
+		        	lookingAt.put("X", mop.blockX - sensorPos.posX);
+		        	lookingAt.put("Y", mop.blockY - sensorPos.posY);
+		        	lookingAt.put("Z", mop.blockZ - sensorPos.posZ);
 		        	map.put("LookingAt", lookingAt);
 		        }
 			}

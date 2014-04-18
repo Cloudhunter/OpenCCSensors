@@ -3,7 +3,6 @@ package openccsensors.common.sensor;
 import java.util.HashMap;
 
 import cpw.mods.fml.common.Loader;
-
 import mods.railcraft.api.carts.IEnergyTransfer;
 import mods.railcraft.api.carts.IExplosiveCart;
 import mods.railcraft.api.carts.IRoutableCart;
@@ -14,6 +13,7 @@ import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Icon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -32,16 +32,16 @@ public class MinecartSensor implements ISensor, IRequiresIconLoading {
 
 
 	@Override
-	public HashMap getDetails(World world, Object obj, Vec3 sensorPos, boolean additional) {
+	public HashMap getDetails(World world, Object obj, ChunkCoordinates sensorPos, boolean additional) {
 
 		EntityMinecart minecart = (EntityMinecart) obj;
 
 		HashMap response = new HashMap();
 		HashMap position = new HashMap();
 		
-		position.put("X", minecart.posX - sensorPos.xCoord);
-		position.put("Y", minecart.posY - sensorPos.yCoord);
-		position.put("Z", minecart.posZ - sensorPos.zCoord);
+		position.put("X", minecart.posX - sensorPos.posX);
+		position.put("Y", minecart.posY - sensorPos.posY);
+		position.put("Z", minecart.posZ - sensorPos.posZ);
 		response.put("Position", position);
 		
 		response.put("Name", minecart.getEntityName());
@@ -76,7 +76,7 @@ public class MinecartSensor implements ISensor, IRequiresIconLoading {
 	}
 
 	@Override
-	public HashMap getTargets(World world, Vec3 location, ISensorTier tier) {
+	public HashMap getTargets(World world, ChunkCoordinates location, ISensorTier tier) {
 		double radius = tier.getMultiplier() * 4;
 		return (HashMap) EntityUtils.getEntities(world, location, radius, EntityMinecart.class);
 	}
@@ -87,7 +87,7 @@ public class MinecartSensor implements ISensor, IRequiresIconLoading {
 	}
 
 	@Override
-	public Object callCustomMethod(World world, Vec3 location, int methodID,
+	public Object callCustomMethod(World world, ChunkCoordinates location, int methodID,
 			Object[] args, ISensorTier tier) {
 		return null;
 	}

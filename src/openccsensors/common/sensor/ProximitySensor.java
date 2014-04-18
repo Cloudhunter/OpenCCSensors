@@ -12,6 +12,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Icon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -30,12 +31,12 @@ public class ProximitySensor implements ISensor, IRequiresIconLoading {
 	private Icon icon;
 
 	@Override
-	public HashMap getDetails(World world, Object obj, Vec3 sensorPos, boolean additional) {
+	public HashMap getDetails(World world, Object obj, ChunkCoordinates sensorPos, boolean additional) {
 		return EntityUtils.livingToMap((EntityLivingBase)obj, sensorPos, additional);
 	}
 
 	@Override
-	public HashMap getTargets(World world, Vec3 location,
+	public HashMap getTargets(World world, ChunkCoordinates location,
 			ISensorTier tier) {
 		double radius = tier.getMultiplier() * 4;
 		return (HashMap) EntityUtils.getEntities(world, location, radius, EntityLivingBase.class);
@@ -47,7 +48,7 @@ public class ProximitySensor implements ISensor, IRequiresIconLoading {
 	}
 
 	@Override
-	public Object callCustomMethod(World world, Vec3 location, int methodID,
+	public Object callCustomMethod(World world, ChunkCoordinates location, int methodID,
 			Object[] args, ISensorTier tier) {
 		return null;
 	}

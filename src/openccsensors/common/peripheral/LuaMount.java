@@ -8,7 +8,7 @@ import java.util.List;
 
 import openccsensors.OpenCCSensors;
 
-import dan200.computer.api.IMount;
+import dan200.computercraft.api.filesystem.IMount;
 
 public class LuaMount implements IMount {
 	

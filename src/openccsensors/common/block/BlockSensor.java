@@ -21,7 +21,7 @@ import openccsensors.common.tileentity.TileEntitySensor;
 import openccsensors.common.util.MiscUtils;
 import openccsensors.common.util.OCSLog;
 import cpw.mods.fml.common.registry.GameRegistry;
-import dan200.computer.api.ComputerCraftAPI;
+import dan200.computercraft.api.ComputerCraftAPI;
 
 public class BlockSensor extends BlockContainer {
 

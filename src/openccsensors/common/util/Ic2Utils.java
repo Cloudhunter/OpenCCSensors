@@ -16,10 +16,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import openccsensors.common.sensor.CropSensor;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
@@ -142,15 +142,15 @@ public class Ic2Utils {
 		return tile instanceof ICropTile;
 	}
 
-	public static Map getCropDetails(Object obj, Vec3 sensorPos, boolean additional) {
+	public static Map getCropDetails(Object obj, ChunkCoordinates sensorPos, boolean additional) {
 		HashMap response = new HashMap();
 		if (obj == null) return response;
 
 		TileEntity tile = (TileEntity) obj;
 		HashMap position = new HashMap();
-		position.put("X", tile.xCoord - sensorPos.xCoord);
-		position.put("Y", tile.yCoord - sensorPos.yCoord);
-		position.put("Z", tile.zCoord - sensorPos.zCoord);
+		position.put("X", tile.xCoord - sensorPos.posX);
+		position.put("Y", tile.yCoord - sensorPos.posY);
+		position.put("Z", tile.zCoord - sensorPos.posZ);
 		response.put("Position", position);
 
 		ItemStack stack = new ItemStack(tile.getBlockType(), 1, tile.getBlockMetadata());
