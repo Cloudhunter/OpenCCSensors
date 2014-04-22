@@ -1,5 +1,7 @@
 package openccsensors;
 
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.Property;
 import openccsensors.api.IItemMeta;
@@ -27,14 +29,12 @@ import openccsensors.common.turtle.TurtleUpgradeSensor;
 import openccsensors.common.util.OCSLog;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.ModContainer;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.ItemStack;
 
 @Mod( modid = "OCS", name = "OpenCCSensors", version = "1.6.4.2", dependencies = "required-after:ComputerCraft;after:CCTurtle;after:BuildCraft|Core;after:IC2;after:Thaumcraft;after:AppliedEnergistics;after:RailCraft;after:ArsMagica;after:UniversalElectricity;after:ThermalExpansion")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
@@ -116,7 +116,7 @@ public class OpenCCSensors {
 	@SidedProxy( clientSide = "openccsensors.client.ClientProxy", serverSide = "openccsensors.common.CommonProxy" )
 	public static CommonProxy proxy;
 	
-	@Mod.Init
+	@EventHandler
 	public void init( FMLInitializationEvent evt )
 	{
 		OCSLog.init();
@@ -128,7 +128,7 @@ public class OpenCCSensors {
 		proxy.registerRenderInformation();
 	}
 	
-	@Mod.PreInit
+	@EventHandler
 	public void preInit( FMLPreInitializationEvent evt )
 	{
 

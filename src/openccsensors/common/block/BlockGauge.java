@@ -18,7 +18,6 @@ import openccsensors.common.tileentity.TileEntityGauge;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import dan200.computercraft.api.ComputerCraftAPI;
 
 public class BlockGauge extends BlockContainer {
 

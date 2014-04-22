@@ -2,14 +2,12 @@ package openccsensors.common.sensor;
 
 import java.util.HashMap;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Icon;
-import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import openccsensors.api.IRequiresIconLoading;
 import openccsensors.api.ISensor;

@@ -5,23 +5,19 @@ import java.util.Random;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import openccsensors.OpenCCSensors;
 import openccsensors.common.tileentity.TileEntitySensor;
 import openccsensors.common.util.MiscUtils;
-import openccsensors.common.util.OCSLog;
 import cpw.mods.fml.common.registry.GameRegistry;
-import dan200.computercraft.api.ComputerCraftAPI;
 
 public class BlockSensor extends BlockContainer {
 

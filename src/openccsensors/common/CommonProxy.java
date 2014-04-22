@@ -9,8 +9,6 @@ import java.net.URLEncoder;
 
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.ForgeVersion;
-import net.minecraftforge.common.MinecraftForge;
-
 import openccsensors.OpenCCSensors;
 import openccsensors.common.block.BlockBasicSensor;
 import openccsensors.common.block.BlockGauge;

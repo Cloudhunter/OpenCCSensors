@@ -1,17 +1,10 @@
 package openccsensors.common.util;
 
-import ic2.api.tile.IEnergyStorage;
-
 import java.util.HashMap;
 
-import buildcraft.api.power.IPowerReceptor;
-import buildcraft.api.power.PowerHandler.PowerReceiver;
 import mods.railcraft.api.carts.IEnergyTransfer;
 import mods.railcraft.api.carts.IExplosiveCart;
 import net.minecraft.entity.item.EntityMinecart;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
 
 
 public class RailcraftUtils {
