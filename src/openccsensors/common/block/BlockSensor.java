@@ -21,9 +21,10 @@ import openccsensors.common.tileentity.TileEntitySensor;
 import openccsensors.common.util.MiscUtils;
 import openccsensors.common.util.OCSLog;
 import cpw.mods.fml.common.registry.GameRegistry;
-import dan200.computercraft.api.ComputerCraftAPI;
+import dan200.computercraft.api.peripheral.IPeripheral;
+import dan200.computercraft.api.peripheral.IPeripheralProvider;
 
-public class BlockSensor extends BlockContainer {
+public class BlockSensor extends BlockContainer implements IPeripheralProvider {
 
 	public Icon turtleIcon;
 	private Icon icon;
@@ -130,4 +131,13 @@ public class BlockSensor extends BlockContainer {
 	{
 		return false;
 	}
+
+	@Override
+	public IPeripheral getPeripheral(World world, int x, int y, int z, int side) {
+		TileEntity entity = world.getBlockTileEntity(x, y, z);
+		if (entity instanceof TileEntitySensor) {
+			return (IPeripheral)entity;
+		}
+		return null;
+   }
 }

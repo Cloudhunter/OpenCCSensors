@@ -58,6 +58,8 @@ public class CommonProxy {
 			ComputerCraftAPI.registerTurtleUpgrade(OpenCCSensors.turtleUpgradeSensor);
 		}
 		
+		ComputerCraftAPI.registerPeripheralProvider(OpenCCSensors.Blocks.sensorBlock);
+		
 		NetworkRegistry.instance().registerGuiHandler(OpenCCSensors.instance, new GuiHandler());
 
 		TileEntityGauge.addGaugeSensor(OpenCCSensors.Sensors.machineSensor);
