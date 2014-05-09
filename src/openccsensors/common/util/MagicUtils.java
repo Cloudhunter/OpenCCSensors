@@ -32,9 +32,11 @@ public class MagicUtils {
 		if (obj instanceof IAspectContainer) {
 			IAspectContainer aspectContainer = (IAspectContainer) obj;
 			AspectList aspectList = aspectContainer.getAspects();
-			Aspect[] aspects = aspectList.getAspects();
-			for (int i = 0; i < aspectList.size(); i++) {
-				response.put(aspects[i].getName(), aspectList.getAmount(aspects[i]));
+			if (aspectList != null) {
+				Aspect[] aspects = aspectList.getAspects();
+				for (int i = 0; i < aspectList.size(); i++) {
+					response.put(aspects[i].getName(), aspectList.getAmount(aspects[i]));
+				}
 			}
 		}
 		return response;
