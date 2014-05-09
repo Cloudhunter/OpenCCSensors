@@ -14,6 +14,7 @@ item.openccsensors.powerCard.name=Power Sensor Card
 item.openccsensors.machineCard.name=Machine Sensor Card
 item.openccsensors.appliedEnergisticsCard.name=Applied Energistics Sensor Card
 item.openccsensors.cropCard.name=Crop Sensor Card
+item.openccsensors.magicCard.name=Magic Sensor Card
 
 item.openccsensors.rangeExtensionAntenna.name=Range Extension Antenna
 item.openccsensors.signalAmplifier.name=Signal Amplifier

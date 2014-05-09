@@ -2,10 +2,10 @@ package openccsensors.common.sensor;
 
 import java.util.HashMap;
 
+import cpw.mods.fml.common.Loader;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.src.ModLoader;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Icon;
@@ -22,18 +22,18 @@ public class MagicSensor extends TileSensor implements ISensor, IRequiresIconLoa
 
 	@Override
 	public boolean isValidTarget(Object tile) {
-		return (ModLoader.isModLoaded("Thaumcraft") && MagicUtils.isValidAspectTarget(tile)) ||
-		       (ModLoader.isModLoaded("ArsMagica") && MagicUtils.isValidAspectTarget(tile));
+		return (Loader.isModLoaded("Thaumcraft") && MagicUtils.isValidAspectTarget(tile)) ||
+		       (Loader.isModLoaded("ArsMagica") && MagicUtils.isValidAspectTarget(tile));
 	}
 
 	@Override
 	public HashMap getDetails(World world, Object obj, ChunkCoordinates sensorPos, boolean additional) {
 		TileEntity tile = (TileEntity) obj;
 		HashMap response = super.getDetails(tile, sensorPos);
-		if (ModLoader.isModLoaded("Thaumcraft")) {
+		if (Loader.isModLoaded("Thaumcraft")) {
 			response.put("Aspects", MagicUtils.getMapOfAspects(world, obj, additional));
 		}
-		if (ModLoader.isModLoaded("ArsMagica")) {
+		if (Loader.isModLoaded("ArsMagica")) {
 			response.putAll(MagicUtils.getMapOfArsMagicaPower(world, obj, additional));
 		}
 		return response;

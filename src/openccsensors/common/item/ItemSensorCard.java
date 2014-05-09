@@ -128,6 +128,12 @@ public class ItemSensorCard extends Item implements ISensorCardRegistry {
 		addSensorCard(41, new SensorCard(OpenCCSensors.Sensors.cropSensor, tier4));
 		addIconsForLoading(OpenCCSensors.Sensors.cropSensor);
 		
+		addSensorCard(42, new SensorCard(OpenCCSensors.Sensors.magicSensor, tier1));
+		addSensorCard(43, new SensorCard(OpenCCSensors.Sensors.magicSensor, tier2));
+		addSensorCard(44, new SensorCard(OpenCCSensors.Sensors.magicSensor, tier3));
+		addSensorCard(45, new SensorCard(OpenCCSensors.Sensors.magicSensor, tier4));
+		addIconsForLoading(OpenCCSensors.Sensors.magicSensor);
+		
 	}
 
 	public void addIconsForLoading (IRequiresIconLoading... list){
