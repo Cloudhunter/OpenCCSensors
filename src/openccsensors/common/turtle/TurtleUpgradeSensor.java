@@ -20,13 +20,16 @@ import dan200.computercraft.api.turtle.TurtleVerb;
 
 public class TurtleUpgradeSensor implements ITurtleUpgrade {
 
+	private PeripheralSensor peripheral;
+	
 	public TurtleUpgradeSensor() {
 	}
 	
 	@Override
 	public IPeripheral createPeripheral(ITurtleAccess turtle,
 			TurtleSide side) {
-		return new PeripheralSensor(new TurtleSensorEnvironment(turtle), true);
+		this.peripheral = new PeripheralSensor(new TurtleSensorEnvironment(turtle), true);
+		return this.peripheral;
 	}
 
 	@Override
@@ -85,7 +88,7 @@ public class TurtleUpgradeSensor implements ITurtleUpgrade {
 
 	@Override
 	public void update(ITurtleAccess turtle, TurtleSide side) {
-		// TODO Auto-generated method stub
+		this.peripheral.update();
 		
 	}
 

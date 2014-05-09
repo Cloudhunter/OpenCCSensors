@@ -238,10 +238,17 @@ public class PeripheralSensor implements IPeripheral, ISensorAccess {
 	@Override
 	public Object[] callMethod(IComputerAccess computer, ILuaContext context, int method,
 			Object[] arguments) throws Exception {
-
-		return new Object[] {
-		// . returns queue id
-		eventManager.queueMethodCall(computer, method, arguments) };
+		int id = eventManager.queueMethodCall(computer, method, arguments);
+		while (true) {
+			Object[] params = context.pullEvent(null);
+			if (params.length >= 3 && params[1] instanceof Double && ((Double)params[1]).intValue() == id) {
+				if (params[0].equals("ocs_success")) {
+					return new Object[] {params[2]};
+				} else if (params[0].equals("ocs_error")) {
+					return new Object[] {null, params[2]};
+				}
+			}
+		}
 	}
 
 	@Override
