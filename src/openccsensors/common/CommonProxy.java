@@ -157,7 +157,7 @@ public class CommonProxy {
 				ModContainer container = FMLCommonHandler.instance().findContainerFor(OpenCCSensors.instance);
 				String charset = "UTF-8";
 				String url = String.format(
-						"http://www.openccsensors.info/analytics?version=%s&side=%s&forge=%s",
+						"http://www.openccsensors.info/analytics?version=%s&side=commented&forge=%s",
 						URLEncoder.encode(container.getVersion(), charset),
 						//URLEncoder.encode(FMLRelauncher.side(), charset),
 						URLEncoder.encode(ForgeVersion.getVersion(), charset)
