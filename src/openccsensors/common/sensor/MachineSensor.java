@@ -48,12 +48,15 @@ public class MachineSensor extends TileSensor implements ISensor, IRequiresIconL
 	public HashMap getDetails(World world, Object obj, ChunkCoordinates sensorPos, boolean additional) {
 		TileEntity tile = (TileEntity) obj;
 		HashMap response = super.getDetails(tile, sensorPos);
-		if (Mods.IC2)
+		if (Mods.IC2) {
 			response.putAll(Ic2Utils.getMachineDetails(world, obj, additional));
-		if (Mods.TE)
+		}
+		if (Mods.TE) {
 			response.putAll(ThermalExpansionUtils.getMachineDetails(world, obj, additional));
-		if (Mods.RC)
+		}
+		if (Mods.RC) {
 			response.putAll(RotaryCraftUtils.getMachineDetails(world, obj, additional));
+		}
 		return response;
 	}
 
