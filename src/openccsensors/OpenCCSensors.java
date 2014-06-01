@@ -163,10 +163,6 @@ public class OpenCCSensors {
 		prop = configFile.get("general", "turtlePeripheralEnabled", true);
 		prop.comment = "Turtle Peripheral Enabled";
 		Config.turtlePeripheralEnabled = prop.getBoolean(true);
-		
-		prop = configFile.get("general", "enableAnalytics", true);
-		prop.comment = "Enable mod analytics";
-		Config.enableAnalytics = prop.getBoolean(true);
 
 
 		configFile.save();

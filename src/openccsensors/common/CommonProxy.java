@@ -70,9 +70,8 @@ public class CommonProxy {
 		RecipeUtils.addSensorRecipe();
 		RecipeUtils.addProxSensorBlockRecipe();
 		
-		if (setupLuaFiles()) {
-			analytics();
-		}
+		setupLuaFiles();
+		
 		setupLanguages();
 	}
 	
@@ -151,24 +150,4 @@ public class CommonProxy {
 		LanguageUtils.setupLanguages();
 	}
 	
-	private void analytics() {
-		if (OpenCCSensors.Config.enableAnalytics) {
-			try {
-				ModContainer container = FMLCommonHandler.instance().findContainerFor(OpenCCSensors.instance);
-				String charset = "UTF-8";
-				String url = String.format(
-						"http://www.openccsensors.info/analytics?version=%s&side=%s&forge=%s",
-						URLEncoder.encode(container.getVersion(), charset),
-						//URLEncoder.encode(FMLRelauncher.side(), charset),
-						URLEncoder.encode(ForgeVersion.getVersion(), charset)
-				);
-				URLConnection connection = new URL(url).openConnection();
-				connection.setConnectTimeout(4000);
-				connection.setRequestProperty("Accept-Charset", charset);
-				InputStream response = connection.getInputStream();
-			}catch(Exception e) {
-				OCSLog.info(e.getMessage());
-			}
-		}
-	}
 }
