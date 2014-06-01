@@ -32,7 +32,9 @@ public class TankSensor extends TileSensor implements ISensor, IRequiresIconLoad
 	public boolean isValidTarget(Object tile) {
 		if (tile instanceof IFluidHandler) {
 			FluidTankInfo[] tanks = ((IFluidHandler)tile).getTankInfo(ForgeDirection.UNKNOWN);
-			return tanks.length > 0;
+			if (tanks != null) {
+				return tanks.length > 0;
+			}
 		}
 		return false;
 	}
