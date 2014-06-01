@@ -18,7 +18,7 @@ import openccsensors.common.util.OCSLog;
 public class SonicSensor implements ISensor, IRequiresIconLoading {
 	
 	private Icon icon;
-	private static final int BASE_RANGE = 3;
+	private static final int BASE_RANGE = 1;
 	
 	@Override
 	public HashMap getDetails(World world, Object obj, ChunkCoordinates sensorPos, boolean additional) {
