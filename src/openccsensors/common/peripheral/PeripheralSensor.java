@@ -6,9 +6,7 @@ import java.util.Map.Entry;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChunkCoordinates;
-import net.minecraft.util.Vec3;
 import openccsensors.OpenCCSensors;
 import openccsensors.api.IMethodCallback;
 import openccsensors.api.ISensor;
@@ -17,13 +15,9 @@ import openccsensors.api.ISensorEnvironment;
 import openccsensors.api.SensorCard;
 import openccsensors.common.item.ItemSensorCard;
 import openccsensors.common.util.CallbackEventManager;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.ModContainer;
-import dan200.computercraft.api.ComputerCraftAPI;
+import dan200.computercraft.api.lua.ILuaContext;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
-import dan200.computercraft.api.lua.ILuaContext;
-import dan200.computercraft.api.filesystem.IMount;
 
 public class PeripheralSensor implements IPeripheral, ISensorAccess {
 

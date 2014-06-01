@@ -2,7 +2,6 @@ package openccsensors.common.sensor;
 
 import java.util.HashMap;
 
-import cpw.mods.fml.common.Loader;
 import mods.railcraft.api.carts.IEnergyTransfer;
 import mods.railcraft.api.carts.IExplosiveCart;
 import mods.railcraft.api.carts.IRoutableCart;
@@ -15,7 +14,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Icon;
-import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.IFluidHandler;
 import openccsensors.api.IRequiresIconLoading;
@@ -23,6 +21,7 @@ import openccsensors.api.ISensor;
 import openccsensors.api.ISensorTier;
 import openccsensors.common.util.EntityUtils;
 import openccsensors.common.util.InventoryUtils;
+import openccsensors.common.util.Mods;
 import openccsensors.common.util.RailcraftUtils;
 import openccsensors.common.util.TankUtils;
 
@@ -59,7 +58,7 @@ public class MinecartSensor implements ISensor, IRequiresIconLoading {
 			response.put("Riding", EntityUtils.livingToMap((EntityLivingBase)minecart.riddenByEntity, sensorPos, true));
 		}
 		
-		if (Loader.isModLoaded("Railcraft")) {
+		if (Mods.RAIL) {
 			if (minecart instanceof IEnergyTransfer) {
 				response.putAll(RailcraftUtils.getEnergyDetails(minecart));
 			}

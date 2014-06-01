@@ -11,19 +11,16 @@ import cpw.mods.fml.common.network.IGuiHandler;
 public class GuiHandler implements IGuiHandler {	
 	
 	@Override
-	public Object getServerGuiElement(int ID, EntityPlayer player,
-			World world, int x, int y, int z) {
+	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		TileEntity tile = world.getBlockTileEntity(x, y, z);
 		if (tile != null) {
 			return new ContainerSensor(player.inventory, tile);
 		}
-
 		return null;
 	}
 
 	@Override
-	public Object getClientGuiElement(int ID, EntityPlayer player,
-			World world, int x, int y, int z) {
+	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		TileEntity tile = world.getBlockTileEntity(x, y, z);
 		if (tile != null) {
 			if (tile instanceof TileEntitySensor) {

@@ -10,11 +10,9 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import openccsensors.OpenCCSensors;
 import openccsensors.client.model.ModelSensor;
 import openccsensors.common.item.ItemSensorCard;
 import openccsensors.common.tileentity.TileEntitySensor;
-import openccsensors.common.util.OCSLog;
 
 import org.lwjgl.opengl.GL11;
 

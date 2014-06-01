@@ -3,7 +3,6 @@ package openccsensors.api;
 import java.util.HashMap;
 
 import net.minecraft.util.ChunkCoordinates;
-import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 public interface IGaugeSensor {

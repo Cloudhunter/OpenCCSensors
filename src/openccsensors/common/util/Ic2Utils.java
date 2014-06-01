@@ -1,9 +1,5 @@
 package openccsensors.common.util;
 
-import ic2.api.reactor.IC2Reactor;
-import ic2.api.reactor.IReactor;
-import ic2.api.reactor.IReactorChamber;
-import ic2.api.tile.IEnergyStorage;
 import ic2.api.crops.CropCard;
 import ic2.api.crops.Crops;
 import ic2.api.crops.ICropTile;
@@ -11,17 +7,20 @@ import ic2.api.energy.EnergyNet;
 import ic2.api.energy.tile.IEnergyConductor;
 import ic2.api.energy.tile.IEnergySink;
 import ic2.api.energy.tile.IEnergySource;
+import ic2.api.reactor.IC2Reactor;
+import ic2.api.reactor.IReactor;
+import ic2.api.reactor.IReactorChamber;
+import ic2.api.tile.IEnergyStorage;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import openccsensors.common.sensor.CropSensor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
-import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import openccsensors.common.sensor.CropSensor;
 
 public class Ic2Utils {
 

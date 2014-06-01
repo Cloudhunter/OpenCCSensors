@@ -5,7 +5,6 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
-import openccsensors.OpenCCSensors;
 import openccsensors.common.container.ContainerSensor;
 
 import org.lwjgl.opengl.GL11;
