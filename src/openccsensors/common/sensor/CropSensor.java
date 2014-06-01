@@ -11,17 +11,15 @@ import net.minecraft.block.BlockStem;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.src.ModLoader;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Icon;
-import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import net.minecraftforge.common.IPlantable;
 import openccsensors.api.IRequiresIconLoading;
 import openccsensors.api.ISensor;
 import openccsensors.api.ISensorTier;
 import openccsensors.common.util.Ic2Utils;
+import openccsensors.common.util.Mods;
 
 public class CropSensor implements ISensor, IRequiresIconLoading {
 
@@ -87,7 +85,7 @@ public class CropSensor implements ISensor, IRequiresIconLoading {
 			}else if (target.block instanceof BlockPumpkin || target.block instanceof BlockMelon) {
 				response.put("Status", STATUS_GROWN);
 			}
-		}else if (ModLoader.isModLoaded("IC2") && obj instanceof TileEntity) {
+		}else if (Mods.IC2 && obj instanceof TileEntity) {
 			response.putAll(Ic2Utils.getCropDetails(obj, sensorPos, additional));
 		}
 		
@@ -120,7 +118,7 @@ public class CropSensor implements ISensor, IRequiresIconLoading {
 	public ItemStack getUniqueRecipeItem() {
 		return new ItemStack(Item.wheat);
 	}
-
+	
 	@Override
 	public HashMap getTargets(World world, ChunkCoordinates location, ISensorTier tier) {
 
@@ -156,7 +154,7 @@ public class CropSensor implements ISensor, IRequiresIconLoading {
 						targets.put(name, potentialTarget);
 					}else {
 						TileEntity tile = world.getBlockTileEntity(tileX, tileY, tileZ);
-						if (tile != null & ModLoader.isModLoaded("IC2") && Ic2Utils.isValidCropTarget(tile)) {
+						if (Mods.IC2 && Ic2Utils.isValidCropTarget(tile)) {
 							targets.put(name, tile);
 						}
 						

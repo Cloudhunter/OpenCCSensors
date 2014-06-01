@@ -1,9 +1,5 @@
 package openccsensors.common.tileentity.basic;
 
-import openccsensors.OpenCCSensors;
-import openccsensors.api.IBasicSensor;
-import openccsensors.common.sensor.ProximitySensor;
-import openccsensors.common.util.OCSLog;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetworkManager;
@@ -13,7 +9,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
-import net.minecraft.world.World;
+import openccsensors.OpenCCSensors;
+import openccsensors.api.IBasicSensor;
+import openccsensors.common.sensor.ProximitySensor;
 
 public class TileEntityBasicProximitySensor extends TileEntity implements IBasicSensor {
 

@@ -3,10 +3,8 @@ package openccsensors.api;
 import java.util.HashMap;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Icon;
-import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 public interface ISensor {

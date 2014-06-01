@@ -1,15 +1,13 @@
 package openccsensors.common.util;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-
-import am2.api.power.IPowerIntegration;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
+import am2.api.power.IPowerIntegration;
 
 public class MagicUtils {
 

@@ -2,8 +2,7 @@ package openccsensors.common.util;
 
 import java.util.HashMap;
 
-import forestry.api.apiculture.BeeManager;
-import forestry.api.apiculture.IAlleleBeeSpecies;
+import net.minecraft.item.ItemStack;
 import forestry.api.apiculture.IBee;
 import forestry.api.apiculture.IBeeGenome;
 import forestry.api.arboriculture.ITree;
@@ -22,8 +21,6 @@ import forestry.api.genetics.IIndividual;
 import forestry.api.genetics.ISpeciesRoot;
 import forestry.api.lepidopterology.IButterfly;
 import forestry.api.lepidopterology.IButterflyGenome;
-
-import net.minecraft.item.ItemStack;
 
 public class ForestryUtils {
 	

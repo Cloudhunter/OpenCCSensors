@@ -18,7 +18,6 @@ import dan200.computercraft.api.turtle.TurtleSide;
 import dan200.computercraft.api.turtle.TurtleUpgradeType;
 import dan200.computercraft.api.turtle.TurtleVerb;
 
-
 public class TurtleUpgradeSensor implements ITurtleUpgrade {
 
 	private ArrayList<PeripheralSensor> peripheral = new ArrayList<PeripheralSensor>();
