@@ -88,8 +88,9 @@ public class TurtleUpgradeSensor implements ITurtleUpgrade {
 
 	@Override
 	public void update(ITurtleAccess turtle, TurtleSide side) {
-		this.peripheral.update();
-		
+		if (this.peripheral != null) {
+			this.peripheral.update();			
+		} 	
 	}
 
 }

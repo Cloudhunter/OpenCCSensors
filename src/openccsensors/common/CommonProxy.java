@@ -149,5 +149,4 @@ public class CommonProxy {
 	private void setupLanguages() {
 		LanguageUtils.setupLanguages();
 	}
-	
 }

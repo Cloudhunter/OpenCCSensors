@@ -114,7 +114,7 @@ public class PeripheralSensor implements IPeripheral, ISensorAccess {
 				HashMap<String, Object> targets = sensor.getTargets(env.getWorld(), location, card.getTier());
 				
 				if (!targets.containsKey(targetName)) {
-					return null;
+					throw new Exception("Sensor cannot find data at location"); 
 				}
 				
 				return sensor.getDetails(env.getWorld(), targets.get(targetName), location, true);
