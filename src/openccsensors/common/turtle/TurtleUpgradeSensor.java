@@ -1,5 +1,6 @@
 package openccsensors.common.turtle;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
@@ -20,7 +21,7 @@ import dan200.computercraft.api.turtle.TurtleVerb;
 
 public class TurtleUpgradeSensor implements ITurtleUpgrade {
 
-	private PeripheralSensor peripheral;
+	private ArrayList<PeripheralSensor> peripheral = new ArrayList<PeripheralSensor>();
 	
 	public TurtleUpgradeSensor() {
 	}
@@ -28,8 +29,8 @@ public class TurtleUpgradeSensor implements ITurtleUpgrade {
 	@Override
 	public IPeripheral createPeripheral(ITurtleAccess turtle,
 			TurtleSide side) {
-		this.peripheral = new PeripheralSensor(new TurtleSensorEnvironment(turtle), true);
-		return this.peripheral;
+		this.peripheral.add(new PeripheralSensor(new TurtleSensorEnvironment(turtle), true));
+		return this.peripheral.get(this.peripheral.size() - 1);
 	}
 
 	@Override
@@ -89,7 +90,11 @@ public class TurtleUpgradeSensor implements ITurtleUpgrade {
 	@Override
 	public void update(ITurtleAccess turtle, TurtleSide side) {
 		if (this.peripheral != null) {
-			this.peripheral.update();			
+			for (PeripheralSensor peripheral : this.peripheral) {
+				if (peripheral != null) {
+					peripheral.update();
+				}
+			}		
 		} 	
 	}
 
