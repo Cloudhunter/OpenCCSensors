@@ -20,13 +20,11 @@ public class WorldSensor implements ISensor, IRequiresIconLoading {
 	@Override
 	public HashMap getDetails(World world, Object obj, ChunkCoordinates sensorLocation, boolean additional) {
 		
-		Vec3 location = (Vec3) obj;
-		
 		HashMap response = new HashMap();
 		
-		int x = (int) location.xCoord;
-		int y = (int) location.yCoord;
-		int z = (int) location.zCoord;
+		int x = (int) sensorLocation.posX;
+		int y = (int) sensorLocation.posY;
+		int z = (int) sensorLocation.posZ;
 		
 		response.put("Dimension", world.getWorldInfo().getVanillaDimension());
 		response.put("Biome", world.getBiomeGenForCoords(x, z).biomeName);
