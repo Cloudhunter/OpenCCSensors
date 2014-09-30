@@ -1,0 +1,24 @@
+[
+{
+  "modid" : "OCS",
+  "name" : "OpenCCSensors",
+  "version" : "1.6.4.5",
+  "url" : "http://www.computercraft.info",
+  "credits" : "",
+  "authors": [
+    "Cloudy",
+    "Orwell1984",
+    "Mikeemoo",
+    "Nietsnie",
+    "Lyqyd",
+    "CoolisTheName007",
+    "thraaawn",
+    "foone"
+  ],
+  "description": "",
+  "logoFile" : "",
+  "updateUrl" : "",
+  "parent" : "",
+  "screenshots": [
+  ]
+}]
