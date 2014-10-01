@@ -14,7 +14,7 @@ public class RailcraftUtils {
 		if (minecart instanceof IEnergyTransfer) {
 			IEnergyTransfer energyCart = (IEnergyTransfer) minecart;
 			int capacity = energyCart.getCapacity();
-			int stored = energyCart.getEnergy();
+			double stored = energyCart.getEnergy();
 			
 			response.put("Stored", stored);
 			response.put("Capacity", capacity);
