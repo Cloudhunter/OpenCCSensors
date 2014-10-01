@@ -5,29 +5,30 @@ import java.util.Map;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import universalelectricity.core.block.IConductor;
-import universalelectricity.core.block.IElectrical;
-import universalelectricity.core.block.IElectricalStorage;
+import net.minecraftforge.common.util.ForgeDirection;
+import universalelectricity.api.core.grid.electric.IElectricNode;
+import universalelectricity.api.core.grid.electric.IEnergyNode;
+import universalelectricity.api.core.grid.electric.IResistance;
 
 public class UniversalElectricityUtils {
 
 	public static boolean isValidTarget(TileEntity target) {
-		return target instanceof IElectrical ||
-			   target instanceof IElectricalStorage ||
-			   target instanceof IConductor;
+		return target instanceof IElectricNode ||
+			   target instanceof IEnergyNode ||
+			   target instanceof IResistance;
 	}
 
 	public static Map getDetails(World world, Object obj, boolean additional) {
 		HashMap response = new HashMap();
 		
 		if (additional) {
-			if (obj instanceof IElectrical) {
-				response.put("Voltage", ((IElectrical)obj).getVoltage());
+			if (obj instanceof IElectricNode) {
+				response.put("Voltage", ((IElectricNode)obj).getVoltage(ForgeDirection.UNKNOWN));
 			}
 			
-			if (obj instanceof IElectricalStorage) {
-				double joules = ((IElectricalStorage)obj).getEnergyStored();
-				double maxJoules = ((IElectricalStorage)obj).getMaxEnergyStored();
+			if (obj instanceof IEnergyNode) {
+				double joules = ((IEnergyNode)obj).getEnergy(ForgeDirection.UNKNOWN);
+				double maxJoules = ((IEnergyNode)obj).getEnergyCapacity(ForgeDirection.UNKNOWN);
 				response.put("Stored", joules);
 				response.put("MaxStorage", maxJoules);
 				if (maxJoules > 0) {
@@ -37,9 +38,8 @@ public class UniversalElectricityUtils {
 				}
 			}
 			
-			if (obj instanceof IConductor) {
-				response.put("ConductorCapacity", ((IConductor)obj).getCurrentCapacity());
-				response.put("Resistance", ((IConductor)obj).getResistance());
+			if (obj instanceof IResistance) {
+				response.put("Resistance", ((IResistance)obj).getResistance());
 			}
 			
 		}
