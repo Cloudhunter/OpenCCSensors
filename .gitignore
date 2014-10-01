@@ -2,6 +2,12 @@
 build/
 download/
 .DS_Store
+.classpath
+.gradle/
+.project
+.settings/
+bin/
+eclipse/
 
 # Package Files #
 *.jar
