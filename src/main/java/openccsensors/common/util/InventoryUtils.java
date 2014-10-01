@@ -71,8 +71,8 @@ public class InventoryUtils {
         {
             for (int i = 0; i < nbttaglist.tagCount(); ++i)
             {
-                short short1 = ((NBTTagCompound)nbttaglist.tagAt(i)).getShort("id");
-                short short2 = ((NBTTagCompound)nbttaglist.tagAt(i)).getShort("lvl");
+                short short1 = (nbttaglist.getCompoundTagAt(i)).getShort("id");
+                short short2 = (nbttaglist.getCompoundTagAt(i)).getShort("lvl");
 
                 if (Enchantment.enchantmentsList[short1] != null)
                 {
