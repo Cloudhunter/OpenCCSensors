@@ -32,7 +32,7 @@ public class CoFHUtils {
 			response.put("StoredPercentage", 0);
 
 			if (capacity > 0) {
-				response.put("StoredPercentage", Math.max(Math.min(100,((100.0 / capacity) * stored)), 0));
+				response.put("StoredPercentage", Math.max(Math.min(100,((100.0 * stored) / capacity)), 0));
 			}
 		}
 		return response;
@@ -54,7 +54,7 @@ public class CoFHUtils {
 			response.put("StoredPercentage", 0);
 
 			if (capacity > 0) {
-				response.put("StoredPercentage", Math.max(Math.min(100,((100.0 / capacity) * stored)), 0));
+				response.put("StoredPercentage", Math.max(Math.min(100,((100.0 * stored) / capacity)), 0));
 			}
 		}
 		return response;
