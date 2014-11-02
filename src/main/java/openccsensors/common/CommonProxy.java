@@ -38,6 +38,7 @@ import openccsensors.common.util.ResourceExtractingUtils;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.FMLLaunchHandler;
 import dan200.computercraft.api.ComputerCraftAPI;
 
@@ -101,6 +102,9 @@ public class CommonProxy {
 		
 		OpenCCSensors.Items.sensorCard = new ItemSensorCard();
 		OpenCCSensors.Items.sensorCard.registerSensors();
+		
+		GameRegistry.registerItem(OpenCCSensors.Items.genericItem, "genericItem", "ocs");
+		GameRegistry.registerItem(OpenCCSensors.Items.sensorCard, "sensorCard", "ocs");
 		
 	}
 	
