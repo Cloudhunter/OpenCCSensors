@@ -1,9 +1,8 @@
 package openccsensors.common.util;
 
 import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import cpw.mods.fml.common.FMLLog;
 
 public class OCSLog {
 
@@ -14,7 +13,7 @@ public class OCSLog {
 	}
 
 	public static void init() {
-		logger = FMLLog.getLogger();
+		logger = LogManager.getFormatterLogger("OpenCCSensors");
 	}
 
 	public static void log(Level level, String format, Object... data) {
