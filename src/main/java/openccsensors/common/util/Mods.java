@@ -39,4 +39,9 @@ public class Mods {
 	 */
 	public static final boolean RAIL = Loader.isModLoaded("Railcraft");
 	
+	
+	/***
+	 * Buildcraft Core
+	 */
+	public static final boolean BC = Loader.isModLoaded("BuildCraft|Core");
 }

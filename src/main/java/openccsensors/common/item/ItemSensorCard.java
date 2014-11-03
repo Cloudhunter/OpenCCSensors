@@ -21,6 +21,7 @@ import openccsensors.api.ISensorCardRegistry;
 import openccsensors.api.ISensorTier;
 import openccsensors.api.SensorCard;
 import openccsensors.common.SensorTier;
+import openccsensors.common.util.OCSLog;
 import openccsensors.common.util.RecipeUtils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -133,6 +134,7 @@ public class ItemSensorCard extends Item implements ISensorCardRegistry {
 		addSensorCard(45, new SensorCard(OpenCCSensors.Sensors.magicSensor, tier4));
 		addIconsForLoading(OpenCCSensors.Sensors.magicSensor);
 		
+		OCSLog.info("Added %d Sensor Cards with %d Icons", cards.size(), iconLoadList.size());
 	}
 
 	public void addIconsForLoading (IRequiresIconLoading... list){

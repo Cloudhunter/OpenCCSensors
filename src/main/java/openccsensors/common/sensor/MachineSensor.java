@@ -16,7 +16,7 @@ import openccsensors.api.ISensorTier;
 import openccsensors.common.util.Ic2Utils;
 import openccsensors.common.util.Mods;
 import openccsensors.common.util.RotaryCraftUtils;
-import openccsensors.common.util.ThermalExpansionUtils;
+import openccsensors.common.util.CoFHUtils;
 
 public class MachineSensor extends TileSensor implements ISensor, IRequiresIconLoading, IGaugeSensor {
 
@@ -35,7 +35,7 @@ public class MachineSensor extends TileSensor implements ISensor, IRequiresIconL
 	@Override
 	public boolean isValidTarget(Object target) {
 		return (Mods.IC2 && Ic2Utils.isValidMachineTarget(target)) ||
-			   (Mods.TE && ThermalExpansionUtils.isValidMachineTarget(target)) ||
+			   (Mods.TE && CoFHUtils.isValidMachineTarget(target)) ||
 			   (Mods.RC && RotaryCraftUtils.isValidMachineTarget(target));
 	}
 
@@ -52,7 +52,7 @@ public class MachineSensor extends TileSensor implements ISensor, IRequiresIconL
 			response.putAll(Ic2Utils.getMachineDetails(world, obj, additional));
 		}
 		if (Mods.TE) {
-			response.putAll(ThermalExpansionUtils.getMachineDetails(world, obj, additional));
+			response.putAll(CoFHUtils.getMachineDetails(world, obj, additional));
 		}
 		if (Mods.RC) {
 			response.putAll(RotaryCraftUtils.getMachineDetails(world, obj, additional));

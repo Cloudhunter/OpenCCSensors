@@ -36,7 +36,7 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
-@Mod( modid = "OCS", name = "OpenCCSensors", version = "1.6.4.5", dependencies = "required-after:ComputerCraft;after:CCTurtle;after:BuildCraft|Core;after:IC2;after:Thaumcraft;after:AppliedEnergistics;after:RailCraft;after:ArsMagica;after:UniversalElectricity;after:ThermalExpansion")
+@Mod( modid = "OCS", name = "OpenCCSensors", version = "1.7.1", dependencies = "required-after:ComputerCraft;after:CCTurtle;after:BuildCraft|Core;after:IC2;after:Thaumcraft;after:AppliedEnergistics;after:RailCraft;after:ArsMagica;after:UniversalElectricity;after:ThermalExpansion")
 public class OpenCCSensors {
 
 	public static class Blocks
@@ -110,7 +110,7 @@ public class OpenCCSensors {
 
 				@Override
 				public Item getTabIconItem() {
-					return null;
+					return Items.sensorCard;
 				}
   };
 
@@ -138,33 +138,12 @@ public class OpenCCSensors {
 
 		RESOURCE_PATH = "/assets/openccsensors";
 		LUA_PATH = String.format("%s/lua", RESOURCE_PATH);
-		LANGUAGE_PATH = String.format("%s/languages", RESOURCE_PATH);
 		TEXTURE_PATH = String.format("%s/textures", RESOURCE_PATH);
 		EXTRACTED_LUA_PATH = String.format("mods/OCSLua/%s/lua", FMLCommonHandler.instance().findContainerFor(OpenCCSensors.instance).getVersion());
 		
 		Configuration configFile = new Configuration(evt.getSuggestedConfigurationFile());
 
-		Property prop = configFile.get("block", "sensorBlockID", 341);
-		prop.comment = "The block ID for the sensor block";
-		Config.sensorBlockID = prop.getInt();
-
-		prop = configFile.get("block", "gaugeBlockID", 342);
-		prop.comment = "The block ID for the gauge block";
-		Config.gaugeBlockID = prop.getInt();
-		
-		prop = configFile.get("block", "basicSensorBlockID", 343);
-		prop.comment = "The block ID for the basic sensor block";
-		Config.basicSensorBlockID = prop.getInt();
-
-		prop = configFile.get("item", "sensorCardID", 7486);
-		prop.comment = "The block ID for the sensor card";
-		Config.sensorCardID = prop.getInt();
-
-		prop = configFile.get("item", "sensorUpgradeID", 7487);
-		prop.comment = "The block ID for the generic item";
-		Config.genericItemID = prop.getInt();
-
-		prop = configFile.get("general", "turtlePeripheralEnabled", true);
+		Property prop = configFile.get("general", "turtlePeripheralEnabled", true);
 		prop.comment = "Turtle Peripheral Enabled";
 		Config.turtlePeripheralEnabled = prop.getBoolean(true);
 
