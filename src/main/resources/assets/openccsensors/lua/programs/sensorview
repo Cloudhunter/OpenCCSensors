@@ -1,5 +1,6 @@
 local sideNames = rs.getSides()
 local sensorSides = {}
+local targetNames
 local sideSelection, targetSelection, targetOffset, detailOffset = 1, 1, 1, 1
 local detailLines, targetNameMenuTable
 local graphing, graphSide, graphTarget, graphMatch, graphInstance = false
@@ -18,7 +19,7 @@ local function checkSensors()
 end
 
 local function writeEntry(menuTable, index, cursorPos)
-	if cursorPos == index then
+	if cursorPos == menuTable[index] then
 		term.setBackgroundColor(term.isColor() and colors.blue or colors.white)
 		term.setTextColor(term.isColor() and colors.white or colors.black)
 		term.write(string.sub(menuTable[index], 1, 16))
@@ -56,7 +57,7 @@ end
 local function redraw()
 	w, h = term.getSize()
 	--pre-fetch sensor targets and detailed target information.
-	local targetNames = nil
+	targetNames = nil
 	detailLines = {}
 	checkSensors()
 	if sensorSides[sideNames[sideSelection]] then
@@ -67,8 +68,11 @@ local function redraw()
 				table.insert(targetNameMenuTable, k)
 			end
 			table.sort(targetNameMenuTable)
+			if not (targetSelection and targetNames[targetSelection]) then
+				targetSelection = targetNameMenuTable[1]
+			end
 			if #targetNameMenuTable > 0 then
-				toLines(sensor.call(sideNames[sideSelection], "getTargetDetails", targetNameMenuTable[targetSelection]), detailLines, {}, 0)
+				toLines(sensor.call(sideNames[sideSelection], "getTargetDetails", targetSelection), detailLines, {}, 0)
 			end
 		end
 	end
@@ -186,7 +190,7 @@ while true do
 			--left, selects previous side
 			if sideSelection > 1 then
 				sideSelection = sideSelection - 1
-				targetSelection = 1
+				targetSelection = targetNameMenuTable and targetNameMenuTable[1] or nil
 				targetOffset = 1
 				detailOffset = 1
 				detailLines = nil
@@ -195,30 +199,52 @@ while true do
 			--right, selects next side
 			if sideSelection < 6 then
 				sideSelection = sideSelection + 1
-				targetSelection = 1
+				targetSelection = targetNameMenuTable and targetNameMenuTable[1] or nil
 				targetOffset = 1
 				detailOffset = 1
 				detailLines = nil
 			end
 		elseif p1 == 200 then
 			--up, selects previous target, adjusting offset if necessary.
-			if targetSelection > 1 then
-				if targetSelection - targetOffset + 1 == 2 and targetOffset > 1 then
+			local sel
+			--look up selection cursor position in list based off of target name
+			for i, name in ipairs(targetNameMenuTable) do
+				if name == targetSelection then
+					sel = i
+					break
+				end
+			end
+			
+			if sel > 1 then
+				if sel - targetOffset + 1 == 2 and targetOffset > 1 then
 					targetOffset = targetOffset - 1
 				end
-				targetSelection = targetSelection - 1
+				sel = sel - 1
 				detailOffset = 1
 				detailLines = nil
+				--sel has changed, assign new target name.
+				targetSelection = targetNameMenuTable[sel]
 			end
 		elseif p1 == 208 then
 			--down, selects next target, adjusting offset if necessary.
-			if targetNameMenuTable and targetSelection < #targetNameMenuTable then
-				if targetSelection - targetOffset + 1 == h - 4 and targetSelection ~= #targetNameMenuTable - 1 then
+			local sel
+			--look up selection cursor position in list based off of target name
+			for i, name in ipairs(targetNameMenuTable) do
+				if name == targetSelection then
+					sel = i
+					break
+				end
+			end
+
+			if targetNameMenuTable and sel < #targetNameMenuTable then
+				if sel - targetOffset + 1 == h - 4 and sel ~= #targetNameMenuTable - 1 then
 					targetOffset = targetOffset + 1
 				end
-				targetSelection = targetSelection + 1
+				sel = sel + 1
 				detailOffset = 1
 				detailLines = nil
+				--sel has changed, assign new target name.
+				targetSelection = targetNameMenuTable[sel]
 			end
 		elseif p1 == 201 then
 			--pgup, moves detail
