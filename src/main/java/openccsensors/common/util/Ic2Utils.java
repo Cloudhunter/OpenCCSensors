@@ -28,12 +28,18 @@ public class Ic2Utils {
 	protected static final String MASS_FAB_CLASS = "ic2.core.block.machine.tileentity.TileEntityMatter";
 	
 	public static boolean isValidPowerTarget(Object target) {
-		return target != null &&
+		TileEntity energyTarget = null;
+		if (target instanceof TileEntity) {
+			TileEntity tile = (TileEntity) target;
+			energyTarget = EnergyNet.instance.getTileEntity(tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord);
+		}
+		
+		return energyTarget != null &&
 			    (
-			     target instanceof IEnergySink ||
-			     target instanceof IEnergySource ||
-			     target instanceof IEnergyConductor ||
-			     target instanceof IEnergyStorage
+		    		energyTarget instanceof IEnergySink ||
+		    		energyTarget instanceof IEnergySource ||
+		    		energyTarget instanceof IEnergyConductor ||
+		    		energyTarget instanceof IEnergyStorage
 			    );
 	}
 
