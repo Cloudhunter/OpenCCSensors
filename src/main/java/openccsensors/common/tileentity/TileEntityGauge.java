@@ -161,7 +161,7 @@ public class TileEntityGauge extends TileEntity implements IPeripheral {
 					for (String property : new String[] {
 							"HeatPercentage",
 							"Progress",
-							"PowerPercentFull",
+							"StoredPercentage",
 							"InventoryPercentFull"
 					}) {
 						if (updatePropertyName == "" && tileProperties.containsKey(property)) {

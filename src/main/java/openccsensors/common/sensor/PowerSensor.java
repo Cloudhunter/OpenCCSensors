@@ -25,7 +25,7 @@ public class PowerSensor extends TileSensor implements ISensor, IRequiresIconLoa
 
 	private IIcon icon;
 	private String[] gaugeProperties = new String[] {
-		"PowerPercentFull"	
+		"StoredPercentage"	
 	};
 	
 	Class UEApi = null;

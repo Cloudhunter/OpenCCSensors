@@ -36,7 +36,7 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
-@Mod( modid = "OCS", name = "OpenCCSensors", version = "1.7.1", dependencies = "required-after:ComputerCraft;after:CCTurtle;after:BuildCraft|Core;after:IC2;after:Thaumcraft;after:AppliedEnergistics;after:RailCraft;after:ArsMagica;after:UniversalElectricity;after:ThermalExpansion")
+@Mod( modid = "OCS", name = "OpenCCSensors", version = "1.7.2", dependencies = "required-after:ComputerCraft;after:CCTurtle;after:BuildCraft|Core;after:IC2;after:Thaumcraft;after:AppliedEnergistics;after:RailCraft;after:ArsMagica;after:UniversalElectricity;after:ThermalExpansion")
 public class OpenCCSensors {
 
 	public static class Blocks
@@ -95,11 +95,8 @@ public class OpenCCSensors {
 		public static CropSensor cropSensor;
 	}
 	
-	public static String RESOURCE_PATH;
-	public static String LANGUAGE_PATH;
 	public static String LUA_PATH;
 	public static String EXTRACTED_LUA_PATH;
-	public static String TEXTURE_PATH;
 	
 	public static LuaMount mount = new LuaMount();
 
@@ -136,9 +133,7 @@ public class OpenCCSensors {
 	public void preInit( FMLPreInitializationEvent evt )
 	{
 
-		RESOURCE_PATH = "/assets/openccsensors";
-		LUA_PATH = String.format("%s/lua", RESOURCE_PATH);
-		TEXTURE_PATH = String.format("%s/textures", RESOURCE_PATH);
+		LUA_PATH = "/assets/openccsensors/lua";
 		EXTRACTED_LUA_PATH = String.format("mods/OCSLua/%s/lua", FMLCommonHandler.instance().findContainerFor(OpenCCSensors.instance).getVersion());
 		
 		Configuration configFile = new Configuration(evt.getSuggestedConfigurationFile());
