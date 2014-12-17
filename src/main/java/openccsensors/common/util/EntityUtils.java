@@ -9,6 +9,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.MovingObjectPosition;
@@ -64,9 +65,9 @@ public class EntityUtils {
 		position.put("Z", living.posZ - sensorPos.posZ);
 		map.put("Position", position);
 
-		map.put("Name", (living instanceof EntityPlayer) ? "Player" : living.getCommandSenderName());
+		map.put("Name", (living instanceof EntityPlayerMP) ? "Player" : living.getCommandSenderName());
 		map.put("RawName", living.getClass().getName());
-		map.put("IsPlayer", living instanceof EntityPlayer);
+		map.put("IsPlayer", living instanceof EntityPlayerMP);
 		
 		if (additional) {
 
@@ -80,7 +81,7 @@ public class EntityUtils {
 			
 			map.put("Armour", armour);
 			map.put("Health", living.getHealth());
-			map.put("IsAirborne", living.isAirBorne);
+			map.put("IsAirborne", !living.onGround);
 			map.put("IsBurning", living.isBurning());
 			map.put("IsAlive", living.isEntityAlive());
 			map.put("IsInWater", living.isInWater());
@@ -105,8 +106,8 @@ public class EntityUtils {
 			map.put("PotionEffects", potionEffects);
 		}
 	
-		if (living instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) living;
+		if (living instanceof EntityPlayerMP) {
+			EntityPlayerMP player = (EntityPlayerMP) living;
 			map.put("Username", player.getCommandSenderName());
 			map.put("IsBlocking", player.isBlocking());
 			map.put("ExperienceTotal", player.experienceTotal);
@@ -116,20 +117,6 @@ public class EntityUtils {
 				map.put("FoodLevel", player.getFoodStats().getFoodLevel());
 				map.put("Gamemode", player.capabilities.isCreativeMode);
 				map.put("Inventory", InventoryUtils.invToMap(player.inventory));
-
-		        Vec3 posVec = Vec3.createVectorHelper(player.posX, player.posY + 1.62F, player.posZ);
-		        Vec3 lookVec = player.getLook(1.0f);
-		        Vec3 targetVec = posVec.addVector(lookVec.xCoord * 10f, lookVec.yCoord * 10f, lookVec.zCoord * 10f);
-		        MovingObjectPosition mop = player.worldObj.rayTraceBlocks(posVec, targetVec);
-		        map.put("IsLookingAtBlock", mop.typeOfHit == MovingObjectType.ENTITY);
-		        if (mop.typeOfHit == MovingObjectType.ENTITY) {
-		        	//int blockId = player.worldObj.getBlockId(mop.blockX, mop.blockY, mop.blockZ);
-		        	HashMap lookingAt = new HashMap();
-		        	lookingAt.put("X", mop.blockX - sensorPos.posX);
-		        	lookingAt.put("Y", mop.blockY - sensorPos.posY);
-		        	lookingAt.put("Z", mop.blockZ - sensorPos.posZ);
-		        	map.put("LookingAt", lookingAt);
-		        }
 			}
 		
 			map.put("Experience", player.experience);
