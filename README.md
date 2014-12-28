@@ -12,19 +12,27 @@ https://github.com/Cloudhunter/OpenCCSensors/wiki/Getting-started-Dev
 Compiling
 =======
 
-(Linux and Mac)
+OpenCCSensors now uses the ForgeGradle build system.  These instructions assume you've set up an OpenCCSensors directory and have downloaded the correct ForgeGradle package (recommended version for the current Minecraft version) and copied these directories and files into it:
 
-You will need Apache Ant and Git.
+eclipse/ (if you are using eclipse as your IDE)
+gradle/
+src/
+gradlew
+gradlew.bat
 
 Run: git clone git://github.com/Cloudhunter/OpenCCSensors && cd OpenCCSensors
 
 It should download the repository and cd into the repository.
 
-Next, run: ant
+Next, run the following command: gradlew setupDecompWorkspace
 
-It should find the Buildfile and start downloading Forge and MCP.
+It should find the build.gradle and start downloading Forge and MCP, as well as decompiling Minecraft.
 
-It will start decompiling Minecraft and then after a few minutes there should be a file called 'OpenCCSensors-VERSION.jar' in build/dist. That is the compiled version of OpenCCSensors.
+Next, if you are using eclipse, run: gradlew eclipse
+
+Finally, run: gradlew build
+
+It will start compiling the build and then after a few minutes there should be a file called 'OpenCCSensors-VERSION.jar' in build/libs. That is the compiled version of OpenCCSensors. After making changes in the source, building a new version only requires that you repeat the `gradlew build` command.
 
 License
 =======
