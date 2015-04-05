@@ -23,6 +23,7 @@ public class TankUtils {
 					if (tank != null) {
 						HashMap tankMap = new HashMap();
 						tankMap.put("Capacity", tank.capacity);
+						int fluidAmount = 0;
 						tankMap.put("Amount", 0);
 						
 						FluidStack stack = tank.fluid;
@@ -31,12 +32,15 @@ public class TankUtils {
 							Fluid fluid = stack.getFluid();
 							tankMap.put("Name", FluidRegistry.getFluidName(stack));
 							tankMap.put("RawName", fluid.getUnlocalizedName());
-							tankMap.put("Amount", stack.amount);
+							fluidAmount = stack.amount;
 							tankMap.put("Luminousity", fluid.getLuminosity());
 							tankMap.put("Temperature", fluid.getTemperature());
 							tankMap.put("Viscosity", fluid.getViscosity());
 							tankMap.put("IsGaseous", fluid.isGaseous());
 						}
+						tankMap.put("Amount", fluidAmount);
+						tankMap.put("PercentFull", ((double)fluidAmount) * 100d / (double) tank.capacity);
+						
 						allTanks.put(++i, tankMap);
 					}
 				}
