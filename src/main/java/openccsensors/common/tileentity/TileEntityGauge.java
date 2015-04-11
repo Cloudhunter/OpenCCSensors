@@ -173,7 +173,7 @@ public class TileEntityGauge extends TileEntity implements IPeripheral {
 						updatePropertyName = entry.getKey();
 					}
 				}
-				percentage = ((Double) (tileProperties.get(updatePropertyName))).intValue();
+				percentage = ((Number) (tileProperties.get(updatePropertyName))).intValue();
 			}
 			if (lastBroadcast++ % 10 == 0) {
 				lastBroadcast = 1;
