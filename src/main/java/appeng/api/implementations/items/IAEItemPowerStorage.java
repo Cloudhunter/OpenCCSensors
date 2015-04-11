@@ -14,7 +14,7 @@ public interface IAEItemPowerStorage
 	 * Inject amt, power into the device, it will store what it can, and return
 	 * the amount unable to be stored.
 	 * 
-	 * @return amount unable to be stored
+	 * @return
 	 */
 	public double injectAEPower(ItemStack is, double amt);
 
@@ -22,8 +22,8 @@ public interface IAEItemPowerStorage
 	 * Attempt to extract power from the device, it will extract what it can and
 	 * return it.
 	 * 
-	 * @param amt to be extracted power from device
-	 * @return what it could extract
+	 * @param amt
+	 * @return
 	 */
 	public double extractAEPower(ItemStack is, double amt);
 
@@ -41,7 +41,7 @@ public interface IAEItemPowerStorage
 	 * Control the power flow by telling what the network can do, either add? or
 	 * subtract? or both!
 	 * 
-	 * @return access restriction of network
+	 * @return
 	 */
 	public AccessRestriction getPowerFlow(ItemStack is);
 

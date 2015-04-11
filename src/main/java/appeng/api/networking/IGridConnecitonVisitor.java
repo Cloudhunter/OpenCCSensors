@@ -1,6 +1,6 @@
 package appeng.api.networking;
 
-public interface IGridConnectionVisitor extends IGridVisitor
+public interface IGridConnecitonVisitor extends IGridVisitor
 {
 
 	/**

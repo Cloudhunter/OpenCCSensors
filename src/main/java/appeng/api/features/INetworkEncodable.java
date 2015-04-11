@@ -7,8 +7,9 @@ public interface INetworkEncodable {
 	/**
 	 * Used to get the current key from the item.
 	 * 
-	 * @param item item
-	 * @return string key of item
+	 * @param player
+	 * @param item
+	 * @return
 	 */
 	String getEncryptionKey(ItemStack item);
 

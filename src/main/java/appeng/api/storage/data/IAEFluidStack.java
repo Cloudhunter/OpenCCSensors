@@ -45,7 +45,7 @@ public interface IAEFluidStack extends IAEStack<IAEFluidStack>
 	/**
 	 * quick way to get access to the Forge Fluid Definition.
 	 * 
-	 * @return fluid definition
+	 * @return
 	 */
 	Fluid getFluid();
 

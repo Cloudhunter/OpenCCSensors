@@ -12,14 +12,14 @@ public interface IAETagCompound
 {
 
 	/**
-	 * @return a copy ( the copy will not be a IAETagCompound, it will be a NBTTagCompound )
+	 * @return a copy ( the copy will not be a IAETagCompount, it will be a NBTTagCompound )
 	 */
 	public NBTTagCompound getNBTTagCompoundCopy();
 
 	/**
 	 * compare to other NBTTagCompounds or IAETagCompounds
 	 * 
-	 * @param a compared object
+	 * @param a
 	 * @return true, if they are the same.
 	 */
 	@Override

@@ -1,11 +1,12 @@
 package appeng.api.storage.data;
 
-import appeng.api.config.FuzzyMode;
-import appeng.api.storage.StorageChannel;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.nbt.NBTTagCompound;
 
 import java.io.IOException;
+
+import net.minecraft.nbt.NBTTagCompound;
+import appeng.api.config.FuzzyMode;
+import appeng.api.storage.StorageChannel;
 
 public interface IAEStack<StackType extends IAEStack>
 {
@@ -13,7 +14,7 @@ public interface IAEStack<StackType extends IAEStack>
 	/**
 	 * add two stacks together
 	 * 
-	 * @param is added item
+	 * @param is
 	 */
 	void add(StackType is);
 
@@ -27,7 +28,7 @@ public interface IAEStack<StackType extends IAEStack>
 	/**
 	 * changes the number of items in the stack.
 	 * 
-	 * @param stackSize
+	 * @param basically
 	 *            , ItemStack.stackSize = N
 	 */
 	StackType setStackSize(long stackSize);
@@ -56,12 +57,12 @@ public interface IAEStack<StackType extends IAEStack>
 	/**
 	 * change weather the item can be crafted.
 	 * 
-	 * @param isCraftable can item be crafted
+	 * @param isCraftable
 	 */
 	StackType setCraftable(boolean isCraftable);
 
 	/**
-	 * clears, requestable, craftable, and stack sizes.
+	 * clears, requsetable, craftable, and stack sizes.
 	 */
 	StackType reset();
 
@@ -70,12 +71,12 @@ public interface IAEStack<StackType extends IAEStack>
 	 * 
 	 * @return isThisRecordMeaningful
 	 */
-	boolean isMeaningful();
+	boolean isMeaninful();
 
 	/**
 	 * Adds more to the stack size...
 	 * 
-	 * @param i additional stack size
+	 * @param i
 	 */
 	void incStackSize(long i);
 
@@ -87,21 +88,21 @@ public interface IAEStack<StackType extends IAEStack>
 	/**
 	 * adds items to the requestable
 	 * 
-	 * @param i increased amount of requested items
+	 * @param i
 	 */
 	void incCountRequestable(long i);
 
 	/**
-	 * removes items from the requestable
+	 * removes items from the requsetable
 	 * 
-	 * @param i decreased amount of requested items
+	 * @param i
 	 */
 	void decCountRequestable(long i);
 
 	/**
 	 * write to a NBTTagCompound.
 	 * 
-	 * @param i to be written data
+	 * @param i
 	 */
 	void writeToNBT(NBTTagCompound i);
 
@@ -114,7 +115,7 @@ public interface IAEStack<StackType extends IAEStack>
 	 * 
 	 * IAEFluidStack, FluidStack
 	 * 
-	 * @param obj compared object
+	 * @param obj
 	 * @return true if they are the same.
 	 */
 	@Override
@@ -125,8 +126,8 @@ public interface IAEStack<StackType extends IAEStack>
 	 * 
 	 * a IAEItemStack to another AEItemStack or a ItemStack.
 	 * 
-	 * @param st stacks
-	 * @param mode used fuzzy mode
+	 * @param st
+	 * @param mode
 	 * @return true if two stacks are equal based on AE Fuzzy Comparison.
 	 */
 	boolean fuzzyComparison(Object st, FuzzyMode mode);
@@ -134,7 +135,7 @@ public interface IAEStack<StackType extends IAEStack>
 	/**
 	 * Slower for disk saving, but smaller/more efficient for packets.
 	 * 
-	 * @param data to be written data
+	 * @param data
 	 * @throws IOException
 	 */
 	void writeToPacket(ByteBuf data) throws IOException;
@@ -156,7 +157,7 @@ public interface IAEStack<StackType extends IAEStack>
 	/**
 	 * obtain the NBT Data for the item.
 	 * 
-	 * @return nbt data
+	 * @return
 	 */
 	IAETagCompound getTagCompound();
 

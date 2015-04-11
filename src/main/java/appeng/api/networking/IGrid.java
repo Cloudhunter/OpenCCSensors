@@ -14,7 +14,7 @@ public interface IGrid
 	/**
 	 * Get Access to various grid modules
 	 * 
-	 * @param iface face
+	 * @param iface
 	 * @return the IGridCache you requested.
 	 */
 	public <C extends IGridCache> C getCache(Class<? extends IGridCache> iface);
@@ -48,13 +48,13 @@ public interface IGrid
 	/**
 	 * Get machines on the network.
 	 * 
-	 * @param gridHostClass class of the grid host
+	 * @param classofIGridHost
 	 * @return IMachineSet of all nodes belonging to hosts of specified class.
 	 */
-	public IMachineSet getMachines(Class<? extends IGridHost> gridHostClass);
+	public IMachineSet getMachines(Class<? extends IGridHost> classofIGridHost);
 
 	/**
-	 * @return IReadOnlyCollection for all nodes on the network, node visitors are preferred.
+	 * @return IReadOnlyCollection for all nodes on the network, node visitors are prefered.
 	 */
 	IReadOnlyCollection<IGridNode> getNodes();
 

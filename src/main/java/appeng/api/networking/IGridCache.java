@@ -26,8 +26,8 @@ public interface IGridCache
 	 * with the node you are passed, if you need to manage other grid
 	 * information, do it on the next updateTick.
 	 * 
-	 * @param gridNode removed from that grid
-	 * @param machine to be removed machine
+	 * @param gridNode
+	 * @param machine
 	 */
 	void removeNode(IGridNode gridNode, IGridHost machine);
 
@@ -38,8 +38,8 @@ public interface IGridCache
 	 * with the node you are passed, if you need to manage other grid
 	 * information, do it on the next updateTick.
 	 * 
-	 * @param gridNode added to grid node
-	 * @param machine to be added machine
+	 * @param gridNode
+	 * @param machine
 	 */
 	void addNode(IGridNode gridNode, IGridHost machine);
 
@@ -48,7 +48,7 @@ public interface IGridCache
 	 * Iteratively processes changes. The destination should receive half, and
 	 * the current cache should receive half.
 	 * 
-	 * @param destinationStorage storage which receives half of old grid
+	 * @param destinationStorage
 	 */
 	void onSplit(IGridStorage destinationStorage);
 
@@ -57,14 +57,14 @@ public interface IGridCache
 	 * Iteratively processes changes. Use this method to incorporate all the
 	 * data from the source into your cache.
 	 * 
-	 * @param sourceStorage old storage
+	 * @param sourceStorage
 	 */
 	void onJoin(IGridStorage sourceStorage);
 
 	/**
 	 * Called when saving changes,
 	 * 
-	 * @param destinationStorage storage
+	 * @param destinationStorage
 	 */
 	void populateGridStorage(IGridStorage destinationStorage);
 

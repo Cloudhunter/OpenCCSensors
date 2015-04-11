@@ -63,6 +63,7 @@ public class CommonProxy {
 		TileEntityGauge.addGaugeSensor(OpenCCSensors.Sensors.machineSensor);
 		TileEntityGauge.addGaugeSensor(OpenCCSensors.Sensors.powerSensor);
 		TileEntityGauge.addGaugeSensor(OpenCCSensors.Sensors.inventorySensor);
+		TileEntityGauge.addGaugeSensor(OpenCCSensors.Sensors.tankSensor);
 		
 		RecipeUtils.addGaugeRecipe();
 		RecipeUtils.addSensorRecipe();

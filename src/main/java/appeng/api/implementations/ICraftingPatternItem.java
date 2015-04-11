@@ -12,11 +12,11 @@ public interface ICraftingPatternItem
 {
 
 	/**
-	 * Access Details about a pattern
+	 * Access Details about a patern
 	 * 
-	 * @param is pattern
-	 * @param w crafting world
-	 * @return details of pattern
+	 * @param is
+	 * @param w
+	 * @return
 	 */
 	ICraftingPatternDetails getPatternForItem(ItemStack is, World w);
 }

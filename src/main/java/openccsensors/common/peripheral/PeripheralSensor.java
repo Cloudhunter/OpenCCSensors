@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
 import openccsensors.OpenCCSensors;
 import openccsensors.api.IMethodCallback;
@@ -299,7 +300,17 @@ public class PeripheralSensor implements IPeripheral, ISensorAccess {
 
 	@Override
 	public boolean equals(IPeripheral other) {
-		// TODO Auto-generated method stub
+		if(other == null) {
+			return false;
+		}
+		if(this == other) {
+			return true;
+		}
+		if(other instanceof TileEntity) {
+			TileEntity tother = (TileEntity) other;
+			ChunkCoordinates location = env.getLocation();
+			return tother.getWorldObj().equals(env.getWorld()) && tother.xCoord == location.posX && tother.yCoord == location.posY && tother.zCoord == location.posZ;
+		}
 		return false;
 	}
 }

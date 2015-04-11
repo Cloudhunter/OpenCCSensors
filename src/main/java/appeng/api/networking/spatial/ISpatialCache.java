@@ -7,7 +7,7 @@ public interface ISpatialCache extends IGridCache
 {
 
 	/**
-	 * @return true if a region is defined at all, it doesn't have to be valid, but all points must be in the same world.
+	 * @return true if a region is defined at all, it dosn't have to be valid, but all points must be in the same world.
 	 */
 	boolean hasRegion();
 
@@ -32,8 +32,8 @@ public interface ISpatialCache extends IGridCache
 	long requiredPower();
 
 	/**
-	 * @return current 100% - 0% efficiency.
+	 * @return current 100% - 0% effiency.
 	 */
-	float currentEfficiency();
+	float currentEffiency();
 
 }

@@ -18,7 +18,7 @@ public interface IGrinderEntry
 	/**
 	 * lets you change the grinder recipe by changing its input.
 	 * 
-	 * @param input input item
+	 * @param input
 	 */
 	public void setInput(ItemStack input);
 
@@ -46,37 +46,37 @@ public interface IGrinderEntry
 	/**
 	 * allows you to change the output.
 	 * 
-	 * @param output output item
+	 * @param output
 	 */
 	public void setOutput(ItemStack output);
 
 	/**
 	 * stack, and 0.0-1.0 chance that it will be generated.
 	 * 
-	 * @param output output item
-	 * @param chance generation chance
+	 * @param output
+	 * @param chance
 	 */
 	public void setOptionalOutput(ItemStack output, float chance);
 
 	/**
 	 * 0.0 - 1.0 the chance that the optional output will be generated.
 	 * 
-	 * @return chance of optional output
+	 * @return
 	 */
 	public float getOptionalChance();
 
 	/**
 	 * stack, and 0.0-1.0 chance that it will be generated.
 	 * 
-	 * @param output second optional output item
-	 * @param chance second optional output chance
+	 * @param output
+	 * @param chance
 	 */
 	public void setSecondOptionalOutput(ItemStack output, float chance);
 
 	/**
 	 * 0.0 - 1.0 the chance that the optional output will be generated.
 	 * 
-	 * @return second optional output chance
+	 * @return
 	 */
 	public float getSecondOptionalChance();
 
@@ -90,7 +90,7 @@ public interface IGrinderEntry
 	/**
 	 * Allows you to adjust the number of turns
 	 * 
-	 * @param c number of turns to produce output.
+	 * @param new number of turns to produce output.
 	 */
 	public void setEnergyCost(int c);
 }

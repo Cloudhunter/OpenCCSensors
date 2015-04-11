@@ -14,8 +14,8 @@ public interface IExternalStorageHandler
 	 * if this can handle the provided inventory, return true. ( Generally skipped by AE, and it just calls getInventory
 	 * )
 	 * 
-	 * @param te to be handled tile entity
-	 * @param mySrc source
+	 * @param te
+	 * @param mySrc
 	 * @return true, if it can get a handler via getInventory
 	 */
 	boolean canHandle(TileEntity te, ForgeDirection d, StorageChannel channel, BaseActionSource mySrc);
@@ -26,10 +26,10 @@ public interface IExternalStorageHandler
 	 * please note that if your inventory changes and requires polling, you must use an {@link IMEMonitor} instead of an
 	 * {@link IMEInventory} failure to do so will result in invalid item counts and reporting of the inventory.
 	 * 
-	 * @param te to be handled tile entity
-	 * @param d direction
-	 * @param channel channel
-	 * @param src source
+	 * @param te
+	 * @param d
+	 * @param channel
+	 * @param src
 	 * @return The Handler for the inventory
 	 */
 	IMEInventory getInventory(TileEntity te, ForgeDirection d, StorageChannel channel, BaseActionSource src);

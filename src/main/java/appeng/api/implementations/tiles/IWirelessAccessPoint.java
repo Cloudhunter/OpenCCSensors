@@ -23,7 +23,7 @@ public interface IWirelessAccessPoint extends IActionHost
 	boolean isActive();
 
 	/**
-	 * @return grid of linked WAP
+	 * @return
 	 */
 	IGrid getGrid();
 

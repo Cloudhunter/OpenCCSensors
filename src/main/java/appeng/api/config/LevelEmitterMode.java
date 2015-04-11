@@ -5,6 +5,6 @@ public enum LevelEmitterMode
 
 	STORED_AMOUNT,
 
-	STORABLE_AMOUNT
+	STOREABLE_AMOUNT
 
 }

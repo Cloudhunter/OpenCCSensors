@@ -7,7 +7,7 @@ public interface IUpgradeModule
 {
 
 	/**
-	 * @param itemstack item with potential upgrades
+	 * @param itemstack
 	 * @return null, or a valid upgrade type.
 	 */
 	Upgrades getType(ItemStack itemstack);

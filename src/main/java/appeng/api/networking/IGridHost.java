@@ -29,9 +29,9 @@ public interface IGridHost
 
 	/**
 	 * Determines how cables render when they connect to this block. Priority is
-	 * Smart &gt; Covered &gt; Glass
+	 * Smart > Covered > Glass
 	 * 
-	 * @param dir direction
+	 * @param dir
 	 */
 	public AECableType getCableConnectionType(ForgeDirection dir);
 

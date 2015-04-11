@@ -6,11 +6,13 @@ package appeng.api.implementations;
  */
 public class TransitionResult
 {
-	public final boolean success;
-	public final double energyUsage;
 
 	public TransitionResult(boolean _success, double power) {
 		success = _success;
 		energyUsage = power;
 	}
+
+	public final boolean success;
+	public final double energyUsage;
+
 }

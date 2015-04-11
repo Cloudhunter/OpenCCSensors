@@ -15,14 +15,14 @@ public interface ICellRegistry
 	/**
 	 * Register a new handler.
 	 * 
-	 * @param handler cell handler
+	 * @param handler
 	 */
 	void addCellHandler(ICellHandler handler);
 
 	/**
 	 * return true, if you can get a InventoryHandler for the item passed.
 	 * 
-	 * @param is to be checked item
+	 * @param is
 	 * @return true if the provided item, can be handled by a handler in AE, ( AE May choose to skip this and just get
 	 *         the handler instead. )
 	 */
@@ -31,7 +31,7 @@ public interface ICellRegistry
 	/**
 	 * get the handler, for the requested type.
 	 * 
-	 * @param is to be checked item
+	 * @param is
 	 * @return the handler registered for this item type.
 	 */
 	ICellHandler getHandler(ItemStack is);
@@ -39,9 +39,9 @@ public interface ICellRegistry
 	/**
 	 * returns an IMEInventoryHandler for the provided item.
 	 * 
-	 * @param is item with inventory handler
+	 * @param is
 	 * @param host can be null, or the hosting tile / part.
-	 * @param chan the storage channel to request the handler for.
+	 * @param the storage channel to request the handler for.
 	 * 
 	 * @return new IMEInventoryHandler, or null if there isn't one.
 	 */

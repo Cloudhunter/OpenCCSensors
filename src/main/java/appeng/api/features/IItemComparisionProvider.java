@@ -7,14 +7,14 @@ import net.minecraft.item.ItemStack;
  * if the comparison function handles the item, by trying to request a
  * IItemComparison class.
  */
-public interface IItemComparisonProvider
+public interface IItemComparisionProvider
 {
 
 	/**
 	 * should return a new IItemComparison, or return null if it doesn't handle
 	 * the supplied item.
 	 * 
-	 * @param is item
+	 * @param is
 	 * @return IItemComparison, or null
 	 */
 	IItemComparison getComparison(ItemStack is);
@@ -22,7 +22,7 @@ public interface IItemComparisonProvider
 	/**
 	 * Simple test for support ( AE generally skips this and calls the above function. )
 	 * 
-	 * @param stack item
+	 * @param stack
 	 * @return true, if getComparison will return a valid IItemComparison Object
 	 */
 	public boolean canHandle(ItemStack stack);

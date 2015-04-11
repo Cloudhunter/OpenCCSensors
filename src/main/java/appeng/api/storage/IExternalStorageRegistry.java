@@ -16,15 +16,15 @@ public interface IExternalStorageRegistry
 	/**
 	 * A registry for StorageBus interactions
 	 * 
-	 * @param esh storage handler
+	 * @param esh
 	 */
 	void addExternalStorageInterface(IExternalStorageHandler esh);
 
 	/**
-	 * @param te tile entity
-	 * @param opposite direction
-	 * @param channel channel
-	 * @param mySrc source
+	 * @param te
+	 * @param opposite
+	 * @param channel
+	 * @param mySrc
 	 * @return the handler for a given tile / forge direction
 	 */
 	IExternalStorageHandler getHandler(TileEntity te, ForgeDirection opposite, StorageChannel channel, BaseActionSource mySrc);

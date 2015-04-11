@@ -12,14 +12,18 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
+import openccsensors.api.IGaugeSensor;
 import openccsensors.api.IRequiresIconLoading;
 import openccsensors.api.ISensor;
 import openccsensors.api.ISensorTier;
 import openccsensors.common.util.TankUtils;
 
-public class TankSensor extends TileSensor implements ISensor, IRequiresIconLoading {
+public class TankSensor extends TileSensor implements ISensor, IRequiresIconLoading, IGaugeSensor {
 	
 	private IIcon icon;
+	private String[] gaugeProperties = new String[] {
+			"PercentFull"	
+		};
 
 	@Override
 	public boolean isValidTarget(Object tile) {
@@ -69,6 +73,11 @@ public class TankSensor extends TileSensor implements ISensor, IRequiresIconLoad
 	@Override
 	public ItemStack getUniqueRecipeItem() {
 		return new ItemStack((Item)Item.itemRegistry.getObject("bucket"));
+	}
+
+	@Override
+	public String[] getGaugeProperties() {
+		return this.gaugeProperties;
 	}
 
 }

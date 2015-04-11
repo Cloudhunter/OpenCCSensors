@@ -12,16 +12,16 @@ public interface ISpecialComparisonRegistry
 	/**
 	 * return TheHandler or null.
 	 * 
-	 * @param stack item
+	 * @param stack
 	 * @return a handler it found for a specific item
 	 */
-	IItemComparison getSpecialComparison(ItemStack stack);
+	IItemComparison getSpecialComparion(ItemStack stack);
 
 	/**
 	 * Register a new special comparison function with AE.
 	 * 
-	 * @param prov comparison provider
+	 * @param prov
 	 */
-	public void addComparisonProvider(IItemComparisonProvider prov);
+	public void addComparisonProvider(IItemComparisionProvider prov);
 
 }

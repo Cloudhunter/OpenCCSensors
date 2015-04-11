@@ -1,11 +1,11 @@
 package appeng.api.implementations;
 
-import appeng.api.util.IConfigurableObject;
 import net.minecraft.tileentity.TileEntity;
 import appeng.api.config.Upgrades;
 import appeng.api.implementations.tiles.ISegmentedInventory;
+import appeng.api.util.IConfigureableObject;
 
-public interface IUpgradeableHost extends IConfigurableObject, ISegmentedInventory
+public interface IUpgradeableHost extends IConfigureableObject, ISegmentedInventory
 {
 
 	/**
@@ -16,7 +16,7 @@ public interface IUpgradeableHost extends IConfigurableObject, ISegmentedInvento
 	/**
 	 * the tile...
 	 * 
-	 * @return tile entity
+	 * @return
 	 */
 	TileEntity getTile();
 

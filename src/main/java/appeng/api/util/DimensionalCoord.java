@@ -9,8 +9,8 @@ import net.minecraft.world.World;
 public class DimensionalCoord extends WorldCoord
 {
 
-	private final World w;
-	private final int dimId;
+	private World w;
+	private int dimId;
 
 	public DimensionalCoord(DimensionalCoord s) {
 		super( s.x, s.y, s.z );
@@ -44,7 +44,9 @@ public class DimensionalCoord extends WorldCoord
 	@Override
 	public boolean equals(Object obj)
 	{
-		return obj instanceof DimensionalCoord && isEqual((DimensionalCoord) obj);
+		if ( obj instanceof DimensionalCoord )
+			return isEqual( (DimensionalCoord) obj );
+		return false;
 	}
 
 	@Override
