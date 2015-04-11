@@ -132,6 +132,23 @@ public class TileEntityGauge extends TileEntity implements IPeripheral {
 	@Override
 	public void detach(IComputerAccess computer) {
 	}
+
+	private HashMap checkForKeys(HashMap data, String[] keys, String prefix) {
+		HashMap properties = new HashMap();
+		for (Object obj : data.keySet()) {
+			Object value = data.get(obj);
+			if (value instanceof HashMap) {
+				properties.putAll(checkForKeys((HashMap)value, keys, prefix + obj.toString()));
+			} else if (obj instanceof String) {
+				for (String property : keys) {
+					if (property.equals(obj)) {
+						properties.put(prefix + property, value);
+					}
+				}
+			}
+		}
+		return properties;
+	}
 	
 	@Override
 	public void updateEntity() {
@@ -146,11 +163,7 @@ public class TileEntityGauge extends TileEntity implements IPeripheral {
 				for (IGaugeSensor gaugeSensor : gaugeSensors)  {
 					if (gaugeSensor.isValidTarget(behindTile)) {
 						HashMap details = gaugeSensor.getDetails(worldObj, behindTile, new ChunkCoordinates(behindTile.xCoord, behindTile.yCoord, behindTile.zCoord), true);
-						for (String property : gaugeSensor.getGaugeProperties()) {
-							if (details.containsKey(property)) {
-								tileProperties.put(property, details.get(property));
-							}
-						}
+						tileProperties.putAll(checkForKeys(details, gaugeSensor.getGaugeProperties(), ""));
 					}
 				}
 			}

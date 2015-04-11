@@ -77,8 +77,7 @@ public class TankSensor extends TileSensor implements ISensor, IRequiresIconLoad
 
 	@Override
 	public String[] getGaugeProperties() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.gaugeProperties;
 	}
 
 }
