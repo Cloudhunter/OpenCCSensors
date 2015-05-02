@@ -28,4 +28,8 @@ public class OCSLog {
 		log(Level.WARN, format, data);
 	}
 
+	public static void debug(String format, Object... data) {
+		log(Level.DEBUG, format, data);
+	}
+
 }

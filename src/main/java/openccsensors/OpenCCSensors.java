@@ -27,6 +27,7 @@ import openccsensors.common.sensor.SonicSensor;
 import openccsensors.common.sensor.TankSensor;
 import openccsensors.common.sensor.WorldSensor;
 import openccsensors.common.turtle.TurtleUpgradeSensor;
+import openccsensors.common.util.Mods;
 import openccsensors.common.util.OCSLog;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -36,7 +37,7 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
-@Mod( modid = "OCS", name = "OpenCCSensors", version = "1.7.4", dependencies = "required-after:ComputerCraft;after:CCTurtle;after:BuildCraft|Core;after:IC2;after:Thaumcraft;after:AppliedEnergistics;after:RailCraft;after:ArsMagica;after:UniversalElectricity;after:ThermalExpansion")
+@Mod( modid = "OCS", name = "OpenCCSensors", version = "1.7.5", dependencies = "required-after:ComputerCraft;after:CCTurtle;after:BuildCraft|Core;after:IC2;after:Thaumcraft;after:AppliedEnergistics;after:RailCraft;after:ArsMagica;after:UniversalElectricity;after:ThermalExpansion;after:RotaryCraft")
 public class OpenCCSensors {
 
 	public static class Blocks
