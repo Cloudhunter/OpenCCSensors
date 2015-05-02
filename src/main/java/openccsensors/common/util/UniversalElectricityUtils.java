@@ -6,26 +6,18 @@ import java.util.Map;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import universalelectricity.api.core.grid.electric.IElectricNode;
-import universalelectricity.api.core.grid.electric.IEnergyNode;
-import universalelectricity.api.core.grid.electric.IResistance;
+import resonantengine.api.graph.node.IEnergyNode;
 
 public class UniversalElectricityUtils {
 
 	public static boolean isValidTarget(TileEntity target) {
-		return target instanceof IElectricNode ||
-			   target instanceof IEnergyNode ||
-			   target instanceof IResistance;
+		return target instanceof IEnergyNode;
 	}
 
 	public static Map getDetails(World world, Object obj, boolean additional) {
 		HashMap response = new HashMap();
 		
 		if (additional) {
-			if (obj instanceof IElectricNode) {
-				response.put("Voltage", ((IElectricNode)obj).getVoltage(ForgeDirection.UNKNOWN));
-			}
-			
 			if (obj instanceof IEnergyNode) {
 				double joules = ((IEnergyNode)obj).getEnergy(ForgeDirection.UNKNOWN);
 				double maxJoules = ((IEnergyNode)obj).getEnergyCapacity(ForgeDirection.UNKNOWN);
@@ -37,11 +29,6 @@ public class UniversalElectricityUtils {
 					response.put("PowerPercentFull", percent);
 				}
 			}
-			
-			if (obj instanceof IResistance) {
-				response.put("Resistance", ((IResistance)obj).getResistance());
-			}
-			
 		}
 		return response;
 	}

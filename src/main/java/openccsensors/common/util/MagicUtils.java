@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
-import am2.api.power.IPowerIntegration;
+import am2.api.power.IPowerNode;
 
 public class MagicUtils {
 
@@ -16,7 +16,7 @@ public class MagicUtils {
 	}
 
 	public static boolean isValidEssenceTarget(Object target) {
-		return target != null && target instanceof IPowerIntegration;
+		return target != null && target instanceof IPowerNode;
 	}
 
 	public static HashMap getMapOfAspects(World world, Object obj, boolean additional) {
@@ -47,16 +47,11 @@ public class MagicUtils {
 			return response;
 		}
 
-		if (obj instanceof IPowerIntegration) {
-			IPowerIntegration powerObj = (IPowerIntegration) obj;
-			response.put("EssenceCharge", powerObj.getCharge());
-			response.put("EssenceCapacity", powerObj.getCapacity());
-			response.put("EssenceDeficit", powerObj.getDefecit());
-			response.put("EssenceDeficitThreshold", powerObj.getDefecitThreshold());
-			response.put("IsNexus", powerObj.isNexus());
-			response.put("IsNexusImpersonator", powerObj.isNexusImpersonator());
-			response.put("HasNexusPath", powerObj.hasNexusPath());
-			response.put("HopsToNexus", powerObj.getNumHopsToNexus());
+		if (obj instanceof IPowerNode) {
+			IPowerNode powerObj = (IPowerNode) obj;
+			//response.put("EssenceCharge", powerObj.getCharge());
+			response.put("Capacity", powerObj.getCapacity());
+			response.put("IsSource", powerObj.isSource());
 			response.put("ChargeRate", powerObj.getChargeRate());
 		}
 		return response;

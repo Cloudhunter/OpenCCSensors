@@ -12,6 +12,7 @@ import ic2.api.reactor.IReactor;
 import ic2.api.reactor.IReactorChamber;
 import ic2.api.tile.IEnergyStorage;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -183,9 +184,8 @@ public class Ic2Utils {
 			response.put("Size", crop.getSize());
 			response.put("WeedExStorage", crop.getWeedExStorage());
 			response.put("Status", "Empty");
-			CropCard[] cards = Crops.instance.getCropList();
-			if (crop.getID() >= 0 && crop.getID() < cards.length) {
-				CropCard cropCard = Crops.instance.getCropList()[crop.getID()];
+			CropCard cropCard = crop.getCrop();
+			if (cropCard != null) {
 				response.put("IsWeed", cropCard.isWeed(crop));
 				response.put("CanBeHarvested", cropCard.canBeHarvested(crop));
 				if (cropCard.canBeHarvested(crop)) {
