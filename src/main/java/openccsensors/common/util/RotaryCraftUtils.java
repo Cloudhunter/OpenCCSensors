@@ -4,9 +4,9 @@ import java.util.HashMap;
 
 import net.minecraft.world.World;
 
-import Reika.RotaryCraft.API.PowerGenerator;
-import Reika.RotaryCraft.API.ShaftMachine;
-import Reika.RotaryCraft.API.ThermalMachine;
+import Reika.RotaryCraft.API.Power.PowerGenerator;
+import Reika.RotaryCraft.API.Power.ShaftMachine;
+import Reika.RotaryCraft.API.Interfaces.ThermalMachine;
 
 public class RotaryCraftUtils {
 

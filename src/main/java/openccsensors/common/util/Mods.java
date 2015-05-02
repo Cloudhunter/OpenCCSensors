@@ -41,7 +41,17 @@ public class Mods {
 	
 	
 	/***
-	 * Buildcraft Core
+	 * CoFH Core
 	 */
-	public static final boolean BC = Loader.isModLoaded("BuildCraft|Core");
+	private static boolean isCoFHCoreLoaded() {
+		try {
+			Class cls = Class.forName("cofh.api.energy.IEnergyProvider");
+			return true;
+		} catch (ClassNotFoundException e) {
+			return false;
+		}
+	}	
+	
+	public static final boolean COFH = isCoFHCoreLoaded(); 
+		
 }

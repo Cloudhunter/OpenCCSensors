@@ -47,7 +47,7 @@ public class PowerSensor extends TileSensor implements ISensor, IRequiresIconLoa
 		}
 		return (UEApi != null && UniversalElectricityUtils.isValidTarget((TileEntity)target)) ||
 			   (Mods.IC2 && Ic2Utils.isValidPowerTarget(target)) ||
-			   (Mods.BC && CoFHUtils.isValidPowerTarget(target)) ||
+			   (Mods.COFH && CoFHUtils.isValidPowerTarget(target)) ||
 			   (Mods.TE && CoFHUtils.isValidPowerTarget(target)) ||
 			   (Mods.RC && RotaryCraftUtils.isValidPowerTarget(target));
 	}
@@ -61,7 +61,7 @@ public class PowerSensor extends TileSensor implements ISensor, IRequiresIconLoa
 		if (Mods.IC2) {
 			response.putAll(Ic2Utils.getPowerDetails(world, obj, additional));
 		}
-		if (Mods.BC) {
+		if (Mods.COFH) {
 			response.putAll(CoFHUtils.getPowerDetails(world, obj, additional));
 		}
 		if (Mods.TE) {
